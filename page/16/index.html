@@ -55,71 +55,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2010-12-18T06:13:39.000Z"><a href="/2010/12/18/mysql-optimization/">12月 18 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/18/mysql-optimization/">Mysql编译参数优化</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><strong>1. -static 13%</strong></p>
-<pre><code><figure class="highlight"><pre><span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">client</span>-<span class="comment">ldflags=</span>-<span class="comment">all</span>-<span class="comment">static</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">mysqld</span>-<span class="comment">ldflags=</span>-<span class="comment">all</span>-<span class="comment">static</span>
-<span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
-<span class="comment">静态链接提高13%性能</span>
-
-<span class="comment">**2\</span>. <span class="literal">-</span><span class="comment">pgcc</span> <span class="comment">1%**</span>
-
-&lt;<span class="comment">pre</span>&gt;<span class="comment">`CFLAGS="</span>-<span class="comment">O3</span> <span class="literal">-</span><span class="comment">mpentiumpro</span> <span class="literal">-</span><span class="comment">mstack</span>-<span class="comment">align</span>-<span class="comment">double"</span> <span class="comment">CXX=gcc</span> <span class="comment">\</span>
-<span class="comment">CXXFLAGS="</span>-<span class="comment">O3</span> <span class="literal">-</span><span class="comment">mpentiumpro</span> <span class="literal">-</span><span class="comment">mstack</span>-<span class="comment">align</span>-<span class="comment">double</span> <span class="comment">\</span>
-<span class="literal">-</span><span class="comment">felide</span>-<span class="comment">constructors</span> <span class="literal">-</span><span class="comment">fno</span>-<span class="comment">exceptions</span> <span class="literal">-</span><span class="comment">fno</span>-<span class="comment">rtti"</span>
-<span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
-
-<span class="comment">如果是Inter处理器，使用pgcc提高1%性能</span>
-<span class="comment">**</span>
-<span class="comment">3\</span>. <span class="comment">Unix</span> <span class="comment">Socket</span> <span class="comment">7</span>.<span class="comment">5%**</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">unix</span>-<span class="comment">socket</span>-<span class="comment">path=/usr/local/mysql/tmp/mysql</span>.<span class="comment">sock</span>
-<span class="comment">使用unix套接字链接提高7</span>.<span class="comment">5%性能，所以在windows下mysql性能肯定不如unix下面</span>
-
-<span class="comment">**4\</span>. <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span>-<span class="comment">assembler**</span>
-<span class="comment">允许使用汇编模式(优化性能)</span>
-<span class="comment">下面是总体的编译文件</span>
-<span class="comment">编译代码</span>
-&lt;<span class="comment">pre</span>&gt;<span class="comment">`CFLAGS="</span>-<span class="comment">O3"</span> <span class="comment">CXX=gcc</span> <span class="comment">CXXFLAGS="</span>-<span class="comment">O3</span> <span class="literal">-</span><span class="comment">felide</span>-<span class="comment">constructors</span> <span class="comment">\</span>
-<span class="literal">-</span><span class="comment">fno</span>-<span class="comment">exceptions</span> <span class="literal">-</span><span class="comment">fno</span>-<span class="comment">rtti</span> <span class="literal">-</span><span class="comment">fomit</span>-<span class="comment">frame</span>-<span class="comment">pointer</span> <span class="literal">-</span><span class="comment">ffixed</span>-<span class="comment">ebp"</span>
-<span class="string">.</span><span class="comment">/configure</span> <span class="comment">\</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">prefix=/usr/local/mysql</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span>-<span class="comment">assembler</span> <span class="comment">\</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">mysqld</span>-<span class="comment">ldflags=</span>-<span class="comment">all</span>-<span class="comment">static</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">client</span>-<span class="comment">ldflags=</span>-<span class="comment">all</span>-<span class="comment">static</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">unix</span>-<span class="comment">socket</span>-<span class="comment">path=/usr/local/mysql/tmp/mysql</span>.<span class="comment">sock</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">charset=utf8</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">collation=utf8_general_ci</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">extra</span>-<span class="comment">charsets=all
-</pre></figure></code></pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2010-12-18T06:05:34.000Z"><a href="/2010/12/18/vsftpd-virtual-user/">12月 18 2010</a></time>
       
       
@@ -288,6 +223,7 @@ ftp&gt; quit
 
 
 
+
   <article class="post">
   
   <div class="post-content">
@@ -324,6 +260,7 @@ iptables -X</p>
     </footer>
   </div>
 </article>
+
 
 
 
@@ -440,6 +377,7 @@ fastcgi_param HTTP_ACCEPT_ENCODING gzip,deflate<span class="comment">;</span>
 
 
 
+
   <article class="post">
   
   <div class="post-content">
@@ -490,6 +428,325 @@ nginx.pid nginx.pid.oldbin</p>
 
 
 
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T23:56:54.000Z"><a href="/2010/12/18/apache-tomcat-cluster-bacst/">12月 18 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/18/apache-tomcat-cluster-bacst/">Apache Tomcat Cluster-bacst 配置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>关于Apache+Tomcat的Cluster的郁闷问题，终于得到解决</p>
+<p>此类话题已经很多，可以参考的文档也不少，我是参考这个blog的文档做的：</p>
+<p><a href="http://blogger.org.cn/blog/blog.asp?name=lhwork">http://blogger.org.cn/blog/blog.asp?name=lhwork</a></p>
+<p>1）环境和版本：</p>
+<p>Apache2.0.59+Tomcat5.5.15（两个），一开始用的是Tomcat5.0.28，一直有问题（在后面总结），就升级到5.5去做试验了，冤枉5.0.28兄弟了:)</p>
+<p>步骤小结为：</p>
+<p>1、安装（忽略）；</p>
+<p>2、配置Tomcat：</p>
+<p>1）第一个Tomcat：</p>
+<p>A.启用jvmRoute</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;!-- You should set jvmRoute to support load-balancing via AJP ie :--&gt;</p>
+<p>&lt;Engine name=&quot;Standalone&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;tomcat1&quot;&gt;</p>
+<p>&lt;!-- Define the top level container in our container hierarchy</p>
+<p>&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;--&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>B.启用原来禁用的Cluster设置</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;Cluster className=&quot;org.apache.catalina.cluster.tcp.SimpleTcpCluster&quot;</p>
+<p>managerClassName=&quot;org.apache.catalina.cluster.session.DeltaManager&quot;</p>
+<p>expireSessionsOnShutdown=&quot;false&quot;</p>
+<p>useDirtyFlag=&quot;true&quot;</p>
+<p>notifyListenersOnReplication=&quot;true&quot;&gt;</p>
+<p>&lt;Membership</p>
+<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
+<p>mcastBindAddress=&quot;127.0.0.1&quot;</p>
+<p>mcastAddr=&quot;224.1.2.3&quot;</p>
+<p>mcastPort=&quot;2525&quot;</p>
+<p>mcastFrequency=&quot;500&quot;</p>
+<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
+<p>&lt;Receiver</p>
+<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;</p>
+<p>tcpListenAddress=&quot;auto&quot;</p>
+<p>tcpListenPort=&quot;4001&quot;</p>
+<p>tcpSelectorTimeout=&quot;100&quot;</p>
+<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
+<p>&lt;Sender</p>
+<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationTransmitter&quot;</p>
+<p>replicationMode=&quot;pooled&quot;</p>
+<p>ackTimeout=&quot;15000&quot;/&gt;</p>
+<p>&lt;Valve className=&quot;org.apache.catalina.cluster.tcp.ReplicationValve&quot;</p>
+<p>filter=&quot;.<em>.gif;.</em>.js;.<em>.jpg;.</em>.png;.<em>.htm;.</em>.html;.<em>.css;.</em>.txt;&quot;/&gt;</p>
+<p>&lt;Deployer className=&quot;org.apache.catalina.cluster.deploy.FarmWarDeployer&quot;</p>
+<p>tempDir=&quot;/tmp/war-temp/&quot;</p>
+<p>deployDir=&quot;/tmp/war-deploy/&quot;</p>
+<p>watchDir=&quot;/tmp/war-listen/&quot;</p>
+<p>watchEnabled=&quot;false&quot;/&gt;</p>
+<p>&lt;ClusterListener className=&quot;org.apache.catalina.cluster.session.ClusterSessionListener&quot;/&gt;</p>
+<p>&lt;/Cluster&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>C.搞定</p>
+<p>2）配置第二个Tomcat（要注意端口冲突了）：</p>
+<p>A.变更端口</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;Server port=&quot;8005&quot; shutdown=&quot;SHUTDOWN&quot;&gt;</p>
+<p>＝》</p>
+<p>&lt;Server port=&quot;8004&quot; shutdown=&quot;SHUTDOWN&quot;&gt;</p>
+<p>B.变更端口</p>
+<p>&lt;Connector port=&quot;8009&quot;</p>
+<p>enableLookups=&quot;false&quot; redirectPort=&quot;8443&quot; protocol=&quot;AJP/1.3&quot; /&gt;</p>
+<p>＝》</p>
+<p>&lt;Connector port=&quot;9009&quot;</p>
+<p>enableLookups=&quot;false&quot; redirectPort=&quot;8443&quot; protocol=&quot;AJP/1.3&quot; /&gt;</p>
+<p>C.启用jvmRoute</p>
+<p>&lt;!-- You should set jvmRoute to support load-balancing via AJP ie :--&gt;</p>
+<p>&lt;Engine name=&quot;Standalone&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;tomcat2&quot;&gt;</p>
+<p>&lt;!-- Define the top level container in our container hierarchy</p>
+<p>&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;--&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>D.启用原来禁用的Cluster设置</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;Cluster className=&quot;org.apache.catalina.cluster.tcp.SimpleTcpCluster&quot;</p>
+<p>managerClassName=&quot;org.apache.catalina.cluster.session.DeltaManager&quot;</p>
+<p>expireSessionsOnShutdown=&quot;false&quot;</p>
+<p>useDirtyFlag=&quot;true&quot;</p>
+<p>notifyListenersOnReplication=&quot;true&quot;&gt;</p>
+<p>&lt;Membership</p>
+<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
+<p>mcastBindAddress=&quot;127.0.0.1&quot;</p>
+<p>mcastAddr=&quot;224.1.2.3&quot;</p>
+<p>mcastPort=&quot;2525&quot;</p>
+<p>mcastFrequency=&quot;500&quot;</p>
+<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
+<p>&lt;Receiver</p>
+<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;</p>
+<p>tcpListenAddress=&quot;auto&quot;</p>
+<p>tcpListenPort=&quot;4002&quot;</p>
+<p>tcpSelectorTimeout=&quot;100&quot;</p>
+<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
+<p>&lt;Sender</p>
+<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationTransmitter&quot;</p>
+<p>replicationMode=&quot;pooled&quot;</p>
+<p>ackTimeout=&quot;15000&quot;/&gt;</p>
+<p>&lt;Valve className=&quot;org.apache.catalina.cluster.tcp.ReplicationValve&quot;</p>
+<p>filter=&quot;.<em>.gif;.</em>.js;.<em>.jpg;.</em>.png;.<em>.htm;.</em>.html;.<em>.css;.</em>.txt;&quot;/&gt;</p>
+<p>&lt;Deployer className=&quot;org.apache.catalina.cluster.deploy.FarmWarDeployer&quot;</p>
+<p>tempDir=&quot;/tmp/war-temp/&quot;</p>
+<p>deployDir=&quot;/tmp/war-deploy/&quot;</p>
+<p>watchDir=&quot;/tmp/war-listen/&quot;</p>
+<p>watchEnabled=&quot;false&quot;/&gt;</p>
+<p>&lt;ClusterListener className=&quot;org.apache.catalina.cluster.session.ClusterSessionListener&quot;/&gt;</p>
+<p>&lt;/Cluster&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>E.搞定</p>
+<p>3、配置apache：</p>
+<p>1）修订conf/httpd.conf</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<h1>add by zhengxq</h1>
+<p>LoadModule jk2_module modules/mod_jk2.so</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>2）新增worders2.properties并放到conf下</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>[shm]</p>
+<p>info=Scoreboard. Requried for reconfiguration and status with multiprocess servers.</p>
+<p>file=anon</p>
+<h1>Defines a load balancer named lb. Use even if you only have one machine.</h1>
+<p>[lb:lb]</p>
+<p>worker=ajp13:tomcat1</p>
+<p>worker=ajp13:tomcat2</p>
+<h1>Example socket channel, override port and host.</h1>
+<p>[channel.socket:localhost:9009]</p>
+<p>port=9009</p>
+<p>host=127.0.0.1</p>
+<h1>define the worker</h1>
+<p>[ajp13:localhost:9009]</p>
+<p>channel=channel.socket:localhost:9009</p>
+<p>group=lb</p>
+<h1>Example socket channel, override port and host.</h1>
+<p>[channel.socket:localhost:8009]</p>
+<p>port=8009</p>
+<p>host=127.0.0.1</p>
+<h1>define the worker</h1>
+<p>[ajp13:localhost:8009]</p>
+<p>channel=channel.socket:localhost:8009</p>
+<p>group=lb</p>
+<h1>Map the Tomcat examples webapp to the Web server uri space</h1>
+<p>[uri:/clusterapp/*]</p>
+<p>group=lb</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>3）搞定</p>
+<p>3.测试程序，请参考上述参考文档，如下：</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;%@ page contentType=&quot;text/html; charset=GBK&quot; import=&quot;java.util.*&quot;%&gt;</p>
+<p>&lt;html&gt;&lt;head&gt;&lt;title&gt;Cluster App Test&lt;/title&gt;&lt;/head&gt;</p>
+<p>&lt;body&gt;</p>
+<p>Server Info: &lt;%out.print(request.getLocalAddr() + &quot; : &quot; + request.getLocalPort());%&gt;</p>
+<p>&lt;%</p>
+<p>out.println(&quot;&lt;br&gt; ID &quot; + session.getId());</p>
+<p>// 如果有新的 Session 属性设置</p>
+<p>String dataName = request.getParameter(&quot;dataName&quot;);</p>
+<p>if (dataName != null &amp;&amp; dataName.length() &gt; 0) {</p>
+<p>String dataValue = request.getParameter(&quot;dataValue&quot;);</p>
+<p>session.setAttribute(dataName, dataValue);</p>
+<p>}</p>
+<p>out.print(&quot;&lt;b&gt;Session 列表&lt;/b&gt;&quot;);</p>
+<p>Enumeration e = session.getAttributeNames();</p>
+<p>while (e.hasMoreElements()) {</p>
+<p>String name = (String)e.nextElement();</p>
+<p>String value = session.getAttribute(name).toString();</p>
+<p>out.println( name + &quot; = &quot; + value);</p>
+<p>}</p>
+<p>%&gt;</p>
+<p>&lt;form action=&quot;index.jsp&quot; method=&quot;POST&quot;&gt;</p>
+<p>名称:&lt;input type=text size=20 name=&quot;dataName&quot;&gt;</p>
+<p>&lt;br&gt;</p>
+<p>值:&lt;input type=text size=20 name=&quot;dataValue&quot;&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;input type=submit&gt;</p>
+<p>&lt;/form&gt;</p>
+<p>&lt;/body&gt;</p>
+<p>&lt;/html&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>所需要注意的是：</p>
+<p>1、测试应用的web.xml必须加上：</p>
+<p>2、我搞了很久，发现三个东西起来后，可以访问，但只能做到负载均衡，不能session复制，这点我重复配置了一次，就是不行，郁闷之下找了tomcat的邮件列表，这样做：</p>
+<p>1）测试广播是否正常</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>A. download this jar</p>
+<p><a href="http://cvs.apache.org/~fhanik/tomcat-replication.jar">http://cvs.apache.org/~fhanik/tomcat-replication.jar</a></p>
+<p>B. Open two terminals</p>
+<p>a) Terminal one run</p>
+<p>java -cp tomcat-replication.jar MCaster 239.255.10.10 2525 Terminal1</p>
+<p>b) Terminal two run</p>
+<p>java -cp tomcat-replication.jar MCaster 239.255.10.10 2525 Terminal2</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>发现结果如下：</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>C:\&gt;java -cp tomcat-replication.jar MCaster 224.1.2.3 2525 Terminal1</p>
+<p>Usage MCaster [address port message]</p>
+<p>BEGIN TO RECEIVE</p>
+<p>SENT:Terminal11</p>
+<p>SENT:Terminal12</p>
+<p>SENT:Terminal13</p>
+<p>SENT:Terminal14</p>
+<p>SENT:Terminal15</p>
+<p>SENT:Terminal16</p>
+<p>SENT:Terminal17</p>
+<p>SENT:Terminal18</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>表明广播有问题，气死了，难怪Tomcat总是在启动的时候提示：</p>
+<p>信息: Manager [/clusterapp]: skipping state transfer. No members active in cluster group.</p>
+<p>后来终于发现猫腻，必须注意在server.xml的</p>
+<p>为什么呢？很简单，因为我安装了VPN，这家伙会设置一个虚拟网卡，导致绑定失败（没地方责怪了，只好让它垫背）？！这是通过邮件列表里面所描述的多网卡绑定问题举一反三得到的判断。</p>
+<p>具体请参考：<a href="http://www.servlets.com/archive/servlet/ReadMsg?msgId=475067&amp;listName=tomcat-user">http://www.servlets.com/archive/servlet/ReadMsg?msgId=475067&amp;listName=tomcat-user</a></p>
+<p>三、tomcat集群配置，session 同步配置：</p>
+<p>1、tomca1 tomcat 2 在同一台机器</p>
+<p>Tomcat 1 （IP: 192.168.19.199）</p>
+<p>A、修改Engine节点信息：</p>
+<p>B、去掉 &lt;\Cluster&gt; 的注释符</p>
+<p>C、修改Cluster 节点信息</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;Membership</p>
+<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;                mcastBindAddress=&quot;192.168.19.199&quot;</p>
+<p>mcastAddr=&quot;224.0.0.1&quot;</p>
+<p>mcastPort=&quot;45564&quot;</p>
+<p>mcastFrequency=&quot;500&quot;</p>
+<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
+<p>&lt;Receiver</p>
+<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;                tcpListenAddress=&quot;192.168.19.199&quot;</p>
+<p>tcpListenPort=&quot;4001&quot;</p>
+<p>tcpSelectorTimeout=&quot;100&quot;</p>
+<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>Tomcat 2 （IP: 192.168.19.81）</p>
+<p>A、修改Engine节点信息：</p>
+<p>B、去掉 &lt;\Cluster&gt; 的注释符</p>
+<p>C、修改Cluster 节点信息</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;Membership</p>
+<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
+<p>mcastBindAddress=&quot;192.168.19.199&quot;</p>
+<p>mcastAddr=&quot;224.0.0.1&quot;</p>
+<p>mcastPort=&quot;45564&quot;</p>
+<p>mcastFrequency=&quot;500&quot;</p>
+<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
+<p>&lt;Receiver</p>
+<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;</p>
+<p>tcpListenAddress=&quot;192.168.19.199&quot;</p>
+<p>tcpListenPort=&quot;4002&quot;    一定要改</p>
+<p>tcpSelectorTimeout=&quot;100&quot;</p>
+<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>D、将8080 8009 8082三个节点的端口改为</p>
+<p>9080 9009 9082 避免 与tomcat1端口冲突</p>
+<p>注：这里的IP也可以不改</p>
+<p>2、tomca1 tomcat 2 在不同机器上</p>
+<p>Tomcat 1 （IP: 192.168.19.199）</p>
+<p>A、修改Engine节点信息：</p>
+<p>B、去掉 &lt;\Cluster&gt; 的注释符</p>
+<p>C、修改Cluster 节点信息</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;Membership</p>
+<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
+<p>mcastBindAddress=&quot;192.168.19.199&quot;</p>
+<p>mcastAddr=&quot;224.0.0.1&quot;</p>
+<p>mcastPort=&quot;45564&quot;</p>
+<p>mcastFrequency=&quot;500&quot;</p>
+<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
+<p>&lt;Receiver</p>
+<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;</p>
+<p>tcpListenAddress=&quot;192.168.19.199&quot;</p>
+<p>tcpListenPort=&quot;4001&quot;</p>
+<p>tcpSelectorTimeout=&quot;100&quot;</p>
+<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>Tomcat 2 （IP: 192.168.19.81）</p>
+<p>A、修改Engine节点信息：</p>
+<p>B、去掉 &lt;\Cluster&gt; 的注释符</p>
+<p>C、修改Cluster 节点信息</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;Membership</p>
+<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
+<p>mcastBindAddress=&quot;192.168.19.81&quot;</p>
+<p>mcastAddr=&quot;224.0.0.1&quot;</p>
+<p>mcastPort=&quot;45564&quot;     mcastFrequency=&quot;500&quot;</p>
+<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
+<p>&lt;Receiver</p>
+<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;            tcpListenAddress=&quot;192.168.19.81&quot;</p>
+<p>tcpListenPort=&quot;4001&quot;</p>
+<p>tcpSelectorTimeout=&quot;100&quot;</p>
+<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>修改web应用里面WEB-INF目录下的web.xml文件，加入标签</p>
+<p>直接加在之前就可以了</p>
+<p>做tomcat集群必须需要这一步，否则用户的session就无法正常使用。</p>
+<p>源文档 &lt;<a href="http://www.opendoc.com.cn/webserver/Apache_Tomcat_Cluster.html&amp;gt">http://www.opendoc.com.cn/webserver/Apache_Tomcat_Cluster.html&amp;gt</a>;</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
 <nav id="pagination">
   
     <a href="/page/15/" class="alignleft prev">上一页</a>
@@ -512,6 +769,10 @@ nginx.pid nginx.pid.oldbin</p>
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>4</small></li>
+  
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
     <li><a href="/categories/faq/">faq</a><small>27</small></li>
@@ -522,33 +783,33 @@ nginx.pid nginx.pid.oldbin</p>
   
     <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
   
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
     <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
   
-    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
   
     <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
   
     <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
   
-    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
   
     <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
   
-    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   
     <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
-  
-    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   
     <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
   
     <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
   
-    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
-  
     <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
   
-    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>0</small></li>
   
     <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
   

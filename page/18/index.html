@@ -55,105 +55,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2010-12-17T23:38:06.000Z"><a href="/2010/12/18/eaccelerator-config-explanation/">12月 18 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/18/eaccelerator-config-explanation/">eAccelerator 配置参数详解</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>eaccelerator.shm_size=&quot;32&quot;
-eAccelerator 可以使用的共享内存的数量 (以兆为单位) . &quot;0&quot; 是指操作系统的默认值. 默认值是 &quot;0&quot;.可根据服务器的实际情况来调整，16，32，64，128都是可以的。</p>
-<p>eaccelerator.cache_dir=&quot;/home/php/tmp&quot;
-这个目录是给磁盘缓存使用. eAccelerator 在这里储存预先编译好的代码, 进程数据, 内容以及用户的自定义内容. 同样的数据也能被储存在共享内存中 (这样可以提高访问速度). 默认的设置是 &quot;/tmp/eaccelerator&quot;.</p>
-<p>eaccelerator.enable=&quot;1&quot;
-开启或关闭 eAccelerator。&quot;1&quot; 为开启，&quot;0&quot; 为关闭。默认值为 &quot;1&quot;。</p>
-<p>eaccelerator.optimizer=&quot;1&quot;
-启或关闭内部优化器，可以提升代码执行速度。&quot;1&quot; 为开启，&quot;0&quot; 为关闭。默认值为 &quot;1&quot;。</p>
-<p>eaccelerator.check_mtime=&quot;1&quot;
-打开或者关闭 PHP 的文件修改检查. &quot;1&quot; 是指打开, &quot;0&quot; 是指关闭. 如果您在修改以后重新编译 PHP 的文件,那么您应当设置为 &quot;1&quot;. 默认值是 &quot;1&quot;.</p>
-<p>eaccelerator.debug=&quot;0&quot;
-开启或关闭调试日志记录。&quot;1&quot; 为开启，&quot;0&quot; 为关闭。默认值为 &quot;0&quot;。会将缓存命中得记录写入日志。</p>
-<p>eaccelerator.filter=&quot;&quot;
-判断哪些 PHP 文件必须缓存。您可以指定缓存和不缓存的文件类型（如 &quot;<em>.php </em>.phtml&quot;等）
-如果参数以 &quot;!&quot; 开头，则匹配这些参数的文件被忽略缓存。默认值为 &quot;&quot;，即，所有 PHP 文件都将被缓存。</p>
-<p>eaccelerator.shm_max=&quot;0&quot;
-当使用 &quot; eaccelerator_put() &quot; 函数时禁止其向共享内存中存储过大的文件。该参数指定允许存储的最大值，单位：字节 (10240, 10K, 1M)。&quot;0&quot; 为不限制。默认值为 &quot;0&quot;。
-eaccelerator.shm_ttl=&quot;0&quot;
-当 eAccelerator 获取新脚本的共享内存大小失败时，它将从共享内存中删除所有在最后 &quot;shm_ttl&quot; 秒内没有存取的脚本缓存。默认值为 &quot;0&quot;，即：不从共享内春中删除任何缓存文件。
-eaccelerator.shm_prune_period=&quot;0&quot;
-当 eAccelerator 获取新脚本的共享内存大小失败时，他将试图从共享内存中删除早于&quot;shm_prune_period&quot; 秒的缓存脚本。默认值为 &quot;0&quot;，即：不从共享内春中删除任何缓存文件。</p>
-<p>eaccelerator.shm_only=&quot;0&quot;
-允许或禁止将已编译脚本缓存在磁盘上。该选项对 session 数据和内容缓存无效。默认值为 &quot;0&quot;，即：使用磁盘和共享内存进行缓存。</p>
-<p>eaccelerator.compress=&quot;1&quot;
-允许或禁止压缩内容缓存。默认值为 &quot;1&quot;，即：允许压缩。</p>
-<p>eaccelerator.compress_level=&quot;9&quot;
-指定内容缓存的压缩等级。默认值为 &quot;9&quot;，为最高等级。</p>
-<p>eaccelerator.keys = &quot;disk_only&quot;
-eaccelerator.session = &quot;disk_only&quot;
-eaccelerator.content = &quot;disk_only&quot;
-设置内容缓存的存放的地方，可以设置为：
-shm_and_disk 在共享缓存和硬盘(默认值)
-shm 默认存在共享内存，如果共享内存已满或大小超过 &quot;eaccelerator.shm_max&quot; 的值，就存到硬盘
-shm_only 只存放在共享内存
-disk_only 只存放在硬盘
-none 不缓存数据</p>
-<p>eaccelerator.allowed_admin_path = &quot;/var/www/html/21andy.com/eaccelerator&quot;
-这是控制面板的地址
-安装包里有个control.php，你把它复制到网站的任意目录，可以用它查看和管理，这个必须指定，否则查看缓存内容的时候会出错
-最后，来看一下我的 eAccelerator 设置</p>
-<pre><code><figure class="highlight"><pre>; eaccelerator 
-[eaccelerator] 
-<span class="title">zend_extension</span>=<span class="string">"/usr/local/php/lib/php/extensions/no-debug-non-zts-20060613/eaccelerator.so"</span> 
-<span class="title">eaccelerator</span>.shm_size=<span class="string">"128"</span> 
-<span class="title">eaccelerator</span>.cache_dir=<span class="string">"/tmp/eaccelerator"</span> 
-<span class="title">eaccelerator</span>.enable=<span class="string">"1"</span> 
-<span class="title">eaccelerator</span>.optimizer=<span class="string">"1"</span> 
-<span class="title">eaccelerator</span>.check_mtime=<span class="string">"1"</span> 
-<span class="title">eaccelerator</span>.debug=<span class="string">"0"</span> 
-<span class="title">eaccelerator</span>.filter=<span class="string">""</span> 
-<span class="title">eaccelerator</span>.shm_max=<span class="string">"0"</span> 
-<span class="title">eaccelerator</span>.shm_ttl=<span class="string">"3600"</span> 
-<span class="title">eaccelerator</span>.shm_prune_period=<span class="string">"3600"</span> 
-<span class="title">eaccelerator</span>.shm_only=<span class="string">"0"</span> 
-<span class="title">eaccelerator</span>.compress=<span class="string">"1"</span> 
-<span class="title">eaccelerator</span>.compress_level=<span class="string">"9"</span> 
-<span class="title">eaccelerator</span>.keys = <span class="string">"disk_only"</span> 
-<span class="title">eaccelerator</span>.sessions = <span class="string">"disk_only"</span> 
-<span class="title">eaccelerator</span>.content = <span class="string">"disk_only"</span> 
-<span class="title">eaccelerator</span>.allowed_admin_path = <span class="string">"/var/www/html/21andy.com/eaccelerator"</span> 
-</pre></figure></code></pre>
-<p>另外，再说下 eAccelerator 的安装</p>
-<h1>wget <a href="http://bart.eaccelerator.net/source/0.9.6/eaccelerator-0.9.6.tar.bz2">http://bart.eaccelerator.net/source/0.9.6/eaccelerator-0.9.6.tar.bz2</a></h1>
-<h1>tar -jxvf eaccelerator-0.9.6.tar.bz2</h1>
-<h1>cd eaccelerator-0.9.6</h1>
-<h1>/usr/local/php/bin/phpize</h1>
-<h1>./configure --enable-eaccelerator=shared --with-php-config=/usr/local/php/bin/php-config</h1>
-<h1>make &amp;&amp; make install</h1>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2010-12-17T10:59:04.000Z"><a href="/2010/12/17/apache-ssi-shtml-config/">12月 17 2010</a></time>
       
       
@@ -220,6 +121,7 @@ AddOutputFilter INCLUDES;DEFLATE shtml</p>
 
 
 
+
   <article class="post">
   
   <div class="post-content">
@@ -268,6 +170,7 @@ Expires值是可以通过在Internet临时文件夹中查看临时文件的属�
     </footer>
   </div>
 </article>
+
 
 
 
@@ -338,6 +241,7 @@ AddModule mod_limitipconn.c
 
 
 
+
   <article class="post">
   
   <div class="post-content">
@@ -348,40 +252,46 @@ AddModule mod_limitipconn.c
       
       
   
-    <h1 class="title"><a href="/2010/12/17/apache-mod_cband/">Apache 带宽限制mod_cband </a></h1>
+    <h1 class="title"><a href="/2010/12/17/apache-mod_cband/">Apache bandwidth Limit mod_cband </a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>CBandLimit 100M
-    CBandSpeed 1024 10 30
-    CBandRemoteSpeed 10kb/s 3 2
-    CBandPeriod 4W
-    SetHandler cband-status
-    SetHandler cband-status-me</p>
-<p>解释：
-CBandLimit 100M</p>
-<h1>总带宽</h1>
-<h1>Maximal 1024kbps speed for this virtualhost</h1>
-<h1>Maximal 10 requests per second for this virtualhost</h1>
-<h1>Maximal 30 open connections for this virtualhost</h1>
-<p>CBandSpeed 1024 10 30
-限制此虚拟主机最高访问速度1024kbps
-限制此虚拟主机每秒最高接受请求数10个
-限制此虚拟主机最高并发连接30个</p>
-<h1>Maximal 10kB/s speed, 3 requests/s and 2 open connections for any remote client</h1>
-<p>CBandRemoteSpeed 10kb/s 3 2
-限制来自远端访问速度10kB每秒，3个请求每秒，2个连接。</p>
-<h1>a period of time after which the scoreboard will be cleared (4 weeks)</h1>
-<p>CBandPeriod 4W
-设定多久对所记录的全局访问带宽进行重设（清零）。
-4W=4 weeks 4周（一个月）</p>
-<h1>Then you can access the status page with a URL like:<a href="http://server_name/cband-status">http://server_name/cband-status</a></h1>
-<p>SetHandler cband-status
-开启了mod_cband的实时监测功能，可以通过<a href="http://server_name/cband-status进行直观的观测。（全局监测）">http://server_name/cband-status进行直观的观测。（全局监测）</a></p>
-<h1>Then you can access the status page with a URL like:<a href="http://server_name/cband-status-me">http://server_name/cband-status-me</a></h1>
-<p>SetHandler cband-status-me</p>
+        <p>Apache带宽限制利用cband模块，模块配置内如下：</p>
+<pre><code><figure class="highlight"><pre>CBandLimit 100M
+CBandSpeed 1024 10 30
+CBandRemoteSpeed 10kb/s 3 2
+CBandPeriod 4W
+Set<span class="operator"><span class="keyword">Handler</span> cband-status
+SetHandler cband-status-me
+</pre></figure></code></pre>
+<p>说明：</p>
+<p><strong>CBandLimit 100M</strong></p>
+<p>总带宽:</p>
+<ul>
+<li>Maximal 1024kbps speed for this virtualhost</li>
+<li>Maximal 10 requests per second for this virtualhost</li>
+<li>Maximal 30 open connections for this virtualhost</li>
+</ul>
+<p><strong>CBandSpeed 1024 10 30</strong></p>
+<ul>
+<li>限制此虚拟主机最高访问速度1024kbps</li>
+<li>限制此虚拟主机每秒最高接受请求数10个</li>
+<li>限制此虚拟主机最高并发连接30个</li>
+</ul>
+<p>Maximal 10kB/s speed, 3 requests/s and 2 open connections for any remote client</p>
+<p><strong>CBandRemoteSpeed 10kb/s 3 2</strong></p>
+<p>限制来自远端访问速度10kB每秒，3个请求每秒，2个连接。
+a period of time after which the scoreboard will be cleared (4 weeks)</p>
+<p><strong>CBandPeriod 4W</strong></p>
+<p>设定多久对所记录的全局访问带宽进行重设（清零）。
+4W=4 weeks 4周（一个月）
+Then you can access the status page with a URL <a href="http://server_name/cband-status">Like</a></p>
+<p><strong>SetHandler cband-status</strong></p>
+<p>开启了mod_cband的实时监测功能，可以通过<a href="http://server_name/cband-status进行直观的观测。（全局监测）">http://server_name/cband-status进行直观的观测。（全局监测）</a>
+Then you can access the status page with a URL <a href="http://server_name/cband-status-me">like</a></p>
+<p><strong>SetHandler cband-status-me</strong></p>
 <p>开启了mod_cband的实时监测功能，可以通过<a href="http://server_name/cband-status-me进行直观的观测。（单一监测）">http://server_name/cband-status-me进行直观的观测。（单一监测）</a></p>
 
       
@@ -395,6 +305,60 @@ CBandLimit 100M</p>
     </footer>
   </div>
 </article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T10:51:14.000Z"><a href="/2010/12/17/apache-exclude-log/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/apache-exclude-log/">Apache filter log</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Apache过滤掉无需记录的日志方法。</p>
+<p>在httpd.conf的</p>
+<p><code>LogFormat &quot;%{X-Forwarded-For}i %l %u %t \&quot;%r\&quot; %&amp;gt;s %b \&quot;%{Referer}i\&quot; \&quot;%{User-Agent}i\&quot;&quot; combined</code></p>
+<p>后面加入如下:</p>
+<pre><code><figure class="highlight"><pre><span class="comment"># filter the localhost visit</span>
+<span class="keyword">SetEnvIf</span> Remote_Addr <span class="string">"127\.0\.0\.1"</span> dontlog
+<span class="comment"># filter some special directories</span>
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"^ZendPlatform.*$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI \.healthcheck\.html$ dontlog
+<span class="keyword">SetEnvIf</span> Remote_Addr <span class="string">"::1"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.getPing.php$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"^/error\.html$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.gif$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.jpg$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.css$"</span> dontlog
+</pre></figure></code></pre>
+<p>其它根据自己的需要做一些调整。</p>
+<p>另一种日志不记录图片的方法</p>
+<pre><code><figure class="highlight"><pre><span class="title">SetEnv</span> dontlog <span class="number">1</span>
+CustomLog logs/access_log combined env=!dontlog
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
 
 
 
@@ -421,6 +385,10 @@ CBandLimit 100M</p>
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>4</small></li>
+  
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
     <li><a href="/categories/faq/">faq</a><small>27</small></li>
@@ -431,33 +399,33 @@ CBandLimit 100M</p>
   
     <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
   
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
     <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
   
-    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
   
     <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
   
     <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
   
-    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
   
     <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
   
-    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   
     <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
-  
-    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   
     <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
   
     <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
   
-    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
-  
     <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
   
-    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>0</small></li>
   
     <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
   

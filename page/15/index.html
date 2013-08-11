@@ -55,81 +55,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2010-12-18T23:10:49.000Z"><a href="/2010/12/19/linux-find-commands/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/linux-find-commands/">linux find查找命令大全</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>linux 查找文加命令，相信对初学者很有用，下面是一部分常用的linux查找命令。</p>
-<p>grep命令：
-grep -i pattern files ：不区分大小写地搜索。默认情况区分大小写，
-grep -l pattern files ：只列出匹配的文件名，
-grep -L pattern files ：列出不匹配的文件名，
-grep -w pattern files ：只匹配整个单词，而不是字符串的一部分（如匹配‘magic’，而不是‘magical’），
-grep -C number pattern files ：匹配的上下文分别显示[number]行，
-grep pattern1 | pattern2 files ：显示匹配 pattern1 或 pattern2 的行，
-grep pattern1 files | grep pattern2 ：显示既匹配 pattern1 又匹配 pattern2 的行。
-example:grep -i martin@martin-desktop:~$ grep ShopAction -i notes/sql/<em> #note: </em> 不要忘记</p>
-<p>find命令:
-find 目录 -name 关键字</p>
-<pre><code><figure class="highlight"><pre><span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">amin</span> <span class="literal">-</span><span class="comment">10</span> <span class="comment">#</span> <span class="comment">查找在系统中最后10分钟访问的文件</span>
-<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">atime</span> <span class="literal">-</span><span class="comment">2</span> <span class="comment">#</span> <span class="comment">查找在系统中最后48小时访问的文件</span>
-<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">empty</span> <span class="comment">#</span> <span class="comment">查找在系统中为空的文件或者文件夹</span>
-<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">group</span> <span class="comment">cat</span> <span class="comment">#</span> <span class="comment">查找在系统中属于</span> <span class="comment">groupcat的文件</span>
-<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">mmin</span> <span class="literal">-</span><span class="comment">5</span> <span class="comment">#</span> <span class="comment">查找在系统中最后5分钟里修改过的文件</span>
-<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">mtime</span> <span class="literal">-</span><span class="comment">1</span> <span class="comment">#查找在系统中最后24小时里修改过的文件</span>
-<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">nouser</span> <span class="comment">#查找在系统中属于作废用户的文件</span>
-<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">user</span> <span class="comment">fred</span> <span class="comment">#查找在系统中属于FRED这个用户的文件</span>
-<span class="comment">find</span> <span class="string">.</span> <span class="literal">-</span><span class="comment">maxdepth</span> <span class="comment">2</span> <span class="literal">-</span><span class="comment">name</span> <span class="comment">fred
-</pre></figure></code></pre>
-<p>-maxdepth选项的作用就是限制find命令在目录中按照递减方式查找文件的时候搜索文件超过某个级别或者搜索过多的目录，这样导致查找速度变慢，查找花费的时间过多。例如，我们要在当前(.)目录技巧子目录中查找一个名叫fred的文件，我们可以使用如下命令</p>
-<p>find / -name “php.ini” -ls
-系统查找到php.ini文件后立即在屏幕上显示php.ini文件信息。</p>
-<p>find 常用参数
--exec command;查找并执行命令
--fprint file;打印文件完整文件名
--fprint0 file;打印文件完整文件名包括空的文件
--fprintf file format;打印文件格式
--ok command;给用户命令执行操作，根据用户的Y 确认输入执行
--printf format;打印文件格式
--ls;打印同种文件格式的文件.</p>
-<p>locate 命令
-locate命令其实是“find -name”的另一种写法，但是要比后者快得多，原因在于它不搜索具体目录，而是搜索一个数据库（/var/lib/locatedb），这个数据库中含 有本地所有文件信息。Linux系统自动创建这个数据库，并且每天自动更新一次，所以使用locate命令查不到最新变动过的文件。为了避免这种情况，可 以在使用locate之前，先使用updatedb命令，手动更新数据库。</p>
-<p>locate命令的使用实例：
-$ locate /etc/sh
-搜索etc目录下所有以sh开头的文件。
-$ locate ~/m
-搜索用户主目录下，所有以m开头的文件。
-$ locate -i ~/m
-搜索用户主目录下，所有以m开头的文件，并且忽略大小写。</p>
-<p>原创文章，转载请注明： 转载自Martin
-<a href="http://www.blags.org/linux-find-command-daquan/">http://www.blags.org/linux-find-command-daquan/</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2010-12-18T22:59:00.000Z"><a href="/2010/12/19/linux-word-order/">12月 19 2010</a></time>
       
       
@@ -367,6 +292,7 @@ $ locate -i ~/m
 
 
 
+
   <article class="post">
   
   <div class="post-content">
@@ -452,6 +378,7 @@ $<span class="title">PSOA</span>'
     </footer>
   </div>
 </article>
+
 
 
 
@@ -612,6 +539,7 @@ gdb -p pid
     </footer>
   </div>
 </article>
+
 
 
 
@@ -845,6 +773,73 @@ ORM 还可以把你的SQL语句打包成一个事务，这会比单独执行他�
 
 
 
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T06:13:39.000Z"><a href="/2010/12/18/mysql-optimization/">12月 18 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/18/mysql-optimization/">Mysql编译参数优化</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><strong>1. -static 13%</strong></p>
+<pre><code><figure class="highlight"><pre><span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">client</span>-<span class="comment">ldflags=</span>-<span class="comment">all</span>-<span class="comment">static</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">mysqld</span>-<span class="comment">ldflags=</span>-<span class="comment">all</span>-<span class="comment">static</span>
+<span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">静态链接提高13%性能</span>
+
+<span class="comment">**2\</span>. <span class="literal">-</span><span class="comment">pgcc</span> <span class="comment">1%**</span>
+
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`CFLAGS="</span>-<span class="comment">O3</span> <span class="literal">-</span><span class="comment">mpentiumpro</span> <span class="literal">-</span><span class="comment">mstack</span>-<span class="comment">align</span>-<span class="comment">double"</span> <span class="comment">CXX=gcc</span> <span class="comment">\</span>
+<span class="comment">CXXFLAGS="</span>-<span class="comment">O3</span> <span class="literal">-</span><span class="comment">mpentiumpro</span> <span class="literal">-</span><span class="comment">mstack</span>-<span class="comment">align</span>-<span class="comment">double</span> <span class="comment">\</span>
+<span class="literal">-</span><span class="comment">felide</span>-<span class="comment">constructors</span> <span class="literal">-</span><span class="comment">fno</span>-<span class="comment">exceptions</span> <span class="literal">-</span><span class="comment">fno</span>-<span class="comment">rtti"</span>
+<span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">如果是Inter处理器，使用pgcc提高1%性能</span>
+<span class="comment">**</span>
+<span class="comment">3\</span>. <span class="comment">Unix</span> <span class="comment">Socket</span> <span class="comment">7</span>.<span class="comment">5%**</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">unix</span>-<span class="comment">socket</span>-<span class="comment">path=/usr/local/mysql/tmp/mysql</span>.<span class="comment">sock</span>
+<span class="comment">使用unix套接字链接提高7</span>.<span class="comment">5%性能，所以在windows下mysql性能肯定不如unix下面</span>
+
+<span class="comment">**4\</span>. <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span>-<span class="comment">assembler**</span>
+<span class="comment">允许使用汇编模式(优化性能)</span>
+<span class="comment">下面是总体的编译文件</span>
+<span class="comment">编译代码</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`CFLAGS="</span>-<span class="comment">O3"</span> <span class="comment">CXX=gcc</span> <span class="comment">CXXFLAGS="</span>-<span class="comment">O3</span> <span class="literal">-</span><span class="comment">felide</span>-<span class="comment">constructors</span> <span class="comment">\</span>
+<span class="literal">-</span><span class="comment">fno</span>-<span class="comment">exceptions</span> <span class="literal">-</span><span class="comment">fno</span>-<span class="comment">rtti</span> <span class="literal">-</span><span class="comment">fomit</span>-<span class="comment">frame</span>-<span class="comment">pointer</span> <span class="literal">-</span><span class="comment">ffixed</span>-<span class="comment">ebp"</span>
+<span class="string">.</span><span class="comment">/configure</span> <span class="comment">\</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">prefix=/usr/local/mysql</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">enable</span>-<span class="comment">assembler</span> <span class="comment">\</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">mysqld</span>-<span class="comment">ldflags=</span>-<span class="comment">all</span>-<span class="comment">static</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">client</span>-<span class="comment">ldflags=</span>-<span class="comment">all</span>-<span class="comment">static</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">unix</span>-<span class="comment">socket</span>-<span class="comment">path=/usr/local/mysql/tmp/mysql</span>.<span class="comment">sock</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">charset=utf8</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">collation=utf8_general_ci</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">with</span>-<span class="comment">extra</span>-<span class="comment">charsets=all
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
 <nav id="pagination">
   
     <a href="/page/14/" class="alignleft prev">上一页</a>
@@ -867,6 +862,10 @@ ORM 还可以把你的SQL语句打包成一个事务，这会比单独执行他�
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>4</small></li>
+  
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
     <li><a href="/categories/faq/">faq</a><small>27</small></li>
@@ -877,33 +876,33 @@ ORM 还可以把你的SQL语句打包成一个事务，这会比单独执行他�
   
     <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
   
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
     <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
   
-    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
   
     <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
   
     <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
   
-    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
   
     <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
   
-    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   
     <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
-  
-    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   
     <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
   
     <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
   
-    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
-  
     <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
   
-    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>0</small></li>
   
     <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
   

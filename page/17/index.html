@@ -55,323 +55,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2010-12-17T23:56:54.000Z"><a href="/2010/12/18/apache-tomcat-cluster-bacst/">12月 18 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/18/apache-tomcat-cluster-bacst/">Apache Tomcat Cluster-bacst 配置</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>关于Apache+Tomcat的Cluster的郁闷问题，终于得到解决</p>
-<p>此类话题已经很多，可以参考的文档也不少，我是参考这个blog的文档做的：</p>
-<p><a href="http://blogger.org.cn/blog/blog.asp?name=lhwork">http://blogger.org.cn/blog/blog.asp?name=lhwork</a></p>
-<p>1）环境和版本：</p>
-<p>Apache2.0.59+Tomcat5.5.15（两个），一开始用的是Tomcat5.0.28，一直有问题（在后面总结），就升级到5.5去做试验了，冤枉5.0.28兄弟了:)</p>
-<p>步骤小结为：</p>
-<p>1、安装（忽略）；</p>
-<p>2、配置Tomcat：</p>
-<p>1）第一个Tomcat：</p>
-<p>A.启用jvmRoute</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;!-- You should set jvmRoute to support load-balancing via AJP ie :--&gt;</p>
-<p>&lt;Engine name=&quot;Standalone&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;tomcat1&quot;&gt;</p>
-<p>&lt;!-- Define the top level container in our container hierarchy</p>
-<p>&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;--&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>B.启用原来禁用的Cluster设置</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;Cluster className=&quot;org.apache.catalina.cluster.tcp.SimpleTcpCluster&quot;</p>
-<p>managerClassName=&quot;org.apache.catalina.cluster.session.DeltaManager&quot;</p>
-<p>expireSessionsOnShutdown=&quot;false&quot;</p>
-<p>useDirtyFlag=&quot;true&quot;</p>
-<p>notifyListenersOnReplication=&quot;true&quot;&gt;</p>
-<p>&lt;Membership</p>
-<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
-<p>mcastBindAddress=&quot;127.0.0.1&quot;</p>
-<p>mcastAddr=&quot;224.1.2.3&quot;</p>
-<p>mcastPort=&quot;2525&quot;</p>
-<p>mcastFrequency=&quot;500&quot;</p>
-<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
-<p>&lt;Receiver</p>
-<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;</p>
-<p>tcpListenAddress=&quot;auto&quot;</p>
-<p>tcpListenPort=&quot;4001&quot;</p>
-<p>tcpSelectorTimeout=&quot;100&quot;</p>
-<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
-<p>&lt;Sender</p>
-<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationTransmitter&quot;</p>
-<p>replicationMode=&quot;pooled&quot;</p>
-<p>ackTimeout=&quot;15000&quot;/&gt;</p>
-<p>&lt;Valve className=&quot;org.apache.catalina.cluster.tcp.ReplicationValve&quot;</p>
-<p>filter=&quot;.<em>.gif;.</em>.js;.<em>.jpg;.</em>.png;.<em>.htm;.</em>.html;.<em>.css;.</em>.txt;&quot;/&gt;</p>
-<p>&lt;Deployer className=&quot;org.apache.catalina.cluster.deploy.FarmWarDeployer&quot;</p>
-<p>tempDir=&quot;/tmp/war-temp/&quot;</p>
-<p>deployDir=&quot;/tmp/war-deploy/&quot;</p>
-<p>watchDir=&quot;/tmp/war-listen/&quot;</p>
-<p>watchEnabled=&quot;false&quot;/&gt;</p>
-<p>&lt;ClusterListener className=&quot;org.apache.catalina.cluster.session.ClusterSessionListener&quot;/&gt;</p>
-<p>&lt;/Cluster&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>C.搞定</p>
-<p>2）配置第二个Tomcat（要注意端口冲突了）：</p>
-<p>A.变更端口</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;Server port=&quot;8005&quot; shutdown=&quot;SHUTDOWN&quot;&gt;</p>
-<p>＝》</p>
-<p>&lt;Server port=&quot;8004&quot; shutdown=&quot;SHUTDOWN&quot;&gt;</p>
-<p>B.变更端口</p>
-<p>&lt;Connector port=&quot;8009&quot;</p>
-<p>enableLookups=&quot;false&quot; redirectPort=&quot;8443&quot; protocol=&quot;AJP/1.3&quot; /&gt;</p>
-<p>＝》</p>
-<p>&lt;Connector port=&quot;9009&quot;</p>
-<p>enableLookups=&quot;false&quot; redirectPort=&quot;8443&quot; protocol=&quot;AJP/1.3&quot; /&gt;</p>
-<p>C.启用jvmRoute</p>
-<p>&lt;!-- You should set jvmRoute to support load-balancing via AJP ie :--&gt;</p>
-<p>&lt;Engine name=&quot;Standalone&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;tomcat2&quot;&gt;</p>
-<p>&lt;!-- Define the top level container in our container hierarchy</p>
-<p>&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;--&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>D.启用原来禁用的Cluster设置</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;Cluster className=&quot;org.apache.catalina.cluster.tcp.SimpleTcpCluster&quot;</p>
-<p>managerClassName=&quot;org.apache.catalina.cluster.session.DeltaManager&quot;</p>
-<p>expireSessionsOnShutdown=&quot;false&quot;</p>
-<p>useDirtyFlag=&quot;true&quot;</p>
-<p>notifyListenersOnReplication=&quot;true&quot;&gt;</p>
-<p>&lt;Membership</p>
-<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
-<p>mcastBindAddress=&quot;127.0.0.1&quot;</p>
-<p>mcastAddr=&quot;224.1.2.3&quot;</p>
-<p>mcastPort=&quot;2525&quot;</p>
-<p>mcastFrequency=&quot;500&quot;</p>
-<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
-<p>&lt;Receiver</p>
-<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;</p>
-<p>tcpListenAddress=&quot;auto&quot;</p>
-<p>tcpListenPort=&quot;4002&quot;</p>
-<p>tcpSelectorTimeout=&quot;100&quot;</p>
-<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
-<p>&lt;Sender</p>
-<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationTransmitter&quot;</p>
-<p>replicationMode=&quot;pooled&quot;</p>
-<p>ackTimeout=&quot;15000&quot;/&gt;</p>
-<p>&lt;Valve className=&quot;org.apache.catalina.cluster.tcp.ReplicationValve&quot;</p>
-<p>filter=&quot;.<em>.gif;.</em>.js;.<em>.jpg;.</em>.png;.<em>.htm;.</em>.html;.<em>.css;.</em>.txt;&quot;/&gt;</p>
-<p>&lt;Deployer className=&quot;org.apache.catalina.cluster.deploy.FarmWarDeployer&quot;</p>
-<p>tempDir=&quot;/tmp/war-temp/&quot;</p>
-<p>deployDir=&quot;/tmp/war-deploy/&quot;</p>
-<p>watchDir=&quot;/tmp/war-listen/&quot;</p>
-<p>watchEnabled=&quot;false&quot;/&gt;</p>
-<p>&lt;ClusterListener className=&quot;org.apache.catalina.cluster.session.ClusterSessionListener&quot;/&gt;</p>
-<p>&lt;/Cluster&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>E.搞定</p>
-<p>3、配置apache：</p>
-<p>1）修订conf/httpd.conf</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<h1>add by zhengxq</h1>
-<p>LoadModule jk2_module modules/mod_jk2.so</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>2）新增worders2.properties并放到conf下</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>[shm]</p>
-<p>info=Scoreboard. Requried for reconfiguration and status with multiprocess servers.</p>
-<p>file=anon</p>
-<h1>Defines a load balancer named lb. Use even if you only have one machine.</h1>
-<p>[lb:lb]</p>
-<p>worker=ajp13:tomcat1</p>
-<p>worker=ajp13:tomcat2</p>
-<h1>Example socket channel, override port and host.</h1>
-<p>[channel.socket:localhost:9009]</p>
-<p>port=9009</p>
-<p>host=127.0.0.1</p>
-<h1>define the worker</h1>
-<p>[ajp13:localhost:9009]</p>
-<p>channel=channel.socket:localhost:9009</p>
-<p>group=lb</p>
-<h1>Example socket channel, override port and host.</h1>
-<p>[channel.socket:localhost:8009]</p>
-<p>port=8009</p>
-<p>host=127.0.0.1</p>
-<h1>define the worker</h1>
-<p>[ajp13:localhost:8009]</p>
-<p>channel=channel.socket:localhost:8009</p>
-<p>group=lb</p>
-<h1>Map the Tomcat examples webapp to the Web server uri space</h1>
-<p>[uri:/clusterapp/*]</p>
-<p>group=lb</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>3）搞定</p>
-<p>3.测试程序，请参考上述参考文档，如下：</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;%@ page contentType=&quot;text/html; charset=GBK&quot; import=&quot;java.util.*&quot;%&gt;</p>
-<p>&lt;html&gt;&lt;head&gt;&lt;title&gt;Cluster App Test&lt;/title&gt;&lt;/head&gt;</p>
-<p>&lt;body&gt;</p>
-<p>Server Info: &lt;%out.print(request.getLocalAddr() + &quot; : &quot; + request.getLocalPort());%&gt;</p>
-<p>&lt;%</p>
-<p>out.println(&quot;&lt;br&gt; ID &quot; + session.getId());</p>
-<p>// 如果有新的 Session 属性设置</p>
-<p>String dataName = request.getParameter(&quot;dataName&quot;);</p>
-<p>if (dataName != null &amp;&amp; dataName.length() &gt; 0) {</p>
-<p>String dataValue = request.getParameter(&quot;dataValue&quot;);</p>
-<p>session.setAttribute(dataName, dataValue);</p>
-<p>}</p>
-<p>out.print(&quot;&lt;b&gt;Session 列表&lt;/b&gt;&quot;);</p>
-<p>Enumeration e = session.getAttributeNames();</p>
-<p>while (e.hasMoreElements()) {</p>
-<p>String name = (String)e.nextElement();</p>
-<p>String value = session.getAttribute(name).toString();</p>
-<p>out.println( name + &quot; = &quot; + value);</p>
-<p>}</p>
-<p>%&gt;</p>
-<p>&lt;form action=&quot;index.jsp&quot; method=&quot;POST&quot;&gt;</p>
-<p>名称:&lt;input type=text size=20 name=&quot;dataName&quot;&gt;</p>
-<p>&lt;br&gt;</p>
-<p>值:&lt;input type=text size=20 name=&quot;dataValue&quot;&gt;</p>
-<p>&lt;br&gt;</p>
-<p>&lt;input type=submit&gt;</p>
-<p>&lt;/form&gt;</p>
-<p>&lt;/body&gt;</p>
-<p>&lt;/html&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>所需要注意的是：</p>
-<p>1、测试应用的web.xml必须加上：</p>
-<p>2、我搞了很久，发现三个东西起来后，可以访问，但只能做到负载均衡，不能session复制，这点我重复配置了一次，就是不行，郁闷之下找了tomcat的邮件列表，这样做：</p>
-<p>1）测试广播是否正常</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>A. download this jar</p>
-<p><a href="http://cvs.apache.org/~fhanik/tomcat-replication.jar">http://cvs.apache.org/~fhanik/tomcat-replication.jar</a></p>
-<p>B. Open two terminals</p>
-<p>a) Terminal one run</p>
-<p>java -cp tomcat-replication.jar MCaster 239.255.10.10 2525 Terminal1</p>
-<p>b) Terminal two run</p>
-<p>java -cp tomcat-replication.jar MCaster 239.255.10.10 2525 Terminal2</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>发现结果如下：</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>C:\&gt;java -cp tomcat-replication.jar MCaster 224.1.2.3 2525 Terminal1</p>
-<p>Usage MCaster [address port message]</p>
-<p>BEGIN TO RECEIVE</p>
-<p>SENT:Terminal11</p>
-<p>SENT:Terminal12</p>
-<p>SENT:Terminal13</p>
-<p>SENT:Terminal14</p>
-<p>SENT:Terminal15</p>
-<p>SENT:Terminal16</p>
-<p>SENT:Terminal17</p>
-<p>SENT:Terminal18</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>表明广播有问题，气死了，难怪Tomcat总是在启动的时候提示：</p>
-<p>信息: Manager [/clusterapp]: skipping state transfer. No members active in cluster group.</p>
-<p>后来终于发现猫腻，必须注意在server.xml的</p>
-<p>为什么呢？很简单，因为我安装了VPN，这家伙会设置一个虚拟网卡，导致绑定失败（没地方责怪了，只好让它垫背）？！这是通过邮件列表里面所描述的多网卡绑定问题举一反三得到的判断。</p>
-<p>具体请参考：<a href="http://www.servlets.com/archive/servlet/ReadMsg?msgId=475067&amp;listName=tomcat-user">http://www.servlets.com/archive/servlet/ReadMsg?msgId=475067&amp;listName=tomcat-user</a></p>
-<p>三、tomcat集群配置，session 同步配置：</p>
-<p>1、tomca1 tomcat 2 在同一台机器</p>
-<p>Tomcat 1 （IP: 192.168.19.199）</p>
-<p>A、修改Engine节点信息：</p>
-<p>B、去掉 &lt;\Cluster&gt; 的注释符</p>
-<p>C、修改Cluster 节点信息</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;Membership</p>
-<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;                mcastBindAddress=&quot;192.168.19.199&quot;</p>
-<p>mcastAddr=&quot;224.0.0.1&quot;</p>
-<p>mcastPort=&quot;45564&quot;</p>
-<p>mcastFrequency=&quot;500&quot;</p>
-<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
-<p>&lt;Receiver</p>
-<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;                tcpListenAddress=&quot;192.168.19.199&quot;</p>
-<p>tcpListenPort=&quot;4001&quot;</p>
-<p>tcpSelectorTimeout=&quot;100&quot;</p>
-<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>Tomcat 2 （IP: 192.168.19.81）</p>
-<p>A、修改Engine节点信息：</p>
-<p>B、去掉 &lt;\Cluster&gt; 的注释符</p>
-<p>C、修改Cluster 节点信息</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;Membership</p>
-<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
-<p>mcastBindAddress=&quot;192.168.19.199&quot;</p>
-<p>mcastAddr=&quot;224.0.0.1&quot;</p>
-<p>mcastPort=&quot;45564&quot;</p>
-<p>mcastFrequency=&quot;500&quot;</p>
-<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
-<p>&lt;Receiver</p>
-<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;</p>
-<p>tcpListenAddress=&quot;192.168.19.199&quot;</p>
-<p>tcpListenPort=&quot;4002&quot;    一定要改</p>
-<p>tcpSelectorTimeout=&quot;100&quot;</p>
-<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>D、将8080 8009 8082三个节点的端口改为</p>
-<p>9080 9009 9082 避免 与tomcat1端口冲突</p>
-<p>注：这里的IP也可以不改</p>
-<p>2、tomca1 tomcat 2 在不同机器上</p>
-<p>Tomcat 1 （IP: 192.168.19.199）</p>
-<p>A、修改Engine节点信息：</p>
-<p>B、去掉 &lt;\Cluster&gt; 的注释符</p>
-<p>C、修改Cluster 节点信息</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;Membership</p>
-<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
-<p>mcastBindAddress=&quot;192.168.19.199&quot;</p>
-<p>mcastAddr=&quot;224.0.0.1&quot;</p>
-<p>mcastPort=&quot;45564&quot;</p>
-<p>mcastFrequency=&quot;500&quot;</p>
-<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
-<p>&lt;Receiver</p>
-<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;</p>
-<p>tcpListenAddress=&quot;192.168.19.199&quot;</p>
-<p>tcpListenPort=&quot;4001&quot;</p>
-<p>tcpSelectorTimeout=&quot;100&quot;</p>
-<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>Tomcat 2 （IP: 192.168.19.81）</p>
-<p>A、修改Engine节点信息：</p>
-<p>B、去掉 &lt;\Cluster&gt; 的注释符</p>
-<p>C、修改Cluster 节点信息</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;Membership</p>
-<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
-<p>mcastBindAddress=&quot;192.168.19.81&quot;</p>
-<p>mcastAddr=&quot;224.0.0.1&quot;</p>
-<p>mcastPort=&quot;45564&quot;     mcastFrequency=&quot;500&quot;</p>
-<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
-<p>&lt;Receiver</p>
-<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;            tcpListenAddress=&quot;192.168.19.81&quot;</p>
-<p>tcpListenPort=&quot;4001&quot;</p>
-<p>tcpSelectorTimeout=&quot;100&quot;</p>
-<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>修改web应用里面WEB-INF目录下的web.xml文件，加入标签</p>
-<p>直接加在之前就可以了</p>
-<p>做tomcat集群必须需要这一步，否则用户的session就无法正常使用。</p>
-<p>源文档 &lt;<a href="http://www.opendoc.com.cn/webserver/Apache_Tomcat_Cluster.html&amp;gt">http://www.opendoc.com.cn/webserver/Apache_Tomcat_Cluster.html&amp;gt</a>;</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2010-12-17T23:53:12.000Z"><a href="/2010/12/18/tomcat-optimization-sending-end-packet/">12月 18 2010</a></time>
       
       
@@ -415,6 +98,7 @@ Broken pipe产生的原因通常是当管道读端没有在读，而管道的写
 
 
 
+
   <article class="post">
   
   <div class="post-content">
@@ -455,6 +139,7 @@ Broken pipe产生的原因通常是当管道读端没有在读，而管道的写
     </footer>
   </div>
 </article>
+
 
 
 
@@ -654,6 +339,7 @@ php-fpm还带有一个更方便的脚本，在$prefix/sbin/php-fpm。可以用ph
 
 
 
+
   <article class="post">
   
   <div class="post-content">
@@ -717,6 +403,107 @@ yum -y install nginx mysql mysql-server php-fpm php-cli php-pdo php-mysql php-mc
 
 
 
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T23:38:06.000Z"><a href="/2010/12/18/eaccelerator-config-explanation/">12月 18 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/18/eaccelerator-config-explanation/">eAccelerator 配置参数详解</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>eaccelerator.shm_size=&quot;32&quot;
+eAccelerator 可以使用的共享内存的数量 (以兆为单位) . &quot;0&quot; 是指操作系统的默认值. 默认值是 &quot;0&quot;.可根据服务器的实际情况来调整，16，32，64，128都是可以的。</p>
+<p>eaccelerator.cache_dir=&quot;/home/php/tmp&quot;
+这个目录是给磁盘缓存使用. eAccelerator 在这里储存预先编译好的代码, 进程数据, 内容以及用户的自定义内容. 同样的数据也能被储存在共享内存中 (这样可以提高访问速度). 默认的设置是 &quot;/tmp/eaccelerator&quot;.</p>
+<p>eaccelerator.enable=&quot;1&quot;
+开启或关闭 eAccelerator。&quot;1&quot; 为开启，&quot;0&quot; 为关闭。默认值为 &quot;1&quot;。</p>
+<p>eaccelerator.optimizer=&quot;1&quot;
+启或关闭内部优化器，可以提升代码执行速度。&quot;1&quot; 为开启，&quot;0&quot; 为关闭。默认值为 &quot;1&quot;。</p>
+<p>eaccelerator.check_mtime=&quot;1&quot;
+打开或者关闭 PHP 的文件修改检查. &quot;1&quot; 是指打开, &quot;0&quot; 是指关闭. 如果您在修改以后重新编译 PHP 的文件,那么您应当设置为 &quot;1&quot;. 默认值是 &quot;1&quot;.</p>
+<p>eaccelerator.debug=&quot;0&quot;
+开启或关闭调试日志记录。&quot;1&quot; 为开启，&quot;0&quot; 为关闭。默认值为 &quot;0&quot;。会将缓存命中得记录写入日志。</p>
+<p>eaccelerator.filter=&quot;&quot;
+判断哪些 PHP 文件必须缓存。您可以指定缓存和不缓存的文件类型（如 &quot;<em>.php </em>.phtml&quot;等）
+如果参数以 &quot;!&quot; 开头，则匹配这些参数的文件被忽略缓存。默认值为 &quot;&quot;，即，所有 PHP 文件都将被缓存。</p>
+<p>eaccelerator.shm_max=&quot;0&quot;
+当使用 &quot; eaccelerator_put() &quot; 函数时禁止其向共享内存中存储过大的文件。该参数指定允许存储的最大值，单位：字节 (10240, 10K, 1M)。&quot;0&quot; 为不限制。默认值为 &quot;0&quot;。
+eaccelerator.shm_ttl=&quot;0&quot;
+当 eAccelerator 获取新脚本的共享内存大小失败时，它将从共享内存中删除所有在最后 &quot;shm_ttl&quot; 秒内没有存取的脚本缓存。默认值为 &quot;0&quot;，即：不从共享内春中删除任何缓存文件。
+eaccelerator.shm_prune_period=&quot;0&quot;
+当 eAccelerator 获取新脚本的共享内存大小失败时，他将试图从共享内存中删除早于&quot;shm_prune_period&quot; 秒的缓存脚本。默认值为 &quot;0&quot;，即：不从共享内春中删除任何缓存文件。</p>
+<p>eaccelerator.shm_only=&quot;0&quot;
+允许或禁止将已编译脚本缓存在磁盘上。该选项对 session 数据和内容缓存无效。默认值为 &quot;0&quot;，即：使用磁盘和共享内存进行缓存。</p>
+<p>eaccelerator.compress=&quot;1&quot;
+允许或禁止压缩内容缓存。默认值为 &quot;1&quot;，即：允许压缩。</p>
+<p>eaccelerator.compress_level=&quot;9&quot;
+指定内容缓存的压缩等级。默认值为 &quot;9&quot;，为最高等级。</p>
+<p>eaccelerator.keys = &quot;disk_only&quot;
+eaccelerator.session = &quot;disk_only&quot;
+eaccelerator.content = &quot;disk_only&quot;
+设置内容缓存的存放的地方，可以设置为：
+shm_and_disk 在共享缓存和硬盘(默认值)
+shm 默认存在共享内存，如果共享内存已满或大小超过 &quot;eaccelerator.shm_max&quot; 的值，就存到硬盘
+shm_only 只存放在共享内存
+disk_only 只存放在硬盘
+none 不缓存数据</p>
+<p>eaccelerator.allowed_admin_path = &quot;/var/www/html/21andy.com/eaccelerator&quot;
+这是控制面板的地址
+安装包里有个control.php，你把它复制到网站的任意目录，可以用它查看和管理，这个必须指定，否则查看缓存内容的时候会出错
+最后，来看一下我的 eAccelerator 设置</p>
+<pre><code><figure class="highlight"><pre>; eaccelerator 
+[eaccelerator] 
+<span class="title">zend_extension</span>=<span class="string">"/usr/local/php/lib/php/extensions/no-debug-non-zts-20060613/eaccelerator.so"</span> 
+<span class="title">eaccelerator</span>.shm_size=<span class="string">"128"</span> 
+<span class="title">eaccelerator</span>.cache_dir=<span class="string">"/tmp/eaccelerator"</span> 
+<span class="title">eaccelerator</span>.enable=<span class="string">"1"</span> 
+<span class="title">eaccelerator</span>.optimizer=<span class="string">"1"</span> 
+<span class="title">eaccelerator</span>.check_mtime=<span class="string">"1"</span> 
+<span class="title">eaccelerator</span>.debug=<span class="string">"0"</span> 
+<span class="title">eaccelerator</span>.filter=<span class="string">""</span> 
+<span class="title">eaccelerator</span>.shm_max=<span class="string">"0"</span> 
+<span class="title">eaccelerator</span>.shm_ttl=<span class="string">"3600"</span> 
+<span class="title">eaccelerator</span>.shm_prune_period=<span class="string">"3600"</span> 
+<span class="title">eaccelerator</span>.shm_only=<span class="string">"0"</span> 
+<span class="title">eaccelerator</span>.compress=<span class="string">"1"</span> 
+<span class="title">eaccelerator</span>.compress_level=<span class="string">"9"</span> 
+<span class="title">eaccelerator</span>.keys = <span class="string">"disk_only"</span> 
+<span class="title">eaccelerator</span>.sessions = <span class="string">"disk_only"</span> 
+<span class="title">eaccelerator</span>.content = <span class="string">"disk_only"</span> 
+<span class="title">eaccelerator</span>.allowed_admin_path = <span class="string">"/var/www/html/21andy.com/eaccelerator"</span> 
+</pre></figure></code></pre>
+<p>另外，再说下 eAccelerator 的安装</p>
+<h1>wget <a href="http://bart.eaccelerator.net/source/0.9.6/eaccelerator-0.9.6.tar.bz2">http://bart.eaccelerator.net/source/0.9.6/eaccelerator-0.9.6.tar.bz2</a></h1>
+<h1>tar -jxvf eaccelerator-0.9.6.tar.bz2</h1>
+<h1>cd eaccelerator-0.9.6</h1>
+<h1>/usr/local/php/bin/phpize</h1>
+<h1>./configure --enable-eaccelerator=shared --with-php-config=/usr/local/php/bin/php-config</h1>
+<h1>make &amp;&amp; make install</h1>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
 <nav id="pagination">
   
     <a href="/page/16/" class="alignleft prev">上一页</a>
@@ -739,6 +526,10 @@ yum -y install nginx mysql mysql-server php-fpm php-cli php-pdo php-mysql php-mc
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>4</small></li>
+  
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
     <li><a href="/categories/faq/">faq</a><small>27</small></li>
@@ -749,33 +540,33 @@ yum -y install nginx mysql mysql-server php-fpm php-cli php-pdo php-mysql php-mc
   
     <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
   
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
     <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
   
-    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
   
     <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
   
     <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
   
-    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
   
     <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
   
-    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   
     <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
-  
-    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   
     <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
   
     <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
   
-    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
-  
     <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
   
-    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>0</small></li>
   
     <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
   

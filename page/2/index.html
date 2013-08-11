@@ -55,53 +55,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2011-05-17T01:56:39.000Z"><a href="/2011/05/17/转linux内核软中断引起大量丢包/">5月 17 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/05/17/转linux内核软中断引起大量丢包/">[转]linux内核软中断引起大量丢包</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>最近用linux做nat多出口时，遇到的几个问题，经过一个星期的资料查找跟具体实践终于给解决了，由于的问题复杂性，加之个人水平十分有限，解决的过程十分的痛苦，为了使更多的人，不痛苦或者少痛苦一点，介绍一下问题解决的过程。</p>
-<p>先说说环境</p>
-<p>1.硬件:DELL R410</p>
-<p>2.网卡:板载1000M BCM5709</p>
-<p>2.OS: RHEL 5.5 x86_64</p>
-<p>3.KERNEL: 2.6.18-194.el5</p>
-<p>所出现的问题</p>
-<p>1.网卡毫无征兆的down掉，而且没有任何log信息</p>
-<p>2.当流量增大时，不到理论上限的1/3时机器出现网络延迟严重，伴随大量的丢包</p>
-<p>3.机器的cpu软中断不均衡，只有1个cpu处理软中断，并且该cpu的软中断周期性的达到100%</p>
-<p>4.内外网网卡做nat丢包数据量不一致，差别很大，不在同一个数量级</p>
-<p>想必第一个问题，大部分使用bcm网卡，rhel 5.3以后得机器都会遇到这种情况，网上的资料比较的多，我也不多啰嗦了，直接升级网卡驱动就可以解决了。第二，三，四其实是同一个问题都是由于网卡中断过多，cpu处理不过来(准确的说，cpu分配不均衡，导致只有一个cpu处理，处理不过来)，引起丢包，那么为什么两个网卡丢包的数量级不一样呢，下面从原理上进行解释，既然是做nat多出口，那么就有大量的路由信息，是一个网络应用，当一个数据包请求nat时，数据包先被网卡驱动的数据接收，网卡收到数据时，触发中断。在中断执行例程中，把skb挂入输入队列，并触发软中断。稍后的某个时刻，当软中断执行时，再从该队列中把skb取下来，投递给上层协议。</p>
-<p>如果在这个过程当中cpu没有及时处理完这个队列导致网卡的buffer满了，网卡将直接丢弃该数据包。这里牵涉到2个队列，一个是tx，一个是rx，它的队列的大小默认都是255，可以通过ethtool -g eth0(你指定的网卡)，为了防止丢包，当时我通过ethtool -G eth0 rx xxx 把它调大了，但是调大以后，还是杯水车薪啊，通过ethtool -S eth0 |grep rx_fw_discards,发现数值还是不停的在增长，也就是说还在不停的丢包，cpu处理不过来，这时候找到网上有人在利用lvs时也遇到这个问题，cpu软中断分配不均衡，只有一个cpu处理软中断的问题，网上的资料五花八门，有建议使用修改设备中断方式。即通过修改设置中断/proc/irq/${网卡中断号}/smp_affinit这时候，我也修改过，没有什么实质的效果，</p>
-<p>从官方的bug报告，<a href="https://bugzilla.redhat.com/show_bug.cgi?id=520888，其中提到rhel5.6已经修复了这个bug，这其中也提到目前我们的版本可以升级内核到kernel-2.6.18-194.3.1.el5可以解决这个问题。">https://bugzilla.redhat.com/show_bug.cgi?id=520888，其中提到rhel5.6已经修复了这个bug，这其中也提到目前我们的版本可以升级内核到kernel-2.6.18-194.3.1.el5可以解决这个问题。</a></p>
-<p>红帽子官方修复报告中的说明如下：<a href="http://rhn.redhat.com/errata/RHSA-2010-0398.html，我们升级了这个内核算是解决单核处理软中断的问题，升级后各个cpu已经能够平均的分配这个软中断，也不丢包了，那么为什么cpu处理不过来这个软中断呢，数据量并不是特别的大啊，上层应用接到这个数据包后，通过路由协议，找到某个出口给nat出去，找nat出口是需要查找路由表，查询路由表是一件很耗时的工作，而每一个不同源地址，不同目的地址的数据包都得重新查找一次路由表，导致cpu处理不过来，为了提高路由查询的效率。Linux内核引用了路由缓存，用于减少对路由表的查询。Linux的路由缓存是被设计来与协议无关的独立子系统，查看路由缓存可以通过命令route">http://rhn.redhat.com/errata/RHSA-2010-0398.html，我们升级了这个内核算是解决单核处理软中断的问题，升级后各个cpu已经能够平均的分配这个软中断，也不丢包了，那么为什么cpu处理不过来这个软中断呢，数据量并不是特别的大啊，上层应用接到这个数据包后，通过路由协议，找到某个出口给nat出去，找nat出口是需要查找路由表，查询路由表是一件很耗时的工作，而每一个不同源地址，不同目的地址的数据包都得重新查找一次路由表，导致cpu处理不过来，为了提高路由查询的效率。Linux内核引用了路由缓存，用于减少对路由表的查询。Linux的路由缓存是被设计来与协议无关的独立子系统，查看路由缓存可以通过命令route</a> -Cn,由于路由缓存当中是采用hash算法进行才找，它的查找速度非常之快，既然是cache就有超时这一概念。系统默认为10分钟，可以通过这个文件进行查看和修改/proc/sys/net/ipv4/route/secret_interval。而当路由缓存当中未找到或者已经超时的路由信息才开始查找路由表，查询到的结果保存在路由缓存中。如果路由表越大，那么查询的时间就越长，一个新的连接进来后或者是老连接cache超时后，占用大量的cpu查询时间，导致cpu周期性的软中断出现100%，而两个网卡丢包的情况来看不均衡也是因为用户的数据包是经过其中一个网卡进来后查询路由表耗时过长，cpu处理不过来，导致那块网卡的队列满了，丢包严重。当然在路由表变动不大的情况下可以加大cache的时间，修改上述内容后，从我监测的情况来看，扛流量能力得到了大大的提升。</p>
-<p>转正哥们周灵杰BLOG <a href="http://blog.netzhou.net/?p=152">http://blog.netzhou.net/?p=152</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2011-05-15T04:00:07.000Z"><a href="/2011/05/15/转服务器返回状态码图解/">5月 15 2011</a></time>
       
       
@@ -168,6 +121,7 @@ HTTP 502 – 网关错误</p>
     </footer>
   </div>
 </article>
+
 
 
 
@@ -348,6 +302,7 @@ HTTP 502 – 网关错误</p>
     </footer>
   </div>
 </article>
+
 
 
 
@@ -536,6 +491,7 @@ Etc: git, vagrant, chef, capistrano, RabbitMQ, jQuery</p>
 
 
 
+
   <article class="post">
   
   <div class="post-content">
@@ -611,6 +567,79 @@ Etc: git, vagrant, chef, capistrano, RabbitMQ, jQuery</p>
 
 
 
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-03-14T06:29:43.000Z"><a href="/2011/03/14/ubuntu-install-moinmoin/">3月 14 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/03/14/ubuntu-install-moinmoin/">ubuntu install moinmoin WIKI系统</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>官方网站：<a href="http://moinmo.in/"><a href="http://moinmo.in">http://moinmo.in</a></a></p>
+<p>下载1.9的包后，在docs里有INSTALL.html文档，可以看下依赖包。</p>
+<p>本文是最新ubuntu python2.6+ nginx fcgi</p>
+<p>安装：</p>
+<pre><code><figure class="highlight"><pre> python2<span class="number">.6</span> setup.py install <span class="comment">--force --record=install.log --prefix='/usr/local' --install-data=/data/moin  `&lt;/pre&gt;</span>
+
+<span class="type">COPY</span> <span class="type">WIKI</span>相关的目录
+
+&lt;pre&gt;`
+<span class="title">cp</span> -<span class="type">R</span> /usr/local/share/moin/<span class="typedef"><span class="keyword">data</span> /<span class="keyword">data</span>/moin</span>
+<span class="title">cp</span> -<span class="type">R</span> /usr/local/share/moin/underlay /<span class="typedef"><span class="keyword">data</span>/moin</span>
+<span class="title">cp</span> /usr/local/share/moin/config/wikiconfig.py /<span class="typedef"><span class="keyword">data</span>/moin</span>
+<span class="title">cp</span> /usr/local/share/moin/server/moin.fcgi  /<span class="typedef"><span class="keyword">data</span>/moin </span>
+`&lt;/pre&gt;
+
+启动moin
+
+&lt;pre&gt;` spawn-fcgi -a <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> -p <span class="number">9001</span> -u daemon -g daemon -<span class="type">F</span> <span class="number">1</span> -f /<span class="typedef"><span class="keyword">data</span>/moin/moin.fcgi `&lt;/pre&gt;</span>
+
+新建<span class="type">WIKI</span>的虚拟主机
+<span class="title">wiki</span>.bubbyroom.com.conf
+&lt;pre&gt;` 
+<span class="title">server</span>
+{
+<span class="title">listen</span>    <span class="number">80</span>;
+<span class="title">server_name</span> wiki.bubbyroom.com;
+<span class="title">index</span> index.php index.html index.htm;
+<span class="title">root</span>   /<span class="typedef"><span class="keyword">data</span>/wwwroot/moin;</span>
+#access_log /<span class="typedef"><span class="keyword">data</span>/logs/access_test.com.log  combined;</span>
+#error_log  /<span class="typedef"><span class="keyword">data</span>/logs/error_test.com.log;</span>
+<span class="title">location</span> / {
+<span class="title">include</span>        fastcgi_params;
+<span class="title">fastcgi_pass</span>   <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9001</span>;
+<span class="title">fastcgi_param</span>  <span class="type">SCRIPT_FILENAME</span>  $fastcgi_script_name;
+<span class="title">fastcgi_param</span>   <span class="type">SCRIPT_NAME</span> /;
+<span class="title">fastcgi_param</span> <span class="type">PATH_INFO</span> $fastcgi_script_name;
+}
+} 
+</pre></figure></code></pre>
+<p>访问wiki.bubbyroom.com 就好了</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
 <nav id="pagination">
   
     <a href="/" class="alignleft prev">上一页</a>
@@ -633,6 +662,10 @@ Etc: git, vagrant, chef, capistrano, RabbitMQ, jQuery</p>
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>4</small></li>
+  
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
     <li><a href="/categories/faq/">faq</a><small>27</small></li>
@@ -643,33 +676,33 @@ Etc: git, vagrant, chef, capistrano, RabbitMQ, jQuery</p>
   
     <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
   
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
     <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
   
-    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
   
     <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
   
     <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
   
-    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
   
     <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
   
-    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   
     <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
-  
-    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   
     <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
   
     <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
   
-    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
-  
     <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
   
-    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>0</small></li>
   
     <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
   

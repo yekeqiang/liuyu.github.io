@@ -55,57 +55,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2011-03-03T09:34:20.000Z"><a href="/2011/03/03/kernel-contact-your-bios-vendor-to-see-if-the-e752x-error/">3月 3 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/03/03/kernel-contact-your-bios-vendor-to-see-if-the-e752x-error/">kernel: Contact your BIOS vendor to see if the E752x error</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>今天遇到这种错误。感觉很奇怪。看似像内存的问题，实际上不是。</p>
-<p>搜索一下。发现HP官网有说明。但机器是DELL 2850 再搜索发现同样也有说明。</p>
-<p>是模块与系统的问题导致。</p>
-<p>E752x error</p>
-<p>服务器dmesg信息中包含如下信息：</p>
-<p>Contact your BIOS vendor to see if the E752x error registers can be safely un-hidden</p>
-<p>e752x_edac: probe of 0000:00:00.0 failed with error -12</p>
-<p>出现此报错信息的服务器是Dell 2850,其实同样有此报错的还有HP的服务器，下面是HP官方的解释。</p>
-<p><a href="http://www.icare.hp.com.cn/TechCenter_StaticArticle/44490/44490.html">http://www.icare.hp.com.cn/TechCenter_StaticArticle/44490/44490.html</a></p>
-<p>启动配有 Intel E7520、E7525 或 E7320 芯片组并且运行 Red Hat Enterprise Linux 5.1 的 HP ProLiant 服务器时，可能会出现下列 Error Detection and Correction (EDAC) 模块消息：</p>
-<p>kernel: Contact your BIOS vendor to see if the E752x error registers can be safely un-hidden</p>
-<p>kernel: e752x_edac: probe of 0000:00:00.0 failed with error -12</p>
-<p>出现这个问题是因为服务器 System ROM 配置这些寄存器兼容 HP Management Agents for Linux，以求提供错误检测与硬件事件报告功能。</p>
-<p>下面“受影响平台”部分所列出的任何 HP ProLiant 服务器，配有 Intel 7520、E7525 或 E7320 服务器芯片组并运行 Red Hat Enterprise Linux 5.1。</p>
-<p>为了避免出现这个消息，请在 /etc/modprobe.conf 中添加下列内容：</p>
-<p>alias e752x_edac off</p>
-<p>这个新条目将能避免 Linux EDAC 模块在启动过程中自动加载。</p>
-<p>目前FreeBSD系统下还没有发现此现象，在Dell服务器上如果要运行Dell日志清除工具的话可能会造成服务器的短暂不响应，不过很快就会恢复正常.</p>
-<p>如果大家觉得这个选项没有太大用处的话可以按照上面的方法禁用。</p>
-<p>参考： <a href="http://mycoding.spaces.live.com/?_c11_BlogPart_pagedir=Next&amp;_c11_BlogPart_handle=cns!337B0545DDC11E83!251&amp;_c11_BlogPart_BlogPart=blogview&amp;_c=BlogPart"><a href="http://mycoding.spaces.live.com/?_c11_BlogPart_pagedir=Next&amp;_c11_BlogPart_handle=cns!337B0545DDC11E83!251&amp;_c11_BlogPart_BlogPart=blogview&amp;_c=BlogPart">http://mycoding.spaces.live.com/?_c11_BlogPart_pagedir=Next&amp;_c11_BlogPart_handle=cns!337B0545DDC11E83!251&amp;_c11_BlogPart_BlogPart=blogview&amp;_c=BlogPart</a></a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2011-03-01T07:38:43.000Z"><a href="/2011/03/01/rpmcreate/">3月 1 2011</a></time>
       
       
@@ -130,6 +79,7 @@
     </footer>
   </div>
 </article>
+
 
 
 
@@ -171,6 +121,7 @@
     </footer>
   </div>
 </article>
+
 
 
 
@@ -231,6 +182,7 @@
 
 
 
+
   <article class="post">
   
   <div class="post-content">
@@ -267,6 +219,60 @@
 
 
 
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-02-21T06:15:05.000Z"><a href="/2011/02/21/mysql-ignore-db/">2月 21 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/02/21/mysql-ignore-db/">mysql 主从忽略 库</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>记录下：</p>
+<p>需求：</p>
+<p>1、 不记录这个库的binlog</p>
+<p>2、 从不同步这个库</p>
+<p>设这个库为bubbyroom</p>
+<p>主my.cnf增加</p>
+<p><div id="_mcePaste">binlog-ignore-db = bubbyroom</div></p>
+<p><div id="_mcePaste"></div></p>
+<p><div>从my.cnf增加</div></p>
+<p><div>replicate-ignore-db = bubbyroom</div>
+/etc/init.d/mysqld reload 即可</p>
+<p>注意检查下从库的同步状态。</p>
+<p>参数说明：</p>
+<p><span style="font-family: Verdana, sans-serif; line-height: 22px; -webkit-border-horizontal-spacing: 1px; -webkit-border-vertical-spacing: 1px; color: #333333;"><span style="color: #800000; padding: 0px; margin: 0px;">#设定不同步的数据库，这些库的修改不会记录到日志，可以添加多行
+</span><span style="color: #800000; padding: 0px; margin: 0px;">binlog-ignore-db = test
+</span><span style="color: #800000; padding: 0px; margin: 0px;">#设定记录的库，可以添加多行
+</span><span style="color: #800000; padding: 0px; margin: 0px;">binlog-do-db = vnet</span></span></p>
+<p><span style="font-family: Verdana, sans-serif; line-height: 22px; -webkit-border-horizontal-spacing: 1px; -webkit-border-vertical-spacing: 1px; color: #333333;"><span style="color: #800000; padding: 0px; margin: 0px;"><span style="color: #333333;"><span style="color: #800000; padding: 0px; margin: 0px;">#设置忽略的库，可以添加多行
+</span><span style="color: #800000; padding: 0px; margin: 0px;">replicate-ignore-db = testdb
+</span><span style="color: #800000; padding: 0px; margin: 0px;">#设置仅处理的库，可以添加多行
+</span><span style="color: #800000; padding: 0px; margin: 0px;">replicate-do-db = aslibra</span></span></span></span></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
 <nav id="pagination">
   
     <a href="/page/3/" class="alignleft prev">上一页</a>
@@ -289,6 +295,10 @@
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>4</small></li>
+  
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
     <li><a href="/categories/faq/">faq</a><small>27</small></li>
@@ -299,33 +309,33 @@
   
     <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
   
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
     <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
   
-    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
   
     <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
   
     <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
   
-    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
   
     <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
   
-    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   
     <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
-  
-    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   
     <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
   
     <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
   
-    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
-  
     <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
   
-    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>0</small></li>
   
     <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
   
