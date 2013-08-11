@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Puppet in action]]></subtitle>
   <link href="http://bubbyroom.com/atom.xml" rel="self"/>
   <link href="http://bubbyroom.com"/>
-  <updated>2013-08-11T10:16:27.524Z</updated>
+  <updated>2013-08-11T10:21:52.116Z</updated>
   <id>http://bubbyroom.com/</id>
   <author>
     <name><![CDATA[Liu Yu]]></name>
@@ -146,7 +146,7 @@ yum makecache</p>
     <link href="http://bubbyroom.com/2011/08/11/zabbix_agent-spec/"/>
     <id>http://bubbyroom.com/2011/08/11/zabbix_agent-spec/</id>
     <published>2011-08-11T03:20:45.000Z</published>
-    <updated>2013-08-11T10:16:05.000Z</updated>
+    <updated>2013-08-11T10:21:40.000Z</updated>
     <content type="html"><![CDATA[<p>Zabbix RPM制作，spec文件参考</p>
 <pre><code><figure class="highlight"><pre><span class="variable">%define</span> zabbix_agent_etc /etc/zabbix
 <span class="variable">%define</span> zabbix_agent_bin /usr/<span class="keyword">local</span>/zabbix_agent/bin
