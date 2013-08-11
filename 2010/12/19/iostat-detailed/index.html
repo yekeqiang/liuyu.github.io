@@ -1,0 +1,597 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>iostat 命令详解 | Puppet-in-action</title>
+  <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="iostat 结果解析
+[root@20081006-1724 ~]# iostat -x
+Linux 2.6.9-78.ELsmp (20081006-1724) 11/20/2009
+avg-cpu: %user %nice %sys %iowait %idle
+0.19 0.00 0.04 0">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="iostat 命令详解"/>
+  <meta property="og:site_name" content="Puppet-in-action"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Puppet-in-action</a></h1>
+  <h2><a href="/">Puppet</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T09:00:42.000Z"><a href="/2010/12/19/iostat-detailed/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title">iostat 命令详解</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>iostat 结果解析</p>
+<pre><code><figure class="highlight"><pre>[root<span class="variable">@20081006</span>-<span class="number">1724</span> ~]<span class="comment"># iostat -x</span>
+Linux <span class="number">2.6</span>.<span class="number">9</span>-<span class="number">78</span>.ELsmp (<span class="number">20081006</span>-<span class="number">1724</span>) <span class="number">11</span>/<span class="number">20</span>/<span class="number">2009</span>
+avg-cpu: <span class="variable">%user</span> <span class="variable">%nice</span> <span class="variable">%sys</span> <span class="variable">%iowait</span> <span class="variable">%idle</span>
+<span class="number">0</span>.<span class="number">19</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">04</span> <span class="number">0</span>.<span class="number">03</span> <span class="number">99.73</span>
+Device: rrqm/<span class="keyword">s</span> wrqm/<span class="keyword">s</span> r/<span class="keyword">s</span> w/<span class="keyword">s</span> rsec/<span class="keyword">s</span> wsec/<span class="keyword">s</span> rkB/<span class="keyword">s</span> wkB/<span class="keyword">s</span> avgrq-sz avgqu-sz await svctm <span class="variable">%util</span>
+sda <span class="number">0</span>.<span class="number">05</span> <span class="number">17.60</span> <span class="number">1.46</span> <span class="number">7.72</span> <span class="number">80.69</span> <span class="number">202.57</span> <span class="number">40.34</span> <span class="number">101.29</span> <span class="number">30.87</span> <span class="number">0</span>.<span class="number">01</span> <span class="number">1.06</span> <span class="number">0</span>.<span class="number">37</span> <span class="number">0</span>.<span class="number">34</span>
+sda1 <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">29.90</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">3.14</span> <span class="number">3.14</span> <span class="number">0</span>.<span class="number">00</span>
+sda2 <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">16.25</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">1.51</span> <span class="number">1.30</span> <span class="number">0</span>.<span class="number">00</span>
+sda3 <span class="number">0</span>.<span class="number">05</span> <span class="number">17.60</span> <span class="number">1.46</span> <span class="number">7.72</span> <span class="number">80.69</span> <span class="number">202.57</span> <span class="number">40.34</span> <span class="number">101.29</span> <span class="number">30.87</span> <span class="number">0</span>.<span class="number">01</span> <span class="number">1.06</span> <span class="number">0</span>.<span class="number">37</span> <span class="number">0</span>.<span class="number">34</span>
+dm-<span class="number">0</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">1.46</span> <span class="number">25.28</span> <span class="number">80.32</span> <span class="number">202.26</span> <span class="number">40.16</span> <span class="number">101.13</span> <span class="number">10.57</span> <span class="number">0</span>.<span class="number">36</span> <span class="number">13.56</span> <span class="number">0</span>.<span class="number">13</span> <span class="number">0</span>.<span class="number">34</span>
+dm-<span class="number">1</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">05</span> <span class="number">0</span>.<span class="number">04</span> <span class="number">0</span>.<span class="number">37</span> <span class="number">0</span>.<span class="number">32</span> <span class="number">0</span>.<span class="number">18</span> <span class="number">0</span>.<span class="number">16</span> <span class="number">8.00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">6.84</span> <span class="number">1.30</span> <span class="number">0</span>.<span class="number">01</span>
+</pre></figure></code></pre>
+<p>rrqm/s: 每秒进行 merge 的读操作数目。即 delta(rmerge)/s
+wrqm/s: 每秒进行 merge 的写操作数目。即 delta(wmerge)/s
+r/s: 每秒完成的读 I/O 设备次数。即 delta(rio)/s
+w/s: 每秒完成的写 I/O 设备次数。即 delta(wio)/s
+rsec/s: 每秒读扇区数。即 delta(rsect)/s
+wsec/s: 每秒写扇区数。即 delta(wsect)/s
+rkB/s: 每秒读K字节数。是 rsect/s 的一半，因为每扇区大小为512字节。
+wkB/s: 每秒写K字节数。是 wsect/s 的一半。
+avgrq-sz: 平均每次设备I/O操作的数据大小 (扇区)。即 delta(rsect+wsect)/delta(rio+wio)
+avgqu-sz: 平均I/O队列长度。即 delta(aveq)/s/1000 (因为aveq的单位为毫秒)。
+await: 平均每次设备I/O操作的等待时间 (毫秒)。即 delta(ruse+wuse)/delta(rio+wio)
+svctm: 平均每次设备I/O操作的服务时间 (毫秒)。即 delta(use)/delta(rio+wio)
+%util: 一秒中有百分之多少的时间用于 I/O 操作，或者说一秒中有多少时间 I/O 队列是非空的。
+即 delta(use)/s/1000 (因为use的单位为毫秒)</p>
+<p><span style="color: #ff0000;"><strong>如果 %util 接近 100%，说明产生的I/O请求太多，I/O系统已经满负荷，该磁盘
+可能存在瓶颈</strong>。</span></p>
+<p><strong>
+比较重要的参数</strong>
+%util: 一秒中有百分之多少的时间用于 I/O 操作，或者说一秒中有多少时间 I/O 队列是非空的
+svctm: 平均每次设备I/O操作的服务时间
+await: 平均每次设备I/O操作的等待时间
+avgqu-sz: 平均I/O队列长度</p>
+<p><span style="color: #ff0000;"><strong>如果%util接近100%,表明i/o请求太多,i/o系统已经满负荷,磁盘可能存在瓶颈,一 般%util大于70%,i/o压力就比较大,读取速度有较多的wait.同时可以结合vmstat查看查看b参数(等待资源的进程数)和wa参数(IO 等待所占用的CPU时间的百分比,高过30%时IO压力高)。</strong></span>
+await 的大小一般取决于服务时间(svctm) 以及 I/O 队列的长度和 I/O 请求的发出模式。如果 svctm 比较接近 await，说明 I/O 几乎没有等待时间；如果 await 远大于 svctm，说明 I/O 队列太长，应用得到的响应时间变慢。</p>
+<p>形象的比喻
+r/s+w/s 类似于交款人的总数
+平均队列长度(avgqu-sz)类似于单位时间里平均排队人的个数
+平均服务时间(svctm)类似于收银员的收款速度
+平均等待时间(await)类似于平均每人的等待时间
+平均I/O数据(avgrq-sz)类似于平均每人所买的东西多少
+I/O 操作率 (%util)类似于收款台前有人排队的时间比例
+设备IO操作:总IO(io)/s = r/s(读) +w/s(写) =1.46 + 25.28=26.74
+平均每次设备I/O操作只需要0.36毫秒完成,现在却需要10.57毫秒完成，因为发出的请求太多(每秒26.74个)，假如请求时同时发出的，可以这样计算平均等待时间:
+平均等待时间=单个I/O服务器时间*(1+2+...+请求总数-1)/请求总数
+每秒发出的I/0请求很多,但是平均队列就4,表示这些请求比较均匀,大部分处理还是比较及时</p>
+<p>svctm 一般要小于 await (因为同时等待的请求的等待时间被重复计算了)，
+svctm 的大小一般和磁盘性能有关，CPU/内存的负荷也会对其有影响，请求过多
+也会间接导致 svctm 的增加。await 的大小一般取决于服务时间(svctm) 以及
+I/O 队列的长度和 I/O 请求的发出模式。如果 svctm 比较接近 await，说明
+I/O 几乎没有等待时间；如果 await 远大于 svctm，说明 I/O 队列太长，应用
+得到的响应时间变慢，如果响应时间超过了用户可以容许的范围，这时可以考虑
+更换更快的磁盘，调整内核 elevator 算法，优化应用，或者升级 CPU。
+队列长度(avgqu-sz)也可作为衡量系统 I/O 负荷的指标，但由于 avgqu-sz 是
+按照单位时间的平均值，所以不能反映瞬间的 I/O 洪水。</p>
+<p>转自：<a href="http://blog.csdn.net/wyzxg/archive/2009/03/12/3985221.aspx">http://blog.csdn.net/wyzxg/archive/2009/03/12/3985221.aspx</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/系统命令/">系统命令</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/iostat/">iostat</a>, <a href="/tags/命令详解/">命令详解</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/1032/">1032</a><small>1</small></li>
+  
+    <li><a href="/tags/1236/">1236</a><small>1</small></li>
+  
+    <li><a href="/tags/403/">403</a><small>1</small></li>
+  
+    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
+  
+    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
+  
+    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
+  
+    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
+  
+    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
+  
+    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
+  
+    <li><a href="/tags/acl/">acl</a><small>2</small></li>
+  
+    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
+  
+    <li><a href="/tags/apache/">apache</a><small>8</small></li>
+  
+    <li><a href="/tags/arp/">arp</a><small>1</small></li>
+  
+    <li><a href="/tags/awk/">awk</a><small>4</small></li>
+  
+    <li><a href="/tags/bash/">bash</a><small>2</small></li>
+  
+    <li><a href="/tags/best/">best</a><small>1</small></li>
+  
+    <li><a href="/tags/binding/">binding</a><small>1</small></li>
+  
+    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
+  
+    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
+  
+    <li><a href="/tags/browser/">browser</a><small>1</small></li>
+  
+    <li><a href="/tags/cache/">cache</a><small>1</small></li>
+  
+    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>8</small></li>
+  
+    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
+  
+    <li><a href="/tags/chown/">chown</a><small>1</small></li>
+  
+    <li><a href="/tags/commands/">commands</a><small>1</small></li>
+  
+    <li><a href="/tags/content/">content</a><small>1</small></li>
+  
+    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
+  
+    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
+  
+    <li><a href="/tags/creating/">creating</a><small>1</small></li>
+  
+    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
+  
+    <li><a href="/tags/dell/">dell</a><small>1</small></li>
+  
+    <li><a href="/tags/diff/">diff</a><small>1</small></li>
+  
+    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
+  
+    <li><a href="/tags/du/">du</a><small>1</small></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
+  
+    <li><a href="/tags/end/">end</a><small>1</small></li>
+  
+    <li><a href="/tags/epel/">epel</a><small>1</small></li>
+  
+    <li><a href="/tags/etag/">etag</a><small>1</small></li>
+  
+    <li><a href="/tags/expires/">expires</a><small>1</small></li>
+  
+    <li><a href="/tags/find/">find</a><small>1</small></li>
+  
+    <li><a href="/tags/for-1/">for</a><small>1</small></li>
+  
+    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
+  
+    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
+  
+    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
+  
+    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
+  
+    <li><a href="/tags/group/">group</a><small>1</small></li>
+  
+    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
+  
+    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
+  
+    <li><a href="/tags/howto/">howto</a><small>2</small></li>
+  
+    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
+  
+    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
+  
+    <li><a href="/tags/if/">if</a><small>2</small></li>
+  
+    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
+  
+    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
+  
+    <li><a href="/tags/init/">init</a><small>1</small></li>
+  
+    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
+  
+    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
+  
+    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
+  
+    <li><a href="/tags/jk/">jk</a><small>1</small></li>
+  
+    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
+  
+    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/kick/">kick</a><small>1</small></li>
+  
+    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>18</small></li>
+  
+    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
+  
+    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
+  
+    <li><a href="/tags/master/">master</a><small>2</small></li>
+  
+    <li><a href="/tags/metric/">metric</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
+  
+    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
+  
+    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
+  
+    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
+  
+    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
+  
+    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
+  
+    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
+  
+    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
+  
+    <li><a href="/tags/packet/">packet</a><small>1</small></li>
+  
+    <li><a href="/tags/pam/">pam</a><small>1</small></li>
+  
+    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
+  
+    <li><a href="/tags/perl/">perl</a><small>1</small></li>
+  
+    <li><a href="/tags/permission/">permission</a><small>1</small></li>
+  
+    <li><a href="/tags/php-1/">php</a><small>2</small></li>
+  
+    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
+  
+    <li><a href="/tags/pil/">pil</a><small>1</small></li>
+  
+    <li><a href="/tags/port/">port</a><small>1</small></li>
+  
+    <li><a href="/tags/practices/">practices</a><small>1</small></li>
+  
+    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
+  
+    <li><a href="/tags/ps/">ps</a><small>2</small></li>
+  
+    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
+  
+    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
+  
+    <li><a href="/tags/python-1/">python</a><small>3</small></li>
+  
+    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
+  
+    <li><a href="/tags/quick/">quick</a><small>1</small></li>
+  
+    <li><a href="/tags/r410/">r410</a><small>1</small></li>
+  
+    <li><a href="/tags/r710/">r710</a><small>1</small></li>
+  
+    <li><a href="/tags/raw/">raw</a><small>1</small></li>
+  
+    <li><a href="/tags/referer/">referer</a><small>1</small></li>
+  
+    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
+  
+    <li><a href="/tags/repo/">repo</a><small>1</small></li>
+  
+    <li><a href="/tags/resources/">resources</a><small>1</small></li>
+  
+    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
+  
+    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
+  
+    <li><a href="/tags/sar/">sar</a><small>1</small></li>
+  
+    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
+  
+    <li><a href="/tags/sed/">sed</a><small>4</small></li>
+  
+    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
+  
+    <li><a href="/tags/sending/">sending</a><small>1</small></li>
+  
+    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>2</small></li>
+  
+    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
+  
+    <li><a href="/tags/slave/">slave</a><small>2</small></li>
+  
+    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
+  
+    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
+  
+    <li><a href="/tags/spec/">spec</a><small>2</small></li>
+  
+    <li><a href="/tags/squid/">squid</a><small>1</small></li>
+  
+    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>1</small></li>
+  
+    <li><a href="/tags/tar/">tar</a><small>1</small></li>
+  
+    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
+  
+    <li><a href="/tags/tools/">tools</a><small>1</small></li>
+  
+    <li><a href="/tags/top/">top</a><small>1</small></li>
+  
+    <li><a href="/tags/tree/">tree</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
+  
+    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
+  
+    <li><a href="/tags/user/">user</a><small>2</small></li>
+  
+    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>2</small></li>
+  
+    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
+  
+    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/while/">while</a><small>1</small></li>
+  
+    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
+  
+    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
+  
+    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
+  
+    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
+  
+    <li><a href="/tags/yum/">yum</a><small>10</small></li>
+  
+    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
+  
+    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
+  
+    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
+  
+    <li><a href="/tags/优化/">优化</a><small>1</small></li>
+  
+    <li><a href="/tags/内核/">内核</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
+  
+    <li><a href="/tags/参考/">参考</a><small>1</small></li>
+  
+    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
+  
+    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
+  
+    <li><a href="/tags/对比/">对比</a><small>1</small></li>
+  
+    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
+  
+    <li><a href="/tags/日志/">日志</a><small>2</small></li>
+  
+    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
+  
+    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
+  
+    <li><a href="/tags/管理/">管理</a><small>1</small></li>
+  
+    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
+  
+    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
+  
+    <li><a href="/tags/老板/">老板</a><small>1</small></li>
+  
+    <li><a href="/tags/认证/">认证</a><small>1</small></li>
+  
+    <li><a href="/tags/详解/">详解</a><small>3</small></li>
+  
+    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
+  
+    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
+  
+    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

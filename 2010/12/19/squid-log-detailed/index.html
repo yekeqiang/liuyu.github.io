@@ -1,0 +1,848 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>squid 日志详解 | Puppet-in-action</title>
+  <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="安装配置完squid，通过日志来看看squid的一些基本的运行状态
+1.access.log
+访问日志，位于squid/var/logs/access.log，常用的记录格式如下
+remotehost rfc931 authuser [date] “method URL” status bytes ">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="squid 日志详解"/>
+  <meta property="og:site_name" content="Puppet-in-action"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Puppet-in-action</a></h1>
+  <h2><a href="/">Puppet</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T15:26:04.000Z"><a href="/2010/12/19/squid-log-detailed/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title">squid 日志详解</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>安装配置完squid，通过日志来看看squid的一些基本的运行状态</p>
+<p>1.access.log</p>
+<p>访问日志，位于squid/var/logs/access.log，常用的记录格式如下</p>
+<pre><code><figure class="highlight"><pre>remotehost rfc931 authuser [date] “method URL” status bytes [Result Codes]:[Hierarchy Codes] `&lt;/pre&gt;
+
+看一些具体的
+&lt;pre&gt;`cd /opt/squid/<span class="keyword">var</span>/logs
+head access.log
+
+<span class="number">221.222</span><span class="number">.213</span><span class="number">.64</span> - - [<span class="number">15</span>/Nov/<span class="number">2006</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">03</span> +<span class="number">0800</span>] “GET http:<span class="comment">//bbs.ci123.com/sample.jpg HTTP/1.1″ 200 240673 TCP_MEM_HIT:NONE</span>
+`&lt;/pre&gt;
+可以通过脚本查看一些统计信息，如各种反应状态所占的比例，通常较好的情况下HIT所占的比例（应该就是所谓的命中率）可以在<span class="number">70</span>%~<span class="number">80</span>%
+&lt;pre&gt;`
+cat access.log|gawk ‘{print $<span class="number">11</span>}’|sort|uniq -c|sort -nr
+cat access.log|grep “http:<span class="comment">//blog”|gawk ‘{print $11}’|sort|uniq -c|sort -nr</span>
+
+<span class="number">154389</span> TCP_MEM_HIT:NONE
+<span class="number">81330</span> TCP_IMS_HIT:NONE
+<span class="number">66991</span> TCP_HIT:NONE
+<span class="number">32413</span> TCP_MISS:FIRST_UP_PARENT
+<span class="number">19900</span> TCP_NEGATIVE_HIT:NONE
+<span class="number">1437</span> TCP_CLIENT_REFRESH_MISS:FIRST_UP_PARENT
+<span class="number">1368</span> TCP_REFRESH_HIT:FIRST_UP_PARENT
+<span class="number">245</span> TCP_MISS:ANY_PARENT
+<span class="number">200</span> TCP_SWAPFAIL_MISS:FIRST_UP_PARENT
+<span class="number">64</span> TCP_REFRESH_MISS:FIRST_UP_PARENT
+<span class="number">23</span> TCP_IMS_HIT:FIRST_UP_PARENT
+<span class="number">7</span> TCP_REFRESH_HIT:ANY_PARENT
+<span class="number">7</span> TCP_CLIENT_REFRESH_MISS:ANY_PARENT
+<span class="number">6</span> TCP_MISS:NONE
+<span class="number">2</span> TCP_SWAPFAIL_MISS:ANY_PARENT`&lt;/pre&gt;
+
+PS:官方文档中关于Result Codes的说明
+============================================================
+
+TCP_HIT
+
+A valid copy of the requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span>.</span>
+TCP_MISS
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">not</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span>.</span>
+TCP_REFRESH_HIT
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">cached</span> <span class="title">but</span> <span class="title">STALE</span>. <span class="title">The</span> <span class="title">IMS</span> <span class="title">query</span> <span class="title">for</span> <span class="title">the</span> <span class="title">object</span> <span class="title">resulted</span> <span class="title">in</span> “304 <span class="title">not</span> <span class="title">modified</span>”.</span>
+TCP_REF_FAIL_HIT
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">cached</span> <span class="title">but</span> <span class="title">STALE</span>. <span class="title">The</span> <span class="title">IMS</span> <span class="title">query</span> <span class="title">failed</span> <span class="title">and</span> <span class="title">the</span> <span class="title">stale</span> <span class="title">object</span> <span class="title">was</span> <span class="title">delivered</span>.</span>
+TCP_REFRESH_MISS
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">cached</span> <span class="title">but</span> <span class="title">STALE</span>. <span class="title">The</span> <span class="title">IMS</span> <span class="title">query</span> <span class="title">returned</span> <span class="title">the</span> <span class="title">new</span> <span class="title">content</span>.</span>
+TCP_CLIENT_REFRESH_MISS
+
+The client issued a “no-cache” pragma, or some analogous cache control command along <span class="keyword">with</span> the request. Thus, the cache
+
+has to refetch the <span class="keyword">object</span>.
+TCP_IMS_HIT
+
+The client issued an IMS request <span class="keyword">for</span> an <span class="class"><span class="keyword">object</span> <span class="title">which</span> <span class="title">was</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span> <span class="title">and</span> <span class="title">fresh</span>.</span>
+TCP_SWAPFAIL_MISS
+
+The <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">believed</span> <span class="title">to</span> <span class="title">be</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span>, <span class="title">but</span> <span class="title">could</span> <span class="title">not</span> <span class="title">be</span> <span class="title">accessed</span>.</span>
+TCP_NEGATIVE_HIT
+
+Request <span class="keyword">for</span> a negatively cached <span class="keyword">object</span>, e.g. “<span class="number">404</span> not found”, <span class="keyword">for</span> which the cache believes to know that it is
+
+inaccessible. Also refer to the explainations <span class="keyword">for</span> negative_ttl in your squid.conf file.
+TCP_MEM_HIT
+
+A valid copy of the requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span> <span class="title">and</span> <span class="title">it</span> <span class="title">was</span> <span class="title">in</span> <span class="title">memory</span>, <span class="title">thus</span> <span class="title">avoiding</span> <span class="title">disk</span> <span class="title">accesses</span>.</span>
+TCP_DENIED
+
+Access was denied <span class="keyword">for</span> <span class="keyword">this</span> request.
+TCP_OFFLINE_HIT
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">retrieved</span> <span class="title">from</span> <span class="title">the</span> <span class="title">cache</span> <span class="title">during</span> <span class="title">offline</span> <span class="title">mode</span>. <span class="title">The</span> <span class="title">offline</span> <span class="title">mode</span> <span class="title">never</span> <span class="title">validates</span> <span class="title">any</span> <span class="title">object</span>, <span class="title">see</span></span>
+
+offline_mode in squid.conf file.
+UDP_HIT
+
+A valid copy of the requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span>.</span>
+UDP_MISS
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">is</span> <span class="title">not</span> <span class="title">in</span> <span class="title">this</span> <span class="title">cache</span>.</span>
+UDP_DENIED
+
+Access was denied <span class="keyword">for</span> <span class="keyword">this</span> request.
+UDP_INVALID
+
+An invalid request was received.
+UDP_MISS_NOFETCH
+
+During “-Y” startup, or during frequent failures, a cache in hit only mode will <span class="keyword">return</span> either UDP_HIT or <span class="keyword">this</span> code.
+
+Neighbours will thus only fetch hits.
+NONE
+
+Seen <span class="keyword">with</span> errors and cachemgr requests.
+
+The following codes are no longer available in Squid-<span class="number">2</span>:
+
+ERR_*
+
+Errors are now contained in the status code.
+TCP_CLIENT_REFRESH
+
+See: TCP_CLIENT_REFRESH_MISS.
+TCP_SWAPFAIL
+
+See: TCP_SWAPFAIL_MISS.
+TCP_IMS_MISS
+
+Deleted, TCP_IMS_HIT used instead.
+UDP_HIT_OBJ
+
+Hit objects are no longer available.
+UDP_RELOADING
+
+See: UDP_MISS_NOFETCH.
+
+后面找到了中文版，补充全一些：
+access.log结果编码
+
+相应于HTTP请求，下列标签可能出现在access.log文件的第四个域。
+
+TCP_HIT
+Squid发现请求资源的貌似新鲜的拷贝，并将其立即发送到客户端。
+
+TCP_MISS
+Squid没有请求资源的cache拷贝。
+
+TCP_REFRESH_HIT
+Squid发现请求资源的貌似陈旧的拷贝，并发送确认请求到原始服务器。原始服务器返回<span class="number">304</span>（未修改）响应，指示squid的拷贝仍旧是新鲜的。
+
+TCP_REF_FAIL_HIT
+Squid发现请求资源的貌似陈旧的拷贝，并发送确认请求到原始服务器。然而，原始服务器响应失败，或者返回的响应Squid不能理解。在此情形下，squid发送现有cache拷贝（很可能是陈旧的）到客户端。
+
+TCP_REFRESH_MISS
+Squid发现请求资源的貌似陈旧的拷贝，并发送确认请求到原始服务器。原始服务器响应新的内容，指示这个cache拷贝确实是陈旧的。
+
+TCP_CLIENT_REFRESH_MISS
+Squid发现了请求资源的拷贝，但客户端的请求包含了Cache-Control: no-cache指令。Squid转发客户端的请求到原始服务器，强迫cache确认。
+
+TCP_IMS_HIT
+客户端发送确认请求，Squid发现更近来的、貌似新鲜的请求资源的拷贝。Squid发送更新的内容到客户端，而不联系原始服务器。
+
+TCP_SWAPFAIL_MISS
+Squid发现请求资源的有效拷贝，但从磁盘装载它失败。这时squid发送请求到原始服务器，就如同这是个cache丢失一样。
+
+TCP_NEGATIVE_HIT
+在对原始服务器的请求导致HTTP错误时，Squid也会cache这个响应。在短时间内对这些资源的重复请求，导致了否命中。negative_ttl指令控制这些错误被cache的时间数量。请注意这些错误只在内存cache，不会写往磁盘。下列HTTP状态码可能导致否定cache（也遵循于其他约束）： <span class="number">204</span>, <span class="number">305</span>, <span class="number">400</span>, <span class="number">403</span>, <span class="number">404</span>, <span class="number">405</span>, <span class="number">414</span>, <span class="number">500</span>, <span class="number">501</span>, <span class="number">502</span>, <span class="number">503</span>, <span class="number">504</span>。
+
+TCP_MEM_HIT
+Squid在内存cache里发现请求资源的有效拷贝，并将其立即发送到客户端。注意这点并非精确的呈现了所有从内存服务的响应。例如，某些cache在内存里，但要求确认的响应，会以TCP_REFRESH_HIT, TCP_REFRESH_MISS等形式记录。
+
+TCP_DENIED
+因为http_access或http_reply_access规则，客户端的请求被拒绝了。注意被http_access拒绝的请求在第<span class="number">9</span>域的值是NONE/-，然而被http_reply_access拒绝的请求，在相应地方有一个有效值。
+
+TCP_OFFLINE_HIT
+当offline_mode激活时，Squid对任何cache响应返回cache命中，而不用考虑它的新鲜程度。
+
+TCP_REDIRECT
+重定向程序告诉Squid产生一个HTTP重定向到新的URI（见<span class="number">11.1</span>节）。正常的，Squid不会记录这些重定向。假如要这样做，必须在编译squid前，手工定义LOG_TCP_REDIRECTS预处理指令。
+
+NONE
+无分类的结果用于特定错误，例如无效主机名。
+
+相应于ICP查询，下列标签可能出现在access.log文件的第四域。
+
+UDP_HIT
+Squid在cache里发现请求资源的貌似新鲜的拷贝。
+
+UDP_MISS
+Squid没有在cache里发现请求资源的貌似新鲜的拷贝。假如同一目标通过HTTP请求，就可能是个cache丢失。请对比UDP_MISS_NOFETCH。
+
+UDP_MISS_NOFETCH
+跟UDP_MISS类似，不同的是这里也指示了Squid不愿去处理相应的HTTP请求。假如使用了-Y命令行选项，Squid在启动并编译其内存索引时，会返回这个标签而不是UDP_MISS。
+
+UDP_DENIED
+因为icp_access规则，ICP查询被拒绝。假如超过<span class="number">95</span>%的到某客户端的ICP响应是UDP_DENIED，并且客户端数据库激活了（见附录A），Squid在<span class="number">1</span>小时内，停止发送任何ICP响应到该客户端。若这点发生，你也可在cache.log里见到一个警告。
+
+UDP_INVALID
+Squid接受到无效查询（例如截断的消息、无效协议版本、URI里的空格等）。Squid发送UDP_INVALID响应到客户端。
+
+<span class="number">13.2</span><span class="number">.2</span> HTTP响应状态码
+
+Table <span class="number">13</span>-<span class="number">1</span>列出了数字HTTP响应CODE和理由短句。注意Squid和其他HTTP客户端仅仅关注这些数字值。理由短句是纯解释性的，不会影响响应的意义。对每个状态码，也提供了一个到RFC <span class="number">2616</span>的具体节的索引。注意状态码<span class="number">0</span>和<span class="number">600</span>是squid使用的非标准的值，不会在RFC里提到。
+Table <span class="number">13</span>-<span class="number">1</span>\. HTTP response status codes
+
+Code    Reason phrase    RFC <span class="number">2616</span> section
+<span class="number">0</span>    No Response Received (Squid-specific)    N/A
+<span class="number">1</span>xx    Informational    <span class="number">10.1</span>
+<span class="number">100</span>    Continue    <span class="number">10.1</span><span class="number">.1</span>
+<span class="number">101</span>    Switching Protocols    <span class="number">10.1</span><span class="number">.2</span>
+<span class="number">2</span>xx    Successful    <span class="number">10.2</span>
+<span class="number">200</span>    OK    <span class="number">10.2</span><span class="number">.1</span>
+<span class="number">201</span>    Created    <span class="number">10.2</span><span class="number">.2</span>
+<span class="number">202</span>    Accepted    <span class="number">10.2</span><span class="number">.3</span>
+<span class="number">203</span>    Non-Authoritative Information    <span class="number">10.2</span><span class="number">.4</span>
+<span class="number">204</span>    No Content    <span class="number">10.2</span><span class="number">.5</span>
+<span class="number">205</span>    Reset Content    <span class="number">10.2</span><span class="number">.6</span>
+<span class="number">206</span>    Partial Content    <span class="number">10.2</span><span class="number">.7</span>
+<span class="number">3</span>xx    Redirection    <span class="number">10.3</span>
+<span class="number">300</span>    Multiple Choices    <span class="number">10.3</span><span class="number">.1</span>
+<span class="number">301</span>    Moved Permanently    <span class="number">10.3</span><span class="number">.2</span>
+<span class="number">302</span>    Found    <span class="number">10.3</span><span class="number">.3</span>
+<span class="number">303</span>    See Other    <span class="number">10.3</span><span class="number">.4</span>
+<span class="number">304</span>    Not Modified    <span class="number">10.3</span><span class="number">.5</span>
+<span class="number">305</span>    Use Proxy    <span class="number">10.3</span><span class="number">.6</span>
+<span class="number">306</span>    (Unused)    <span class="number">10.3</span><span class="number">.7</span>
+<span class="number">307</span>    Temporary Redirect    <span class="number">10.3</span><span class="number">.8</span>
+<span class="number">4</span>xx    Client Error    <span class="number">10.4</span>
+<span class="number">400</span>    Bad Request    <span class="number">10.4</span><span class="number">.1</span>
+<span class="number">401</span>    Unauthorized    <span class="number">10.4</span><span class="number">.2</span>
+<span class="number">402</span>    Payment Required    <span class="number">10.4</span><span class="number">.3</span>
+<span class="number">403</span>    Forbidden    <span class="number">10.4</span><span class="number">.4</span>
+<span class="number">404</span>    Not Found    <span class="number">10.4</span><span class="number">.5</span>
+<span class="number">405</span>    Method Not Allowed    <span class="number">10.4</span><span class="number">.6</span>
+<span class="number">406</span>    Not Acceptable    <span class="number">10.4</span><span class="number">.7</span>
+<span class="number">407</span>    Proxy Authentication Required    <span class="number">10.4</span><span class="number">.8</span>
+<span class="number">408</span>    Request Timeout    <span class="number">10.4</span><span class="number">.9</span>
+<span class="number">409</span>    Conflict    <span class="number">10.4</span><span class="number">.10</span>
+<span class="number">410</span>    Gone    <span class="number">10.4</span><span class="number">.11</span>
+<span class="number">411</span>    Length Required    <span class="number">10.4</span><span class="number">.12</span>
+<span class="number">412</span>    Precondition Failed    <span class="number">10.4</span><span class="number">.13</span>
+<span class="number">413</span>    Request Entity Too Large    <span class="number">10.4</span><span class="number">.14</span>
+<span class="number">414</span>    Request-URI Too Long    <span class="number">10.4</span><span class="number">.15</span>
+<span class="number">415</span>    Unsupported Media Type    <span class="number">10.4</span><span class="number">.16</span>
+<span class="number">416</span>    Requested Range Not Satisfiable    <span class="number">10.4</span><span class="number">.17</span>
+<span class="number">417</span>    Expectation Failed    <span class="number">10.4</span><span class="number">.18</span>
+<span class="number">5</span>xx    Server Error    <span class="number">10.5</span>
+<span class="number">500</span>    Internal Server Error    <span class="number">10.5</span><span class="number">.1</span>
+<span class="number">501</span>    Not Implemented    <span class="number">10.5</span><span class="number">.2</span>
+<span class="number">502</span>    Bad Gateway    <span class="number">10.5</span><span class="number">.3</span>
+<span class="number">503</span>    Service Unavailable    <span class="number">10.5</span><span class="number">.4</span>
+<span class="number">504</span>    Gateway Timeout    <span class="number">10.5</span><span class="number">.5</span>
+<span class="number">505</span>    HTTP Version Not Supported    <span class="number">10.5</span><span class="number">.6</span>
+<span class="number">6</span>xx    Proxy Error    N/A
+<span class="number">600</span>    Unparseable Response Headers (Squid-specific)    N/A
+假如Squid从原始服务器没有接受到任何响应，你可在access.log里看到状态码<span class="number">0</span>。假如Squid接受到的响应没有包含HTTP头部，就会出现状态码<span class="number">600</span>。在少数情况下，某些原始服务器仅发送响应body，而忽略了任何头部。
+
+<span class="number">13.2</span><span class="number">.3</span> access.log对端编码
+
+下列编码可能出现在access.log的第<span class="number">9</span>域。请参考<span class="number">10.10</span>节关于Squid如何对cache丢失情况，选择有效的下一跳。
+
+NONE
+这指明Squid对本次请求，不会与任何其他服务器（邻居或原始服务器）通信。它通常与cache命中、拒绝请求、cache管理请求、错误、和所有的ICP查询这些类型联合出现。
+
+DIRECT
+Squid直接转发请求到原始服务器。该域的第<span class="number">2</span>半部分显示原始服务器的IP地址，或主机名–假如禁止了log_ip_on_direct。
+
+SIBLING_HIT
+在姐妹cache返回ICP或HTCP命中后，Squid发送请求到姐妹cache。
+
+PARENT_HIT
+在父cache返回ICP或HTCP命中后，Squid发送请求到父cache。
+
+DEFAULT_PARENT
+Squid选择该父cache，因为其在squid.conf的cache_peer行里被标志为<span class="keyword">default</span>。
+
+FIRST_UP_PARENT
+Squid转发请求到该父cache，因为它是位于已知活跃列表里的第一个父cache。
+
+FIRST_PARENT_MISS
+Squid转发请求到该父cache，它第一个响应ICP/HTCP丢失消息。换句话说，对这个特殊的ICP/HTCP查询，在这个特殊时刻，被选中的父cache有最佳的往返时间（RTT）。注意标准RTT可能被人工矫正过，取决于cache_peer指令的weight选项。
+
+CLOSEST_PARENT_MISS
+Squid选择该父cache，因为它报告到原始服务器的RTT最低。这点仅在<span class="number">2</span>个cache都激活了netdb，并且原始服务器（或在同一子网内的其他server）返回ICMP ping消息。
+
+CLOSEST_PARENT
+这点类似CLOSEST_PARENT_MISS，除了RTT计算不是来自ICP/HTCP响应消息外。代替的，它们来自Squid保留的更老的计算方式，例如netdb交换功能。
+
+CLOSEST_DIRECT
+Squid基于netdb算法，转发请求到原始服务器。这点在满足下述任何条件时发生：
+
+<span class="number">1</span>）在Squid和原始服务器之间的RTT小于配置的minimum_direct_rtt值。
+<span class="number">2</span>）在Squid和原始服务器之间的标准路由跳数少于配置的minimum_direct_hops值。
+<span class="number">3</span>）在ICP/HTCP响应里返回的RTT值，指示Squid离原始服务器近于任何其他邻居。
+ROUNDROBIN_PARENT
+Squid转发请求到该父cache，因为设置了round-robin选项，并且它有最低的使用计数器。
+
+CD_PARENT_HIT
+Squid基于cache摘要算法（见<span class="number">10.7</span>节）转发请求到该父cache。
+
+CD_SIBLING_HIT
+Squid基于cache摘要算法转发请求到该姐妹cache。
+
+CARP
+Squid选择该父cache，基于cache数组路由协议算法（见<span class="number">10.9</span>节）。
+
+ANY_PARENT
+作为最后的手段，Squid选择该父cache，因为没有其他方法能选择可行的下一跳。
+
+注意大部分上述编码可能以TIMEOUT_开头，这表明在等待ICP/HTCP响应时发生超时。例如：
+
+<span class="number">1066038165.382</span>    <span class="number">345</span> <span class="number">193.233</span><span class="number">.46</span><span class="number">.21</span> TCP_MISS/<span class="number">200</span> <span class="number">2836</span>          GET http:<span class="comment">//www.caida.org/home/../images/home.jpg          TIMEOUT_CLOSEST_DIRECT/213.219.122.19 image/jpeg</span>
+可使用icp_query_timeout指令来调整超时。
+
+事例：
+&lt;pre&gt;` cat access.log|gawk ‘{print $<span class="number">11</span>}’|sort|uniq -c|sort -nr
+  <span class="number">15508</span> TCP_NEGATIVE_HIT:NONE 在对原始服务器的请求导致HTTP错误时，Squid也会cache这个响应。在短时间内对这些资源的重复请求，导致了否命中。
+   <span class="number">8212</span> TCP_IMS_HIT:NONE  客户端发送确认请求，Squid发现更近来的、貌似新鲜的请求资源的拷贝。Squid发送更新的内容到客户端，而不联系原始服务器。（这指明Squid对本次请求，不会与任何其他服务器（邻居或原始服务器）通信。）
+   <span class="number">3771</span> TCP_HIT:NONE Squid发现请求资源的貌似新鲜的拷贝，并将其立即发送到客户端。
+   <span class="number">3468</span> TCP_MISS:DIRECT Squid没有请求资源的cache拷贝。（Squid直接转发请求到原始服务器）
+   <span class="number">2379</span> TCP_MEM_HIT:NONE  从内存的响应
+   <span class="number">1876</span> TCP_DENIED:NONE 因为http_access或http_reply_access规则，客户端的请求被拒绝了   全是错误地址链接
+   <span class="number">1732</span> TCP_REFRESH_HIT:DIRECT Squid发现请求资源的貌似陈旧的拷贝，并发送确认请求到原始服务器。原始服务器返回<span class="number">304</span>（未修改）响应，指示squid的拷贝仍旧是新鲜的。（Squid直接转发请求到原始服务器）
+    <span class="number">708</span> TCP_CLIENT_REFRESH_MISS:DIRECT Squid发现了请求资源的拷贝，但客户端的请求包含了Cache-Control: no-cache指令。Squid转发客户端的请求到原始服务器，强迫cache确认。 （Squid直接转发请求到原始服务器）
+      <span class="number">7</span> TCP_MISS:NONE Squid没有请求资源的cache拷贝。（这指明Squid对本次请求，不会与任何其他服务器（邻居或原始服务器）通信）
+</pre></figure></code></pre>
+<p> 原文地址 h<a href="http://callaly.net/blog/archives/category/%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF/ttp://">http://callaly.net/blog/archives/category/%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF/ttp://</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/应用程序/">应用程序</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/squid/">squid</a>, <a href="/tags/日志/">日志</a>, <a href="/tags/详解/">详解</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/1032/">1032</a><small>1</small></li>
+  
+    <li><a href="/tags/1236/">1236</a><small>1</small></li>
+  
+    <li><a href="/tags/403/">403</a><small>1</small></li>
+  
+    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
+  
+    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
+  
+    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
+  
+    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
+  
+    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
+  
+    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
+  
+    <li><a href="/tags/acl/">acl</a><small>2</small></li>
+  
+    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
+  
+    <li><a href="/tags/apache/">apache</a><small>8</small></li>
+  
+    <li><a href="/tags/arp/">arp</a><small>1</small></li>
+  
+    <li><a href="/tags/awk/">awk</a><small>4</small></li>
+  
+    <li><a href="/tags/bash/">bash</a><small>2</small></li>
+  
+    <li><a href="/tags/best/">best</a><small>1</small></li>
+  
+    <li><a href="/tags/binding/">binding</a><small>1</small></li>
+  
+    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
+  
+    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
+  
+    <li><a href="/tags/browser/">browser</a><small>1</small></li>
+  
+    <li><a href="/tags/cache/">cache</a><small>1</small></li>
+  
+    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>8</small></li>
+  
+    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
+  
+    <li><a href="/tags/chown/">chown</a><small>1</small></li>
+  
+    <li><a href="/tags/commands/">commands</a><small>1</small></li>
+  
+    <li><a href="/tags/content/">content</a><small>1</small></li>
+  
+    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
+  
+    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
+  
+    <li><a href="/tags/creating/">creating</a><small>1</small></li>
+  
+    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
+  
+    <li><a href="/tags/dell/">dell</a><small>1</small></li>
+  
+    <li><a href="/tags/diff/">diff</a><small>1</small></li>
+  
+    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
+  
+    <li><a href="/tags/du/">du</a><small>1</small></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
+  
+    <li><a href="/tags/end/">end</a><small>1</small></li>
+  
+    <li><a href="/tags/epel/">epel</a><small>1</small></li>
+  
+    <li><a href="/tags/etag/">etag</a><small>1</small></li>
+  
+    <li><a href="/tags/expires/">expires</a><small>1</small></li>
+  
+    <li><a href="/tags/find/">find</a><small>1</small></li>
+  
+    <li><a href="/tags/for-1/">for</a><small>1</small></li>
+  
+    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
+  
+    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
+  
+    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
+  
+    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
+  
+    <li><a href="/tags/group/">group</a><small>1</small></li>
+  
+    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
+  
+    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
+  
+    <li><a href="/tags/howto/">howto</a><small>2</small></li>
+  
+    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
+  
+    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
+  
+    <li><a href="/tags/if/">if</a><small>2</small></li>
+  
+    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
+  
+    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
+  
+    <li><a href="/tags/init/">init</a><small>1</small></li>
+  
+    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
+  
+    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
+  
+    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
+  
+    <li><a href="/tags/jk/">jk</a><small>1</small></li>
+  
+    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
+  
+    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/kick/">kick</a><small>1</small></li>
+  
+    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>18</small></li>
+  
+    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
+  
+    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
+  
+    <li><a href="/tags/master/">master</a><small>2</small></li>
+  
+    <li><a href="/tags/metric/">metric</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
+  
+    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
+  
+    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
+  
+    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
+  
+    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
+  
+    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
+  
+    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
+  
+    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
+  
+    <li><a href="/tags/packet/">packet</a><small>1</small></li>
+  
+    <li><a href="/tags/pam/">pam</a><small>1</small></li>
+  
+    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
+  
+    <li><a href="/tags/perl/">perl</a><small>1</small></li>
+  
+    <li><a href="/tags/permission/">permission</a><small>1</small></li>
+  
+    <li><a href="/tags/php-1/">php</a><small>2</small></li>
+  
+    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
+  
+    <li><a href="/tags/pil/">pil</a><small>1</small></li>
+  
+    <li><a href="/tags/port/">port</a><small>1</small></li>
+  
+    <li><a href="/tags/practices/">practices</a><small>1</small></li>
+  
+    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
+  
+    <li><a href="/tags/ps/">ps</a><small>2</small></li>
+  
+    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
+  
+    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
+  
+    <li><a href="/tags/python-1/">python</a><small>3</small></li>
+  
+    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
+  
+    <li><a href="/tags/quick/">quick</a><small>1</small></li>
+  
+    <li><a href="/tags/r410/">r410</a><small>1</small></li>
+  
+    <li><a href="/tags/r710/">r710</a><small>1</small></li>
+  
+    <li><a href="/tags/raw/">raw</a><small>1</small></li>
+  
+    <li><a href="/tags/referer/">referer</a><small>1</small></li>
+  
+    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
+  
+    <li><a href="/tags/repo/">repo</a><small>1</small></li>
+  
+    <li><a href="/tags/resources/">resources</a><small>1</small></li>
+  
+    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
+  
+    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
+  
+    <li><a href="/tags/sar/">sar</a><small>1</small></li>
+  
+    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
+  
+    <li><a href="/tags/sed/">sed</a><small>4</small></li>
+  
+    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
+  
+    <li><a href="/tags/sending/">sending</a><small>1</small></li>
+  
+    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>2</small></li>
+  
+    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
+  
+    <li><a href="/tags/slave/">slave</a><small>2</small></li>
+  
+    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
+  
+    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
+  
+    <li><a href="/tags/spec/">spec</a><small>2</small></li>
+  
+    <li><a href="/tags/squid/">squid</a><small>1</small></li>
+  
+    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>1</small></li>
+  
+    <li><a href="/tags/tar/">tar</a><small>1</small></li>
+  
+    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
+  
+    <li><a href="/tags/tools/">tools</a><small>1</small></li>
+  
+    <li><a href="/tags/top/">top</a><small>1</small></li>
+  
+    <li><a href="/tags/tree/">tree</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
+  
+    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
+  
+    <li><a href="/tags/user/">user</a><small>2</small></li>
+  
+    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>2</small></li>
+  
+    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
+  
+    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/while/">while</a><small>1</small></li>
+  
+    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
+  
+    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
+  
+    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
+  
+    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
+  
+    <li><a href="/tags/yum/">yum</a><small>10</small></li>
+  
+    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
+  
+    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
+  
+    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
+  
+    <li><a href="/tags/优化/">优化</a><small>1</small></li>
+  
+    <li><a href="/tags/内核/">内核</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
+  
+    <li><a href="/tags/参考/">参考</a><small>1</small></li>
+  
+    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
+  
+    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
+  
+    <li><a href="/tags/对比/">对比</a><small>1</small></li>
+  
+    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
+  
+    <li><a href="/tags/日志/">日志</a><small>2</small></li>
+  
+    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
+  
+    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
+  
+    <li><a href="/tags/管理/">管理</a><small>1</small></li>
+  
+    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
+  
+    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
+  
+    <li><a href="/tags/老板/">老板</a><small>1</small></li>
+  
+    <li><a href="/tags/认证/">认证</a><small>1</small></li>
+  
+    <li><a href="/tags/详解/">详解</a><small>3</small></li>
+  
+    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
+  
+    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
+  
+    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

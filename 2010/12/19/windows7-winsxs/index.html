@@ -1,0 +1,582 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>给Windows7减肥如何将winsxs放到其他硬盘分区下 | Puppet-in-action</title>
+  <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="不知道大家注意过没有，在Vista和Windows 7系统盘的Windows目录下，有一个名为winscs的文件夹，对于整个Windows目录来说，这个文件夹就占用了其一半多的体积（近3GB）不但如此，随着系统使用时间的不断延长，winscs文件夹的体积还会变得更大，我的现在已经4G多了，这真是一块“赘肉”呀！想想看吧！对于系统盘空间本来就不很富裕的朋友来说，这快“赘肉”难免会拖慢系统的运行速度。如果仅仅是因为这个原因，就对硬盘重新分区以让系统盘的空间变得更大，接着重装系统，这也实在是太麻烦了！其实，我们可以采取一个更简单的方法，将winscs这一块“赘肉”扔到其他硬盘分区下，为系统盘腾出更大的未用空间从而让系统跑得更快。下面，笔者就以 Windows 7为例子，给大家介绍一下具体的操作步骤。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="给Windows7减肥如何将winsxs放到其他硬盘分区下"/>
+  <meta property="og:site_name" content="Puppet-in-action"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Puppet-in-action</a></h1>
+  <h2><a href="/">Puppet</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T09:57:32.000Z"><a href="/2010/12/19/windows7-winsxs/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title">给Windows7减肥如何将winsxs放到其他硬盘分区下</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>不知道大家注意过没有，在Vista和Windows 7系统盘的Windows目录下，有一个名为winscs的文件夹，对于整个Windows目录来说，这个文件夹就占用了其一半多的体积（近3GB）不但如此，随着系统使用时间的不断延长，winscs文件夹的体积还会变得更大，我的现在已经4G多了，这真是一块“赘肉”呀！想想看吧！对于系统盘空间本来就不很富裕的朋友来说，这快“赘肉”难免会拖慢系统的运行速度。如果仅仅是因为这个原因，就对硬盘重新分区以让系统盘的空间变得更大，接着重装系统，这也实在是太麻烦了！其实，我们可以采取一个更简单的方法，将winscs这一块“赘肉”扔到其他硬盘分区下，为系统盘腾出更大的未用空间从而让系统跑得更快。下面，笔者就以 Windows 7为例子，给大家介绍一下具体的操作步骤。</p>
+<a name="more"></a>
+
+<p>Tips：</p>
+<p>winscs文件夹的作用</p>
+<p>winscs是Vista/Windows 7的Windows目录下一个非常重要的文件夹，该文件夹里边有很多重要的组件，版本也很复杂，为了保证</p>
+<p>Windows的正常运行，里面的文件是不可删除的，这些文件夹支撑着mscorwks.dll，没有它们mscorwks也无法加载。如果强行删除后，</p>
+<p>可能只能以安全模式能勉强进入Windows，Windows也就“挂”了。</p>
+<p><strong>第一步：建立链接。</strong></p>
+<p>先从 <a href="http://technet.microsoft.com/zh-cn/bb897556.aspx">http://technet.microsoft.com/zh-cn/bb897556.aspx</a></p>
+<p>下载 “PendMoves 和 MoveFile”，然后将下载的名为“PendMoves”的</p>
+<p>ZIP格式压缩包解压到“c:\Windows\System32”目录下（c是系统盘，下同）；再单击菜单“开始—运行”，接着在弹出的“运行”对</p>
+<p>话框中出入Cmd并按下“Ctrl+Shift+Enter”快捷键，以管理员身份运行 Cmd，打开“命令提示符”窗口；最后窗口的光标处依次执行</p>
+<p>以下两条命令（每输入一条命令都要按下回车键，下同）</p>
+<p>cd \windows</p>
+<p>mklink winscs.link winscs.moved</p>
+<p>Tips：</p>
+<p>DOS命令“mklink /c winscs.link winscs.moved”的含义是建立一个指向winscs.moved的名为winscs.link的链接。</p>
+<p><strong>第二步：获取对winscs文件夹的完全控制权限。</strong></p>
+<p>双击桌面的“计算机”图标，依次定位到“c:\Windows”目录下；接着右击该目录下的“winscs”文件夹，选择“属性”，打开</p>
+<p>winscs属性的对话框的“安全”选项卡并单击该选项卡的“高级”按钮，然后在新弹出的“winscs的高级安全设置”对话框中切换到</p>
+<p>“所有者”选项卡并单击该选项卡的“编辑”按钮；再在弹出的对话框中选中“Administrators”选项并勾选“替换子容器和对象的</p>
+<p>所有者”复选框，最后单击“确定”按钮即可。</p>
+<p><strong>第三步：重命名和复制文件。</strong></p>
+<p>执行完第一步操作中的两条DOS命令后，接着在“命令提示符”窗口光标处依次执行以下两条命令：</p>
+<p>movefile c:\Windows\winscs c:\Windows\winscs.moved</p>
+<p>movefile c:\Windows\winscs.link c:\Windows\winscs</p>
+<p>Tips：</p>
+<p>这两条DOS命令的含义分别是：将“c:\Windows”目录下的“winscs”文件夹重命名为“winscs.moved”、将 “c:\Windows”目录下</p>
+<p>的“winscs.link”重命名为winscs。</p>
+<p>完成文件夹及文件的重命名工作后，接着重新启动系统，</p>
+<p>再将“c:\Windows”目录下的“winscs.moved”文件夹下的所有内容复制到系统盘以外某个硬盘分区的“Windows\winscs”目录下（</p>
+<p>如“D:\Windows\winscs”）即可。</p>
+<p><strong>第四步：建立关联及删除“winscs.moved”文件夹。</strong>再一次以管理员身份运行Cmd，然后在光标处依次执行以下三条命令：</p>
+<p>cd \windows</p>
+<p>rmdir winscs</p>
+<p>mklink /c winscs D:\windows\winscs</p>
+<p>后两条DOS命令的含义是：删除“c:\Windows”目录下名为“winscs”的链接，然后在新建一个与之同名的链接，指向 “D:\windows</p>
+<p>\winscs“目录下。</p>
+<p>完成指向“D:\windows\winscs”目录的名为 winscs 的新链接的创建工作后，接着再重启系统，最后将“c:\Windows”目录下的名为</p>
+<p>winscs.moved 的文件夹删除就可以了。</p>
+<p>将“赘肉”winscs文件夹扔到系统盘以外的其他分区下，从而为系统盘腾出更大的未用空间，Windows 7能够跑得更快这当然是理所当</p>
+<p>然的事情了。有此需要的朋友不妨一试。</p>
+<p>如果不小心把winscs删除了，可以这样恢复</p>
+<p>拿个系统盘然后在开始运行栏里输入sfc /scannow就可以进行修复</p>
+<p>参考：<a href="http://aspoc.net/archives/2007/12/05/how-to-move-the-winsxs-directory-in-vista/">http://aspoc.net/archives/2007/12/05/how-to-move-the-winsxs-directory-in-vista/</a></p>
+<p>其实官方也有。一时没有找到！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/生活乐事/">生活乐事</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/windows7/">windows7</a>, <a href="/tags/winsxs/">winsxs</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/1032/">1032</a><small>1</small></li>
+  
+    <li><a href="/tags/1236/">1236</a><small>1</small></li>
+  
+    <li><a href="/tags/403/">403</a><small>1</small></li>
+  
+    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
+  
+    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
+  
+    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
+  
+    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
+  
+    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
+  
+    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
+  
+    <li><a href="/tags/acl/">acl</a><small>2</small></li>
+  
+    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
+  
+    <li><a href="/tags/apache/">apache</a><small>8</small></li>
+  
+    <li><a href="/tags/arp/">arp</a><small>1</small></li>
+  
+    <li><a href="/tags/awk/">awk</a><small>4</small></li>
+  
+    <li><a href="/tags/bash/">bash</a><small>2</small></li>
+  
+    <li><a href="/tags/best/">best</a><small>1</small></li>
+  
+    <li><a href="/tags/binding/">binding</a><small>1</small></li>
+  
+    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
+  
+    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
+  
+    <li><a href="/tags/browser/">browser</a><small>1</small></li>
+  
+    <li><a href="/tags/cache/">cache</a><small>1</small></li>
+  
+    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>8</small></li>
+  
+    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
+  
+    <li><a href="/tags/chown/">chown</a><small>1</small></li>
+  
+    <li><a href="/tags/commands/">commands</a><small>1</small></li>
+  
+    <li><a href="/tags/content/">content</a><small>1</small></li>
+  
+    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
+  
+    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
+  
+    <li><a href="/tags/creating/">creating</a><small>1</small></li>
+  
+    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
+  
+    <li><a href="/tags/dell/">dell</a><small>1</small></li>
+  
+    <li><a href="/tags/diff/">diff</a><small>1</small></li>
+  
+    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
+  
+    <li><a href="/tags/du/">du</a><small>1</small></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
+  
+    <li><a href="/tags/end/">end</a><small>1</small></li>
+  
+    <li><a href="/tags/epel/">epel</a><small>1</small></li>
+  
+    <li><a href="/tags/etag/">etag</a><small>1</small></li>
+  
+    <li><a href="/tags/expires/">expires</a><small>1</small></li>
+  
+    <li><a href="/tags/find/">find</a><small>1</small></li>
+  
+    <li><a href="/tags/for-1/">for</a><small>1</small></li>
+  
+    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
+  
+    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
+  
+    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
+  
+    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
+  
+    <li><a href="/tags/group/">group</a><small>1</small></li>
+  
+    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
+  
+    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
+  
+    <li><a href="/tags/howto/">howto</a><small>2</small></li>
+  
+    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
+  
+    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
+  
+    <li><a href="/tags/if/">if</a><small>2</small></li>
+  
+    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
+  
+    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
+  
+    <li><a href="/tags/init/">init</a><small>1</small></li>
+  
+    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
+  
+    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
+  
+    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
+  
+    <li><a href="/tags/jk/">jk</a><small>1</small></li>
+  
+    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
+  
+    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/kick/">kick</a><small>1</small></li>
+  
+    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>18</small></li>
+  
+    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
+  
+    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
+  
+    <li><a href="/tags/master/">master</a><small>2</small></li>
+  
+    <li><a href="/tags/metric/">metric</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
+  
+    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
+  
+    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
+  
+    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
+  
+    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
+  
+    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
+  
+    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
+  
+    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
+  
+    <li><a href="/tags/packet/">packet</a><small>1</small></li>
+  
+    <li><a href="/tags/pam/">pam</a><small>1</small></li>
+  
+    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
+  
+    <li><a href="/tags/perl/">perl</a><small>1</small></li>
+  
+    <li><a href="/tags/permission/">permission</a><small>1</small></li>
+  
+    <li><a href="/tags/php-1/">php</a><small>2</small></li>
+  
+    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
+  
+    <li><a href="/tags/pil/">pil</a><small>1</small></li>
+  
+    <li><a href="/tags/port/">port</a><small>1</small></li>
+  
+    <li><a href="/tags/practices/">practices</a><small>1</small></li>
+  
+    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
+  
+    <li><a href="/tags/ps/">ps</a><small>2</small></li>
+  
+    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
+  
+    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
+  
+    <li><a href="/tags/python-1/">python</a><small>3</small></li>
+  
+    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
+  
+    <li><a href="/tags/quick/">quick</a><small>1</small></li>
+  
+    <li><a href="/tags/r410/">r410</a><small>1</small></li>
+  
+    <li><a href="/tags/r710/">r710</a><small>1</small></li>
+  
+    <li><a href="/tags/raw/">raw</a><small>1</small></li>
+  
+    <li><a href="/tags/referer/">referer</a><small>1</small></li>
+  
+    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
+  
+    <li><a href="/tags/repo/">repo</a><small>1</small></li>
+  
+    <li><a href="/tags/resources/">resources</a><small>1</small></li>
+  
+    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
+  
+    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
+  
+    <li><a href="/tags/sar/">sar</a><small>1</small></li>
+  
+    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
+  
+    <li><a href="/tags/sed/">sed</a><small>4</small></li>
+  
+    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
+  
+    <li><a href="/tags/sending/">sending</a><small>1</small></li>
+  
+    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>2</small></li>
+  
+    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
+  
+    <li><a href="/tags/slave/">slave</a><small>2</small></li>
+  
+    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
+  
+    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
+  
+    <li><a href="/tags/spec/">spec</a><small>2</small></li>
+  
+    <li><a href="/tags/squid/">squid</a><small>1</small></li>
+  
+    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>1</small></li>
+  
+    <li><a href="/tags/tar/">tar</a><small>1</small></li>
+  
+    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
+  
+    <li><a href="/tags/tools/">tools</a><small>1</small></li>
+  
+    <li><a href="/tags/top/">top</a><small>1</small></li>
+  
+    <li><a href="/tags/tree/">tree</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
+  
+    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
+  
+    <li><a href="/tags/user/">user</a><small>2</small></li>
+  
+    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>2</small></li>
+  
+    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
+  
+    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/while/">while</a><small>1</small></li>
+  
+    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
+  
+    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
+  
+    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
+  
+    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
+  
+    <li><a href="/tags/yum/">yum</a><small>10</small></li>
+  
+    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
+  
+    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
+  
+    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
+  
+    <li><a href="/tags/优化/">优化</a><small>1</small></li>
+  
+    <li><a href="/tags/内核/">内核</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
+  
+    <li><a href="/tags/参考/">参考</a><small>1</small></li>
+  
+    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
+  
+    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
+  
+    <li><a href="/tags/对比/">对比</a><small>1</small></li>
+  
+    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
+  
+    <li><a href="/tags/日志/">日志</a><small>2</small></li>
+  
+    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
+  
+    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
+  
+    <li><a href="/tags/管理/">管理</a><small>1</small></li>
+  
+    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
+  
+    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
+  
+    <li><a href="/tags/老板/">老板</a><small>1</small></li>
+  
+    <li><a href="/tags/认证/">认证</a><small>1</small></li>
+  
+    <li><a href="/tags/详解/">详解</a><small>3</small></li>
+  
+    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
+  
+    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
+  
+    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,909 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>howtoforge | Puppet-in-action</title>
+  <meta name="author" content="Liu Yu">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Puppet-in-action"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Puppet-in-action</a></h1>
+  <h2><a href="/">Puppet</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title category">howtoforge</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:11:47.000Z"><a href="/2010/12/19/howto-use-dstat-monitoring-linux-system-resources/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/howto-use-dstat-monitoring-linux-system-resources/">Howto Use Dstat Monitoring Linux System Resources</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>官方网站：<a href="http://dag.wieers.com/rpm/packages/dstat/">http://dag.wieers.com/rpm/packages/dstat/</a></p>
+<p>Dstat的安装：</p>
+<pre><code><figure class="highlight"><pre><span class="comment">wget</span> <span class="comment">http://dag</span>.<span class="comment">wieers</span>.<span class="comment">com/rpm/packag</span> <span class="string">.</span><span class="string">.</span><span class="string">.</span> <span class="comment">1</span>.<span class="comment">rh7</span>.<span class="comment">rf</span>.<span class="comment">noarch</span>.<span class="comment">rpm</span>
+<span class="comment">rpm</span> <span class="literal">-</span><span class="comment">ivh</span> <span class="comment">dstat</span>-<span class="comment">0</span>.<span class="comment">6</span>.<span class="comment">7</span>-<span class="comment">1</span>.<span class="comment">rh7</span>.<span class="comment">rf</span>.<span class="comment">noarch</span>.<span class="comment">rpm</span>
+<span class="comment">wget</span>  <span class="comment">http://dag</span>.<span class="comment">wieers</span>.<span class="comment">com/home</span>-<span class="comment">made/dstat/dstat</span>-<span class="comment">0</span>.<span class="comment">7</span>.<span class="comment">2</span>.<span class="comment">tar</span>.<span class="comment">bz2</span> <span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">Dstat的使用：</span>
+<span class="comment">安装完成后，执行</span> <span class="comment">dstat</span> <span class="comment">命令，默认情况它会收集</span>-<span class="comment">cpu</span>-<span class="comment">、</span>-<span class="comment">disk</span>-<span class="comment">、</span>-<span class="comment">net</span>-<span class="comment">、－paging</span>-<span class="comment">、</span>-<span class="comment">system</span>-<span class="comment">的数据，一秒钟收集一次。</span>
+<span class="comment">默认输入</span> <span class="comment">dstat</span> <span class="comment">等于输入了dstat</span> <span class="literal">-</span><span class="comment">cdngy</span> <span class="comment">1或dstat</span> <span class="literal">-</span><span class="comment">a</span> <span class="comment">1；</span>
+<span class="comment">推荐使用</span> <span class="comment">date</span> <span class="comment">&amp;amp;&amp;amp;</span> <span class="comment">dstat</span> <span class="literal">-</span><span class="comment">tclmdny</span> <span class="comment">60</span> <span class="comment">一分钟监视一次（注意调节显示的宽度，或去掉</span>-<span class="comment">t选项）。</span>
+
+<span class="title">[</span><span class="comment">!</span>[<span class="title">]</span><span class="comment">(http://bubbyroom</span>.<span class="comment">com/wp</span>-<span class="comment">content/uploads/2010/12/dstat</span>.<span class="comment">png</span> <span class="comment">"dstat")</span>]<span class="comment">(http://bubbyroom</span>.<span class="comment">com/wp</span>-<span class="comment">content/uploads/2010/12/dstat</span>.<span class="comment">png)</span>
+
+<span class="comment">于SysStat相比，Dstat拥有一个彩色的界面，在手动观察性能状况时，数据比较显眼容易观察；</span>
+<span class="comment">而且Dstat支持即时刷新，譬如：输入</span> <span class="comment">dstat</span> <span class="comment">3，即每三秒收集一次，但最新的数据都会每秒刷新显示。</span>
+<span class="comment">和SysStat相同的是，Dstat也可以收集指定的性能资源。譬如</span> <span class="comment">dstat</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">即显示CPU的使用情况。</span>
+<span class="comment">Dstat</span> <span class="comment">options:</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span>-<span class="comment">c</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">cpu</span> <span class="comment">显示CPU情况</span>
+<span class="literal">-</span><span class="comment">C</span> <span class="comment">0</span>,<span class="comment">3</span>,<span class="comment">total</span> <span class="comment">include</span> <span class="comment">cpu0</span>, <span class="comment">cpu3</span> <span class="comment">and</span> <span class="comment">total</span>
+<span class="literal">-</span><span class="comment">d</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">disk</span> <span class="comment">显示磁盘情况</span>
+<span class="literal">-</span><span class="comment">D</span> <span class="comment">total</span>,<span class="comment">hda</span> <span class="comment">include</span> <span class="comment">hda</span> <span class="comment">and</span> <span class="comment">total</span>
+<span class="literal">-</span><span class="comment">g</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">page</span> <span class="comment">enable</span> <span class="comment">page</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="comment">i</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">int</span> <span class="comment">enable</span> <span class="comment">interrupt</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="comment">I</span> <span class="comment">5</span>,<span class="comment">eth2</span> <span class="comment">include</span> <span class="comment">int5</span> <span class="comment">and</span> <span class="comment">interrupt</span> <span class="comment">used</span> <span class="comment">by</span> <span class="comment">eth2</span>
+<span class="literal">-</span><span class="comment">l</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">load</span> <span class="comment">enable</span> <span class="comment">load</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="comment">m</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">mem</span> <span class="comment">显示内存情况</span>
+<span class="literal">-</span><span class="comment">n</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">net</span> <span class="comment">显示网络情况</span>
+<span class="literal">-</span><span class="comment">N</span> <span class="comment">eth1</span>,<span class="comment">total</span> <span class="comment">可以指定网络接口</span>
+<span class="literal">-</span><span class="comment">p</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">proc</span> <span class="comment">enable</span> <span class="comment">process</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="comment">s</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">swap</span> <span class="comment">显示swap情况</span>
+<span class="literal">-</span><span class="comment">S</span> <span class="comment">swap1</span>,<span class="comment">total</span> <span class="comment">可以指定多个swap</span>
+<span class="literal">-</span><span class="comment">t</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">time</span> <span class="comment">enable</span> <span class="comment">time</span> <span class="comment">counter</span>
+<span class="literal">-</span><span class="comment">y</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">sys</span> <span class="comment">enable</span> <span class="comment">system</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">ipc</span> <span class="comment">报告IPC消息队列和信号量的使用情况</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">lock</span> <span class="comment">enable</span> <span class="comment">lock</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">raw</span> <span class="comment">enable</span> <span class="comment">raw</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">tcp</span> <span class="comment">enable</span> <span class="comment">tcp</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">udp</span> <span class="comment">enable</span> <span class="comment">udp</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">unix</span> <span class="comment">enable</span> <span class="comment">unix</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="comment">M</span> <span class="comment">stat1</span>,<span class="comment">stat2</span> <span class="comment">enable</span> <span class="comment">external</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">mods</span> <span class="comment">stat1</span>,<span class="comment">stat2</span>
+<span class="literal">-</span><span class="comment">a</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">all</span> <span class="comment">使用</span>-<span class="comment">cdngy</span> <span class="comment">缺省的就是这样显示</span>
+<span class="literal">-</span><span class="comment">f</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">full</span> <span class="comment">使用</span> <span class="literal">-</span><span class="comment">C</span>, <span class="literal">-</span><span class="comment">D</span>, <span class="literal">-</span><span class="comment">I</span>, <span class="literal">-</span><span class="comment">N</span> <span class="comment">and</span> <span class="literal">-</span><span class="comment">S</span> <span class="comment">显示</span>
+<span class="literal">-</span><span class="comment">v</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">vmstat</span> <span class="comment">使用</span>-<span class="comment">pmgdsc</span> <span class="literal">-</span><span class="comment">D</span> <span class="comment">显示</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">integer</span> <span class="comment">show</span> <span class="comment">integer</span> <span class="comment">values</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">nocolor</span> <span class="comment">disable</span> <span class="comment">colors</span> <span class="comment">(implies</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">noupdate)</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">noheaders</span> <span class="comment">只显示一次表头以后就不显示了</span>,<span class="comment">使用重定向写入文件时很有用</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">noupdate</span> <span class="comment">disable</span> <span class="comment">intermediate</span> <span class="comment">updates</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">output</span> <span class="comment">file</span> <span class="comment">写入到CVS文件中`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">上个运行结果：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`#</span> <span class="comment">dstat</span>
+<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">total</span>-<span class="comment">cpu</span>-<span class="comment">usage</span>-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span> <span class="literal">-</span><span class="comment">dsk/total</span>- <span class="literal">-</span><span class="comment">net/total</span>- <span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">paging</span>-<span class="literal">-</span> <span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">system</span>-<span class="literal">-</span>
+<span class="comment">usr</span> <span class="comment">sys</span> <span class="comment">idl</span> <span class="comment">wai</span> <span class="comment">hiq</span> <span class="comment">siq|_read</span> <span class="comment">_writ|_recv</span> <span class="comment">_send|__in_</span> <span class="comment">_out_|_int_</span> <span class="comment">_csw_</span>
+<span class="comment">13</span> <span class="comment">49</span> <span class="comment">29</span> <span class="comment">8</span> <span class="comment">1</span> <span class="comment">1|</span> <span class="comment">424k</span> <span class="comment">23k|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">275</span> <span class="comment">200</span>
+<span class="comment">0</span> <span class="comment">1</span> <span class="comment">95</span> <span class="comment">3</span> <span class="comment">0</span> <span class="comment">1|8192B</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">297B</span> <span class="comment">70B|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">241</span> <span class="comment">33</span>
+<span class="comment">0</span> <span class="comment">1</span> <span class="comment">99</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">0|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">92B</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">243</span> <span class="comment">14</span>
+<span class="comment">0</span> <span class="comment">1</span> <span class="comment">99</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">0|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">395B</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">244</span> <span class="comment">20`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">很简单，一看就明白了，</span>
+<span class="comment">要说明的是如果当usr和sys的数值大于80时说明cpu的负载过重，这个软件和vmstat很像</span>,
+<span class="comment">不过和vmstat相比好像少了io部份的显示dstat只能显示磁盘的吞吐量而不是显示负载情况，</span>
+<span class="comment">dstat和几乎所有监控软件一样，只能对整个系统进行监控而不能对某一个进程或某一个程序进行深入分析。</span>
+<span class="comment">如果你知道如何设置，请通知我。</span>
+<span class="comment">我常使用的参数是</span>
+<span class="comment">dstat</span> <span class="literal">-</span><span class="comment">cdlmnpsy</span>
+<span class="comment">在1024×768的屏幕上正好全部显示出来，最好是将上面的命令设置成别名</span>
+<span class="comment">alias</span> <span class="comment">dstat='dstat</span> <span class="literal">-</span><span class="comment">cdlmnpsy'</span>
+
+<span class="comment">常用命令</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`dstat</span> <span class="literal">-</span><span class="comment">cndymlp</span> <span class="literal">-</span><span class="comment">N</span> <span class="comment">total</span> <span class="literal">-</span><span class="comment">D</span> <span class="comment">total</span> <span class="comment">525</span> <span class="comment">统计CPU</span>,<span class="comment">IO</span> <span class="string">,</span><span class="comment">network</span>,<span class="comment">system</span> <span class="comment">load</span>
+<span class="comment">dstat</span> <span class="literal">-</span><span class="comment">cdnsil</span> <span class="literal">-</span><span class="comment">D</span> <span class="comment">hda</span> <span class="literal">-</span><span class="comment">N</span> <span class="comment">eth1</span> <span class="comment">统计网卡1的信息</span>
+<span class="comment">dstat</span> <span class="comment">–vmstat</span> <span class="comment">内存使用情况
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:32:25.000Z"><a href="/2010/12/19/rhel-use-centos-yum/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/rhel-use-centos-yum/">rhel howto use centos yum ?</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>rhel服务器可以使用yum更新，但需要先卸载原先的yum，并且安装新的yum，然后可以更新。</p>
+<p>1 卸载原先的yum
+rpm -aq|grep yum|xargs rpm -e --nodeps
+如果有卸载不了的，试试 --nodeps
+如果是定义的安装包，试试 --allmatches</p>
+<p>2 下载新的yum，并且安装</p>
+<pre><code><figure class="highlight"><pre>wget http://centos<span class="preprocessor">.ustc</span><span class="preprocessor">.edu</span><span class="preprocessor">.cn</span>/centos/<span class="number">5.3</span>/os/i386/CentOS/yum-<span class="number">3.2</span><span class="number">.19</span>-<span class="number">18.</span>el5<span class="preprocessor">.centos</span><span class="preprocessor">.noarch</span><span class="preprocessor">.rpm</span>
+wget http://centos<span class="preprocessor">.ustc</span><span class="preprocessor">.edu</span><span class="preprocessor">.cn</span>/centos/<span class="number">5.3</span>/os/i386/CentOS/yum-metadata-parser-<span class="number">1.1</span><span class="number">.2</span>-<span class="number">2.</span>el5<span class="preprocessor">.i</span>386<span class="preprocessor">.rpm</span>
+wget http://mirror<span class="preprocessor">.centos</span><span class="preprocessor">.org</span>/centos-<span class="number">5</span>/<span class="number">5.3</span>/os/i386/CentOS/yum-fastestmirror-<span class="number">1.1</span><span class="number">.16</span>-<span class="number">13.</span>el5<span class="preprocessor">.centos</span><span class="preprocessor">.noarch</span><span class="preprocessor">.rpm</span>
+rpm -ivh yum-*`&lt;/pre&gt;
+
+<span class="number">4</span> 更改yum源
+&lt;pre&gt;`cd /etc/yum<span class="preprocessor">.repos</span><span class="preprocessor">.d</span>/
+wget http://docs<span class="preprocessor">.linuxtone</span><span class="preprocessor">.org</span>/soft/lemp/CentOS-Base<span class="preprocessor">.repo</span>`&lt;/pre&gt;
+
+注：别的 centos源要把repo文件里的 $releasever 换成版本号，比如换成<span class="number">5</span>
+引用
+&lt;pre&gt;`baseurl=http://centos<span class="preprocessor">.ustc</span><span class="preprocessor">.edu</span><span class="preprocessor">.cn</span>/centos/$releasever/os/$basearch/
+变成：
+baseurl=http://centos<span class="preprocessor">.ustc</span><span class="preprocessor">.edu</span><span class="preprocessor">.cn</span>/centos/<span class="number">5</span>/os/$basearch/
+</pre></figure></code></pre>
+<p>5 全部更新
+yum -y update</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:15:12.000Z"><a href="/2010/12/19/tcpdump-exclude-port/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/tcpdump-exclude-port/">tcpdump过滤某个端口</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>TcpDump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供 and、or、not等逻辑语句来帮助你去掉无用的信息。tcpdump就是一种免费的网络分析工具</p>
+<p>一般我们使用Tcpdump时都是使用：</p>
+<pre><code><figure class="highlight"><pre><span class="xml">tcpdump -i ethx `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+这样可以查看网卡ethx上的所有数据包传送过程，但你会发现相当的多。你都看不过来。因此我们需要过滤。
+
+下面这条命令就是查看</span><span class="number">80</span><span class="xml">端口的访问量，进行排序，取前</span><span class="number">20</span><span class="xml">位
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tcpdump -i eth0 -tnn dst port </span><span class="number">80</span><span class="xml"> -c </span><span class="number">1000</span><span class="xml"> | awk -F"." '{print </span><span class="variable">$1</span><span class="xml">"."</span><span class="variable">$2</span><span class="xml">"."</span><span class="variable">$3</span><span class="xml">"."</span><span class="variable">$4}</span><span class="xml">' | sort | uniq -c | sort -nr |head -</span><span class="number">20</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+但也可以使用过滤某个端口的方法进行查看
+如：过滤掉</span><span class="number">22</span><span class="xml">端口
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tcpdump -i eth1  -s </span><span class="number">1500</span><span class="xml"> port not </span><span class="number">22</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+过滤</span><span class="number">22</span><span class="xml">和</span><span class="number">53</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tcpdump -i eth1  -s </span><span class="number">1500</span><span class="xml"> port not </span><span class="number">22</span><span class="xml"> and port not </span><span class="number">53</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+过滤</span><span class="number">22</span><span class="xml">并指定来源ip
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tcpdump -i eth1 port not </span><span class="number">22</span><span class="xml"> and host </span><span class="number">1.2</span><span class="xml"></span><span class="number">.3</span><span class="xml"></span><span class="number">.4</span><span class="xml"> </span>
+</pre></figure></code></pre>
+<p>参考：
+<a href="http://www.cyberciti.biz/faq/linux-monitor-all-network-traffic-except-ssh-port-22/">http://www.cyberciti.biz/faq/linux-monitor-all-network-traffic-except-ssh-port-22/</a>
+<a href="http://www.opendoc.com.cn/linuxtools/system_command.html">http://www.opendoc.com.cn/linuxtools/system_command.html</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T05:59:13.000Z"><a href="/2010/12/18/ubuntu-install-smokeping/">12月 18 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/18/ubuntu-install-smokeping/">ubuntu install smokeping</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>aptitude install rrdtool apache2 fping echoping libapache2-mod-speedycgi libwww-perl libsocket6-perl libnet-telnet-perl libnet-dns-perl libnet-ldap-perl libio-socket-ssl-perl libauthen-radius-perl libcgi-perl librrds-perl librrdp-perl
+apt-get install smokeping
+<a href="http://［IP］/cgi-bin/smokeping.cgi">http://［IP］/cgi-bin/smokeping.cgi</a></p>
+<p>配置smokeping,添加监控主机。/etc/smokeping/config.d/ Targets
+ubuntu 的iptables 不同于linux
+iptables -F
+iptables -X</p>
+<p>自动会生效，就关闭了iptables</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T00:06:53.000Z"><a href="/2010/12/18/nginx-perl-fcgi-nagios/">12月 18 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/18/nginx-perl-fcgi-nagios/">Nginx perl fcgi 配置nagios</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Nginx8 + nagios3.2 +perl fcgi</p>
+<p>通常使用：nginx 代理+ apache CGI部分交给apache来处理
+本文取消apache 改为nginx自己处理</p>
+<p>Nginx nagios 安装略</p>
+<p>安装perl cgi模块</p>
+<pre><code><figure class="highlight"><pre>wget http://www<span class="preprocessor">.cpan</span><span class="preprocessor">.org</span>/modules/by-module/FCGI/FCGI-<span class="number">0.67</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
+tar -zxvf FCGI-<span class="number">0.67</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
+cd FCGI-<span class="number">0.67</span>
+perl Makefile<span class="preprocessor">.PL</span>
+make &amp;amp<span class="comment">;&amp;amp; make install</span>
+`&lt;/pre&gt;
+&lt;!--more--&gt;
+
+安装FCGI-ProcManager:
+&lt;pre&gt;`wget http://search<span class="preprocessor">.cpan</span><span class="preprocessor">.org</span>/CPAN/authors/id/G/GB/GBJK/FCGI-ProcManager-<span class="number">0.18</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
+tar -xzxf FCGI-ProcManager-<span class="number">0.18</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
+cd FCGI-ProcManager-<span class="number">0.18</span>
+perl Makefile<span class="preprocessor">.PL</span>
+make      make install
+`&lt;/pre&gt;
+下载nginx-fcgi脚本
+Wget http://www<span class="preprocessor">.nginx</span><span class="preprocessor">.eu</span>/nginx-fcgi/nginx-fcgi<span class="preprocessor">.txt</span>
+放置在：/etc/nginx-fcgi
+启动方法：
+/etc/nginx-fcgi –l /var/log/nginx/nginx-fcgi<span class="preprocessor">.log</span> -pid /var/run/nginx-fcgi<span class="preprocessor">.pid</span> -S /var/run/nginx-fcgi<span class="preprocessor">.sock</span>
+注意给 nginx-fcgi<span class="preprocessor">.sock</span> <span class="number">777</span>的权限
+
+**运行前使用cpan 安装 FCGI<span class="comment">;Getopt::Long;IO::All;Socket;**</span>
+
+配置文件参考：/usr/local/nginx/conf/vhosts/nagios<span class="preprocessor">.conf</span>
+&lt;pre&gt;`server
+{
+listen <span class="number">80</span><span class="comment">;</span>
+server_name IP<span class="comment">;</span>
+root /usr/local/nagios/share<span class="comment">;</span>
+index index<span class="preprocessor">.php</span><span class="comment">;</span>
+location ~ .*\.(php|php5)?$
+{
+fastcgi_pass <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9000</span><span class="comment">;</span>
+fastcgi_index index<span class="preprocessor">.php</span><span class="comment">;</span>
+include enable_php5<span class="preprocessor">.conf</span><span class="comment">;</span>
+auth_basic <span class="string">"Nagios Login pain"</span><span class="comment">;</span>
+auth_basic_user_file /usr/local/nagios/etc/htpasswd<span class="comment">;</span>
+}
+location ~ .*\<span class="preprocessor">.cgi</span>$ {
+root /usr/local/nagios/sbin<span class="comment">;</span>
+rewrite ^/nagios/cgi-bin/(.*)\<span class="preprocessor">.cgi</span> /$<span class="number">1.</span>cgi <span class="keyword">break</span><span class="comment">;</span>
+fastcgi_pass unix:/var/run/ng-fcgi<span class="preprocessor">.sock</span><span class="comment">;</span>
+fastcgi_index index<span class="preprocessor">.cgi</span><span class="comment">;</span>
+fastcgi_param SCRIPT_FILENAME /usr/local/nagios/sbin/$fastcgi_script_name<span class="comment">;</span>
+fastcgi_param HTTP_ACCEPT_LANGUAGE <span class="built_in">zh</span>-cn<span class="comment">;</span>
+include enable_php5<span class="preprocessor">.conf</span><span class="comment">;</span>
+auth_basic <span class="string">"Nagios Login pain"</span><span class="comment">;</span>
+auth_basic_user_file /usr/local/nagios/etc/htpasswd<span class="comment">;</span>
+}
+location /nagios/ {
+alias /usr/local/nagios/share/<span class="comment">;</span>
+}
+`&lt;/pre&gt;
+enable_php5<span class="preprocessor">.conf</span> 参考：
+&lt;pre&gt;`fastcgi_param GATEWAY_INTERFACE CGI/<span class="number">1.1</span><span class="comment">;</span>
+fastcgi_param SERVER_SOFTWARE nginx<span class="comment">;</span>
+fastcgi_param QUERY_STRING $query_string<span class="comment">;</span>
+fastcgi_param REQUEST_METHOD $request_method<span class="comment">;</span>
+fastcgi_param CONTENT_TYPE $content_type<span class="comment">;</span>
+fastcgi_param CONTENT_LENGTH $content_length<span class="comment">;</span>
+fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name<span class="comment">;</span>
+fastcgi_param SCRIPT_NAME $fastcgi_script_name<span class="comment">;</span>
+fastcgi_param REQUEST_URI $request_uri<span class="comment">;</span>
+fastcgi_param DOCUMENT_URI $document_uri<span class="comment">;</span>
+fastcgi_param DOCUMENT_ROOT $document_root<span class="comment">;</span>
+fastcgi_param SERVER_PROTOCOL $server_protocol<span class="comment">;</span>
+fastcgi_param REMOTE_ADDR $remote_addr<span class="comment">;</span>
+fastcgi_param REMOTE_PORT $remote_port<span class="comment">;</span>
+fastcgi_param SERVER_ADDR $server_addr<span class="comment">;</span>
+fastcgi_param SERVER_PORT $server_port<span class="comment">;</span>
+fastcgi_param SERVER_NAME $server_name<span class="comment">;</span>
+fastcgi_param HTTP_ACCEPT_ENCODING gzip,deflate<span class="comment">;</span>
+</pre></figure></code></pre>
+<p>参考：<a href="http://bbs.linuxtone.org/thread-4441-1-1.html">http://bbs.linuxtone.org/thread-4441-1-1.html</a>
+<a href="http://www.nginx.eu/nginx-fcgi.html">http://www.nginx.eu/nginx-fcgi.html</a>
+<a href="http://wiki.nginx.org/NginxSimpleCGI">http://wiki.nginx.org/NginxSimpleCGI</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T23:41:40.000Z"><a href="/2010/12/18/centos-yum-nginx-php-fpm-mysql/">12月 18 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/18/centos-yum-nginx-php-fpm-mysql/">Centos Yum Nginx Php-fpm Mysql</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天发现了个好东西
+<a href="http://centos.alt.ru/pub/repository/centos/5/i386/">http://centos.alt.ru/pub/repository/centos/5/i386/</a>
+<a href="http://centos.alt.ru/pub/repository/centos/5/x86_64/">http://centos.alt.ru/pub/repository/centos/5/x86_64/</a>
+现在，我们可以快速全自动搞定 CentOS + Nginx + PHP-FPM + MySQL 的安装了</p>
+<p>先新建一个 repo</p>
+<h1>vi /etc/yum.repos.d/alt.ru.repo</h1>
+<pre><code><figure class="highlight"><pre><span class="title">[CentALT]</span>
+<span class="setting">name=<span class="value">CentALT Packages for Enterprise Linux <span class="number">5</span> - $basearch</span></span>
+<span class="setting">baseurl=<span class="value">http://centos.alt.ru/repository/centos/<span class="number">5</span>/$basearch/</span></span>
+<span class="setting">enabled=<span class="value"><span class="number">1</span></span></span>
+<span class="setting">gpgcheck=<span class="value"><span class="number">0</span></span></span>
+<span class="setting">protect=<span class="value"><span class="number">1</span></span></span>
+</pre></figure></code></pre>
+<p>启用 EPEL repo
+i386
+rpm -ihv <a href="http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm">http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm</a>
+x86_64
+rpm -ihv <a href="http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-3.noarch.rpm">http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-3.noarch.rpm</a>
+好了，一键安装</p>
+<h1>yum install nginx php-fpm mysql mysql-server</h1>
+<p>爽吧！</p>
+<p>更完整的安装
+yum -y update
+yum -y mysql mysql-server
+mysqladmin -u root password root
+yum -y install nginx php-fpm php-cli php-pdo php-mysql php-mcrypt php-mbstring php-gd php-tidy php-xml php-xmlrpc php-pear php-pecl-memcache php-eaccelerator</p>
+<h1>APC 和 eAccelerator 有冲突，2选1</h1>
+<p>yum -y install php-pecl-apc</p>
+<p>看下我的完整安装，只要一句
+yum -y install nginx mysql mysql-server php-fpm php-cli php-pdo php-mysql php-mcrypt php-mbstring php-gd php-tidy php-xml php-xmlrpc php-pear php-pecl-memcache php-eaccelerator</p>
+<p>引用：<a href="http://www.21andy.com/blog/20100219/1703.html">http://www.21andy.com/blog/20100219/1703.html</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/1032/">1032</a><small>1</small></li>
+  
+    <li><a href="/tags/1236/">1236</a><small>1</small></li>
+  
+    <li><a href="/tags/403/">403</a><small>1</small></li>
+  
+    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
+  
+    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
+  
+    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
+  
+    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
+  
+    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
+  
+    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
+  
+    <li><a href="/tags/acl/">acl</a><small>2</small></li>
+  
+    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
+  
+    <li><a href="/tags/apache/">apache</a><small>8</small></li>
+  
+    <li><a href="/tags/arp/">arp</a><small>1</small></li>
+  
+    <li><a href="/tags/awk/">awk</a><small>4</small></li>
+  
+    <li><a href="/tags/bash/">bash</a><small>2</small></li>
+  
+    <li><a href="/tags/best/">best</a><small>1</small></li>
+  
+    <li><a href="/tags/binding/">binding</a><small>1</small></li>
+  
+    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
+  
+    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
+  
+    <li><a href="/tags/browser/">browser</a><small>1</small></li>
+  
+    <li><a href="/tags/cache/">cache</a><small>1</small></li>
+  
+    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>8</small></li>
+  
+    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
+  
+    <li><a href="/tags/chown/">chown</a><small>1</small></li>
+  
+    <li><a href="/tags/commands/">commands</a><small>1</small></li>
+  
+    <li><a href="/tags/content/">content</a><small>1</small></li>
+  
+    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
+  
+    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
+  
+    <li><a href="/tags/creating/">creating</a><small>1</small></li>
+  
+    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
+  
+    <li><a href="/tags/dell/">dell</a><small>1</small></li>
+  
+    <li><a href="/tags/diff/">diff</a><small>1</small></li>
+  
+    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
+  
+    <li><a href="/tags/du/">du</a><small>1</small></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
+  
+    <li><a href="/tags/end/">end</a><small>1</small></li>
+  
+    <li><a href="/tags/epel/">epel</a><small>1</small></li>
+  
+    <li><a href="/tags/etag/">etag</a><small>1</small></li>
+  
+    <li><a href="/tags/expires/">expires</a><small>1</small></li>
+  
+    <li><a href="/tags/find/">find</a><small>1</small></li>
+  
+    <li><a href="/tags/for-1/">for</a><small>1</small></li>
+  
+    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
+  
+    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
+  
+    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
+  
+    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
+  
+    <li><a href="/tags/group/">group</a><small>1</small></li>
+  
+    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
+  
+    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
+  
+    <li><a href="/tags/howto/">howto</a><small>2</small></li>
+  
+    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
+  
+    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
+  
+    <li><a href="/tags/if/">if</a><small>2</small></li>
+  
+    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
+  
+    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
+  
+    <li><a href="/tags/init/">init</a><small>1</small></li>
+  
+    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
+  
+    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
+  
+    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
+  
+    <li><a href="/tags/jk/">jk</a><small>1</small></li>
+  
+    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
+  
+    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/kick/">kick</a><small>1</small></li>
+  
+    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>18</small></li>
+  
+    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
+  
+    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
+  
+    <li><a href="/tags/master/">master</a><small>2</small></li>
+  
+    <li><a href="/tags/metric/">metric</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
+  
+    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
+  
+    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
+  
+    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
+  
+    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
+  
+    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
+  
+    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
+  
+    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
+  
+    <li><a href="/tags/packet/">packet</a><small>1</small></li>
+  
+    <li><a href="/tags/pam/">pam</a><small>1</small></li>
+  
+    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
+  
+    <li><a href="/tags/perl/">perl</a><small>1</small></li>
+  
+    <li><a href="/tags/permission/">permission</a><small>1</small></li>
+  
+    <li><a href="/tags/php-1/">php</a><small>2</small></li>
+  
+    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
+  
+    <li><a href="/tags/pil/">pil</a><small>1</small></li>
+  
+    <li><a href="/tags/port/">port</a><small>1</small></li>
+  
+    <li><a href="/tags/practices/">practices</a><small>1</small></li>
+  
+    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
+  
+    <li><a href="/tags/ps/">ps</a><small>2</small></li>
+  
+    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
+  
+    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
+  
+    <li><a href="/tags/python-1/">python</a><small>3</small></li>
+  
+    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
+  
+    <li><a href="/tags/quick/">quick</a><small>1</small></li>
+  
+    <li><a href="/tags/r410/">r410</a><small>1</small></li>
+  
+    <li><a href="/tags/r710/">r710</a><small>1</small></li>
+  
+    <li><a href="/tags/raw/">raw</a><small>1</small></li>
+  
+    <li><a href="/tags/referer/">referer</a><small>1</small></li>
+  
+    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
+  
+    <li><a href="/tags/repo/">repo</a><small>1</small></li>
+  
+    <li><a href="/tags/resources/">resources</a><small>1</small></li>
+  
+    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
+  
+    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
+  
+    <li><a href="/tags/sar/">sar</a><small>1</small></li>
+  
+    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
+  
+    <li><a href="/tags/sed/">sed</a><small>4</small></li>
+  
+    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
+  
+    <li><a href="/tags/sending/">sending</a><small>1</small></li>
+  
+    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>2</small></li>
+  
+    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
+  
+    <li><a href="/tags/slave/">slave</a><small>2</small></li>
+  
+    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
+  
+    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
+  
+    <li><a href="/tags/spec/">spec</a><small>2</small></li>
+  
+    <li><a href="/tags/squid/">squid</a><small>1</small></li>
+  
+    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>1</small></li>
+  
+    <li><a href="/tags/tar/">tar</a><small>1</small></li>
+  
+    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
+  
+    <li><a href="/tags/tools/">tools</a><small>1</small></li>
+  
+    <li><a href="/tags/top/">top</a><small>1</small></li>
+  
+    <li><a href="/tags/tree/">tree</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
+  
+    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
+  
+    <li><a href="/tags/user/">user</a><small>2</small></li>
+  
+    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>2</small></li>
+  
+    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
+  
+    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/while/">while</a><small>1</small></li>
+  
+    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
+  
+    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
+  
+    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
+  
+    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
+  
+    <li><a href="/tags/yum/">yum</a><small>10</small></li>
+  
+    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
+  
+    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
+  
+    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
+  
+    <li><a href="/tags/优化/">优化</a><small>1</small></li>
+  
+    <li><a href="/tags/内核/">内核</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
+  
+    <li><a href="/tags/参考/">参考</a><small>1</small></li>
+  
+    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
+  
+    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
+  
+    <li><a href="/tags/对比/">对比</a><small>1</small></li>
+  
+    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
+  
+    <li><a href="/tags/日志/">日志</a><small>2</small></li>
+  
+    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
+  
+    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
+  
+    <li><a href="/tags/管理/">管理</a><small>1</small></li>
+  
+    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
+  
+    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
+  
+    <li><a href="/tags/老板/">老板</a><small>1</small></li>
+  
+    <li><a href="/tags/认证/">认证</a><small>1</small></li>
+  
+    <li><a href="/tags/详解/">详解</a><small>3</small></li>
+  
+    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
+  
+    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
+  
+    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

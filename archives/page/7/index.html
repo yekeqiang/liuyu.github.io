@@ -1,0 +1,1326 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 7 页 | 归档 | Puppet-in-action</title>
+  <meta name="author" content="Liu Yu">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Puppet-in-action"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Puppet-in-action</a></h1>
+  <h2><a href="/">Puppet</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">归档</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:13:20.000Z"><a href="/2010/12/19/howto-only-use-epel-with-yum/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/howto-only-use-epel-with-yum/">Howto only use epel with yum?</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>yum --disablerepo=* --enablerepo=epel list available</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:11:47.000Z"><a href="/2010/12/19/howto-use-dstat-monitoring-linux-system-resources/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/howto-use-dstat-monitoring-linux-system-resources/">Howto Use Dstat Monitoring Linux System Resources</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>官方网站：<a href="http://dag.wieers.com/rpm/packages/dstat/">http://dag.wieers.com/rpm/packages/dstat/</a></p>
+<p>Dstat的安装：</p>
+<pre><code><figure class="highlight"><pre><span class="comment">wget</span> <span class="comment">http://dag</span>.<span class="comment">wieers</span>.<span class="comment">com/rpm/packag</span> <span class="string">.</span><span class="string">.</span><span class="string">.</span> <span class="comment">1</span>.<span class="comment">rh7</span>.<span class="comment">rf</span>.<span class="comment">noarch</span>.<span class="comment">rpm</span>
+<span class="comment">rpm</span> <span class="literal">-</span><span class="comment">ivh</span> <span class="comment">dstat</span>-<span class="comment">0</span>.<span class="comment">6</span>.<span class="comment">7</span>-<span class="comment">1</span>.<span class="comment">rh7</span>.<span class="comment">rf</span>.<span class="comment">noarch</span>.<span class="comment">rpm</span>
+<span class="comment">wget</span>  <span class="comment">http://dag</span>.<span class="comment">wieers</span>.<span class="comment">com/home</span>-<span class="comment">made/dstat/dstat</span>-<span class="comment">0</span>.<span class="comment">7</span>.<span class="comment">2</span>.<span class="comment">tar</span>.<span class="comment">bz2</span> <span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">Dstat的使用：</span>
+<span class="comment">安装完成后，执行</span> <span class="comment">dstat</span> <span class="comment">命令，默认情况它会收集</span>-<span class="comment">cpu</span>-<span class="comment">、</span>-<span class="comment">disk</span>-<span class="comment">、</span>-<span class="comment">net</span>-<span class="comment">、－paging</span>-<span class="comment">、</span>-<span class="comment">system</span>-<span class="comment">的数据，一秒钟收集一次。</span>
+<span class="comment">默认输入</span> <span class="comment">dstat</span> <span class="comment">等于输入了dstat</span> <span class="literal">-</span><span class="comment">cdngy</span> <span class="comment">1或dstat</span> <span class="literal">-</span><span class="comment">a</span> <span class="comment">1；</span>
+<span class="comment">推荐使用</span> <span class="comment">date</span> <span class="comment">&amp;amp;&amp;amp;</span> <span class="comment">dstat</span> <span class="literal">-</span><span class="comment">tclmdny</span> <span class="comment">60</span> <span class="comment">一分钟监视一次（注意调节显示的宽度，或去掉</span>-<span class="comment">t选项）。</span>
+
+<span class="title">[</span><span class="comment">!</span>[<span class="title">]</span><span class="comment">(http://bubbyroom</span>.<span class="comment">com/wp</span>-<span class="comment">content/uploads/2010/12/dstat</span>.<span class="comment">png</span> <span class="comment">"dstat")</span>]<span class="comment">(http://bubbyroom</span>.<span class="comment">com/wp</span>-<span class="comment">content/uploads/2010/12/dstat</span>.<span class="comment">png)</span>
+
+<span class="comment">于SysStat相比，Dstat拥有一个彩色的界面，在手动观察性能状况时，数据比较显眼容易观察；</span>
+<span class="comment">而且Dstat支持即时刷新，譬如：输入</span> <span class="comment">dstat</span> <span class="comment">3，即每三秒收集一次，但最新的数据都会每秒刷新显示。</span>
+<span class="comment">和SysStat相同的是，Dstat也可以收集指定的性能资源。譬如</span> <span class="comment">dstat</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">即显示CPU的使用情况。</span>
+<span class="comment">Dstat</span> <span class="comment">options:</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span>-<span class="comment">c</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">cpu</span> <span class="comment">显示CPU情况</span>
+<span class="literal">-</span><span class="comment">C</span> <span class="comment">0</span>,<span class="comment">3</span>,<span class="comment">total</span> <span class="comment">include</span> <span class="comment">cpu0</span>, <span class="comment">cpu3</span> <span class="comment">and</span> <span class="comment">total</span>
+<span class="literal">-</span><span class="comment">d</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">disk</span> <span class="comment">显示磁盘情况</span>
+<span class="literal">-</span><span class="comment">D</span> <span class="comment">total</span>,<span class="comment">hda</span> <span class="comment">include</span> <span class="comment">hda</span> <span class="comment">and</span> <span class="comment">total</span>
+<span class="literal">-</span><span class="comment">g</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">page</span> <span class="comment">enable</span> <span class="comment">page</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="comment">i</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">int</span> <span class="comment">enable</span> <span class="comment">interrupt</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="comment">I</span> <span class="comment">5</span>,<span class="comment">eth2</span> <span class="comment">include</span> <span class="comment">int5</span> <span class="comment">and</span> <span class="comment">interrupt</span> <span class="comment">used</span> <span class="comment">by</span> <span class="comment">eth2</span>
+<span class="literal">-</span><span class="comment">l</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">load</span> <span class="comment">enable</span> <span class="comment">load</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="comment">m</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">mem</span> <span class="comment">显示内存情况</span>
+<span class="literal">-</span><span class="comment">n</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">net</span> <span class="comment">显示网络情况</span>
+<span class="literal">-</span><span class="comment">N</span> <span class="comment">eth1</span>,<span class="comment">total</span> <span class="comment">可以指定网络接口</span>
+<span class="literal">-</span><span class="comment">p</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">proc</span> <span class="comment">enable</span> <span class="comment">process</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="comment">s</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">swap</span> <span class="comment">显示swap情况</span>
+<span class="literal">-</span><span class="comment">S</span> <span class="comment">swap1</span>,<span class="comment">total</span> <span class="comment">可以指定多个swap</span>
+<span class="literal">-</span><span class="comment">t</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">time</span> <span class="comment">enable</span> <span class="comment">time</span> <span class="comment">counter</span>
+<span class="literal">-</span><span class="comment">y</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">sys</span> <span class="comment">enable</span> <span class="comment">system</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">ipc</span> <span class="comment">报告IPC消息队列和信号量的使用情况</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">lock</span> <span class="comment">enable</span> <span class="comment">lock</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">raw</span> <span class="comment">enable</span> <span class="comment">raw</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">tcp</span> <span class="comment">enable</span> <span class="comment">tcp</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">udp</span> <span class="comment">enable</span> <span class="comment">udp</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">unix</span> <span class="comment">enable</span> <span class="comment">unix</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="comment">M</span> <span class="comment">stat1</span>,<span class="comment">stat2</span> <span class="comment">enable</span> <span class="comment">external</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">mods</span> <span class="comment">stat1</span>,<span class="comment">stat2</span>
+<span class="literal">-</span><span class="comment">a</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">all</span> <span class="comment">使用</span>-<span class="comment">cdngy</span> <span class="comment">缺省的就是这样显示</span>
+<span class="literal">-</span><span class="comment">f</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">full</span> <span class="comment">使用</span> <span class="literal">-</span><span class="comment">C</span>, <span class="literal">-</span><span class="comment">D</span>, <span class="literal">-</span><span class="comment">I</span>, <span class="literal">-</span><span class="comment">N</span> <span class="comment">and</span> <span class="literal">-</span><span class="comment">S</span> <span class="comment">显示</span>
+<span class="literal">-</span><span class="comment">v</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">vmstat</span> <span class="comment">使用</span>-<span class="comment">pmgdsc</span> <span class="literal">-</span><span class="comment">D</span> <span class="comment">显示</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">integer</span> <span class="comment">show</span> <span class="comment">integer</span> <span class="comment">values</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">nocolor</span> <span class="comment">disable</span> <span class="comment">colors</span> <span class="comment">(implies</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">noupdate)</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">noheaders</span> <span class="comment">只显示一次表头以后就不显示了</span>,<span class="comment">使用重定向写入文件时很有用</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">noupdate</span> <span class="comment">disable</span> <span class="comment">intermediate</span> <span class="comment">updates</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">output</span> <span class="comment">file</span> <span class="comment">写入到CVS文件中`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">上个运行结果：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`#</span> <span class="comment">dstat</span>
+<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">total</span>-<span class="comment">cpu</span>-<span class="comment">usage</span>-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span> <span class="literal">-</span><span class="comment">dsk/total</span>- <span class="literal">-</span><span class="comment">net/total</span>- <span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">paging</span>-<span class="literal">-</span> <span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">system</span>-<span class="literal">-</span>
+<span class="comment">usr</span> <span class="comment">sys</span> <span class="comment">idl</span> <span class="comment">wai</span> <span class="comment">hiq</span> <span class="comment">siq|_read</span> <span class="comment">_writ|_recv</span> <span class="comment">_send|__in_</span> <span class="comment">_out_|_int_</span> <span class="comment">_csw_</span>
+<span class="comment">13</span> <span class="comment">49</span> <span class="comment">29</span> <span class="comment">8</span> <span class="comment">1</span> <span class="comment">1|</span> <span class="comment">424k</span> <span class="comment">23k|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">275</span> <span class="comment">200</span>
+<span class="comment">0</span> <span class="comment">1</span> <span class="comment">95</span> <span class="comment">3</span> <span class="comment">0</span> <span class="comment">1|8192B</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">297B</span> <span class="comment">70B|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">241</span> <span class="comment">33</span>
+<span class="comment">0</span> <span class="comment">1</span> <span class="comment">99</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">0|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">92B</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">243</span> <span class="comment">14</span>
+<span class="comment">0</span> <span class="comment">1</span> <span class="comment">99</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">0|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">395B</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">244</span> <span class="comment">20`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">很简单，一看就明白了，</span>
+<span class="comment">要说明的是如果当usr和sys的数值大于80时说明cpu的负载过重，这个软件和vmstat很像</span>,
+<span class="comment">不过和vmstat相比好像少了io部份的显示dstat只能显示磁盘的吞吐量而不是显示负载情况，</span>
+<span class="comment">dstat和几乎所有监控软件一样，只能对整个系统进行监控而不能对某一个进程或某一个程序进行深入分析。</span>
+<span class="comment">如果你知道如何设置，请通知我。</span>
+<span class="comment">我常使用的参数是</span>
+<span class="comment">dstat</span> <span class="literal">-</span><span class="comment">cdlmnpsy</span>
+<span class="comment">在1024×768的屏幕上正好全部显示出来，最好是将上面的命令设置成别名</span>
+<span class="comment">alias</span> <span class="comment">dstat='dstat</span> <span class="literal">-</span><span class="comment">cdlmnpsy'</span>
+
+<span class="comment">常用命令</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`dstat</span> <span class="literal">-</span><span class="comment">cndymlp</span> <span class="literal">-</span><span class="comment">N</span> <span class="comment">total</span> <span class="literal">-</span><span class="comment">D</span> <span class="comment">total</span> <span class="comment">525</span> <span class="comment">统计CPU</span>,<span class="comment">IO</span> <span class="string">,</span><span class="comment">network</span>,<span class="comment">system</span> <span class="comment">load</span>
+<span class="comment">dstat</span> <span class="literal">-</span><span class="comment">cdnsil</span> <span class="literal">-</span><span class="comment">D</span> <span class="comment">hda</span> <span class="literal">-</span><span class="comment">N</span> <span class="comment">eth1</span> <span class="comment">统计网卡1的信息</span>
+<span class="comment">dstat</span> <span class="comment">–vmstat</span> <span class="comment">内存使用情况
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:07:32.000Z"><a href="/2010/12/19/linux-smartctl/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-smartctl/">linux smartctl 磁盘健康监测程序</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>什么是S.M.A.R.T.
+SMART是一种磁盘自我分析检测技术，早在90年代末就基本得到了普及
+每一块硬盘（包括IDE、SCSI）在运行的时候，都会将自身的若干参数记录下来
+这些参数包括型号、容量、温度、密度、扇区、寻道时间、传输、误码率等
+硬盘运行了几千小时后，很多内在的物理参数都会发生变化
+某一参数超过报警阈值，则说明硬盘接近损坏
+此时硬盘依然在工作，如果用户不理睬这个报警继续使用
+那么硬盘将变得非常不可靠，随时可能故障</p>
+<p>启用SMART
+SMART是和主板BIOS上相应功能配合的
+要使用SMART，必须先进入到主板BIOS设置里边启动相关设置</p>
+<p>一般从Pentium2级别起的主板，都支持SMART
+BIOS启动以后，就是操作系统级别的事情了
+很遗憾，Windows没有内置SMART相关工具（需要安装第三方工具软件）
+好在Linux上很早就有了SMART支持了
+如果把Linux装在VMware等虚拟机上，在系统启动时候可以看到有个服务启动报错：smartd
+这个服务器就是smart的daemon进程（因为vmware虚拟机的硬盘不支持SMART，所以报错）</p>
+<p>首先通过dmesg工具，确认一下硬盘的设备符号
+例如一个IDE硬盘连接到Primary IDE 总线上的Slave位置，硬盘设备符号是/dev/hdb
+hdb中的h代表IDE，如果显示为sdb，则代表SATA和SCSI
+最后一个字幕b代表Primary总线，第二块硬盘即Slave位置
+确认硬盘是否打开了SMART支持
+smartctl -i /dev/hdb</p>
+<p>例如看到如下返回结果</p>
+<pre><code><figure class="highlight"><pre>[root@3.6.0Biz-46 ~]# smartctl -i /dev/hdb
+smartctl version 5.33 [i386-redhat-linux-gnu] Copyright (C) 2002-4 Bruce Allen
+Home page is http://smartmontools.sourceforge.net/
+=== <span class="operator"><span class="keyword">START</span> <span class="keyword">OF</span> INFORMATION <span class="keyword">SECTION</span> ===
+Device Model: ST380011A
+Serial <span class="keyword">Number</span>: <span class="number">3</span>JVAPRGH
+Firmware Version: <span class="number">3.04</span>
+<span class="keyword">User</span> Capacity: <span class="number">80</span>,<span class="number">026</span>,<span class="number">361</span>,<span class="number">856</span> bytes
+Device <span class="keyword">is</span>: <span class="keyword">In</span> smartctl database [<span class="keyword">for</span> details use: -P <span class="keyword">show</span>]
+ATA Version <span class="keyword">is</span>: <span class="number">6</span>
+ATA Standard <span class="keyword">is</span>: ATA/ATAPI-<span class="number">6</span> T13 <span class="number">1410</span>D revision <span class="number">2</span>
+<span class="keyword">Local</span> <span class="keyword">Time</span> <span class="keyword">is</span>: Tue Apr <span class="number">3</span> <span class="number">15</span>:<span class="number">39</span>:<span class="number">52</span> <span class="number">2007</span> CST
+SMART support <span class="keyword">is</span>: Available - device has SMART capability.
+SMART support <span class="keyword">is</span>: Disabled
+SMART Disabled. Use <span class="keyword">option</span> -s <span class="keyword">with</span> argument <span class="string">'on'</span> <span class="keyword">to</span> enable it.
+<span class="string">`&lt;/pre&gt;
+
+我们可以看到SMART support is: Disabled表示SMART未启用
+
+执行如下命令，启动SMART：
+&lt;pre&gt;`</span>smartctl --smart=<span class="keyword">on</span> --offlineauto=<span class="keyword">on</span> --saveauto=<span class="keyword">on</span> /dev/hdb<span class="string">`&lt;/pre&gt;
+
+例如看到如下返回结果
+&lt;pre&gt;`</span>[root@<span class="number">3.6</span><span class="number">.0</span>Biz-<span class="number">46</span> ~]# smartctl --smart=<span class="keyword">on</span> --offlineauto=<span class="keyword">on</span> --saveauto=<span class="keyword">on</span> /dev/hdb
+smartctl version <span class="number">5.33</span> [i386-redhat-linux-gnu] Copyright (C) <span class="number">2002</span>-<span class="number">4</span> Bruce Allen
+Home page <span class="keyword">is</span> http://smartmontools.sourceforge.net/
+=== <span class="keyword">START</span> <span class="keyword">OF</span> ENABLE/DISABLE COMMANDS <span class="keyword">SECTION</span> ===
+SMART Enabled.
+SMART Attribute Autosave Enabled.
+SMART Automatic Offline Testing Enabled every four hours.<span class="string">`&lt;/pre&gt;
+
+现在硬盘的SMART功能已经被打开
+执行如下命令查看硬盘的健康状况：
+&lt;pre&gt;`</span>smartctl -H /dev/hda<span class="string">`&lt;/pre&gt;
+
+例如可以看到如下结果：
+&lt;pre&gt;`</span>[root@<span class="number">3.6</span><span class="number">.0</span>Biz-<span class="number">46</span> ~]# smartctl -H /dev/hdb
+smartctl version <span class="number">5.33</span> [i386-redhat-linux-gnu] Copyright (C) <span class="number">2002</span>-<span class="number">4</span> Bruce Allen
+Home page <span class="keyword">is</span> http://smartmontools.sourceforge.net/
+=== <span class="keyword">START</span> <span class="keyword">OF</span> <span class="keyword">READ</span> SMART DATA <span class="keyword">SECTION</span> ===
+SMART overall-health self-assessment test result: PASSED<span class="string">`&lt;/pre&gt;
+
+请注意result后边的结果：PASSED，这表示硬盘健康状态良好
+如果这里显示Failure，那么最好立刻给服务器更换硬盘
+SMART只能报告磁盘已经不再健康，但是报警后还能继续运行多久是不确定的
+通常，SMART报警参数是有预留的，磁盘报警后，不会当场坏掉，一般能坚持一段时间
+有的硬盘SMART报警后还继续跑了好几年，有的硬盘SMART报错后几天就坏了
+但是一旦出现报警，侥幸心里是万万不能的……
+执行如下命令可以看到详细的参数：
+&lt;pre&gt;`</span>smartctl -A /dev/hdb<span class="string">`&lt;/pre&gt;
+
+例如可以看到如下结果：
+&lt;pre&gt;`</span>[root@<span class="number">3.6</span><span class="number">.0</span>Biz-<span class="number">46</span> ~]# smartctl -A /dev/hdb
+smartctl version <span class="number">5.33</span> [i386-redhat-linux-gnu] Copyright (C) <span class="number">2002</span>-<span class="number">4</span> Bruce Allen
+Home page <span class="keyword">is</span> http://smartmontools.sourceforge.net/
+=== <span class="keyword">START</span> <span class="keyword">OF</span> <span class="keyword">READ</span> SMART DATA <span class="keyword">SECTION</span> ===
+SMART Attributes Data Structure revision <span class="keyword">number</span>: <span class="number">10</span>
+Vendor Specific SMART Attributes <span class="keyword">with</span> Thresholds:
+ID# ATTRIBUTE_NAME FLAG <span class="keyword">VALUE</span> WORST THRESH TYPE UPDATED WHEN_FAILED RAW_VALUE
+<span class="number">1</span> Raw_Read_Error_Rate <span class="number">0x000f</span> <span class="number">053</span> <span class="number">051</span> <span class="number">006</span> Pre-fail Always - <span class="number">11338710</span>
+<span class="number">3</span> Spin_Up_Time <span class="number">0x0003</span> <span class="number">098</span> <span class="number">097</span> <span class="number">000</span> Pre-fail Always - <span class="number">0</span>
+<span class="number">4</span> Start_Stop_Count <span class="number">0x0032</span> <span class="number">100</span> <span class="number">100</span> <span class="number">020</span> Old_age Always - <span class="number">17</span>
+<span class="number">5</span> Reallocated_Sector_Ct <span class="number">0x0033</span> <span class="number">100</span> <span class="number">100</span> <span class="number">036</span> Pre-fail Always - <span class="number">0</span>
+<span class="number">7</span> Seek_Error_Rate <span class="number">0x000f</span> <span class="number">087</span> <span class="number">060</span> <span class="number">030</span> Pre-fail Always - <span class="number">610059516</span>
+<span class="number">9</span> Power_On_Hours <span class="number">0x0032</span> <span class="number">087</span> <span class="number">087</span> <span class="number">000</span> Old_age Always - <span class="number">11974</span>
+<span class="number">10</span> Spin_Retry_Count <span class="number">0x0013</span> <span class="number">100</span> <span class="number">100</span> <span class="number">097</span> Pre-fail Always - <span class="number">0</span>
+<span class="number">12</span> Power_Cycle_Count <span class="number">0x0032</span> <span class="number">100</span> <span class="number">100</span> <span class="number">020</span> Old_age Always - <span class="number">110</span>
+<span class="number">194</span> Temperature_Celsius <span class="number">0x0022</span> <span class="number">045</span> <span class="number">052</span> <span class="number">000</span> Old_age Always - <span class="number">45</span>
+<span class="number">195</span> Hardware_ECC_Recovered <span class="number">0x001a</span> <span class="number">053</span> <span class="number">051</span> <span class="number">000</span> Old_age Always - <span class="number">11338710</span>
+<span class="number">197</span> Current_Pending_Sector <span class="number">0x0012</span> <span class="number">100</span> <span class="number">100</span> <span class="number">000</span> Old_age Always - <span class="number">0</span>
+<span class="number">198</span> Offline_Uncorrectable <span class="number">0x0010</span> <span class="number">100</span> <span class="number">100</span> <span class="number">000</span> Old_age Offline - <span class="number">0</span>
+<span class="number">199</span> UDMA_CRC_Error_Count <span class="number">0x003e</span> <span class="number">200</span> <span class="number">200</span> <span class="number">000</span> Old_age Always - <span class="number">0</span>
+<span class="number">200</span> Multi_Zone_Error_Rate <span class="number">0x0000</span> <span class="number">100</span> <span class="number">253</span> <span class="number">000</span> Old_age Offline - <span class="number">0</span>
+<span class="number">202</span> TA_Increase_Count <span class="number">0x0032</span> <span class="number">100</span> <span class="number">253</span> <span class="number">000</span> Old_age Always - <span class="number">0</span>
+<span class="string">`&lt;/pre&gt;
+上边列出的参数表中可供进行技术分析和参考，使用下边的命令可以输出完整结果：
+&lt;pre&gt;`</span>smartctl -a /dev/hdb<span class="string">`&lt;/pre&gt;
+
+定期登录到服务器上运行smartctl是比较麻烦的，linux提供了系统进程smartd
+
+编辑配置文件：
+vi /etc/smartd.conf
+这个配置文件中大部分可能是注释掉的说明，只需要和当前硬盘相关的一行写入正确即可：
+/dev/hdb -H -m test@test123123.com
+上边的配置表示smartd以静默状态工作，当SMART中报告PASSED的时候不理睬
+一旦出现Failure，立刻用邮件通知用户指定的邮箱
+
+修改配置后重启服务：
+/etc/init.d/smartd
+即可完成对SMART的全部配置。
+
+linux下硬盘检测工具: smartmontools
+Smartmontools for SCSI硬盘: http://smartmontools.sourceforge.net/smartmontools_scsi.html
+
+简单用法：
+&lt;pre&gt;`</span><span class="number">1</span>、smartctl -a 检查该设备是否已经打开SMART技术。
+<span class="number">2</span>、smartctl -s <span class="keyword">on</span> 如果没有打开SMART技术，使用该命令打开SMART技术。
+<span class="number">3</span>、smartctl -t short 后台检测硬盘，消耗时间短；
+smartctl -t long 后台检测硬盘，消耗时间长；
+smartctl -C -t short 前台检测硬盘，消耗时间短；
+smartctl -C -t long 前台检测硬盘，消耗时间长。
+其实就是利用硬盘SMART的自检程序。
+<span class="number">4</span>、smartctl -X 中断后台检测硬盘。
+<span class="number">5</span>、smartctl -l selftest 显示硬盘检测日志。
+<span class="number">6</span>、smartctl -l error 显示硬盘错误汇总。
+</pre></figure></code></pre>
+<p>其它：<a href="http://www.cyberciti.biz/tips/monitoring-hard-disk-health-with-smartd-under-linux-or-unix-operating-systems.html">http://www.cyberciti.biz/tips/monitoring-hard-disk-health-with-smartd-under-linux-or-unix-operating-systems.html</a>
+<a href="http://www.linuxjournal.com/article/6983">http://www.linuxjournal.com/article/6983</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:04:01.000Z"><a href="/2010/12/19/linux-user-group-detailed/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-user-group-detailed/">linux 用户user及用户组group 详解</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>一、user相关配置文件</p>
+<pre><code><figure class="highlight"><pre><span class="xml">/etc/passwd
+root:x:</span><span class="number">0</span><span class="xml">:</span><span class="number">0</span><span class="xml">:root:/root:/bin/bash`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+用户名：UID:GID:finger：家目录：shell
+注：UID： </span><span class="number">0</span><span class="xml">即管理员 </span><span class="number">1</span><span class="xml">-</span><span class="number">499</span><span class="xml">系统使用 </span><span class="number">500</span><span class="xml">-</span><span class="number">65535</span><span class="xml">+ 一般用户
+
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`/etc/shadow
+root:</span><span class="variable">$1</span><span class="xml"></span><span class="variable">$jHNFgOBV</span><span class="xml"></span><span class="variable">$br7SAZsvGRyFmySJ9UlUI.:14720:0:99999:7:::</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+用户：加密密码：更改密码日期：不可更改密码天数：需变更日期：过期天数：警告期限：宽限时间：失效日期
+注：日期按</span><span class="number">1970</span><span class="xml">年</span><span class="number">1</span><span class="xml">月</span><span class="number">1</span><span class="xml">日作为起初日期。
+
+二、用户组相关配置
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`/etc/group
+/etc/gshadow`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+三、管理用户（user）的工具或命令
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`useradd adduser 注：添加用户 
+passwd 注：为用户设置密码
+usermod 注：修改用户命令，可以通过usermod 来修改登录名、用户的家目录等等；
+pwconv 注：同步用户从/etc/passwd 到/etc/shadow
+pwck 注：pwck是校验用户配置文件/etc/passwd 和/etc/shadow 文件内容是否合法或完整；
+pwunconv 注：是pwcov 的立逆向操作，是从/etc/shadow和 /etc/passwd 创建/etc/passwd ，然后会删除 /etc/shadow 文件；
+finger 注：查看用户信息工具
+id 注：查看用户的UID、GID及所归属的用户组
+chfn 注：更改用户信息工具
+su 注：用户切换工具
+sudo 注：sudo 是通过另一个用户来执行命令（execute a command as another user），su 是用来切换用户，然后通过切换到的用户来完成相应的任务，但sudo 能后面直接执行命令，比如sudo 不需要root 密码就可以执行root 赋与的执行只有root才能执行相应的命令；但得通过visudo 来编辑/etc/sudoers来实现；
+visudo 注：visodo 是编辑 /etc/sudoers 的命令；也可以不用这个命令，直接用vi 来编辑 /etc/sudoers 的效果是一样的；
+sudoedit 注：和sudo 功能差不多；`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+四、管理用户组（group）的工具或命令
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`groupadd 注：添加用户组；
+groupdel 注：删除用户组；
+groupmod 注：修改用户组信息
+groups 注：显示用户所属的用户组
+grpck
+grpconv 注：通过/etc/group和/etc/gshadow 的文件内容来同步或创建/etc/gshadow ，如果/etc/gshadow 不存在则创建；
+grpunconv 注：通过/etc/group 和/etc/gshadow 文件内容来同步或创建/etc/group ，然后删除gshadow文件；`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="number">1</span><span class="xml">、useradd 命令详解
+功能说明：建立用户帐号。
+语　　法：useradd [-mMnr][-c <span class="tag">&lt;<span class="title">备注</span>&gt;</span>][-d <span class="tag">&lt;<span class="title">登入目录</span>&gt;</span>][-e <span class="tag">&lt;<span class="title">有效期限</span>&gt;</span>][-f <span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span>][-g <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-G <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-s ][-u ][用户帐号] 或 useradd -D [-b][-e <span class="tag">&lt;<span class="title">有效期限</span>&gt;</span>][-f <span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span>][-g <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-G <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-s ]
+
+补充说明：useradd可用来建立用户帐号。帐号建好之后，再用passwd设定帐号的密码．而可用userdel删除帐号。使用useradd指令所建立的帐号，实际上是保存在/etc/passwd文本文件中。
+参　　数：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-c<span class="tag">&lt;<span class="title">备注</span>&gt;</span> 加上备注文字。备注文字会保存在passwd的备注栏位中。
+-d<span class="tag">&lt;<span class="title">登入目录</span>&gt;</span> 指定用户登入时的启始目录。
+-D 　变更预设值．
+-e<span class="tag">&lt;<span class="title">有效期限</span>&gt;</span> 指定帐号的有效期限。
+-f<span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span> 指定在密码过期后多少天即关闭该帐号。
+-g<span class="tag">&lt;<span class="title">群组</span>&gt;</span> 指定用户所属的群组。
+-G<span class="tag">&lt;<span class="title">群组</span>&gt;</span> 指定用户所属的附加群组。
+-m 　自动建立用户的登入目录。
+-M 　不要自动建立用户的登入目录。
+-n 　取消建立以用户名称为名的群组．
+-r 　建立系统帐号。
+-s　 　指定用户登入后所使用的shell。
+-u 　指定用户ID。`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="number">2</span><span class="xml">、usermod
+功能说明：修改用户帐号。
+语　　法：usermod [-LU][-c <span class="tag">&lt;<span class="title">备注</span>&gt;</span>][-d <span class="tag">&lt;<span class="title">登入目录</span>&gt;</span>][-e <span class="tag">&lt;<span class="title">有效期限</span>&gt;</span>][-f <span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span>][-g <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-G <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-l <span class="tag">&lt;<span class="title">帐号名称</span>&gt;</span>][-s ][-u ][用户帐号]
+补充说明：usermod可用来修改用户帐号的各项设定。
+参　　数：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-c<span class="tag">&lt;<span class="title">备注</span>&gt;</span> 修改用户帐号的备注文字。
+-d登入目录&gt; 修改用户登入时的目录。
+-e<span class="tag">&lt;<span class="title">有效期限</span>&gt;</span> 修改帐号的有效期限。
+-f<span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span> 修改在密码过期后多少天即关闭该帐号。
+-g<span class="tag">&lt;<span class="title">群组</span>&gt;</span> 修改用户所属的群组。
+-G<span class="tag">&lt;<span class="title">群组</span>&gt;</span> 修改用户所属的附加群组。
+-l<span class="tag">&lt;<span class="title">帐号名称</span>&gt;</span> 修改用户帐号名称。
+-L 　锁定用户密码，使密码无效。
+-s 　修改用户登入后所使用的shell。
+-u 　修改用户ID。
+-U 　解除密码锁定。`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="number">3</span><span class="xml">、pwconv pwunconv
+功能说明：开启用户的投影密码。
+语　　法：pwconv
+补充说明：Linux系统里的用户和群组密码，分别存放在名称为passwd和group的文件中，　这两个文件位于/etc目录下。因系统运作所需，任 何人都得以读取它们，造成安全上的破绽。投影密码将文件内的密码改存在/etc目录下的shadow和gshadow文件内，只允许系统管理者读取，同时 把原密码置换为"x"字符，有效的强化了系统的安全性。
+功能说明：关闭用户的投影密码。
+语　　法：pwunconv
+补充说明：执行pwunconv指令可以关闭用户投影密码，它会把密码从shadow文件内，重回存到passwd文件里。
+
+</span><span class="number">4</span><span class="xml">、 pwck
+功能：检查用户密码文件的完整性（/etc/passwd以及/etc/shadow文件）。
+用法：pwck [-q] [-s] [passwd [ shadow ]]
+pwck [-q] [-r] [passwd shadow]
+参数：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-q：只显示错误信息，警告不显示
+-s：按id排序
+-r：只读方式检查`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="number">5</span><span class="xml">、grpck命令
+功能：检查用户组及密码文件的完整性（etc/group以及/etc/gshadow文件）
+用法： grpck [-r] [group [ shadow ]]
+grpck [-s] [group [ shadow ]]
+参数：与pwck一样
+
+</span><span class="number">6</span><span class="xml">、finger
+功能说明：查找并显示用户信息。
+语　　法：finger [-lmsp][帐号名称...]
+补充说明：finger指令会去查找，并显示指定帐号的用户相关信息，包括本地与远端主机的用户皆可，帐号名称没有大小写的差别。单独执行finger指 令，它会显示本地主机现在所有的用户的登陆信息，包括帐号名称，真实姓名，登入终端机，闲置时间，登入时间以及地址和电话。
+参　　数：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-l 　列出该用户的帐号名称，真实姓名，用户专属目录，登入所用的Shell，登入时间，转信地址，电子邮件状态，还有计划文件和方案文件内容。
+-m 　排除查找用户的真实姓名。
+-s 　列出该用户的帐号名称，真实姓名，登入终端机，闲置时间，登入时间以及地址和电话。
+-p 　列出该用户的帐号名称，真实姓名，用户专属目录，登入所用的Shell，登入时间，转信地址，电子邮件状态，但不显示该用户的计划文件和方案文件内容。`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="number">7</span><span class="xml">、su
+</span><span class="number">1.</span><span class="xml">作用
+u的作用是变更为其它使用者的身份，超级用户除外，需要键入该使用者的密码。
+
+</span><span class="number">2.</span><span class="xml">格式
+u [选项]... [-] [USER [ARG]...]
+
+</span><span class="number">3.</span><span class="xml">主要参数
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-f ， --fast：不必读启动文件（如 csh.cshrc 等），仅用于csh或tcsh两种Shell。
+-l ， --login：加了这个参数之后，就好像是重新登陆为该使用者一样，大部分环境变量（例如HOME、SHELL和USER等）都是以该使用者（USER）为主，并且工作目录也会改变。如果没有指定USER，缺省情况是root。
+-m， -p ，--preserve-environment：执行su时不改变环境变数。
+-c command：变更账号为USER的使用者，并执行指令（command）后再变回原来使用者。
+USER：欲变更的使用者账号，ARG传入新的Shell参数`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="number">8</span><span class="xml">、sudo
+功能说明：以其他身份来执行指令。
+语　　法：sudo [-bhHpV][-s ][-u <span class="tag">&lt;<span class="title">用户</span>&gt;</span>][指令] 或 sudo [-klv]
+补充说明：sudo 可让用户以其他的身份来执行指定的指令，预设的身份为root。在/etc/sudoers中设置了可执行sudo指令的用户。若其未经授权的用户企图使 用sudo，则会发出警告的邮件给管理员。用户使用sudo时，必须先输入密码，之后有</span><span class="number">5</span><span class="xml">分钟的有效期限，超过期限则必须重新输入密码。
+参　　数：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-b 　在后台执行指令。
+-h 　显示帮助。
+-H 　将HOME环境变量设为新身份的HOME环境变量。
+-k 　结束密码的有效期限，也就是下次再执行sudo时便需要输入密码。
+-l 　列出目前用户可执行与无法执行的指令。
+-p 　改变询问密码的提示符号。
+-s 　执行指定的shell。
+-u<span class="tag">&lt;<span class="title">用户</span>&gt;</span> 以指定的用户作为新的身份。若不加上此参数，则预设以root作为新的身份。
+-v 　延长密码有效期限</span><span class="number">5</span><span class="xml">分钟。
+-V 　显示版本信息。`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="number">9</span><span class="xml">、groupadd
+名称 groupadd - 建 立 新 群 组
+语法
+groupadd [-g gid [-o]] [-r] [-f] group
+参数：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-g gid group's
+ID值。除非使用-o参数不然该值必须是唯一，不可相同。数值不可为负。预设为最小不得小于</span><span class="number">500</span><span class="xml">而逐次增加。</span><span class="number">0</span><span class="xml">~</span><span class="number">499</span><span class="xml">传统上是保留给系统帐号使用。
+-r
+此参数是用来建立系统帐号。的UID会比定义在系统档上/etc/login.defs.的UID_MIN来的小。注意useradd此用法所建立的帐号 不会建立使用者目录，也不会在乎纪录在/etc/login.defs.的定义值。如果你想要有使用者目录须额外指定-m参数来建立系统帐号。这是 REDHAT额外增设的选项。它会自动帮你选定一个小于</span><span class="number">499</span><span class="xml">的gif不需要再加上-g参数。这是REDHAT额外增设的选项。
+-f
+Thisisforceflag.新增一个已经存在的群组帐号，系统会出现错误讯息然后结束groupadd。如果是这样的情况，不会新增这个群组(如果 是这个情况下，系统不会再新增一次)也可同时加上-g选项当你加上一个gid，此时gid就不用是唯一值，可不加-o参数，建好群组后会显结果 (addingagroupasneither-gor-ooptionswerespecified).
+这是REDHAT额外增设的选项`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="number">10</span><span class="xml">、groupmod
+功能说明：更改群组识别码或名称。
+语　　法：groupmod [-g <span class="tag">&lt;<span class="title">群组识别码</span>&gt;</span> <span class="tag">&lt;<span class="title">-o</span>&gt;</span>][-n <span class="tag">&lt;<span class="title">新群组名称</span>&gt;</span>][群组名称]
+补充说明：需要更改群组的识别码或名称时，可用groupmod指令来完成这项工作。
+参　　数：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-g <span class="tag">&lt;<span class="title">群组识别码</span>&gt;</span> 设置欲使用的群组识别码。
+-o 　重复使用群组识别码。
+-n <span class="tag">&lt;<span class="title">新群组名称</span>&gt;</span> 设置欲使用的群组名称。</span>
+</pre></figure></code></pre>
+<p>参考：
+鸟哥一书
+互联网
+<a href="http://www.linuxsir.org/main/?q=node/91">http://www.linuxsir.org/main/?q=node/91</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:40:06.000Z"><a href="/2010/12/19/prockcore-what-is/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/prockcore-what-is/">/proc/kcore是什么文件?</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>/proc/kcore is like an &quot;alias&quot; for the memory in your computer. Its
+size is the same as the amount of RAM you have, and if you read it as
+a file, the kernel does memory reads.
+如果内核不能识别全部内存，即&quot;ll /proc/kcore&quot;（查看kcore的真实大小：du -h /proc/kcore)后显示的大小不等于实际的物理内存大小;
+可以用 cat /proc/meminfo 命令来校验.如果所显示的数量与系统的物理内存不同，则在 /boot/grub/grub.conf 文件中添加：
+mem=xxM</p>
+<p>例如 ：</p>
+<pre><code><figure class="highlight"><pre>#boot=/dev/hda
+<span class="title">default</span>=<span class="number">0</span>
+<span class="title">timeout</span>=<span class="number">5</span>
+<span class="title">splashimage</span>=(hd0,<span class="number">0</span>)/boot/grub/splash.xpm.gz
+<span class="title">hiddenmenu</span>
+<span class="title">title</span> <span class="type">CentOS</span> (<span class="number">2.6</span><span class="number">.18</span>-<span class="number">164.</span>el5)
+<span class="title">root</span> (hd0,<span class="number">0</span>)
+<span class="title">kernel</span> /boot/vmlinuz-<span class="number">2.6</span><span class="number">.18</span>-<span class="number">164.</span>el5 ro root=<span class="type">LABEL</span>=/ mem=<span class="number">4096</span>M
+<span class="title">initrd</span> /boot/initrd-<span class="number">2.6</span><span class="number">.18</span>-<span class="number">164.</span>el5.img
+</pre></figure></code></pre>
+<p>原文: <a href="http://unixguide.net/linux/faq/04.16.shtml">http://unixguide.net/linux/faq/04.16.shtml</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:32:25.000Z"><a href="/2010/12/19/rhel-use-centos-yum/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/rhel-use-centos-yum/">rhel howto use centos yum ?</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>rhel服务器可以使用yum更新，但需要先卸载原先的yum，并且安装新的yum，然后可以更新。</p>
+<p>1 卸载原先的yum
+rpm -aq|grep yum|xargs rpm -e --nodeps
+如果有卸载不了的，试试 --nodeps
+如果是定义的安装包，试试 --allmatches</p>
+<p>2 下载新的yum，并且安装</p>
+<pre><code><figure class="highlight"><pre>wget http://centos<span class="preprocessor">.ustc</span><span class="preprocessor">.edu</span><span class="preprocessor">.cn</span>/centos/<span class="number">5.3</span>/os/i386/CentOS/yum-<span class="number">3.2</span><span class="number">.19</span>-<span class="number">18.</span>el5<span class="preprocessor">.centos</span><span class="preprocessor">.noarch</span><span class="preprocessor">.rpm</span>
+wget http://centos<span class="preprocessor">.ustc</span><span class="preprocessor">.edu</span><span class="preprocessor">.cn</span>/centos/<span class="number">5.3</span>/os/i386/CentOS/yum-metadata-parser-<span class="number">1.1</span><span class="number">.2</span>-<span class="number">2.</span>el5<span class="preprocessor">.i</span>386<span class="preprocessor">.rpm</span>
+wget http://mirror<span class="preprocessor">.centos</span><span class="preprocessor">.org</span>/centos-<span class="number">5</span>/<span class="number">5.3</span>/os/i386/CentOS/yum-fastestmirror-<span class="number">1.1</span><span class="number">.16</span>-<span class="number">13.</span>el5<span class="preprocessor">.centos</span><span class="preprocessor">.noarch</span><span class="preprocessor">.rpm</span>
+rpm -ivh yum-*`&lt;/pre&gt;
+
+<span class="number">4</span> 更改yum源
+&lt;pre&gt;`cd /etc/yum<span class="preprocessor">.repos</span><span class="preprocessor">.d</span>/
+wget http://docs<span class="preprocessor">.linuxtone</span><span class="preprocessor">.org</span>/soft/lemp/CentOS-Base<span class="preprocessor">.repo</span>`&lt;/pre&gt;
+
+注：别的 centos源要把repo文件里的 $releasever 换成版本号，比如换成<span class="number">5</span>
+引用
+&lt;pre&gt;`baseurl=http://centos<span class="preprocessor">.ustc</span><span class="preprocessor">.edu</span><span class="preprocessor">.cn</span>/centos/$releasever/os/$basearch/
+变成：
+baseurl=http://centos<span class="preprocessor">.ustc</span><span class="preprocessor">.edu</span><span class="preprocessor">.cn</span>/centos/<span class="number">5</span>/os/$basearch/
+</pre></figure></code></pre>
+<p>5 全部更新
+yum -y update</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:30:14.000Z"><a href="/2010/12/19/vim-editor-save-file-without-root-permission/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/vim-editor-save-file-without-root-permission/">vi编辑文件保存时没有root权限</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>使用普通用户编辑nginx.conf 等配置文件：</p>
+<p><a href="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-1.jpg"><img src="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-1.jpg" alt="" title="vim-not-root-1"></a></p>
+<p>保存的时候会提示：没有Root Permission
+可以用如下方法解决：
+保存时加上：
+:w !sudo tee %</p>
+<p><a href="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-2.jpg"><img src="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-2.jpg" alt="" title="vim-not-root-2"></a></p>
+<p>我这里有一个问题。没有配置sudo权限。
+用sudo时提示&quot;xxx is not in the sudoers file. This incident will be reported.其中XXX是你的用户名，也就是你的用户名没有权限使用sudo,我们只要修改一下/etc/sudoers文件就行了。下面是修改方 法：
+1）进入超级用户模式。也就是输入&quot;su -&quot;,系统会让你输入超级用户密码，输入密码后就进入了超级用户模式。（当然，你也可以直接用root用）
+2）添加文件的写权限。也就是输入命令&quot;chmod u+w /etc/sudoers&quot;。
+3）编辑/etc/sudoers文件。也就是输入命令&quot;vim /etc/sudoers&quot;,输入&quot;i&quot;进入编辑模式，找到这一 行：&quot;root ALL=(ALL) ALL&quot;在起下面添加&quot;xxx ALL=(ALL) ALL&quot;(这里的xxx是你的用户名)，然后保存（就是先按一 下Esc键，然后输入&quot;:wq&quot;）退出。
+4）撤销文件的写权限。也就是输入命令&quot;chmod u-w /etc/sudoers&quot;。
+再次保存：</p>
+<p><a href="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-3.jpg"><img src="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-3.jpg" alt="" title="vim-not-root-3"></a></p>
+<p>查看是否成功：
+$ grep sudo nginx.conf</p>
+<h1>test :w !sudo tee %</h1>
+<p>参考：<a href="http://www.cyberciti.biz/faq/vim-vi-text-editor-save-file-without-root-permission/">http://www.cyberciti.biz/faq/vim-vi-text-editor-save-file-without-root-permission/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:16:30.000Z"><a href="/2010/12/19/linux-tools/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-tools/">Linux一些工具整理</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>替代rsync bbcp <a href="http://www.slac.stanford.edu/~abh/bbcp/">http://www.slac.stanford.edu/~abh/bbcp/</a>
+同步：<a href="http://code.google.com/p/sersync/">http://code.google.com/p/sersync/</a>
+图片处理：imagemagick <a href="http://www.imagemagick.org/script/index.php">http://www.imagemagick.org/script/index.php</a>
+替代品(速度快15%): GraphicsMagick <a href="http://www.graphicsmagick.org/">http://www.graphicsmagick.org/</a></p>
+<p>系统管理工具：ipmitool 远程开关机并监控温度等状态
+内存检测工具：kmemcheck <a href="http://www.ibm.com/developerworks/cn/linux/l-cn-kmemcheck/index.html?ca=drs-cn-1119">http://www.ibm.com/developerworks/cn/linux/l-cn-kmemcheck/index.html?ca=drs-cn-1119</a>
+检测漏洞和后门：Rootkit Hunter和Chkrootkit
+性能测试工具：sysbench <a href="http://www.ningoo.net/html/2009/performance_test_tool_sysbench.html">http://www.ningoo.net/html/2009/performance_test_tool_sysbench.html</a>
+网络备份工具: bacula
+测试硬盘性能：iozone</p>
+<p>linux分区修复软件: Testdisk <a href="http://www.php-oa.com/2009/02/13/testdisk.html">http://www.php-oa.com/2009/02/13/testdisk.html</a>
+用Google App Engine做个人代理服务器：<a href="http://blog.chinaunix.net/u/249/showart.php?id=2212119">http://blog.chinaunix.net/u/249/showart.php?id=2212119</a></p>
+<p>INNODB备份：xtrabackup
+MySQL 优化工具 MySQLTuner <a href="http://github.com/rackerhacker/MySQLTuner-perl">http://github.com/rackerhacker/MySQLTuner-perl</a>
+MySQL 监控工具 mytop <a href="http://jeremy.zawodny.com/mysql/mytop/">http://jeremy.zawodny.com/mysql/mytop/</a></p>
+<p>服务器统一配置管理：Cfengine
+社交网络平台上创建的免费的企业级协作套件：CubeTree （简介、活动、微博、WIKI、BLOG、共享、搜索）</p>
+<p>自动化处理：
+opscode <a href="http://www.opscode.com/">http://www.opscode.com/</a>
+puppet <a href="http://reductivelabs.com/products/puppet/">http://reductivelabs.com/products/puppet/</a>
+punc</p>
+<p>集群文件系统：GlusterFS
+Eucalyptus系统 Eucalyptus是一套开源系统，可构建企业内部的私有云及混合云，把电脑、网络和存储等数据中心资源纳入一朵可由IT部门控制并定制的云</p>
+<p>流量：
+speedometer查看流量
+wget <a href="http://excess.org/speedometer/speedometer.py">http://excess.org/speedometer/speedometer.py</a>
+yum install python-urwid
+chmod 755 speedometer
+./speedometer.py -rx eth0 -c -tx eth0</p>
+<p>流量统计： piwik <a href="http://piwik.org/demo/">http://piwik.org/demo/</a>
+Crash 工具分析 Linux dump 文件 <a href="http://www.ibm.com/developerworks/cn/linux/l-cn-dumpanalyse/index.html?ca=drs-cn-0329">http://www.ibm.com/developerworks/cn/linux/l-cn-dumpanalyse/index.html?ca=drs-cn-0329</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:15:12.000Z"><a href="/2010/12/19/tcpdump-exclude-port/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/tcpdump-exclude-port/">tcpdump过滤某个端口</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>TcpDump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供 and、or、not等逻辑语句来帮助你去掉无用的信息。tcpdump就是一种免费的网络分析工具</p>
+<p>一般我们使用Tcpdump时都是使用：</p>
+<pre><code><figure class="highlight"><pre><span class="xml">tcpdump -i ethx `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+这样可以查看网卡ethx上的所有数据包传送过程，但你会发现相当的多。你都看不过来。因此我们需要过滤。
+
+下面这条命令就是查看</span><span class="number">80</span><span class="xml">端口的访问量，进行排序，取前</span><span class="number">20</span><span class="xml">位
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tcpdump -i eth0 -tnn dst port </span><span class="number">80</span><span class="xml"> -c </span><span class="number">1000</span><span class="xml"> | awk -F"." '{print </span><span class="variable">$1</span><span class="xml">"."</span><span class="variable">$2</span><span class="xml">"."</span><span class="variable">$3</span><span class="xml">"."</span><span class="variable">$4}</span><span class="xml">' | sort | uniq -c | sort -nr |head -</span><span class="number">20</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+但也可以使用过滤某个端口的方法进行查看
+如：过滤掉</span><span class="number">22</span><span class="xml">端口
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tcpdump -i eth1  -s </span><span class="number">1500</span><span class="xml"> port not </span><span class="number">22</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+过滤</span><span class="number">22</span><span class="xml">和</span><span class="number">53</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tcpdump -i eth1  -s </span><span class="number">1500</span><span class="xml"> port not </span><span class="number">22</span><span class="xml"> and port not </span><span class="number">53</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+过滤</span><span class="number">22</span><span class="xml">并指定来源ip
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tcpdump -i eth1 port not </span><span class="number">22</span><span class="xml"> and host </span><span class="number">1.2</span><span class="xml"></span><span class="number">.3</span><span class="xml"></span><span class="number">.4</span><span class="xml"> </span>
+</pre></figure></code></pre>
+<p>参考：
+<a href="http://www.cyberciti.biz/faq/linux-monitor-all-network-traffic-except-ssh-port-22/">http://www.cyberciti.biz/faq/linux-monitor-all-network-traffic-except-ssh-port-22/</a>
+<a href="http://www.opendoc.com.cn/linuxtools/system_command.html">http://www.opendoc.com.cn/linuxtools/system_command.html</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:10:49.000Z"><a href="/2010/12/19/linux-find-commands/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-find-commands/">linux find查找命令大全</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>linux 查找文加命令，相信对初学者很有用，下面是一部分常用的linux查找命令。</p>
+<p>grep命令：
+grep -i pattern files ：不区分大小写地搜索。默认情况区分大小写，
+grep -l pattern files ：只列出匹配的文件名，
+grep -L pattern files ：列出不匹配的文件名，
+grep -w pattern files ：只匹配整个单词，而不是字符串的一部分（如匹配‘magic’，而不是‘magical’），
+grep -C number pattern files ：匹配的上下文分别显示[number]行，
+grep pattern1 | pattern2 files ：显示匹配 pattern1 或 pattern2 的行，
+grep pattern1 files | grep pattern2 ：显示既匹配 pattern1 又匹配 pattern2 的行。
+example:grep -i martin@martin-desktop:~$ grep ShopAction -i notes/sql/<em> #note: </em> 不要忘记</p>
+<p>find命令:
+find 目录 -name 关键字</p>
+<pre><code><figure class="highlight"><pre><span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">amin</span> <span class="literal">-</span><span class="comment">10</span> <span class="comment">#</span> <span class="comment">查找在系统中最后10分钟访问的文件</span>
+<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">atime</span> <span class="literal">-</span><span class="comment">2</span> <span class="comment">#</span> <span class="comment">查找在系统中最后48小时访问的文件</span>
+<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">empty</span> <span class="comment">#</span> <span class="comment">查找在系统中为空的文件或者文件夹</span>
+<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">group</span> <span class="comment">cat</span> <span class="comment">#</span> <span class="comment">查找在系统中属于</span> <span class="comment">groupcat的文件</span>
+<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">mmin</span> <span class="literal">-</span><span class="comment">5</span> <span class="comment">#</span> <span class="comment">查找在系统中最后5分钟里修改过的文件</span>
+<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">mtime</span> <span class="literal">-</span><span class="comment">1</span> <span class="comment">#查找在系统中最后24小时里修改过的文件</span>
+<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">nouser</span> <span class="comment">#查找在系统中属于作废用户的文件</span>
+<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">user</span> <span class="comment">fred</span> <span class="comment">#查找在系统中属于FRED这个用户的文件</span>
+<span class="comment">find</span> <span class="string">.</span> <span class="literal">-</span><span class="comment">maxdepth</span> <span class="comment">2</span> <span class="literal">-</span><span class="comment">name</span> <span class="comment">fred
+</pre></figure></code></pre>
+<p>-maxdepth选项的作用就是限制find命令在目录中按照递减方式查找文件的时候搜索文件超过某个级别或者搜索过多的目录，这样导致查找速度变慢，查找花费的时间过多。例如，我们要在当前(.)目录技巧子目录中查找一个名叫fred的文件，我们可以使用如下命令</p>
+<p>find / -name “php.ini” -ls
+系统查找到php.ini文件后立即在屏幕上显示php.ini文件信息。</p>
+<p>find 常用参数
+-exec command;查找并执行命令
+-fprint file;打印文件完整文件名
+-fprint0 file;打印文件完整文件名包括空的文件
+-fprintf file format;打印文件格式
+-ok command;给用户命令执行操作，根据用户的Y 确认输入执行
+-printf format;打印文件格式
+-ls;打印同种文件格式的文件.</p>
+<p>locate 命令
+locate命令其实是“find -name”的另一种写法，但是要比后者快得多，原因在于它不搜索具体目录，而是搜索一个数据库（/var/lib/locatedb），这个数据库中含 有本地所有文件信息。Linux系统自动创建这个数据库，并且每天自动更新一次，所以使用locate命令查不到最新变动过的文件。为了避免这种情况，可 以在使用locate之前，先使用updatedb命令，手动更新数据库。</p>
+<p>locate命令的使用实例：
+$ locate /etc/sh
+搜索etc目录下所有以sh开头的文件。
+$ locate ~/m
+搜索用户主目录下，所有以m开头的文件。
+$ locate -i ~/m
+搜索用户主目录下，所有以m开头的文件，并且忽略大小写。</p>
+<p>原创文章，转载请注明： 转载自Martin
+<a href="http://www.blags.org/linux-find-command-daquan/">http://www.blags.org/linux-find-command-daquan/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/archives/page/6/" class="alignleft prev">上一页</a>
+  
+  
+    <a href="/archives/page/8/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/1032/">1032</a><small>1</small></li>
+  
+    <li><a href="/tags/1236/">1236</a><small>1</small></li>
+  
+    <li><a href="/tags/403/">403</a><small>1</small></li>
+  
+    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
+  
+    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
+  
+    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
+  
+    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
+  
+    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
+  
+    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
+  
+    <li><a href="/tags/acl/">acl</a><small>2</small></li>
+  
+    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
+  
+    <li><a href="/tags/apache/">apache</a><small>8</small></li>
+  
+    <li><a href="/tags/arp/">arp</a><small>1</small></li>
+  
+    <li><a href="/tags/awk/">awk</a><small>4</small></li>
+  
+    <li><a href="/tags/bash/">bash</a><small>2</small></li>
+  
+    <li><a href="/tags/best/">best</a><small>1</small></li>
+  
+    <li><a href="/tags/binding/">binding</a><small>1</small></li>
+  
+    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
+  
+    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
+  
+    <li><a href="/tags/browser/">browser</a><small>1</small></li>
+  
+    <li><a href="/tags/cache/">cache</a><small>1</small></li>
+  
+    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>8</small></li>
+  
+    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
+  
+    <li><a href="/tags/chown/">chown</a><small>1</small></li>
+  
+    <li><a href="/tags/commands/">commands</a><small>1</small></li>
+  
+    <li><a href="/tags/content/">content</a><small>1</small></li>
+  
+    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
+  
+    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
+  
+    <li><a href="/tags/creating/">creating</a><small>1</small></li>
+  
+    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
+  
+    <li><a href="/tags/dell/">dell</a><small>1</small></li>
+  
+    <li><a href="/tags/diff/">diff</a><small>1</small></li>
+  
+    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
+  
+    <li><a href="/tags/du/">du</a><small>1</small></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
+  
+    <li><a href="/tags/end/">end</a><small>1</small></li>
+  
+    <li><a href="/tags/epel/">epel</a><small>1</small></li>
+  
+    <li><a href="/tags/etag/">etag</a><small>1</small></li>
+  
+    <li><a href="/tags/expires/">expires</a><small>1</small></li>
+  
+    <li><a href="/tags/find/">find</a><small>1</small></li>
+  
+    <li><a href="/tags/for-1/">for</a><small>1</small></li>
+  
+    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
+  
+    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
+  
+    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
+  
+    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
+  
+    <li><a href="/tags/group/">group</a><small>1</small></li>
+  
+    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
+  
+    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
+  
+    <li><a href="/tags/howto/">howto</a><small>2</small></li>
+  
+    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
+  
+    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
+  
+    <li><a href="/tags/if/">if</a><small>2</small></li>
+  
+    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
+  
+    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
+  
+    <li><a href="/tags/init/">init</a><small>1</small></li>
+  
+    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
+  
+    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
+  
+    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
+  
+    <li><a href="/tags/jk/">jk</a><small>1</small></li>
+  
+    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
+  
+    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/kick/">kick</a><small>1</small></li>
+  
+    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>18</small></li>
+  
+    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
+  
+    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
+  
+    <li><a href="/tags/master/">master</a><small>2</small></li>
+  
+    <li><a href="/tags/metric/">metric</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
+  
+    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
+  
+    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
+  
+    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
+  
+    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
+  
+    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
+  
+    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
+  
+    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
+  
+    <li><a href="/tags/packet/">packet</a><small>1</small></li>
+  
+    <li><a href="/tags/pam/">pam</a><small>1</small></li>
+  
+    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
+  
+    <li><a href="/tags/perl/">perl</a><small>1</small></li>
+  
+    <li><a href="/tags/permission/">permission</a><small>1</small></li>
+  
+    <li><a href="/tags/php-1/">php</a><small>2</small></li>
+  
+    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
+  
+    <li><a href="/tags/pil/">pil</a><small>1</small></li>
+  
+    <li><a href="/tags/port/">port</a><small>1</small></li>
+  
+    <li><a href="/tags/practices/">practices</a><small>1</small></li>
+  
+    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
+  
+    <li><a href="/tags/ps/">ps</a><small>2</small></li>
+  
+    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
+  
+    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
+  
+    <li><a href="/tags/python-1/">python</a><small>3</small></li>
+  
+    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
+  
+    <li><a href="/tags/quick/">quick</a><small>1</small></li>
+  
+    <li><a href="/tags/r410/">r410</a><small>1</small></li>
+  
+    <li><a href="/tags/r710/">r710</a><small>1</small></li>
+  
+    <li><a href="/tags/raw/">raw</a><small>1</small></li>
+  
+    <li><a href="/tags/referer/">referer</a><small>1</small></li>
+  
+    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
+  
+    <li><a href="/tags/repo/">repo</a><small>1</small></li>
+  
+    <li><a href="/tags/resources/">resources</a><small>1</small></li>
+  
+    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
+  
+    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
+  
+    <li><a href="/tags/sar/">sar</a><small>1</small></li>
+  
+    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
+  
+    <li><a href="/tags/sed/">sed</a><small>4</small></li>
+  
+    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
+  
+    <li><a href="/tags/sending/">sending</a><small>1</small></li>
+  
+    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>2</small></li>
+  
+    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
+  
+    <li><a href="/tags/slave/">slave</a><small>2</small></li>
+  
+    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
+  
+    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
+  
+    <li><a href="/tags/spec/">spec</a><small>2</small></li>
+  
+    <li><a href="/tags/squid/">squid</a><small>1</small></li>
+  
+    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>1</small></li>
+  
+    <li><a href="/tags/tar/">tar</a><small>1</small></li>
+  
+    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
+  
+    <li><a href="/tags/tools/">tools</a><small>1</small></li>
+  
+    <li><a href="/tags/top/">top</a><small>1</small></li>
+  
+    <li><a href="/tags/tree/">tree</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
+  
+    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
+  
+    <li><a href="/tags/user/">user</a><small>2</small></li>
+  
+    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>2</small></li>
+  
+    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
+  
+    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/while/">while</a><small>1</small></li>
+  
+    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
+  
+    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
+  
+    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
+  
+    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
+  
+    <li><a href="/tags/yum/">yum</a><small>10</small></li>
+  
+    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
+  
+    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
+  
+    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
+  
+    <li><a href="/tags/优化/">优化</a><small>1</small></li>
+  
+    <li><a href="/tags/内核/">内核</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
+  
+    <li><a href="/tags/参考/">参考</a><small>1</small></li>
+  
+    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
+  
+    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
+  
+    <li><a href="/tags/对比/">对比</a><small>1</small></li>
+  
+    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
+  
+    <li><a href="/tags/日志/">日志</a><small>2</small></li>
+  
+    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
+  
+    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
+  
+    <li><a href="/tags/管理/">管理</a><small>1</small></li>
+  
+    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
+  
+    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
+  
+    <li><a href="/tags/老板/">老板</a><small>1</small></li>
+  
+    <li><a href="/tags/认证/">认证</a><small>1</small></li>
+  
+    <li><a href="/tags/详解/">详解</a><small>3</small></li>
+  
+    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
+  
+    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
+  
+    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

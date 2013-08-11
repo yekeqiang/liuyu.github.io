@@ -1,0 +1,658 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>linux tar 命令详解  | Puppet-in-action</title>
+  <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="tar -c|x|u|r|t[z|j][v] -f &lt;归档文件&gt; [未打包文件]
+将多个文件打包为一个归档文件，可以在打包的同时进行压缩。支持的格式为tar（归档）、gz（压缩）、bz2（压缩率更高，比较耗时）
+ -c 创建
+-x 解包
+-u 更新
+-r 添加
+-t 查看
+-d 比较压缩">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="linux tar 命令详解 "/>
+  <meta property="og:site_name" content="Puppet-in-action"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Puppet-in-action</a></h1>
+  <h2><a href="/">Puppet</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:48:09.000Z"><a href="/2010/12/19/linux-tar-detailed/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title">linux tar 命令详解 </h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>tar -c|x|u|r|t[z|j][v] -f &lt;归档文件&gt; [未打包文件]</p>
+<p>将多个文件打包为一个归档文件，可以在打包的同时进行压缩。支持的格式为tar（归档）、gz（压缩）、bz2（压缩率更高，比较耗时）</p>
+<pre><code><figure class="highlight"><pre> <span class="literal">-</span><span class="comment">c</span> <span class="comment">创建</span>
+<span class="literal">-</span><span class="comment">x</span> <span class="comment">解包</span>
+<span class="literal">-</span><span class="comment">u</span> <span class="comment">更新</span>
+<span class="literal">-</span><span class="comment">r</span> <span class="comment">添加</span>
+<span class="literal">-</span><span class="comment">t</span> <span class="comment">查看</span>
+<span class="literal">-</span><span class="comment">d</span> <span class="comment">比较压缩包内文件和文件</span>
+<span class="literal">-</span><span class="comment">A</span> <span class="comment">将tar文件添加到归档文件中</span>
+<span class="literal">-</span><span class="comment">z</span> <span class="comment">使用gz压缩格式</span>
+<span class="literal">-</span><span class="comment">j</span> <span class="comment">使用bz2压缩格式</span>
+<span class="literal">-</span><span class="comment">v</span> <span class="comment">显示过程</span>
+<span class="literal">-</span><span class="comment">f</span> &lt;<span class="comment">文件名</span>&gt; <span class="comment">归档文件的文件名</span>
+<span class="literal">-</span><span class="comment">C</span> &lt;<span class="comment">解压路径</span>&gt; <span class="comment">将压缩包中的文件解压到指定目录`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="title">[</span><span class="comment">未打包文件</span>] <span class="comment">创建、更新时必须填写</span>
+
+<span class="comment">示例：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span> <span class="comment">tar</span> <span class="literal">-</span><span class="comment">zcvf</span> <span class="comment">xxx</span>.<span class="comment">tar</span>.<span class="comment">gz</span> <span class="comment">xxx/</span> <span class="comment">xxx1</span> <span class="comment">xxx2</span> <span class="comment">xxx3</span> <span class="comment">多个待打包文件以空格分隔</span>
+<span class="comment">tar</span> <span class="literal">-</span><span class="comment">zxvf</span> <span class="comment">xxx</span>.<span class="comment">tar</span>.<span class="comment">gz</span> <span class="comment">按相对路径解包到当前目录下，或按绝对路径解包</span>
+<span class="comment">tar</span> <span class="literal">-</span><span class="comment">zcvf</span> <span class="comment">xxx</span>.<span class="comment">tar</span>.<span class="comment">gz</span> <span class="comment">xxx</span> <span class="comment">|</span> <span class="comment">split</span> <span class="literal">-</span><span class="comment">b</span> <span class="comment">1m</span> <span class="comment">打包后，使用split分割为1m大小的多个文件`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">**其它参数**</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span> <span class="literal">-</span><span class="comment">P</span> <span class="comment">使用绝对路径压缩时，保留根目录“/”</span>
+<span class="literal">-</span><span class="comment">W</span> <span class="comment">校验</span>
+<span class="literal">-</span><span class="comment">p</span> <span class="comment">还原文件权限</span>
+<span class="literal">-</span><span class="comment">w</span> <span class="comment">询问用户</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">totals</span> <span class="comment">统计</span>
+<span class="literal">-</span><span class="comment">T</span> &lt;<span class="comment">表达式</span>&gt; <span class="comment">处理符合条件的文件</span>
+<span class="literal">-</span><span class="comment">X</span> &lt;<span class="comment">表达式</span>&gt; <span class="comment">排除符合条件的文件`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">**</span>
+<span class="comment">通过ssh传输文件**</span>
+<span class="comment">Code</span> <span class="comment">block</span> 
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span> <span class="comment">scp</span> <span class="literal">-</span><span class="comment">rp</span> <span class="comment">/path/filename</span> <span class="comment">username@remoteIP:/path</span> <span class="comment">#将本地文件拷贝到服务器上</span>
+<span class="comment">scp</span> <span class="literal">-</span><span class="comment">rp</span> <span class="comment">username@remoteIP:/path/filename</span> <span class="comment">/path</span> <span class="comment">#将远程文件从服务器下载到本地</span>
+<span class="comment">tar</span> <span class="comment">cvzf</span> <span class="literal">-</span> <span class="comment">/path/</span> <span class="comment">|</span> <span class="comment">ssh</span> <span class="comment">username@remoteip</span> <span class="comment">"cd</span> <span class="comment">/some/path/;</span> <span class="comment">cat</span> <span class="literal">-</span> &gt; <span class="comment">path</span>.<span class="comment">tar</span>.<span class="comment">gz"</span> <span class="comment">#压缩传输</span>
+<span class="comment">tar</span> <span class="comment">cvzf</span> <span class="literal">-</span> <span class="comment">/path/</span> <span class="comment">|</span> <span class="comment">ssh</span> <span class="comment">username@remoteip</span> <span class="comment">"cd</span> <span class="comment">/some/path/;</span> <span class="comment">tar</span> <span class="comment">xvzf</span> <span class="literal">-</span><span class="comment">"</span> <span class="comment">#压缩传输一个目录并解压缩`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">##直接命令行输入不需要双引号</span>
+
+<span class="comment">功能说明：备份文件。</span>
+<span class="comment">**语　　法**：tar</span> <span class="title">[</span><span class="literal">-</span><span class="comment">ABcdgGhiklmMoOpPrRsStuUvwWxzZ</span>]<span class="title">[</span><span class="literal">-</span><span class="comment">b</span> &lt;<span class="comment">区块数目</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">C</span> &lt;<span class="comment">目的目录</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">f</span> &lt;<span class="comment">备份文件</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">F</span> <span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">K</span> &lt;<span class="comment">文件</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">L</span> &lt;<span class="comment">媒体容量</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">N</span> &lt;<span class="comment">日期时间</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">T</span> &lt;<span class="comment">范本文件</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">V</span> &lt;<span class="comment">卷册名称</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">X</span> &lt;<span class="comment">范本文件</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span>&lt;<span class="comment">设备编号</span>&gt;&lt;<span class="comment">存储密</span> <span class="comment">度</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">after</span>-<span class="comment">date=</span>&lt;<span class="comment">日期时间</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">atime</span>-<span class="comment">preserve</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">backuup=</span>&lt;<span class="comment">备份方式&amp;</span> <span class="comment">amp;</span> <span class="comment">gt;</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">checkpoint</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">concatenate</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">confirmation</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">delete</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">exclude=&amp;</span> <span class="comment">lt;范本样式</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">force</span>-<span class="comment">local</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">group=</span>&lt;<span class="comment">群组名称</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">help</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">ignore</span>- <span class="comment">failed</span>-<span class="comment">read</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">new</span>-<span class="comment">volume</span>-<span class="comment">script=</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">newer</span>-<span class="comment">mtime</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">no</span>- <span class="comment">recursion</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">null</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">numeric</span>-<span class="comment">owner</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">owner=</span>&lt;<span class="comment">用户名称</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">posix</span>] <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">erve</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">preserve</span>-<span class="comment">order</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">preserve</span>-<span class="comment">permissions</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">record</span>-<span class="comment">size=</span>&lt;<span class="comment">区块数</span> <span class="comment">目</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span>-<span class="comment">unlink</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">remove</span>-<span class="comment">files</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">rsh</span>-<span class="comment">command=</span>&lt;<span class="comment">执行指令</span>&gt;<span class="title">]</span> <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">same</span>-<span class="comment">owner</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">suffix=</span>&lt;<span class="comment">备份字尾字符串</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">totals</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">use</span>-<span class="comment">compress</span>- <span class="comment">program=</span>&lt;<span class="comment">执行指令</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">version</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">volno</span>-<span class="comment">file=</span>&lt;<span class="comment">编号文件</span>&gt;<span class="title">]</span><span class="title">[</span><span class="comment">文件或目录</span>.<span class="string">.</span><span class="string">.</span><span class="title">]</span>
+<span class="comment">补充说明：tar是用来建立，还原备份文件的工具程序，它可以加入，解开备份文件内的文件。</span>
+
+<span class="comment">**参　　数**：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span> <span class="literal">-</span><span class="comment">A或</span>-<span class="literal">-</span><span class="comment">catenate</span> <span class="comment">新增温暖件到已存在的备份文件。</span>
+<span class="literal">-</span><span class="comment">b</span>&lt;<span class="comment">区块数目</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">blocking</span>-<span class="comment">factor=</span>&lt;<span class="comment">区块数目</span>&gt; <span class="comment">设置每笔记录的区块数目，每个区块大小为12Bytes。</span>
+<span class="literal">-</span><span class="comment">B或</span>-<span class="literal">-</span><span class="comment">read</span>-<span class="comment">full</span>-<span class="comment">records</span> <span class="comment">读取数据时重设区块大小。</span>
+<span class="literal">-</span><span class="comment">c或</span>-<span class="literal">-</span><span class="comment">create</span> <span class="comment">建立新的备份文件。</span>
+<span class="literal">-</span><span class="comment">C</span>&lt;<span class="comment">目的目录</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">directory=</span>&lt;<span class="comment">目的目录</span>&gt; <span class="comment">切换到指定的目录。</span>
+<span class="literal">-</span><span class="comment">d或</span>-<span class="literal">-</span><span class="comment">diff或</span>-<span class="literal">-</span><span class="comment">compare</span> <span class="comment">对比备份文件内和文件系统上的文件的差异。</span>
+<span class="literal">-</span><span class="comment">f</span>&lt;<span class="comment">备份文件</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">file=</span>&lt;<span class="comment">备份文件</span>&gt; <span class="comment">指定备份文件。</span>
+<span class="literal">-</span><span class="comment">F或</span>-<span class="literal">-</span><span class="comment">info</span>-<span class="comment">script=</span> <span class="comment">每次更换磁带时，就执行指定的Script文件。</span>
+<span class="literal">-</span><span class="comment">g或</span>-<span class="literal">-</span><span class="comment">listed</span>-<span class="comment">incremental</span> <span class="comment">处理GNU格式的大量备份。</span>
+<span class="literal">-</span><span class="comment">G或</span>-<span class="literal">-</span><span class="comment">incremental</span> <span class="comment">处理旧的GNU格式的大量备份。</span>
+<span class="literal">-</span><span class="comment">h或</span>-<span class="literal">-</span><span class="comment">dereference</span> <span class="comment">不建立符号连接，直接复制该连接所指向的原始文件。</span>
+<span class="literal">-</span><span class="comment">i或</span>-<span class="literal">-</span><span class="comment">ignore</span>-<span class="comment">zeros</span> <span class="comment">忽略备份文件中的0</span> <span class="comment">Byte区块，也就是EOF。</span>
+<span class="literal">-</span><span class="comment">k或</span>-<span class="literal">-</span><span class="comment">keep</span>-<span class="comment">old</span>-<span class="comment">files</span> <span class="comment">解开备份文件时，不覆盖已有的文件。</span>
+<span class="literal">-</span><span class="comment">K</span>&lt;<span class="comment">文件</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">starting</span>-<span class="comment">file=</span>&lt;<span class="comment">文件</span>&gt; <span class="comment">从指定的文件开始还原。</span>
+<span class="literal">-</span><span class="comment">l或</span>-<span class="literal">-</span><span class="comment">one</span>-<span class="comment">file</span>-<span class="comment">system</span> <span class="comment">复制的文件或目录存放的文件系统，必须与tar指令执行时所处的文件系统相同，否则不予复制。</span>
+<span class="literal">-</span><span class="comment">L</span>&lt;<span class="comment">媒体容量</span>&gt;<span class="comment">或</span>-<span class="comment">tape</span>-<span class="comment">length=</span>&lt;<span class="comment">媒体容量</span>&gt; <span class="comment">设置存放每体的容量，单位以1024</span> <span class="comment">Bytes计算。</span>
+<span class="literal">-</span><span class="comment">m或</span>-<span class="literal">-</span><span class="comment">modification</span>-<span class="comment">time</span> <span class="comment">还原文件时，不变更文件的更改时间。</span>
+<span class="literal">-</span><span class="comment">M或</span>-<span class="literal">-</span><span class="comment">multi</span>-<span class="comment">volume</span> <span class="comment">在建立，还原备份文件或列出其中的内容时，采用多卷册模式。</span>
+<span class="literal">-</span><span class="comment">N</span>&lt;<span class="comment">日期格式</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">newer=</span>&lt;<span class="comment">日期时间</span>&gt; <span class="comment">只将较指定日期更新的文件保存到备份文件里。</span>
+<span class="literal">-</span><span class="comment">o或</span>-<span class="literal">-</span><span class="comment">old</span>-<span class="comment">archive或</span>-<span class="literal">-</span><span class="comment">portability</span> <span class="comment">将资料写入备份文件时使用V7格式。</span>
+<span class="literal">-</span><span class="comment">O或</span>-<span class="literal">-</span><span class="comment">stdout</span> <span class="comment">把从备份文件里还原的文件输出到标准输出设备。</span>
+<span class="literal">-</span><span class="comment">p或</span>-<span class="literal">-</span><span class="comment">same</span>-<span class="comment">permissions</span> <span class="comment">用原来的文件权限还原文件。</span>
+<span class="literal">-</span><span class="comment">P或</span>-<span class="literal">-</span><span class="comment">absolute</span>-<span class="comment">names</span> <span class="comment">文件名使用绝对名称，不移除文件名称前的"/"号。</span>
+<span class="literal">-</span><span class="comment">r或</span>-<span class="literal">-</span><span class="comment">append</span> <span class="comment">新增文件到已存在的备份文件的结尾部分。</span>
+<span class="literal">-</span><span class="comment">R或</span>-<span class="literal">-</span><span class="comment">block</span>-<span class="comment">number</span> <span class="comment">列出每个信息在备份文件中的区块编号。</span>
+<span class="literal">-</span><span class="comment">s或</span>-<span class="literal">-</span><span class="comment">same</span>-<span class="comment">order</span> <span class="comment">还原文件的顺序和备份文件内的存放顺序相同。</span>
+<span class="literal">-</span><span class="comment">S或</span>-<span class="literal">-</span><span class="comment">sparse</span> <span class="comment">倘若一个文件内含大量的连续0字节，则将此文件存成稀疏文件。</span>
+<span class="literal">-</span><span class="comment">t或</span>-<span class="literal">-</span><span class="comment">list</span> <span class="comment">列出备份文件的内容。</span>
+<span class="literal">-</span><span class="comment">T</span>&lt;<span class="comment">范本文件</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">files</span>-<span class="comment">from=</span>&lt;<span class="comment">范本文件</span>&gt; <span class="comment">指定范本文件，其内含有一个或多个范本样式，让tar解开或建立符合设置条件的文件。</span>
+<span class="literal">-</span><span class="comment">u或</span>-<span class="literal">-</span><span class="comment">update</span> <span class="comment">仅置换较备份文件内的文件更新的文件。</span>
+<span class="literal">-</span><span class="comment">U或</span>-<span class="literal">-</span><span class="comment">unlink</span>-<span class="comment">first</span> <span class="comment">解开压缩文件还原文件之前，先解除文件的连接。</span>
+<span class="literal">-</span><span class="comment">v或</span>-<span class="literal">-</span><span class="comment">verbose</span> <span class="comment">显示指令执行过程。</span>
+<span class="literal">-</span><span class="comment">V</span>&lt;<span class="comment">卷册名称</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">label=</span>&lt;<span class="comment">卷册名称</span>&gt; <span class="comment">建立使用指定的卷册名称的备份文件。</span>
+<span class="literal">-</span><span class="comment">w或</span>-<span class="literal">-</span><span class="comment">interactive</span> <span class="comment">遭遇问题时先询问用户。</span>
+<span class="literal">-</span><span class="comment">W或</span>-<span class="literal">-</span><span class="comment">verify</span> <span class="comment">写入备份文件后，确认文件正确无误。</span>
+<span class="literal">-</span><span class="comment">x或</span>-<span class="literal">-</span><span class="comment">extract或</span>-<span class="literal">-</span><span class="comment">get</span> <span class="comment">从备份文件中还原文件。</span>
+<span class="literal">-</span><span class="comment">X</span>&lt;<span class="comment">范本文件</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">exclude</span>-<span class="comment">from=</span>&lt;<span class="comment">范本文件</span>&gt; <span class="comment">指定范本文件，其内含有一个或多个范本样式，让ar排除符合设置条件的文件。</span>
+<span class="literal">-</span><span class="comment">z或</span>-<span class="literal">-</span><span class="comment">gzip或</span>-<span class="literal">-</span><span class="comment">ungzip</span> <span class="comment">通过gzip指令处理备份文件。</span>
+<span class="literal">-</span><span class="comment">Z或</span>-<span class="literal">-</span><span class="comment">compress或</span>-<span class="literal">-</span><span class="comment">uncompress</span> <span class="comment">通过compress指令处理备份文件。</span>
+<span class="literal">-</span>&lt;<span class="comment">设备编号</span>&gt;&lt;<span class="comment">存储密度</span>&gt; <span class="comment">设置备份用的外围设备编号及存放数据的密度。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">after</span>-<span class="comment">date=</span>&lt;<span class="comment">日期时间</span>&gt; <span class="comment">此参数的效果和指定"</span>-<span class="comment">N"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">atime</span>-<span class="comment">preserve</span> <span class="comment">不变更文件的存取时间。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">backup=</span>&lt;<span class="comment">备份方式</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">backup</span> <span class="comment">移除文件前先进行备份。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">checkpoint</span> <span class="comment">读取备份文件时列出目录名称。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">concatenate</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">A"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">confirmation</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">w"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">delete</span> <span class="comment">从备份文件中删除指定的文件。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">exclude=</span>&lt;<span class="comment">范本样式</span>&gt; <span class="comment">排除符合范本样式的问家。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">group=</span>&lt;<span class="comment">群组名称</span>&gt; <span class="comment">把加入设备文件中的文件的所属群组设成指定的群组。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">help</span> <span class="comment">在线帮助。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">ignore</span>-<span class="comment">failed</span>-<span class="comment">read</span> <span class="comment">忽略数据读取错误，不中断程序的执行。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">new</span>-<span class="comment">volume</span>-<span class="comment">script=</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">F"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">newer</span>-<span class="comment">mtime</span> <span class="comment">只保存更改过的文件。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">no</span>-<span class="comment">recursion</span> <span class="comment">不做递归处理，也就是指定目录下的所有文件及子目录不予处理。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">null</span> <span class="comment">从null设备读取文件名称。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">numeric</span>-<span class="comment">owner</span> <span class="comment">以用户识别码及群组识别码取代用户名称和群组名称。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">owner=</span>&lt;<span class="comment">用户名称</span>&gt; <span class="comment">把加入备份文件中的文件的拥有者设成指定的用户。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">posix</span> <span class="comment">将数据写入备份文件时使用POSIX格式。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">preserve</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">ps"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">preserve</span>-<span class="comment">order</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">A"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">preserve</span>-<span class="comment">permissions</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">p"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">record</span>-<span class="comment">size=</span>&lt;<span class="comment">区块数目</span>&gt; <span class="comment">此参数的效果和指定"</span>-<span class="comment">b"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span>-<span class="comment">unlink</span> <span class="comment">解开压缩文件还原目录之前，先解除整个目录下所有文件的连接。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">remove</span>-<span class="comment">files</span> <span class="comment">文件加入备份文件后，就将其删除。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">rsh</span>-<span class="comment">command=</span>&lt;<span class="comment">执行指令</span>&gt; <span class="comment">设置要在远端主机上执行的指令，以取代rsh指令。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">same</span>-<span class="comment">owner</span> <span class="comment">尝试以相同的文件拥有者还原问家你。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">suffix=</span>&lt;<span class="comment">备份字尾字符串</span>&gt; <span class="comment">移除文件前先行备份。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">totals</span> <span class="comment">备份文件建立后，列出文件大小。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">use</span>-<span class="comment">compress</span>-<span class="comment">program=</span>&lt;<span class="comment">执行指令</span>&gt; <span class="comment">通过指定的指令处理备份文件。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">version</span> <span class="comment">显示版本信息。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">volno</span>-<span class="comment">file=</span>&lt;<span class="comment">编号文件</span>&gt; <span class="comment">使用指定文件内的编号取代预设的卷册编号。
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/系统命令/">系统命令</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/tar/">tar</a>, <a href="/tags/命令详解/">命令详解</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/1032/">1032</a><small>1</small></li>
+  
+    <li><a href="/tags/1236/">1236</a><small>1</small></li>
+  
+    <li><a href="/tags/403/">403</a><small>1</small></li>
+  
+    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
+  
+    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
+  
+    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
+  
+    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
+  
+    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
+  
+    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
+  
+    <li><a href="/tags/acl/">acl</a><small>2</small></li>
+  
+    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
+  
+    <li><a href="/tags/apache/">apache</a><small>8</small></li>
+  
+    <li><a href="/tags/arp/">arp</a><small>1</small></li>
+  
+    <li><a href="/tags/awk/">awk</a><small>4</small></li>
+  
+    <li><a href="/tags/bash/">bash</a><small>2</small></li>
+  
+    <li><a href="/tags/best/">best</a><small>1</small></li>
+  
+    <li><a href="/tags/binding/">binding</a><small>1</small></li>
+  
+    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
+  
+    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
+  
+    <li><a href="/tags/browser/">browser</a><small>1</small></li>
+  
+    <li><a href="/tags/cache/">cache</a><small>1</small></li>
+  
+    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>8</small></li>
+  
+    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
+  
+    <li><a href="/tags/chown/">chown</a><small>1</small></li>
+  
+    <li><a href="/tags/commands/">commands</a><small>1</small></li>
+  
+    <li><a href="/tags/content/">content</a><small>1</small></li>
+  
+    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
+  
+    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
+  
+    <li><a href="/tags/creating/">creating</a><small>1</small></li>
+  
+    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
+  
+    <li><a href="/tags/dell/">dell</a><small>1</small></li>
+  
+    <li><a href="/tags/diff/">diff</a><small>1</small></li>
+  
+    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
+  
+    <li><a href="/tags/du/">du</a><small>1</small></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
+  
+    <li><a href="/tags/end/">end</a><small>1</small></li>
+  
+    <li><a href="/tags/epel/">epel</a><small>1</small></li>
+  
+    <li><a href="/tags/etag/">etag</a><small>1</small></li>
+  
+    <li><a href="/tags/expires/">expires</a><small>1</small></li>
+  
+    <li><a href="/tags/find/">find</a><small>1</small></li>
+  
+    <li><a href="/tags/for-1/">for</a><small>1</small></li>
+  
+    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
+  
+    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
+  
+    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
+  
+    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
+  
+    <li><a href="/tags/group/">group</a><small>1</small></li>
+  
+    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
+  
+    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
+  
+    <li><a href="/tags/howto/">howto</a><small>2</small></li>
+  
+    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
+  
+    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
+  
+    <li><a href="/tags/if/">if</a><small>2</small></li>
+  
+    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
+  
+    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
+  
+    <li><a href="/tags/init/">init</a><small>1</small></li>
+  
+    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
+  
+    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
+  
+    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
+  
+    <li><a href="/tags/jk/">jk</a><small>1</small></li>
+  
+    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
+  
+    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/kick/">kick</a><small>1</small></li>
+  
+    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>18</small></li>
+  
+    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
+  
+    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
+  
+    <li><a href="/tags/master/">master</a><small>2</small></li>
+  
+    <li><a href="/tags/metric/">metric</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
+  
+    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
+  
+    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
+  
+    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
+  
+    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
+  
+    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
+  
+    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
+  
+    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
+  
+    <li><a href="/tags/packet/">packet</a><small>1</small></li>
+  
+    <li><a href="/tags/pam/">pam</a><small>1</small></li>
+  
+    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
+  
+    <li><a href="/tags/perl/">perl</a><small>1</small></li>
+  
+    <li><a href="/tags/permission/">permission</a><small>1</small></li>
+  
+    <li><a href="/tags/php-1/">php</a><small>2</small></li>
+  
+    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
+  
+    <li><a href="/tags/pil/">pil</a><small>1</small></li>
+  
+    <li><a href="/tags/port/">port</a><small>1</small></li>
+  
+    <li><a href="/tags/practices/">practices</a><small>1</small></li>
+  
+    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
+  
+    <li><a href="/tags/ps/">ps</a><small>2</small></li>
+  
+    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
+  
+    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
+  
+    <li><a href="/tags/python-1/">python</a><small>3</small></li>
+  
+    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
+  
+    <li><a href="/tags/quick/">quick</a><small>1</small></li>
+  
+    <li><a href="/tags/r410/">r410</a><small>1</small></li>
+  
+    <li><a href="/tags/r710/">r710</a><small>1</small></li>
+  
+    <li><a href="/tags/raw/">raw</a><small>1</small></li>
+  
+    <li><a href="/tags/referer/">referer</a><small>1</small></li>
+  
+    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
+  
+    <li><a href="/tags/repo/">repo</a><small>1</small></li>
+  
+    <li><a href="/tags/resources/">resources</a><small>1</small></li>
+  
+    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
+  
+    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
+  
+    <li><a href="/tags/sar/">sar</a><small>1</small></li>
+  
+    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
+  
+    <li><a href="/tags/sed/">sed</a><small>4</small></li>
+  
+    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
+  
+    <li><a href="/tags/sending/">sending</a><small>1</small></li>
+  
+    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>2</small></li>
+  
+    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
+  
+    <li><a href="/tags/slave/">slave</a><small>2</small></li>
+  
+    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
+  
+    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
+  
+    <li><a href="/tags/spec/">spec</a><small>2</small></li>
+  
+    <li><a href="/tags/squid/">squid</a><small>1</small></li>
+  
+    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>1</small></li>
+  
+    <li><a href="/tags/tar/">tar</a><small>1</small></li>
+  
+    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
+  
+    <li><a href="/tags/tools/">tools</a><small>1</small></li>
+  
+    <li><a href="/tags/top/">top</a><small>1</small></li>
+  
+    <li><a href="/tags/tree/">tree</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
+  
+    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
+  
+    <li><a href="/tags/user/">user</a><small>2</small></li>
+  
+    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>2</small></li>
+  
+    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
+  
+    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/while/">while</a><small>1</small></li>
+  
+    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
+  
+    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
+  
+    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
+  
+    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
+  
+    <li><a href="/tags/yum/">yum</a><small>10</small></li>
+  
+    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
+  
+    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
+  
+    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
+  
+    <li><a href="/tags/优化/">优化</a><small>1</small></li>
+  
+    <li><a href="/tags/内核/">内核</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
+  
+    <li><a href="/tags/参考/">参考</a><small>1</small></li>
+  
+    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
+  
+    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
+  
+    <li><a href="/tags/对比/">对比</a><small>1</small></li>
+  
+    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
+  
+    <li><a href="/tags/日志/">日志</a><small>2</small></li>
+  
+    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
+  
+    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
+  
+    <li><a href="/tags/管理/">管理</a><small>1</small></li>
+  
+    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
+  
+    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
+  
+    <li><a href="/tags/老板/">老板</a><small>1</small></li>
+  
+    <li><a href="/tags/认证/">认证</a><small>1</small></li>
+  
+    <li><a href="/tags/详解/">详解</a><small>3</small></li>
+  
+    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
+  
+    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
+  
+    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

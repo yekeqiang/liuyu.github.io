@@ -1,0 +1,730 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>tree | Puppet-in-action</title>
+  <meta name="author" content="Liu Yu">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Puppet-in-action"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Puppet-in-action</a></h1>
+  <h2><a href="/">Puppet</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title tag">tree</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T22:59:00.000Z"><a href="/2010/12/19/linux-word-order/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-word-order/">Linux一句话命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>原文链接：<a href="http://bbs.linuxtone.org/thread-16-1-1.html">http://bbs.linuxtone.org/thread-16-1-1.html</a> IT运维专家网--&quot;自由平等，互助分享！&quot;
+作者:NetSeek
+原文加我的补充，以后会更加详细！</p>
+<p>1.删除0字节文件</p>
+<pre><code><figure class="highlight"><pre><span class="comment">find</span> <span class="literal">-</span><span class="comment">type</span> <span class="comment">f</span> <span class="literal">-</span><span class="comment">size</span> <span class="comment">0</span> <span class="literal">-</span><span class="comment">exec</span> <span class="comment">rm</span> <span class="literal">-</span><span class="comment">rf</span> <span class="comment">{}</span> <span class="comment">\;`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">2</span>.<span class="comment">查看进程</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`按内存从大到小排列</span>
+<span class="comment">ps</span> <span class="literal">-</span><span class="comment">e</span> <span class="literal">-</span><span class="comment">o</span> <span class="comment">"%C</span> <span class="comment">:</span> <span class="comment">%p</span> <span class="comment">:</span> <span class="comment">%z</span> <span class="comment">:</span> <span class="comment">%a"|sort</span> <span class="literal">-</span><span class="comment">k5</span> <span class="literal">-</span><span class="comment">nr`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">3</span>.<span class="comment">按cpu利用率从大到小排列</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`ps</span> <span class="literal">-</span><span class="comment">e</span> <span class="literal">-</span><span class="comment">o</span> <span class="comment">"%C</span> <span class="comment">:</span> <span class="comment">%p</span> <span class="comment">:</span> <span class="comment">%z</span> <span class="comment">:</span> <span class="comment">%a"|sort</span> <span class="literal">-</span><span class="comment">nr`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">4</span>.<span class="comment">打印说cache里的URL</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`grep</span> <span class="literal">-</span><span class="comment">r</span> <span class="literal">-</span><span class="comment">a</span> <span class="comment">jpg</span> <span class="comment">/data/cache/*</span> <span class="comment">|</span> <span class="comment">strings</span> <span class="comment">|</span> <span class="comment">grep</span> <span class="comment">"http:"</span> <span class="comment">|</span> <span class="comment">awk</span> <span class="literal">-</span><span class="comment">F'http:'</span> <span class="comment">'{print</span> <span class="comment">"http:"$2;}'`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">5</span>.<span class="comment">查看http的并发请求数及其TCP连接状态：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`netstat</span> <span class="literal">-</span><span class="comment">n</span> <span class="comment">|</span> <span class="comment">awk</span> <span class="comment">'/^tcp/</span> <span class="comment">{</span>+<span class="literal">+</span><span class="comment">S</span>[<span class="comment">$NF</span>]<span class="comment">}</span> <span class="comment">END</span> <span class="comment">{for(a</span> <span class="comment">in</span> <span class="comment">S)</span> <span class="comment">print</span> <span class="comment">a</span>, <span class="comment">S</span>[<span class="comment">a</span>]<span class="comment">}'`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">6</span>.&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span> <span class="comment">sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'/Root/s/no/yes/'</span> <span class="comment">/etc/ssh/sshd_config</span> <span class="comment">sed`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">在这个文里</span> <span class="comment">Root的一行，匹配Root一行，将no替换成yes</span>.
+
+<span class="comment">7</span>.<span class="comment">1</span>.<span class="comment">如何杀掉mysql进程：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`ps</span> <span class="comment">aux|grep</span> <span class="comment">mysql|grep</span> <span class="literal">-</span><span class="comment">v</span> <span class="comment">grep|awk</span> <span class="comment">'{print</span> <span class="comment">$2}'|xargs</span> <span class="comment">kill</span> <span class="literal">-</span><span class="comment">9</span> <span class="comment">(从中了解到awk的用途)</span>
+<span class="comment">pgrep</span> <span class="comment">mysql</span> <span class="comment">|xargs</span> <span class="comment">kill</span> <span class="literal">-</span><span class="comment">9</span> <span class="title">[</span><span class="comment">网友:&amp;FROST</span>]
+<span class="comment">killall</span> <span class="literal">-</span><span class="comment">TERM</span> <span class="comment">mysqld</span>
+<span class="comment">kill</span> <span class="literal">-</span><span class="comment">9</span> <span class="comment">`cat</span> <span class="comment">/usr/local/apache2/logs/httpd</span>.<span class="comment">pid`</span> <span class="comment">试试查杀进程PID`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">8</span>.<span class="comment">显示运行3级别开启的服务:</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`ls</span> <span class="comment">/etc/rc3</span>.<span class="comment">d/S*</span> <span class="comment">|cut</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">15</span>- <span class="comment">(从中了解到cut的用途，截取数据)`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">9</span>.<span class="comment">如何在编写SHELL显示多个信息，用EOF</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`cat</span> &lt;&lt; <span class="comment">EOF</span>
+<span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span>
+<span class="comment">|</span> <span class="comment">===</span> <span class="comment">Welcome</span> <span class="comment">to</span> <span class="comment">Tunoff</span> <span class="comment">services</span> <span class="comment">===</span> <span class="comment">|</span>
+<span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span>
+<span class="comment">EOF`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">10\</span>. <span class="comment">for</span> <span class="comment">的巧用(如给mysql建软链接)</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`cd</span> <span class="comment">/usr/local/mysql/bin</span>
+<span class="comment">for</span> <span class="comment">i</span> <span class="comment">in</span> <span class="comment">*</span>
+<span class="comment">do</span> <span class="comment">ln</span> <span class="comment">/usr/local/mysql/bin/$i</span> <span class="comment">/usr/bin/$i</span>
+<span class="comment">done`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">11\</span>. <span class="comment">取IP地址：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`ifconfig</span> <span class="comment">eth0|sed</span> <span class="literal">-</span><span class="comment">n</span> <span class="comment">'2p'|awk</span> <span class="comment">'{print</span> <span class="comment">$2}'|cut</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">6</span>-<span class="comment">30</span> <span class="comment">或者:</span>
+<span class="comment">ifconfig</span> <span class="comment">eth0</span> <span class="comment">|grep</span> <span class="comment">"inet</span> <span class="comment">addr:"</span> <span class="comment">|awk</span> <span class="comment">'{print</span> <span class="comment">$2}'|cut</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">6</span>- <span class="comment">或者</span>
+<span class="comment">ifconfig</span> <span class="comment">|</span> <span class="comment">grep</span> <span class="comment">'inet</span> <span class="comment">addr:'|</span> <span class="comment">grep</span> <span class="literal">-</span><span class="comment">v</span> <span class="comment">'127</span>.<span class="comment">0</span>.<span class="comment">0</span>.<span class="comment">1'</span> <span class="comment">|</span> <span class="comment">cut</span> <span class="literal">-</span><span class="comment">d:</span> <span class="literal">-</span><span class="comment">f2</span> <span class="comment">|</span> <span class="comment">awk</span> <span class="comment">'{</span> <span class="comment">print</span> <span class="comment">$1}'</span>
+<span class="comment">或者：</span>
+<span class="comment">ifconfig</span> <span class="comment">eth0</span> <span class="comment">|</span> <span class="comment">sed</span> <span class="literal">-</span><span class="comment">n</span> <span class="comment">'/inet</span> <span class="comment">/{s/</span>.<span class="comment">*addr://;s/</span> <span class="string">.</span><span class="comment">*//;p}'`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">Perl实现获取IP的方法:</span>
+<span class="comment">ifconfig</span> <span class="literal">-</span><span class="comment">a</span> <span class="comment">|</span> <span class="comment">perl</span> <span class="literal">-</span><span class="comment">ne</span> <span class="comment">'if</span> <span class="comment">(</span> <span class="comment">m/^\s*inet</span> <span class="comment">(?:addr:)?(</span>[<span class="comment">\d</span>.<span class="title">]</span><span class="literal">+</span><span class="comment">)</span>.<span class="comment">*?cast/</span> <span class="comment">)</span> <span class="comment">{</span> <span class="comment">print</span> <span class="comment">qq($1\n);</span> <span class="comment">exit</span> <span class="comment">0;</span> <span class="comment">}'</span>&lt;<span class="comment">/code</span>&gt;&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">12</span>.<span class="comment">内存的大小:</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`free</span> <span class="literal">-</span><span class="comment">m</span> <span class="comment">|grep</span> <span class="comment">"Mem"</span> <span class="comment">|</span> <span class="comment">awk</span> <span class="comment">'{print</span> <span class="comment">$2}'`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">13</span>.
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`netstat</span> <span class="literal">-</span><span class="comment">an</span> <span class="literal">-</span><span class="comment">t</span> <span class="comment">|</span> <span class="comment">grep</span> <span class="comment">":80"</span> <span class="comment">|</span> <span class="comment">grep</span> <span class="comment">ESTABLISHED</span> <span class="comment">|</span> <span class="comment">awk</span> <span class="comment">'{printf</span> <span class="comment">"%s</span> <span class="comment">%s\n"</span>,<span class="comment">$5</span>,<span class="comment">$6}'</span> <span class="comment">|</span> <span class="comment">sort`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">14</span>.<span class="comment">查看Apache的并发请求数及其TCP连接状态：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`netstat</span> <span class="literal">-</span><span class="comment">n</span> <span class="comment">|</span> <span class="comment">awk</span> <span class="comment">'/^tcp/</span> <span class="comment">{</span>+<span class="literal">+</span><span class="comment">S</span>[<span class="comment">$NF</span>]<span class="comment">}</span> <span class="comment">END</span> <span class="comment">{for(a</span> <span class="comment">in</span> <span class="comment">S)</span> <span class="comment">print</span> <span class="comment">a</span>, <span class="comment">S</span>[<span class="comment">a</span>]<span class="comment">}'`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">15</span>.<span class="comment">因为同事要统计一下服务器下面所有的jpg的文件的大小</span>,<span class="comment">写了个shell给他来统计</span>.<span class="comment">原来用xargs实现</span>,<span class="comment">但他一次处理一部分</span>,<span class="comment">搞的有多个总和</span>.<span class="string">.</span><span class="string">.</span><span class="string">.</span><span class="string">,</span><span class="comment">下面的命令就能解决啦</span>.
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">name</span> <span class="comment">*</span>.<span class="comment">jpg</span> <span class="literal">-</span><span class="comment">exec</span> <span class="comment">wc</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">{}</span> <span class="comment">\;|awk</span> <span class="comment">'{print</span> <span class="comment">$1}'|awk</span> <span class="comment">'{a</span>+<span class="comment">=$1}END{print</span> <span class="comment">a}'`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">CPU的数量（多核算多个CPU，cat</span> <span class="comment">/proc/cpuinfo</span> <span class="comment">|grep</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">processor）越多，系统负载越低，每秒能处理的请求数也越多。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span>
+
+<span class="comment">16</span> <span class="comment">CPU负载</span> <span class="comment">#</span> <span class="comment">cat</span> <span class="comment">/proc/loadavg</span>
+<span class="comment">检查前三个输出值是否超过了系统逻辑CPU的4倍。</span>
+
+<span class="comment">18</span> <span class="comment">CPU负载</span> <span class="comment">#mpstat</span> <span class="comment">1</span> <span class="comment">1</span>
+<span class="comment">检查%idle是否过低(比如小于5%)</span>
+
+<span class="comment">19</span> <span class="comment">内存空间</span> <span class="comment">#</span> <span class="comment">free</span>
+<span class="comment">检查free值是否过低</span> <span class="comment">也可以用</span> <span class="comment">#</span> <span class="comment">cat</span> <span class="comment">/proc/meminfo</span>
+
+<span class="comment">20</span> <span class="comment">swap空间</span> <span class="comment">#</span> <span class="comment">free</span>
+<span class="comment">检查swap</span> <span class="comment">used值是否过高</span> <span class="comment">如果swap</span> <span class="comment">used值过高，进一步检查swap动作是否频繁：</span>
+<span class="comment">#</span> <span class="comment">vmstat</span> <span class="comment">1</span> <span class="comment">5</span>
+<span class="comment">观察si和so值是否较大</span>
+
+<span class="comment">21</span> <span class="comment">磁盘空间</span> <span class="comment">#</span> <span class="comment">df</span> <span class="literal">-</span><span class="comment">h</span>
+<span class="comment">检查是否有分区使用率(Use%)过高(比如超过90%)</span> <span class="comment">如发现某个分区空间接近用尽，可以进入该分区的挂载点，用以下命令找出占用空间最多的文件或目录：</span>
+<span class="comment">#</span> <span class="comment">du</span> <span class="literal">-</span><span class="comment">cks</span> <span class="comment">*</span> <span class="comment">|</span> <span class="comment">sort</span> <span class="literal">-</span><span class="comment">rn</span> <span class="comment">|</span> <span class="comment">head</span> <span class="literal">-</span><span class="comment">n</span> <span class="comment">10</span>
+
+<span class="comment">22</span> <span class="comment">磁盘I/O负载</span> <span class="comment">#</span> <span class="comment">iostat</span> <span class="literal">-</span><span class="comment">x</span> <span class="comment">1</span> <span class="comment">2</span>
+<span class="comment">检查I/O使用率(%util)是否超过100%</span>
+
+<span class="comment">23</span> <span class="comment">网络负载</span> <span class="comment">#</span> <span class="comment">sar</span> <span class="literal">-</span><span class="comment">n</span> <span class="comment">DEV</span>
+<span class="comment">检查网络流量(rxbyt/s</span>, <span class="comment">txbyt/s)是否过高</span>
+
+<span class="comment">24</span> <span class="comment">网络错误</span> <span class="comment">#</span> <span class="comment">netstat</span> <span class="literal">-</span><span class="comment">i</span>
+<span class="comment">检查是否有网络错误(drop</span> <span class="comment">fifo</span> <span class="comment">colls</span> <span class="comment">carrier)</span> <span class="comment">也可以用命令：#</span> <span class="comment">cat</span> <span class="comment">/proc/net/dev</span>
+
+<span class="comment">25</span> <span class="comment">网络连接数目</span>&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span> <span class="comment">#</span> <span class="comment">netstat</span> <span class="literal">-</span><span class="comment">an</span> <span class="comment">|</span> <span class="comment">grep</span> <span class="literal">-</span><span class="comment">E</span> <span class="comment">“^(tcp)”</span> <span class="comment">|</span> <span class="comment">cut</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">68</span>- <span class="comment">|</span> <span class="comment">sort</span> <span class="comment">|</span> <span class="comment">uniq</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">|</span> <span class="comment">sort</span> <span class="literal">-</span><span class="comment">n`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">26</span> <span class="comment">进程总数</span> <span class="comment">#</span> <span class="comment">ps</span> <span class="comment">aux</span> <span class="comment">|</span> <span class="comment">wc</span> <span class="literal">-</span><span class="comment">l</span>
+<span class="comment">检查进程个数是否正常</span> <span class="comment">(比如超过250)</span>
+
+<span class="comment">27</span> <span class="comment">可运行进程数目</span> <span class="comment">#</span> <span class="comment">vmwtat</span> <span class="comment">1</span> <span class="comment">5</span>
+<span class="comment">列给出的是可运行进程的数目，检查其是否超过系统逻辑CPU的4倍</span>
+
+<span class="comment">28</span> <span class="comment">进程</span> <span class="comment">#</span> <span class="comment">top</span> <span class="literal">-</span><span class="comment">id</span> <span class="comment">1</span>
+<span class="comment">观察是否有异常进程出现</span>
+
+<span class="comment">29</span> <span class="comment">网络状态</span> <span class="comment">检查DNS</span>, <span class="comment">网关等是否可以正常连通</span>
+
+<span class="comment">30</span> <span class="comment">用户</span> <span class="comment">#</span> <span class="comment">who</span> <span class="comment">|</span> <span class="comment">wc</span> <span class="literal">-</span><span class="comment">l</span>
+<span class="comment">检查登录用户是否过多</span> <span class="comment">(比如超过50个)</span> <span class="comment">也可以用命令：#</span> <span class="comment">uptime</span>
+
+<span class="comment">31</span> <span class="comment">系统日志</span> <span class="comment">#</span> <span class="comment">cat</span> <span class="comment">/var/log/rflogview/*errors</span>
+<span class="comment">检查是否有异常错误记录</span> <span class="comment">也可以搜寻一些异常关键字，例如：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`#</span> <span class="comment">grep</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">error</span> <span class="comment">/var/log/messages</span>
+<span class="comment">#</span> <span class="comment">grep</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">fail</span> <span class="comment">/var/log/messages</span>
+<span class="comment">#</span> <span class="comment">egrep</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'error|warn'</span> <span class="comment">/var/log/messages</span> <span class="comment">查看系统异常`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">32</span> <span class="comment">核心日志</span> <span class="comment">#</span> <span class="comment">dmesg</span>
+<span class="comment">检查是否有异常错误记录</span>
+
+<span class="comment">33</span> <span class="comment">系统时间</span> <span class="comment">#</span> <span class="comment">date</span>
+<span class="comment">检查系统时间是否正确</span>
+
+<span class="comment">34</span> <span class="comment">打开文件数目</span> <span class="comment">#</span> <span class="comment">lsof</span> <span class="comment">|</span> <span class="comment">wc</span> <span class="literal">-</span><span class="comment">l</span>
+<span class="comment">检查打开文件总数是否过多</span>
+
+<span class="comment">35</span> <span class="comment">日志</span> <span class="comment">#</span> <span class="comment">logwatch</span> <span class="comment">–print</span> <span class="comment">配置/etc/log</span>.<span class="comment">d/logwatch</span>.<span class="comment">conf，将</span> <span class="comment">Mailto</span> <span class="comment">设置为自己的email</span> <span class="comment">地址，启动mail服务</span> <span class="comment">(sendmail或者postfix)，这样就可以每天收到日志报告了。</span>
+<span class="comment">缺省logwatch只报告昨天的日志，可以用#</span> <span class="comment">logwatch</span> <span class="comment">–print</span> <span class="comment">–range</span> <span class="comment">all</span> <span class="comment">获得所有的日志分析结果。</span>
+<span class="comment">可以用#</span> <span class="comment">logwatch</span> <span class="comment">–print</span> <span class="comment">–detail</span> <span class="comment">high</span> <span class="comment">获得更具体的日志分析结果(而不仅仅是出错日志)。</span>
+
+<span class="comment">36</span>.<span class="comment">杀掉80端口相关的进程</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`lsof</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">:80|grep</span> <span class="literal">-</span><span class="comment">v</span> <span class="comment">"PID"|awk</span> <span class="comment">'{print</span> <span class="comment">"kill</span> <span class="literal">-</span><span class="comment">9"</span>,<span class="comment">$2}'|sh`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">37</span>.<span class="comment">清除僵死进程。</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`ps</span> <span class="literal">-</span><span class="comment">eal</span> <span class="comment">|</span> <span class="comment">awk</span> <span class="comment">'{</span> <span class="comment">if</span> <span class="comment">($2</span> <span class="comment">==</span> <span class="comment">"Z")</span> <span class="comment">{print</span> <span class="comment">$4}}'</span> <span class="comment">|</span> <span class="comment">kill</span> <span class="literal">-</span><span class="comment">9`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">38</span>.<span class="comment">tcpdump</span> <span class="comment">抓包</span> <span class="comment">，用来防止80端口被人攻击时可以分析数据</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`#</span> <span class="comment">tcpdump</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">10000</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">eth0</span> <span class="literal">-</span><span class="comment">n</span> <span class="comment">dst</span> <span class="comment">port</span> <span class="comment">80</span> &gt; <span class="comment">/root/pkts`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">39</span>.<span class="comment">然后检查IP的重复数</span> <span class="comment">并从小到大排序</span> <span class="comment">注意</span> <span class="comment">"</span>-<span class="comment">t\</span> <span class="literal">+</span><span class="comment">0"</span> <span class="comment">中间是两个空格</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`#</span> <span class="comment">less</span> <span class="comment">pkts</span> <span class="comment">|</span> <span class="comment">awk</span> <span class="comment">{'printf</span> <span class="comment">$3"\n"'}</span> <span class="comment">|</span> <span class="comment">cut</span> <span class="literal">-</span><span class="comment">d</span>. <span class="literal">-</span><span class="comment">f</span> <span class="comment">1</span>-<span class="comment">4</span> <span class="comment">|</span> <span class="comment">sort</span> <span class="comment">|</span> <span class="comment">uniq</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">|</span> <span class="comment">awk</span> <span class="comment">{'printf</span> <span class="comment">$1"</span> <span class="comment">"$2"\n"'}</span> <span class="comment">|</span> <span class="comment">sort</span> <span class="literal">-</span><span class="comment">n</span> <span class="literal">-</span><span class="comment">t\</span> <span class="literal">+</span><span class="comment">0`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">40</span>.<span class="comment">查看有多少个活动的php</span>-<span class="comment">cgi进程</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`netstat</span> <span class="literal">-</span><span class="comment">anp</span> <span class="comment">|</span> <span class="comment">grep</span> <span class="comment">php</span>-<span class="comment">cgi</span> <span class="comment">|</span> <span class="comment">grep</span> <span class="comment">^tcp</span> <span class="comment">|</span> <span class="comment">wc</span> <span class="literal">-</span><span class="comment">l`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">41</span>.<span class="comment">利用iptables对应简单攻击</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`netstat</span> <span class="literal">-</span><span class="comment">an</span> <span class="comment">|</span> <span class="comment">grep</span> <span class="literal">-</span><span class="comment">v</span> <span class="comment">LISTEN</span> <span class="comment">|</span> <span class="comment">awk</span> <span class="comment">‘{print</span> <span class="comment">$5}’</span> <span class="comment">|grep</span> <span class="literal">-</span><span class="comment">v</span> <span class="comment">127</span>.<span class="comment">0</span>.<span class="comment">0</span>.<span class="comment">1|grep</span> <span class="literal">-</span><span class="comment">v</span> <span class="comment">本机ip|sed</span> <span class="comment">“s/::ffff://g”|awk</span> <span class="comment">‘BEGIN</span> <span class="comment">{</span> <span class="comment">FS=”:”</span> <span class="comment">}</span> <span class="comment">{</span> <span class="comment">Num</span>[<span class="comment">$1</span>]<span class="literal">+</span><span class="literal">+</span> <span class="comment">}</span> <span class="comment">END</span> <span class="comment">{</span> <span class="comment">for(i</span> <span class="comment">in</span> <span class="comment">Num)</span> <span class="comment">if(Num</span>&gt;<span class="comment">8)</span> <span class="comment">{</span> <span class="comment">print</span> <span class="comment">i}</span> <span class="comment">}’</span> <span class="comment">|grep</span> <span class="comment">‘</span>[<span class="comment">0</span>-<span class="comment">9</span>]<span class="comment">\{1</span>,<span class="comment">3\}\</span>.<span class="title">[</span><span class="comment">0</span>-<span class="comment">9</span>]<span class="comment">\{1</span>,<span class="comment">3\}\</span>.<span class="title">[</span><span class="comment">0</span>-<span class="comment">9</span>]<span class="comment">\{1</span>,<span class="comment">3\}\</span>.<span class="title">[</span><span class="comment">0</span>-<span class="comment">9</span>]<span class="comment">\{1</span>,<span class="comment">3\}’|</span> <span class="comment">xargs</span> <span class="literal">-</span><span class="comment">i</span>[<span class="title">]</span> <span class="comment">iptables</span> <span class="literal">-</span><span class="comment">I</span> <span class="comment">INPUT</span> <span class="literal">-</span><span class="comment">s</span> <span class="title">[</span><span class="title">]</span> <span class="literal">-</span><span class="comment">j</span> <span class="comment">DROP`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">Num</span>&gt;<span class="comment">8部分设定值为阀值，这条句子会自动将netstat</span> <span class="literal">-</span><span class="comment">an</span> <span class="comment">中查到的来自同一ＩＰ的超过一定量的连接的列入禁止范围。</span> <span class="comment">基中本机ip改成你的服务器的ip地址</span>
+
+<span class="comment">42\</span>. <span class="comment">怎样知道某个进程在哪个CPU上运行？</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`#</span> <span class="comment">ps</span> <span class="literal">-</span><span class="comment">eo</span> <span class="comment">pid</span>,<span class="comment">args</span>,<span class="comment">psr`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">43\</span>. <span class="comment">查看硬件制造商</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`dmidecode</span> <span class="literal">-</span><span class="comment">s</span> <span class="comment">system</span>-<span class="comment">product</span>-<span class="comment">name`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">44</span>.<span class="comment">perl如何编译成字节码，这样在处理复杂项目的时候会更快一点？</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`perlcc</span> <span class="literal">-</span><span class="comment">B</span> <span class="literal">-</span><span class="comment">o</span> <span class="comment">webseek</span> <span class="comment">webseek</span>.<span class="comment">pl`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">###补充</span>
+<span class="comment">在当前目录及子目录下搜索所有后缀为</span> <span class="string">.</span><span class="comment">php</span> <span class="comment">的文件，并且将</span> <span class="comment">字符串</span> <span class="comment">baidu</span>.<span class="comment">com</span> <span class="comment">替换成</span> <span class="comment">opendoc</span>.<span class="comment">com</span>.<span class="comment">cn</span>
+<span class="comment">find</span> <span class="literal">-</span><span class="comment">name</span> <span class="comment">*</span>.<span class="comment">php</span> <span class="comment">|xargs</span> <span class="comment">perl</span> <span class="literal">-</span><span class="comment">pi</span> <span class="literal">-</span><span class="comment">e</span> <span class="comment">'s|baidu</span>.<span class="comment">com|opendoc</span>.<span class="comment">com</span>.<span class="comment">cn|g';</span>
+<span class="comment">sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">"s/baidu</span>.<span class="comment">com/opendoc</span>.<span class="comment">com</span>.<span class="comment">cn/g"</span> <span class="comment">`grep</span> <span class="comment">baidu</span>.<span class="comment">com</span> <span class="literal">-</span><span class="comment">rl</span> <span class="string">.</span><span class="comment">/`</span>&lt;<span class="comment">/code</span>&gt;&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">vim</span> <span class="comment">颜色</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`if</span> <span class="title">[</span> <span class="literal">-</span><span class="comment">n</span> <span class="comment">"$BASH_VERSION"</span> <span class="literal">-</span><span class="comment">o</span> <span class="literal">-</span><span class="comment">n</span> <span class="comment">"$KSH_VERSION"</span> <span class="literal">-</span><span class="comment">o</span> <span class="literal">-</span><span class="comment">n</span> <span class="comment">"$ZSH_VERSION"</span> <span class="title">]</span><span class="comment">;</span> <span class="comment">then</span>
+<span class="title">[</span> <span class="literal">-</span><span class="comment">x</span> <span class="comment">/usr/bin/id</span> <span class="title">]</span> <span class="comment">||</span> <span class="comment">return</span>
+<span class="comment">alias</span> <span class="comment">vi</span> &gt;<span class="comment">/dev/null</span> <span class="comment">2</span>&gt;<span class="comment">&amp;1</span> <span class="comment">||</span> <span class="comment">alias</span> <span class="comment">vi=vim</span>
+<span class="comment">fi`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">1</span>.<span class="comment">按内存从大到小排列进程:</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`ps</span> <span class="literal">-</span><span class="comment">eo</span> <span class="comment">"%C</span> <span class="comment">:</span> <span class="comment">%p</span> <span class="comment">:</span> <span class="comment">%z</span> <span class="comment">:</span> <span class="comment">%a"|sort</span> <span class="literal">-</span><span class="comment">k5</span> <span class="literal">-</span><span class="comment">nr`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">2</span>.<span class="comment">查看当前有哪些进程；查看进程打开的文件:</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`ps</span> <span class="literal">-</span><span class="comment">A</span> <span class="comment">；lsof</span> <span class="literal">-</span><span class="comment">p</span> <span class="comment">PID`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">3</span>.<span class="comment">获取当前IP地址（从中学习grep</span>,<span class="comment">awk</span>,<span class="comment">cut的作用）</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`ifconfig</span> <span class="comment">eth0</span> <span class="comment">|grep</span> <span class="comment">"inet</span> <span class="comment">addr:"</span> <span class="comment">|awk</span> <span class="comment">'{print</span> <span class="comment">$2}'|cut</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">6</span>-<span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">4</span>.<span class="comment">统计每个单词出现的频率，并排序</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`awk</span> <span class="comment">'{arr</span>[<span class="comment">$1</span>]<span class="literal">+</span><span class="comment">=1</span> <span class="comment">}END{for(i</span> <span class="comment">in</span> <span class="comment">arr){print</span> <span class="comment">arr"\t"i}}'</span> <span class="comment">文件名</span> <span class="comment">|</span> <span class="comment">sort</span> <span class="literal">-</span><span class="comment">rn`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">5</span>.<span class="comment">显示10条最常用的命令</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`sed</span> <span class="literal">-</span><span class="comment">e</span> <span class="comment">"s/|</span> <span class="comment">/\n/g"</span> <span class="comment">~/</span>.<span class="comment">bash_history</span> <span class="comment">|</span> <span class="comment">cut</span> <span class="literal">-</span><span class="comment">d</span> <span class="comment">'</span> <span class="comment">'</span> <span class="literal">-</span><span class="comment">f</span> <span class="comment">1</span> <span class="comment">|</span> <span class="comment">sort</span> <span class="comment">|</span> <span class="comment">uniq</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">|</span> <span class="comment">sort</span> <span class="literal">-</span><span class="comment">nr</span> <span class="comment">|</span> <span class="comment">head`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">6</span>.<span class="comment">杀死Nginx进程(杀死某一进程)</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`ps</span> <span class="literal">-</span><span class="comment">ef|grep</span> <span class="literal">-</span><span class="comment">v</span> <span class="comment">grep</span> <span class="comment">|grep</span> <span class="comment">nginx|awk</span> <span class="comment">'{print</span> <span class="comment">$2}'</span> <span class="comment">或</span>
+<span class="comment">for</span> <span class="comment">i</span> <span class="comment">in</span> <span class="comment">`ps</span> <span class="comment">aux</span> <span class="comment">|</span> <span class="comment">grep</span> <span class="comment">nginx</span> <span class="comment">|</span> <span class="comment">grep</span> <span class="literal">-</span><span class="comment">v</span> <span class="comment">grep</span> <span class="comment">|</span> <span class="comment">awk</span> <span class="comment">{'print</span> <span class="comment">$2'}`</span> <span class="comment">;</span> <span class="comment">do</span> <span class="comment">kill</span> <span class="comment">$i;</span> <span class="comment">done`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">7</span>.<span class="comment">列出当前文件夹目录大小，以G，M，K显示。</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`du</span> <span class="literal">-</span><span class="comment">b</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">max</span>-<span class="comment">depth</span> <span class="comment">1</span> <span class="comment">|</span> <span class="comment">sort</span> <span class="literal">-</span><span class="comment">nr</span> <span class="comment">|</span> <span class="comment">perl</span> <span class="literal">-</span><span class="comment">pe</span> <span class="comment">'s{(</span>[<span class="comment">0</span>-<span class="comment">9</span>]<span class="literal">+</span><span class="comment">)}{sprintf"%</span>.<span class="comment">1f%s"</span>, <span class="comment">$1</span>&gt;<span class="comment">=2**30?</span> <span class="comment">($1/2**30</span>, <span class="comment">"G"):</span> <span class="comment">$1</span>&gt;<span class="comment">=2**20?</span> <span class="comment">($1/2**20</span>, <span class="comment">"M"):$1</span>&gt;<span class="comment">=2**10?</span> <span class="comment">($1/2**10</span>, <span class="comment">"K"):</span> <span class="comment">($1</span>, <span class="comment">"")}e'</span>
+<span class="comment">shaw答案</span> <span class="comment">：du</span> <span class="literal">-</span><span class="comment">hs</span> <span class="comment">$(du</span> <span class="literal">-</span><span class="comment">sk</span> <span class="string">.</span><span class="comment">/`ls</span> <span class="literal">-</span><span class="comment">F</span> <span class="comment">|grep</span> <span class="comment">/`</span> <span class="comment">|sort</span> <span class="literal">-</span><span class="comment">nr</span> <span class="comment">|awk</span> <span class="comment">'{print</span> <span class="comment">$NF}')</span>
+<span class="comment">也可</span> <span class="comment">以实现，不过不是特别完美。但好记。`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">8</span>.<span class="comment">清空linux</span> <span class="comment">buffer</span> <span class="comment">cache</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`sync</span> <span class="comment">&amp;&amp;</span> <span class="comment">echo</span> <span class="comment">3</span> &gt; <span class="comment">/proc/sys/vm/drop_caches`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">9</span>.<span class="comment">将当前目录文件名全部转换成小写</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`for</span> <span class="comment">i</span> <span class="comment">in</span> <span class="comment">*;</span> <span class="comment">do</span> <span class="comment">mv</span> <span class="comment">"$i"</span> <span class="comment">"$(echo</span> <span class="comment">$i|tr</span> <span class="comment">A</span>-<span class="comment">Z</span> <span class="comment">a</span>-<span class="comment">z)";</span> <span class="comment">done`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">10</span>.<span class="comment">消除vim中的^M的几种方法</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`1)dos2uninx</span> <span class="comment">filename</span>
+<span class="comment">2)sed</span> <span class="literal">-</span><span class="comment">e</span> <span class="comment">'s/^M//'</span> <span class="comment">filename</span>
+<span class="comment">3)vim中</span> <span class="comment">:s/^M//gc</span>
+<span class="comment">4)col</span> <span class="literal">-</span><span class="comment">bx</span> &lt; <span class="comment">dosfile</span> &gt; <span class="comment">newfile</span>
+<span class="comment">5)tr</span> <span class="literal">-</span><span class="comment">s</span> <span class="comment">"\r\n"</span> <span class="comment">"\n"</span> &lt; <span class="comment">file</span> &gt; <span class="comment">newfile`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">11\</span>. <span class="comment">清除所有arp缓存</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`arp</span> <span class="literal">-</span><span class="comment">n|awk</span> <span class="comment">'/^</span>[<span class="comment">1</span>-<span class="comment">9</span>]<span class="comment">/</span> <span class="comment">{print</span> <span class="comment">"arp</span> <span class="literal">-</span><span class="comment">d</span> <span class="comment">"$1}'|sh`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">12\</span>. <span class="comment">绑定已知机器的arp地址</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`cat</span> <span class="comment">/proc/net/arp</span> <span class="comment">|</span> <span class="comment">awk</span> <span class="comment">'{print</span> <span class="comment">$1</span> <span class="comment">"</span> <span class="comment">"</span> <span class="comment">$4}'</span> <span class="comment">|sort</span> <span class="literal">-</span><span class="comment">t</span>. <span class="literal">-</span><span class="comment">n</span> <span class="literal">+</span><span class="comment">3</span> <span class="literal">-</span><span class="comment">4</span> &gt; <span class="comment">/etc/ethers`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">13\</span>. &lt;<span class="comment">pre</span>&gt;<span class="comment">`perl</span> <span class="literal">-</span><span class="comment">ne</span> <span class="comment">'m/^(</span>[<span class="comment">^#</span>]<span class="title">[</span><span class="comment">^\s=</span>]<span class="literal">+</span><span class="comment">)\s*(=</span>.<span class="comment">*|)/</span> <span class="comment">&amp;&amp;</span> <span class="comment">printf("%</span>-<span class="comment">35s%s\n"</span>, <span class="comment">$1</span>, <span class="comment">$2)'</span> <span class="comment">/etc/my</span>.<span class="comment">cnf
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/1032/">1032</a><small>1</small></li>
+  
+    <li><a href="/tags/1236/">1236</a><small>1</small></li>
+  
+    <li><a href="/tags/403/">403</a><small>1</small></li>
+  
+    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
+  
+    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
+  
+    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
+  
+    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
+  
+    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
+  
+    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
+  
+    <li><a href="/tags/acl/">acl</a><small>2</small></li>
+  
+    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
+  
+    <li><a href="/tags/apache/">apache</a><small>8</small></li>
+  
+    <li><a href="/tags/arp/">arp</a><small>1</small></li>
+  
+    <li><a href="/tags/awk/">awk</a><small>4</small></li>
+  
+    <li><a href="/tags/bash/">bash</a><small>2</small></li>
+  
+    <li><a href="/tags/best/">best</a><small>1</small></li>
+  
+    <li><a href="/tags/binding/">binding</a><small>1</small></li>
+  
+    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
+  
+    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
+  
+    <li><a href="/tags/browser/">browser</a><small>1</small></li>
+  
+    <li><a href="/tags/cache/">cache</a><small>1</small></li>
+  
+    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>8</small></li>
+  
+    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
+  
+    <li><a href="/tags/chown/">chown</a><small>1</small></li>
+  
+    <li><a href="/tags/commands/">commands</a><small>1</small></li>
+  
+    <li><a href="/tags/content/">content</a><small>1</small></li>
+  
+    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
+  
+    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
+  
+    <li><a href="/tags/creating/">creating</a><small>1</small></li>
+  
+    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
+  
+    <li><a href="/tags/dell/">dell</a><small>1</small></li>
+  
+    <li><a href="/tags/diff/">diff</a><small>1</small></li>
+  
+    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
+  
+    <li><a href="/tags/du/">du</a><small>1</small></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
+  
+    <li><a href="/tags/end/">end</a><small>1</small></li>
+  
+    <li><a href="/tags/epel/">epel</a><small>1</small></li>
+  
+    <li><a href="/tags/etag/">etag</a><small>1</small></li>
+  
+    <li><a href="/tags/expires/">expires</a><small>1</small></li>
+  
+    <li><a href="/tags/find/">find</a><small>1</small></li>
+  
+    <li><a href="/tags/for-1/">for</a><small>1</small></li>
+  
+    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
+  
+    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
+  
+    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
+  
+    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
+  
+    <li><a href="/tags/group/">group</a><small>1</small></li>
+  
+    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
+  
+    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
+  
+    <li><a href="/tags/howto/">howto</a><small>2</small></li>
+  
+    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
+  
+    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
+  
+    <li><a href="/tags/if/">if</a><small>2</small></li>
+  
+    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
+  
+    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
+  
+    <li><a href="/tags/init/">init</a><small>1</small></li>
+  
+    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
+  
+    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
+  
+    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
+  
+    <li><a href="/tags/jk/">jk</a><small>1</small></li>
+  
+    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
+  
+    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/kick/">kick</a><small>1</small></li>
+  
+    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>18</small></li>
+  
+    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
+  
+    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
+  
+    <li><a href="/tags/master/">master</a><small>2</small></li>
+  
+    <li><a href="/tags/metric/">metric</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
+  
+    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
+  
+    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
+  
+    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
+  
+    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
+  
+    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
+  
+    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
+  
+    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
+  
+    <li><a href="/tags/packet/">packet</a><small>1</small></li>
+  
+    <li><a href="/tags/pam/">pam</a><small>1</small></li>
+  
+    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
+  
+    <li><a href="/tags/perl/">perl</a><small>1</small></li>
+  
+    <li><a href="/tags/permission/">permission</a><small>1</small></li>
+  
+    <li><a href="/tags/php-1/">php</a><small>2</small></li>
+  
+    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
+  
+    <li><a href="/tags/pil/">pil</a><small>1</small></li>
+  
+    <li><a href="/tags/port/">port</a><small>1</small></li>
+  
+    <li><a href="/tags/practices/">practices</a><small>1</small></li>
+  
+    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
+  
+    <li><a href="/tags/ps/">ps</a><small>2</small></li>
+  
+    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
+  
+    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
+  
+    <li><a href="/tags/python-1/">python</a><small>3</small></li>
+  
+    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
+  
+    <li><a href="/tags/quick/">quick</a><small>1</small></li>
+  
+    <li><a href="/tags/r410/">r410</a><small>1</small></li>
+  
+    <li><a href="/tags/r710/">r710</a><small>1</small></li>
+  
+    <li><a href="/tags/raw/">raw</a><small>1</small></li>
+  
+    <li><a href="/tags/referer/">referer</a><small>1</small></li>
+  
+    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
+  
+    <li><a href="/tags/repo/">repo</a><small>1</small></li>
+  
+    <li><a href="/tags/resources/">resources</a><small>1</small></li>
+  
+    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
+  
+    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
+  
+    <li><a href="/tags/sar/">sar</a><small>1</small></li>
+  
+    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
+  
+    <li><a href="/tags/sed/">sed</a><small>4</small></li>
+  
+    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
+  
+    <li><a href="/tags/sending/">sending</a><small>1</small></li>
+  
+    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>2</small></li>
+  
+    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
+  
+    <li><a href="/tags/slave/">slave</a><small>2</small></li>
+  
+    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
+  
+    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
+  
+    <li><a href="/tags/spec/">spec</a><small>2</small></li>
+  
+    <li><a href="/tags/squid/">squid</a><small>1</small></li>
+  
+    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>1</small></li>
+  
+    <li><a href="/tags/tar/">tar</a><small>1</small></li>
+  
+    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
+  
+    <li><a href="/tags/tools/">tools</a><small>1</small></li>
+  
+    <li><a href="/tags/top/">top</a><small>1</small></li>
+  
+    <li><a href="/tags/tree/">tree</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
+  
+    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
+  
+    <li><a href="/tags/user/">user</a><small>2</small></li>
+  
+    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>2</small></li>
+  
+    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
+  
+    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/while/">while</a><small>1</small></li>
+  
+    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
+  
+    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
+  
+    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
+  
+    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
+  
+    <li><a href="/tags/yum/">yum</a><small>10</small></li>
+  
+    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
+  
+    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
+  
+    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
+  
+    <li><a href="/tags/优化/">优化</a><small>1</small></li>
+  
+    <li><a href="/tags/内核/">内核</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
+  
+    <li><a href="/tags/参考/">参考</a><small>1</small></li>
+  
+    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
+  
+    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
+  
+    <li><a href="/tags/对比/">对比</a><small>1</small></li>
+  
+    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
+  
+    <li><a href="/tags/日志/">日志</a><small>2</small></li>
+  
+    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
+  
+    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
+  
+    <li><a href="/tags/管理/">管理</a><small>1</small></li>
+  
+    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
+  
+    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
+  
+    <li><a href="/tags/老板/">老板</a><small>1</small></li>
+  
+    <li><a href="/tags/认证/">认证</a><small>1</small></li>
+  
+    <li><a href="/tags/详解/">详解</a><small>3</small></li>
+  
+    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
+  
+    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
+  
+    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

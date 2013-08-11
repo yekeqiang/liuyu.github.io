@@ -1,0 +1,1004 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>puppet | Puppet-in-action</title>
+  <meta name="author" content="Liu Yu">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Puppet-in-action"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Puppet-in-action</a></h1>
+  <h2><a href="/">Puppet</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title category">puppet</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-29T03:25:38.000Z"><a href="/2011/01/29/puppet-kick/">1月 29 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/29/puppet-kick/">puppet puppetrun kick 配置方法 </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>2.6 后puppetrun 名字变成要了puppet kick 命令用法一样。puppetrun也能使用
+puppetrun –&gt; puppet kick</p>
+<p>参考 ： <a href="http://www.puppetlabs.com/2dot6/">http://www.puppetlabs.com/2dot6/</a></p>
+<p>配置puppet kick 很简单
+可参考：<a href="http://theforeman.org/projects/foreman/wiki/Puppetrun">http://theforeman.org/projects/foreman/wiki/Puppetrun</a>
+官网上说：
+修改客户端的：</p>
+<pre><code><figure class="highlight"><pre><span class="xml">namespaceauth.conf
+[puppetrunner]
+allow puppet.domain.com`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`auth.conf
+path /run
+method save
+allow puppet.domain.com`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+如果这么修改运行时会报：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`Error </span><span class="number">403</span><span class="xml"> on SERVER: Forbidden request`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+那是因为auth.conf 里有关于认证的顺序问题。只需要修改一下：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`path /run
+method save
+allow puppet.domain.com
+
+</span><span class="comment"># this one is not stricly necessary, but it has the merit</span><span class="xml">
+</span><span class="comment"># to show the default policy which is deny everything else</span><span class="xml">
+path /
+auth any`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+即把path /run 添加到path /的前面。
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# puppetrun -p </span><span class="number">10</span><span class="xml"> client.domain.com
+Triggering client.domain.com
+Getting status
+status is success
+client.domain.com finished with exit code </span><span class="number">0</span><span class="xml">
+Finished`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+附：
+我的**namespaceauth.conf **
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`[fileserver]
+    allow *.domain.com
+
+[puppetmaster]
+    allow *.domain.com
+
+[puppetrunner]
+    allow *.domain.com
+
+[puppetbucket]
+    allow *.domain.com
+
+[puppetreports]
+    allow *.domain.com
+
+[resource]
+    allow puppet.domain.com`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+**auth.conf **
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`path ~ ^/catalog/([^/]+)$
+method find
+allow </span><span class="variable">$1</span><span class="xml">
+path /certificate_revocation_list/ca
+method find
+allow *
+path /report
+method save
+allow *
+path /file
+allow *
+path /certificate/ca
+auth no
+method find
+allow *
+path /certificate/
+auth no
+method find
+allow *
+path /certificate_request
+auth no
+method find, save
+allow *
+path /run
+method save
+allow puppet.domain.com
+path /
+auth any`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+**client puppet.conf **
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`[main]
+    logdir = /var/log/puppet
+    rundir = /var/run/puppet
+    ssldir = </span><span class="variable">$vardir</span><span class="xml">/ssl
+[agent]
+    classfile = </span><span class="variable">$vardir</span><span class="xml">/classes.txt
+    localconfig = </span><span class="variable">$vardir</span><span class="xml">/localconfig
+
+    listen = true
+    report = true
+    server = puppet.domain.com
+[puppetd]</span>
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-27T09:45:39.000Z"><a href="/2011/01/27/centos-puppet-foreman-instal/">1月 27 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/27/centos-puppet-foreman-instal/">centos puppet  foreman 安装 </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>foreman 和 dashboard 一样。可以直观地查看puppet client 同步状态等。详细情况看官方的截图：
+<a href="http://theforeman.org/projects/foreman/wiki/Screenshots">http://theforeman.org/projects/foreman/wiki/Screenshots</a></p>
+<p>简单说下安装的顺序：
+1. 安装puppet 
+2. 升级ruby 至 1.8.6
+3. 安装相关的依赖 gem rake  rails i18n
+4. 创建库和用户并授权
+5. 安装foreman 
+6. 修改database.yml
+7. 创建foreman表
+8. 配置 foreman.rb 文件，并放至puppet reports目录
+9. 配置 puppet server client 配置文件
+10. 启动</p>
+<p>注意版本的要求。特别是ruby 只能是1.8 升级ruby 参考： <a href="http://bubbyroom.com/2011/01/centos-yum-update-ruby/">http://bubbyroom.com/2011/01/centos-yum-update-ruby/</a></p>
+<pre><code><figure class="highlight"><pre><span class="xml">Ruby </span><span class="number">1.9</span><span class="xml"> is not supported yet. You have to use Ruby </span><span class="number">1.8</span><span class="xml">.x as stated above.
+RubyGems </span><span class="number">1.3</span><span class="xml"></span><span class="number">.1</span><span class="xml"> or higher is required
+Rake </span><span class="number">0.8</span><span class="xml"></span><span class="number">.3</span><span class="xml"> or higher is required
+Rack </span><span class="number">1.0</span><span class="xml"></span><span class="number">.1</span><span class="xml"> is required. If you don't have this exact version, database migration would fail.
+I18n </span><span class="number">0.4</span><span class="xml"></span><span class="number">.2</span><span class="xml"> is required for Redmine &amp;gt;= </span><span class="number">1.0</span><span class="xml"></span><span class="number">.5</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`rpm -Uvh http://download.fedora.redhat.com/pub/epel/</span><span class="number">5</span><span class="xml">/i386/epel-release-</span><span class="number">5</span><span class="xml">-</span><span class="number">3.</span><span class="xml">noarch.rpm `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`yum install -y mysql mysql-devel mysql-server ruby ruby-devel ruby-irb ruby-mysql ruby-rdoc ruby-ri `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+如果MYSQL 是源码包安装则：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`yum install -y ruby ruby-devel ruby-irb ruby-mysql ruby-rdoc ruby-ri `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+安装rubygem </span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`http://production.cf.rubygems.org/rubygems/rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">.tgz
+tar xfz rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">.tgz
+cd rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">
+ruby setup.rb `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+安装rails 和rack
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gem install rails -v=</span><span class="number">2.3</span><span class="xml"></span><span class="number">.5</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gem install rack -v=</span><span class="number">1.0</span><span class="xml"></span><span class="number">.1</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gem install -v=</span><span class="number">0.4</span><span class="xml"></span><span class="number">.2</span><span class="xml"> i18n `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+下载foreman
+地址：http://www.redmine.org/projects/redmine/wiki/Download
+
+我喜欢用GIT下载：
+有人问过我git 怎么安装：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`yum -y install git `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`git clone git://github.com/edavis10/redmine.git `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+源码包地址：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`wget http://rubyforge.org/frs/download.php/</span><span class="number">73900</span><span class="xml">/redmine-</span><span class="number">1.1</span><span class="xml"></span><span class="number">.0</span><span class="xml">.tar.gz `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+下载 后解压。可以放在/usr/local/redmine 目录
+
+Mysql 配置： 创建库和用户
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`create database redmine character set utf8;
+create user 'redmine'@'localhost' identified by 'my_password';
+grant all privileges on redmine.* to 'redmine'@'localhost'; `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+mysql </span><span class="number">5</span><span class="xml"> 以上
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`grant all privileges on redmine.* to 'redmine'@'localhost' identified by 'my_password'; `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+进去foreman配置 database.yml
+config/database.yml
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`production:
+adapter: mysql
+database: redmine
+host: localhost
+username: redmine
+password: my_password `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+建表：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`RAILS_ENV=production rake db:migrate `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+启动：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`ruby script/server webrick -e production `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+库备份：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`/usr/bin/mysqldump-u  -p
+  |gzip &amp;gt; /path/to/backup/db/redmine_`date +%y_%m_%d`.gz `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+puppet master配置
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`reports=log, foreman `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+puppet client 配置
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`report = true `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+配置puppet 提交至foreman
+</span><span class="comment"># cp extras/puppet/foreman/files/foreman-report.rb /usr/lib/ruby/site_ruby/1.8/puppet/reports/foreman.rb</span><span class="xml">
+</span><span class="comment"># chmod 644 /usr/lib/ruby/site_ruby/1.8/puppet/reports/foreman.rb</span><span class="xml">
+</span><span class="comment"># vim /usr/lib/ruby/site_ruby/1.8/puppet/reports/foreman.rb</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# URL of your Foreman installation
+</span><span class="variable">$foreman_url</span><span class="xml">="http://" + `hostname`.strip + ":</span><span class="number">8000</span><span class="xml">"`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+cron 清数据：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`rake reports:expire days=</span><span class="number">7</span><span class="xml"> RAILS_ENV="production" `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="comment">###########################################################</span><span class="xml">
+
+foreman 可以采用yum 安装
+
+配置源：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`cat &gt; /etc/yum.repos.d/foreman.repo <span class="tag">&lt;<span class="title">&lt;</span> <span class="attribute">EOF</span>
+[<span class="attribute">foreman</span>]
+<span class="attribute">name</span>=<span class="value">Foreman</span> <span class="attribute">Repo</span>
+<span class="attribute">baseurl</span>=<span class="value">http:</span>//<span class="attribute">theforeman.org</span>/<span class="attribute">repo</span>
+<span class="attribute">gpgcheck</span>=</span><span class="number">0</span><span class="xml">
+enabled=</span><span class="number">1</span><span class="xml">
+EOF</span>
+</pre></figure></code></pre>
+<p>yum install foreman
+使用yum 安装后会产生/etc/init.d/foreman  配置文件也在/etc/foreman 目录 。其它的配置一样。</p>
+<p>我在安装时遇到过一些错误，但主要是ruby 版本  和mysql 依赖 建议都用yum 来安装 </p>
+<p>参考： 还是国外的文档给力。
+<a href="http://www.how2centos.com/installing-puppet-master-with-foreman-frontend-on-centos-5-5/">http://www.how2centos.com/installing-puppet-master-with-foreman-frontend-on-centos-5-5/</a>
+<a href="http://miao5.blogspot.com/2010/01/setup-puppetmaster-foreman.html">http://miao5.blogspot.com/2010/01/setup-puppetmaster-foreman.html</a>
+<a href="http://www.redmine.org/projects/redmine/wiki/RedmineInstall">http://www.redmine.org/projects/redmine/wiki/RedmineInstall</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-20T15:32:19.000Z"><a href="/2011/01/20/puppet-dashboard/">1月 20 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/20/puppet-dashboard/">puppet dashboard 配置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>puppet dashboard 配置
+Puppet Dashboard可以为你的Puppet环境添加一个图形用户界面（GUI）。Puppet Dashboard可以显示主机上Puppet的运行结果，并且可以提供一个节点分类工具来配置你的主机。
+Dashboard是一种运行在Rails上的Ruby应用程序，它还不是可以添加到系统版本中的程序包，但是我们可以从Puppet Labs以RPM或者DEB包的形式获得该软件。我们也可以选择从资源进行安装。</p>
+<p>rpm -Uvh <a href="http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm">http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm</a></p>
+<p>yum install -y mysql mysql-devel mysql-server ruby ruby-devel ruby-irb ruby-mysql ruby-rdoc ruby-ri</p>
+<p>如果MYSQL 是源码包安装则：yum install -y ruby ruby-devel ruby-irb ruby-mysql ruby-rdoc ruby-ri</p>
+<p>安装rubygem 1.3.5 请不要安装1.3.6及更高版本。不支持。。哈哈</p>
+<pre><code><figure class="highlight"><pre><span class="xml">http://production.cf.rubygems.org/rubygems/rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">.tgz
+tar xfz rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">.tgz
+cd rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">
+ruby setup.rb `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+使用gem安装rake
+gem install rake
+
+安装git 下载dashboard 包
+yum -y install git
+
+下载puppet-dashboard
+我把它放在/data/www/wwwroot/
+mkdir -p /data/www/wwwroot/
+cd /data/www/wwwroot/
+git clone git://github.com/puppetlabs/puppet-dashboard.git
+
+修改数据配置YML文件
+/data/www/wwwroot/puppet-dashboard/config/database.yml
+cp database.yml.example database.yml
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`production:
+database: root
+username: dashboard
+password: linuxtone
+encoding: utf8
+adapter: mysql`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+创建库和表：
+</span><span class="number">1</span><span class="xml">\. 使用rake 创建：
+回到   puppet-dashboard目录执行
+rake RAILS_ENV=production db:create
+
+</span><span class="number">2</span><span class="xml"> 手动创建
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`CREATE DATABASE dashboard CHARACTER SET utf8;
+CREATE USER 'dashboard'@'localhost' IDENTIFIED BY 'my_password';
+GRANT ALL PRIVILEGES ON dashboard.* TO 'dashboard'@'localhost';`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+创建表：rake RAILS_ENV=production db:migrate
+
+我在使用development的时候老是报错。如下：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# rake db:migrate db:test:prepare --trace
+(in /data/www/wwwroot/puppet-dashboard)
+** Invoke db:migrate (first_time)
+** Invoke environment (first_time)
+** Execute environment
+** Execute db:migrate
+rake aborted!
+Access denied for user 'root'@'localhost' (using password: NO) `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+因此我换成了production。大家可以仔细看官网说明。尽管很烂，但也能解决问题
+
+production 与 development 区别：
+启动时：
+production ：Start a production server on port </span><span class="number">3000</span><span class="xml">:
+./script/server -e production
+
+development：start a development server on port </span><span class="number">8080</span><span class="xml">, where the development environment is used by default:
+./script/server -p </span><span class="number">8080</span><span class="xml">
+
+运行：先查看位置：puppetmasterd --configprint libdir
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`cp ext/puppet/puppet_dashboard.rb  /var/lib/puppet/reports/
+chmod </span><span class="number">644</span><span class="xml"> /var/lib/puppet/reports/puppet_dashboard.rb
+</span><span class="comment">#more puppet_dashboard.rb</span><span class="xml">
+HOST = 'localhost'  #主机
+PORT = </span><span class="number">3000</span><span class="xml">    #启动端口 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+导入：Import existing reports 详见官网
+rake RAILS_ENV=production reports:import REPORT_DIR=/path/to/your/reports
+本例：rake RAILS_ENV=production reports:import REPORT_DIR=/var/lib/puppet/reports/
+
+注：/var/lib/puppet/reports/ 为puppet.conf 里vardir 的定义目录
+
+配置puppetmaster
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`[master]
+reports = http, store
+reporturl = http://IP:</span><span class="number">3000</span><span class="xml">/reports
+modulepath = /etc/puppet/modules`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+puppetclient
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`server = puppetmaster.linuxtone.org
+listen = true
+report = true
+runinterval = </span><span class="number">10</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># more /etc/init.d/puppet-dashboard  注意修改脚本里的IP</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`#!/bin/bash
+</span><span class="comment"># Description: Puppet Dashboard init.d script</span><span class="xml">
+
+</span><span class="comment"># Get function from functions library</span><span class="xml">
+. /etc/init.d/functions
+
+</span><span class="comment"># Start the service Puppet Dashboard</span><span class="xml">
+start() {
+echo -n "Starting Puppet Dashboard: "
+/usr/bin/ruby /data/www/wwwroot/puppet-dashboard/script/server -e production -b IP &amp;
+</span><span class="comment">### Create the lock file ###</span><span class="xml">
+touch /var/lock/subsys/puppetdb
+success $"Puppet Dashboard startup"
+echo
+}
+
+</span><span class="comment"># Restart the service Puppet Dashboard</span><span class="xml">
+stop() {
+echo -n "Stopping Puppet Dashboard: "
+kill -</span><span class="number">9</span><span class="xml"> `ps ax | grep "/usr/bin/ruby /data/www/wwwroot/puppet-dashboard/script/server" | grep -v grep | awk '{ print </span><span class="variable">$1</span><span class="xml"> }' ` 
+</span><span class="comment">### Now, delete the lock file ###</span><span class="xml">
+rm -f /var/lock/subsys/puppetdb
+success $"Puppet Dashboard shutdown"
+echo
+}
+
+</span><span class="comment">### main logic ###</span><span class="xml">
+case "</span><span class="variable">$1</span><span class="xml">" in
+start)
+start
+;;
+stop)
+stop
+;;
+status)
+status Puppet DB
+;;
+restart|reload|condrestart)
+stop
+start
+;;
+*)
+echo $"Usage: </span><span class="variable">$0</span><span class="xml"> {start|stop|restart|reload|status}"
+exit </span><span class="number">1</span><span class="xml">
+esac
+
+exit </span><span class="number">0</span><span class="xml"></span>
+</pre></figure></code></pre>
+<p>chmod 755 /etc/init.d/puppet-dashboard
+/etc/init.d/puppet-dashboard start</p>
+<p>参考
+<a href="http://docs.puppetlabs.com/guides/installing_dashboard.html">http://docs.puppetlabs.com/guides/installing_dashboard.html</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-20T03:27:34.000Z"><a href="/2010/12/20/howto-install-puppet-on-centos5/">12月 20 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/20/howto-install-puppet-on-centos5/">Centos5 yum快速安装puppet 2.6</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Centos 5 使用yum源安装puppet 2.6</p>
+<p>一，配置yum源
+cd /etc/yum.repos.d/</p>
+<p>vim puppet.repo</p>
+<pre><code><figure class="highlight"><pre><span class="xml">[puppetlabs]
+name=Puppet Labs Packages
+baseurl=http://yum.puppetlabs.com/base/
+enabled=</span><span class="number">0</span><span class="xml">
+gpgcheck=</span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+vim epel.repo
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>[epel]
+name=Extra Packages for Enterprise Linux </span><span class="number">5</span><span class="xml"> -</span><span class="variable">$basearch</span><span class="xml">
+</span><span class="comment">#baseurl=http://download.fedoraproject.org/pub/epel/5/$basearch</span><span class="xml">
+mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=epel-</span><span class="number">5</span><span class="xml">&amp;amp;arch=</span><span class="variable">$basearch</span><span class="xml">
+failovermethod=priority
+enabled=</span><span class="number">0</span><span class="xml">
+gpgcheck=</span><span class="number">0</span><span class="xml">
+
+[epel-puppet]
+name=epel puppet
+baseurl=http://tmz.fedorapeople.org/repo/puppet/epel/</span><span class="number">5</span><span class="xml">/</span><span class="variable">$basearch</span><span class="xml">/
+enabled=</span><span class="number">0</span><span class="xml">
+gpgcheck=</span><span class="number">0</span><span class="xml"><span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+编码 问题会有一个乱码：mirrorlist=[http://mirrors.fedoraproject.org/mirrorlist?repo=epel-</span><span class="number">5</span><span class="xml">&amp;amp;arch=</span><span class="variable">$basearch</span><span class="xml">](http://mirrors.fedoraproject.org/mirrorlist?repo=epel-</span><span class="number">5</span><span class="xml">&amp;amp;arch=</span><span class="variable">$basearch</span><span class="xml">)
+
+vim ruby.repo
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`[ruby]
+name=ruby
+baseurl=http://repo.premiumhelp.eu/ruby/
+gpgcheck=</span><span class="number">0</span><span class="xml">
+enabled=</span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+puppet </span><span class="number">2.6</span><span class="xml"> 需要 ruby </span><span class="number">1.8</span><span class="xml"></span><span class="number">.6</span><span class="xml"> 去运行 puppet-dashboard
+升级ruby
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# yum --enablerepo="ruby" update ruby
+如果你没有安装ruby 请使用:
+</span><span class="comment">#yum -y install ruby</span><span class="xml">
+`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+安装 Puppet Server
+Server端：On your puppetmaster server:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# yum --enablerepo=epel,epel-puppet install puppet-server`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+Client 端：On your puppet client
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# yum --enablerepo="epel,epel-puppet" install puppet `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+Server端配置site.pp
+vim /etc/puppet/site.pp
+node default {
+file { "/tmp/temp1.txt": content =&amp;gt; "hello,first puppet manifest"; }
+}
+
+Client端配置hostsname
+echo 'client.example.com' &amp;gt; /etc/hostname
+hostname -F /etc/hostname
+Client端运行：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`puppetd --server master.example.com --test`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+上面的命令让puppetd 从 master.example.com 去读取puppet配置文件. 第一次连接,双方会进行ssl证书的验证,这是一个新的客户端,在服务器端那里还没有被认证,因此需要在服务器端进行证书认证.
+在服务器端的机器上执行下面的命令来认证客户端的证书
+
+Server端：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` puppetca -s client.example.com`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+然后再重新在客户端执行
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`puppetd --server master.example.com --test </span>
+</pre></figure></code></pre>
+<p>配置完成。
+参考：<a href="http://www.craigdunn.org/2010/08/part-1-installing-puppet-2-6-1-on-centos-with-yumrpm/">http://www.craigdunn.org/2010/08/part-1-installing-puppet-2-6-1-on-centos-with-yumrpm/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/1032/">1032</a><small>1</small></li>
+  
+    <li><a href="/tags/1236/">1236</a><small>1</small></li>
+  
+    <li><a href="/tags/403/">403</a><small>1</small></li>
+  
+    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
+  
+    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
+  
+    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
+  
+    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
+  
+    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
+  
+    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
+  
+    <li><a href="/tags/acl/">acl</a><small>2</small></li>
+  
+    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
+  
+    <li><a href="/tags/apache/">apache</a><small>8</small></li>
+  
+    <li><a href="/tags/arp/">arp</a><small>1</small></li>
+  
+    <li><a href="/tags/awk/">awk</a><small>4</small></li>
+  
+    <li><a href="/tags/bash/">bash</a><small>2</small></li>
+  
+    <li><a href="/tags/best/">best</a><small>1</small></li>
+  
+    <li><a href="/tags/binding/">binding</a><small>1</small></li>
+  
+    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
+  
+    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
+  
+    <li><a href="/tags/browser/">browser</a><small>1</small></li>
+  
+    <li><a href="/tags/cache/">cache</a><small>1</small></li>
+  
+    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>8</small></li>
+  
+    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
+  
+    <li><a href="/tags/chown/">chown</a><small>1</small></li>
+  
+    <li><a href="/tags/commands/">commands</a><small>1</small></li>
+  
+    <li><a href="/tags/content/">content</a><small>1</small></li>
+  
+    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
+  
+    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
+  
+    <li><a href="/tags/creating/">creating</a><small>1</small></li>
+  
+    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
+  
+    <li><a href="/tags/dell/">dell</a><small>1</small></li>
+  
+    <li><a href="/tags/diff/">diff</a><small>1</small></li>
+  
+    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
+  
+    <li><a href="/tags/du/">du</a><small>1</small></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
+  
+    <li><a href="/tags/end/">end</a><small>1</small></li>
+  
+    <li><a href="/tags/epel/">epel</a><small>1</small></li>
+  
+    <li><a href="/tags/etag/">etag</a><small>1</small></li>
+  
+    <li><a href="/tags/expires/">expires</a><small>1</small></li>
+  
+    <li><a href="/tags/find/">find</a><small>1</small></li>
+  
+    <li><a href="/tags/for-1/">for</a><small>1</small></li>
+  
+    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
+  
+    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
+  
+    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
+  
+    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
+  
+    <li><a href="/tags/group/">group</a><small>1</small></li>
+  
+    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
+  
+    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
+  
+    <li><a href="/tags/howto/">howto</a><small>2</small></li>
+  
+    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
+  
+    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
+  
+    <li><a href="/tags/if/">if</a><small>2</small></li>
+  
+    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
+  
+    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
+  
+    <li><a href="/tags/init/">init</a><small>1</small></li>
+  
+    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
+  
+    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
+  
+    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
+  
+    <li><a href="/tags/jk/">jk</a><small>1</small></li>
+  
+    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
+  
+    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/kick/">kick</a><small>1</small></li>
+  
+    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>18</small></li>
+  
+    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
+  
+    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
+  
+    <li><a href="/tags/master/">master</a><small>2</small></li>
+  
+    <li><a href="/tags/metric/">metric</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
+  
+    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
+  
+    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
+  
+    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
+  
+    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
+  
+    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
+  
+    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
+  
+    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
+  
+    <li><a href="/tags/packet/">packet</a><small>1</small></li>
+  
+    <li><a href="/tags/pam/">pam</a><small>1</small></li>
+  
+    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
+  
+    <li><a href="/tags/perl/">perl</a><small>1</small></li>
+  
+    <li><a href="/tags/permission/">permission</a><small>1</small></li>
+  
+    <li><a href="/tags/php-1/">php</a><small>2</small></li>
+  
+    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
+  
+    <li><a href="/tags/pil/">pil</a><small>1</small></li>
+  
+    <li><a href="/tags/port/">port</a><small>1</small></li>
+  
+    <li><a href="/tags/practices/">practices</a><small>1</small></li>
+  
+    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
+  
+    <li><a href="/tags/ps/">ps</a><small>2</small></li>
+  
+    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
+  
+    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
+  
+    <li><a href="/tags/python-1/">python</a><small>3</small></li>
+  
+    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
+  
+    <li><a href="/tags/quick/">quick</a><small>1</small></li>
+  
+    <li><a href="/tags/r410/">r410</a><small>1</small></li>
+  
+    <li><a href="/tags/r710/">r710</a><small>1</small></li>
+  
+    <li><a href="/tags/raw/">raw</a><small>1</small></li>
+  
+    <li><a href="/tags/referer/">referer</a><small>1</small></li>
+  
+    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
+  
+    <li><a href="/tags/repo/">repo</a><small>1</small></li>
+  
+    <li><a href="/tags/resources/">resources</a><small>1</small></li>
+  
+    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
+  
+    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
+  
+    <li><a href="/tags/sar/">sar</a><small>1</small></li>
+  
+    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
+  
+    <li><a href="/tags/sed/">sed</a><small>4</small></li>
+  
+    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
+  
+    <li><a href="/tags/sending/">sending</a><small>1</small></li>
+  
+    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>2</small></li>
+  
+    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
+  
+    <li><a href="/tags/slave/">slave</a><small>2</small></li>
+  
+    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
+  
+    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
+  
+    <li><a href="/tags/spec/">spec</a><small>2</small></li>
+  
+    <li><a href="/tags/squid/">squid</a><small>1</small></li>
+  
+    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>1</small></li>
+  
+    <li><a href="/tags/tar/">tar</a><small>1</small></li>
+  
+    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
+  
+    <li><a href="/tags/tools/">tools</a><small>1</small></li>
+  
+    <li><a href="/tags/top/">top</a><small>1</small></li>
+  
+    <li><a href="/tags/tree/">tree</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
+  
+    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
+  
+    <li><a href="/tags/user/">user</a><small>2</small></li>
+  
+    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>2</small></li>
+  
+    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
+  
+    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/while/">while</a><small>1</small></li>
+  
+    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
+  
+    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
+  
+    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
+  
+    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
+  
+    <li><a href="/tags/yum/">yum</a><small>10</small></li>
+  
+    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
+  
+    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
+  
+    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
+  
+    <li><a href="/tags/优化/">优化</a><small>1</small></li>
+  
+    <li><a href="/tags/内核/">内核</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
+  
+    <li><a href="/tags/参考/">参考</a><small>1</small></li>
+  
+    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
+  
+    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
+  
+    <li><a href="/tags/对比/">对比</a><small>1</small></li>
+  
+    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
+  
+    <li><a href="/tags/日志/">日志</a><small>2</small></li>
+  
+    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
+  
+    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
+  
+    <li><a href="/tags/管理/">管理</a><small>1</small></li>
+  
+    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
+  
+    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
+  
+    <li><a href="/tags/老板/">老板</a><small>1</small></li>
+  
+    <li><a href="/tags/认证/">认证</a><small>1</small></li>
+  
+    <li><a href="/tags/详解/">详解</a><small>3</small></li>
+  
+    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
+  
+    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
+  
+    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

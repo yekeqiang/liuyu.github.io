@@ -1,0 +1,686 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>用iptables的raw表解决ip_conntrack: table full, dropping packet的问题 | Puppet-in-action</title>
+  <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="1) 什么是raw表？做什么用的？
+iptables有5个链:PREROUTING,INPUT,FORWARD,OUTPUT,POSTROUTING,4个表:filter,nat,mangle,raw.
+4个表的优先级由高到低的顺序为:raw--&gt;mangle--&gt;nat--&gt;fi">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="用iptables的raw表解决ip_conntrack: table full, dropping packet的问题"/>
+  <meta property="og:site_name" content="Puppet-in-action"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Puppet-in-action</a></h1>
+  <h2><a href="/">Puppet</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-04-01T08:55:40.000Z"><a href="/2011/04/01/iptables_raw_ip_conntrack-table-full-dropping-packet/">4月 1 2011</a></time>
+      
+      
+  
+    <h1 class="title">用iptables的raw表解决ip_conntrack: table full, dropping packet的问题</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>1) 什么是raw表？做什么用的？</p>
+<p>iptables有5个链:PREROUTING,INPUT,FORWARD,OUTPUT,POSTROUTING,4个表:filter,nat,mangle,raw.</p>
+<p>4个表的优先级由高到低的顺序为:raw--&gt;mangle--&gt;nat--&gt;filter</p>
+<p>举例来说:如果PRROUTING链上,即有mangle表,也有nat表,那么先由mangle处理,然后由nat表处理</p>
+<p>RAW表只使用在PREROUTING链和OUTPUT链上,因为优先级最高，从而可以对收到的数据包在连接跟踪前进行处理。一但用户使用了RAW表,在某个链上,RAW表处理完后,将跳过NAT表和 ip_conntrack处理,即不再做地址转换和数据包的链接跟踪处理了.</p>
+<p>RAW表可以应用在那些不需要做nat的情况下，以提高性能。如大量访问的web服务器，可以让80端口不再让iptables做数据包的链接跟踪处理，以提高用户的访问速度。</p>
+<p>2) iptables的数据包的流程是怎样的？</p>
+<p>(流程介绍来源：<a href="http://selboo.com.cn/post/721/">http://selboo.com.cn/post/721/</a>)</p>
+<p>一个数据包到达时,是怎么依次穿过各个链和表的（图）。</p>
+<p><img src="http://bubbyroom.com/wp-content/uploads/2011/04/iptables.png" alt="" title="iptables"></p>
+<p>基本步骤如下：</p>
+<p>1. 数据包到达网络接口，比如 eth0。</p>
+<p>2. 进入 raw 表的 PREROUTING 链，这个链的作用是赶在连接跟踪之前处理数据包。</p>
+<p>3. 如果进行了连接跟踪，在此处理。</p>
+<p>4. 进入 mangle 表的 PREROUTING 链，在此可以修改数据包，比如 TOS 等。</p>
+<p>5. 进入 nat 表的 PREROUTING 链，可以在此做DNAT，但不要做过滤。</p>
+<p>6. 决定路由，看是交给本地主机还是转发给其它主机。</p>
+<p>到了这里我们就得分两种不同的情况进行讨论了，一种情况就是数据包要转发给其它主机，这时候它会依次经过：</p>
+<p>7. 进入 mangle 表的 FORWARD 链，这里也比较特殊，这是在第一次路由决定之后，在进行最后的路由决定之前，我们仍然可以对数据包进行某些修改。</p>
+<p>8. 进入 filter 表的 FORWARD 链，在这里我们可以对所有转发的数据包进行过滤。需要注意的是：经过这里的数据包是转发的，方向是双向的。</p>
+<p>9. 进入 mangle 表的 POSTROUTING 链，到这里已经做完了所有的路由决定，但数据包仍然在本地主机，我们还可以进行某些修改。</p>
+<p>10. 进入 nat 表的 POSTROUTING 链，在这里一般都是用来做 SNAT ，不要在这里进行过滤。</p>
+<p>11. 进入出去的网络接口。完毕。</p>
+<p>另一种情况是，数据包就是发给本地主机的，那么它会依次穿过：</p>
+<p>7. 进入 mangle 表的 INPUT 链，这里是在路由之后，交由本地主机之前，我们也可以进行一些相应的修改。</p>
+<p>8. 进入 filter 表的 INPUT 链，在这里我们可以对流入的所有数据包进行过滤，无论它来自哪个网络接口。</p>
+<p>9. 交给本地主机的应用程序进行处理。</p>
+<p>10. 处理完毕后进行路由决定，看该往那里发出。</p>
+<p>11. 进入 raw 表的 OUTPUT 链，这里是在连接跟踪处理本地的数据包之前。</p>
+<p>12. 连接跟踪对本地的数据包进行处理。</p>
+<p>13. 进入 mangle 表的 OUTPUT 链，在这里我们可以修改数据包，但不要做过滤。</p>
+<p>14. 进入 nat 表的 OUTPUT 链，可以对防火墙自己发出的数据做 NAT 。</p>
+<p>15. 再次进行路由决定。</p>
+<p>16. 进入 filter 表的 OUTPUT 链，可以对本地出去的数据包进行过滤。</p>
+<p>17. 进入 mangle 表的 POSTROUTING 链，同上一种情况的第9步。注意，这里不光对经过防火墙的数据包进行处理，还对防火墙自己产生的数据包进行处理。</p>
+<p>18. 进入 nat 表的 POSTROUTING 链，同上一种情况的第10步。</p>
+<p>19. 进入出去的网络接口。完毕。</p>
+<p>3) iptables raw表的使用</p>
+<p>增加raw表，在其他表处理之前，-j NOTRACK跳过其它表处理</p>
+<p>状态除了以前的四个还增加了一个UNTRACKED</p>
+<p>例如：</p>
+<p>可以使用 “NOTRACK” target 允许规则指定80端口的包不进入链接跟踪/NAT子系统</p>
+<p>iptables -t raw -A PREROUTING -d 1.2.3.4 -p tcp --dport 80 -j NOTRACK</p>
+<p>iptables -t raw -A PREROUTING -s 1.2.3.4 -p tcp --sport 80 -j NOTRACK</p>
+<p>iptables -A FORWARD -m state --state UNTRACKED -j ACCEPT</p>
+<p>4) 解决ip_conntrack: table full, dropping packet的问题</p>
+<p>在启用了iptables web服务器上，流量高的时候经常会出现下面的错误：</p>
+<p>ip_conntrack: table full, dropping packet</p>
+<p>这个问题的原因是由于web服务器收到了大量的连接，在启用了iptables的情况下，iptables会把所有的连接都做链接跟踪处理，这样iptables就会有一个链接跟踪表，当这个表满的时候，就会出现上面的错误。</p>
+<p>iptables的链接跟踪表最大容量为/proc/sys/net/ipv4/ip_conntrack_max，链接碰到各种状态的超时后就会从表中删除。</p>
+<p>所以解決方法一般有两个：</p>
+<p>(1) 加大 ip_conntrack_max 值</p>
+<p>vi /etc/sysctl.conf</p>
+<p>net.ipv4.ip_conntrack_max = 393216</p>
+<p>net.ipv4.netfilter.ip_conntrack_max = 393216</p>
+<p>(2): 降低 ip_conntrack timeout时间</p>
+<p>vi /etc/sysctl.conf</p>
+<p>net.ipv4.netfilter.ip_conntrack_tcp_timeout_established = 300</p>
+<p>net.ipv4.netfilter.ip_conntrack_tcp_timeout_time_wait = 120</p>
+<p>net.ipv4.netfilter.ip_conntrack_tcp_timeout_close_wait = 60</p>
+<p>net.ipv4.netfilter.ip_conntrack_tcp_timeout_fin_wait = 120</p>
+<p>上面两种方法打个比喻就是烧水水开的时候，换一个大锅。一般情况下都可以解决问题，但是在极端情况下，还是不够用，怎么办？</p>
+<p>这样就得反其道而行，用釜底抽薪的办法。iptables的raw表是不做数据包的链接跟踪处理的，我们就把那些连接量非常大的链接加入到iptables raw表。</p>
+<p>如一台web服务器可以这样：</p>
+<p>iptables -t raw -A PREROUTING -d 1.2.3.4 -p tcp --dport 80 -j NOTRACK</p>
+<p>iptables -A FORWARD -m state --state UNTRACKED -j ACCEPT</p>
+<p>5) iptables raw表的效果测试</p>
+<p>我们在一台web server上做测试，先不使用raw表，观察链接跟踪表(/proc/net/ip_conntrack)的大小：</p>
+<p>先看下iptables配置：</p>
+<p>cat /etc/sysconfig/iptables</p>
+<h1>Generated by iptables-save v1.3.5 on Wed Aug 18 10:10:52 2010</h1>
+<p>*filter</p>
+<p>:INPUT ACCEPT [0:0]</p>
+<p>:FORWARD ACCEPT [0:0]</p>
+<p>:OUTPUT ACCEPT [104076:12500201]</p>
+<p>:RH-Firewall-1-INPUT - [0:0]</p>
+<p>-A INPUT -j RH-Firewall-1-INPUT</p>
+<p>-A FORWARD -j RH-Firewall-1-INPUT</p>
+<p>-A RH-Firewall-1-INPUT -i lo -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -p icmp -m icmp --icmp-type any -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -p esp -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -p ah -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -d 224.0.0.251 -p udp -m udp --dport 5353 -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -p udp -m udp --dport 631 -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -p tcp -m tcp --dport 631 -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -j REJECT --reject-with icmp-host-prohibited</p>
+<p>COMMIT</p>
+<h1>Completed on Wed Aug 18 10:10:52 2010</h1>
+<p>在另一台机器上用ab测试：</p>
+<p>ab -c 1000 -n 5000 <a href="http://192.168.20.26/index.html">http://192.168.20.26/index.html</a></p>
+<p>在web server上查看链接跟踪表(/proc/net/ip_conntrack)的大小：</p>
+<p>[root@mongo html]# wc -l /proc/net/ip_conntrack</p>
+<p>5153 /proc/net/ip_conntrack</p>
+<p>可以看到跟踪表内有5153个链接，再大一些的压力可能就要报ip_conntrack: table full, dropping packet的错误了。</p>
+<p>下面我们启用raw表：</p>
+<p>先更新iptables：</p>
+<p>[root@mongo html]# cat /etc/sysconfig/iptables</p>
+<h1>Generated by iptables-save v1.3.5 on Wed Aug 18 10:10:52 2010</h1>
+<p>*filter</p>
+<p>:INPUT ACCEPT [0:0]</p>
+<p>:FORWARD ACCEPT [0:0]</p>
+<p>:OUTPUT ACCEPT [104076:12500201]</p>
+<p>:RH-Firewall-1-INPUT - [0:0]</p>
+<p>-A INPUT -j RH-Firewall-1-INPUT</p>
+<p>-A FORWARD -j RH-Firewall-1-INPUT</p>
+<p>-A RH-Firewall-1-INPUT -i lo -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -p icmp -m icmp --icmp-type any -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -p esp -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -p ah -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -d 224.0.0.251 -p udp -m udp --dport 5353 -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -p udp -m udp --dport 631 -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -p tcp -m tcp --dport 631 -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -m state --state RELATED,ESTABLISHED,UNTRACKED -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT</p>
+<p>-A RH-Firewall-1-INPUT -j REJECT --reject-with icmp-host-prohibited</p>
+<p>COMMIT</p>
+<h1>Completed on Wed Aug 18 10:10:52 2010</h1>
+<h1>Generated by iptables-save v1.3.5 on Wed Aug 18 10:10:52 2010</h1>
+<p>*raw</p>
+<p>:PREROUTING ACCEPT [116163:9327716]</p>
+<p>:OUTPUT ACCEPT [104076:12500201]</p>
+<p>-A PREROUTING -p tcp -m tcp --dport 80 -j NOTRACK</p>
+<p>-A OUTPUT -p tcp -m tcp --sport 80 -j NOTRACK</p>
+<p>COMMIT</p>
+<h1>Completed on Wed Aug 18 10:10:52 2010</h1>
+<p>红色部分是新增的。</p>
+<p>重启iptables：</p>
+<p>service iptables restart</p>
+<p>可以用iptables命令查看是否启用成功了：</p>
+<p>[root@mongo html]# iptables -t raw -L -n</p>
+<p>Chain PREROUTING (policy ACCEPT)</p>
+<p>target prot opt source destination</p>
+<p>NOTRACK tcp -- 0.0.0.0/0 0.0.0.0/0 tcp dpt:80</p>
+<p>Chain OUTPUT (policy ACCEPT)</p>
+<p>target prot opt source destination</p>
+<p>NOTRACK tcp -- 0.0.0.0/0 0.0.0.0/0 tcp spt:80</p>
+<p>然后再用ab测试：</p>
+<p>ab -c 1000 -n 5000 <a href="http://192.168.20.26/index.html">http://192.168.20.26/index.html</a></p>
+<p>查看链接跟踪表(/proc/net/ip_conntrack)的大小：</p>
+<p>[root@mongo html]# wc -l /proc/net/ip_conntrack</p>
+<p>1 /proc/net/ip_conntrack</p>
+<p>跟踪表内只跟踪了一个链接了。</p>
+<p>[root@mongo html]# cat /proc/net/ip_conntrack</p>
+<p>tcp 6 431999 ESTABLISHED src=192.168.20.26 dst=192.168.20.10 sport=22 dport=50088 packets=85 bytes=10200 src=192.168.20.10 dst=192.168.20.26 sport=50088 dport=22 packets=92 bytes=6832 [ASSURED] mark=0 secmark=0 use=1</p>
+<p>可以看到iptables已经不跟踪进出端口为80的链接了。测试结果表明用iptables的raw表可以完美解决ip_conntrack: table full, dropping packet的问题。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/faq/">faq</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/iptables/">iptables</a>, <a href="/tags/raw/">raw</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/1032/">1032</a><small>1</small></li>
+  
+    <li><a href="/tags/1236/">1236</a><small>1</small></li>
+  
+    <li><a href="/tags/403/">403</a><small>1</small></li>
+  
+    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
+  
+    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
+  
+    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
+  
+    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
+  
+    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
+  
+    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
+  
+    <li><a href="/tags/acl/">acl</a><small>2</small></li>
+  
+    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
+  
+    <li><a href="/tags/apache/">apache</a><small>8</small></li>
+  
+    <li><a href="/tags/arp/">arp</a><small>1</small></li>
+  
+    <li><a href="/tags/awk/">awk</a><small>4</small></li>
+  
+    <li><a href="/tags/bash/">bash</a><small>2</small></li>
+  
+    <li><a href="/tags/best/">best</a><small>1</small></li>
+  
+    <li><a href="/tags/binding/">binding</a><small>1</small></li>
+  
+    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
+  
+    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
+  
+    <li><a href="/tags/browser/">browser</a><small>1</small></li>
+  
+    <li><a href="/tags/cache/">cache</a><small>1</small></li>
+  
+    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>8</small></li>
+  
+    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
+  
+    <li><a href="/tags/chown/">chown</a><small>1</small></li>
+  
+    <li><a href="/tags/commands/">commands</a><small>1</small></li>
+  
+    <li><a href="/tags/content/">content</a><small>1</small></li>
+  
+    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
+  
+    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
+  
+    <li><a href="/tags/creating/">creating</a><small>1</small></li>
+  
+    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
+  
+    <li><a href="/tags/dell/">dell</a><small>1</small></li>
+  
+    <li><a href="/tags/diff/">diff</a><small>1</small></li>
+  
+    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
+  
+    <li><a href="/tags/du/">du</a><small>1</small></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
+  
+    <li><a href="/tags/end/">end</a><small>1</small></li>
+  
+    <li><a href="/tags/epel/">epel</a><small>1</small></li>
+  
+    <li><a href="/tags/etag/">etag</a><small>1</small></li>
+  
+    <li><a href="/tags/expires/">expires</a><small>1</small></li>
+  
+    <li><a href="/tags/find/">find</a><small>1</small></li>
+  
+    <li><a href="/tags/for-1/">for</a><small>1</small></li>
+  
+    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
+  
+    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
+  
+    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
+  
+    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
+  
+    <li><a href="/tags/group/">group</a><small>1</small></li>
+  
+    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
+  
+    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
+  
+    <li><a href="/tags/howto/">howto</a><small>2</small></li>
+  
+    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
+  
+    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
+  
+    <li><a href="/tags/if/">if</a><small>2</small></li>
+  
+    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
+  
+    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
+  
+    <li><a href="/tags/init/">init</a><small>1</small></li>
+  
+    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
+  
+    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
+  
+    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
+  
+    <li><a href="/tags/jk/">jk</a><small>1</small></li>
+  
+    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
+  
+    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/kick/">kick</a><small>1</small></li>
+  
+    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>18</small></li>
+  
+    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
+  
+    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
+  
+    <li><a href="/tags/master/">master</a><small>2</small></li>
+  
+    <li><a href="/tags/metric/">metric</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
+  
+    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
+  
+    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
+  
+    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
+  
+    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
+  
+    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
+  
+    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
+  
+    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
+  
+    <li><a href="/tags/packet/">packet</a><small>1</small></li>
+  
+    <li><a href="/tags/pam/">pam</a><small>1</small></li>
+  
+    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
+  
+    <li><a href="/tags/perl/">perl</a><small>1</small></li>
+  
+    <li><a href="/tags/permission/">permission</a><small>1</small></li>
+  
+    <li><a href="/tags/php-1/">php</a><small>2</small></li>
+  
+    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
+  
+    <li><a href="/tags/pil/">pil</a><small>1</small></li>
+  
+    <li><a href="/tags/port/">port</a><small>1</small></li>
+  
+    <li><a href="/tags/practices/">practices</a><small>1</small></li>
+  
+    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
+  
+    <li><a href="/tags/ps/">ps</a><small>2</small></li>
+  
+    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
+  
+    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
+  
+    <li><a href="/tags/python-1/">python</a><small>3</small></li>
+  
+    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
+  
+    <li><a href="/tags/quick/">quick</a><small>1</small></li>
+  
+    <li><a href="/tags/r410/">r410</a><small>1</small></li>
+  
+    <li><a href="/tags/r710/">r710</a><small>1</small></li>
+  
+    <li><a href="/tags/raw/">raw</a><small>1</small></li>
+  
+    <li><a href="/tags/referer/">referer</a><small>1</small></li>
+  
+    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
+  
+    <li><a href="/tags/repo/">repo</a><small>1</small></li>
+  
+    <li><a href="/tags/resources/">resources</a><small>1</small></li>
+  
+    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
+  
+    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
+  
+    <li><a href="/tags/sar/">sar</a><small>1</small></li>
+  
+    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
+  
+    <li><a href="/tags/sed/">sed</a><small>4</small></li>
+  
+    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
+  
+    <li><a href="/tags/sending/">sending</a><small>1</small></li>
+  
+    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>2</small></li>
+  
+    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
+  
+    <li><a href="/tags/slave/">slave</a><small>2</small></li>
+  
+    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
+  
+    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
+  
+    <li><a href="/tags/spec/">spec</a><small>2</small></li>
+  
+    <li><a href="/tags/squid/">squid</a><small>1</small></li>
+  
+    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>1</small></li>
+  
+    <li><a href="/tags/tar/">tar</a><small>1</small></li>
+  
+    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
+  
+    <li><a href="/tags/tools/">tools</a><small>1</small></li>
+  
+    <li><a href="/tags/top/">top</a><small>1</small></li>
+  
+    <li><a href="/tags/tree/">tree</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
+  
+    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
+  
+    <li><a href="/tags/user/">user</a><small>2</small></li>
+  
+    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>2</small></li>
+  
+    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
+  
+    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/while/">while</a><small>1</small></li>
+  
+    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
+  
+    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
+  
+    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
+  
+    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
+  
+    <li><a href="/tags/yum/">yum</a><small>10</small></li>
+  
+    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
+  
+    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
+  
+    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
+  
+    <li><a href="/tags/优化/">优化</a><small>1</small></li>
+  
+    <li><a href="/tags/内核/">内核</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
+  
+    <li><a href="/tags/参考/">参考</a><small>1</small></li>
+  
+    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
+  
+    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
+  
+    <li><a href="/tags/对比/">对比</a><small>1</small></li>
+  
+    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
+  
+    <li><a href="/tags/日志/">日志</a><small>2</small></li>
+  
+    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
+  
+    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
+  
+    <li><a href="/tags/管理/">管理</a><small>1</small></li>
+  
+    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
+  
+    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
+  
+    <li><a href="/tags/老板/">老板</a><small>1</small></li>
+  
+    <li><a href="/tags/认证/">认证</a><small>1</small></li>
+  
+    <li><a href="/tags/详解/">详解</a><small>3</small></li>
+  
+    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
+  
+    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
+  
+    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

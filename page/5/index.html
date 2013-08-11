@@ -1,0 +1,2227 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 5 页 | Puppet-in-action</title>
+  <meta name="author" content="Liu Yu">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Puppet-in-action"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Puppet-in-action</a></h1>
+  <h2><a href="/">Puppet</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-20T13:40:17.000Z"><a href="/2010/12/20/wordpress-content/">12月 20 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/20/wordpress-content/">无法定位WordPress Content目录(wp-content) 解决方案</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>方案： 打开htdocs目录下的wp-config.php文件，将下面的代码放在wp-config.php最后一行的&quot;?&gt;&quot;前面即可。注意，不要忘记上传到服务器上啊。</p>
+<p>Php代码</p>
+<pre><code><figure class="highlight"><pre><span class="comment">if(is_admin())</span> <span class="comment">{add_filter('filesystem_method'</span>, <span class="comment">create_function('$a'</span>, <span class="comment">'return</span> <span class="comment">"direct";'</span> <span class="comment">));define(</span> <span class="comment">'FS_CHMOD_DIR'</span>, <span class="comment">0751</span> <span class="comment">);}</span>  <span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">修改完毕后的wp</span>-<span class="comment">config</span>.<span class="comment">php文件是这样的:</span>
+
+<span class="comment">Php代码</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`/*</span> <span class="comment">设定完毕，请保存该文件。</span> <span class="comment">*/</span>
+<span class="comment">//</span>.<span class="string">.</span><span class="string">.</span><span class="string">.</span><span class="string">.</span><span class="string">.</span><span class="string">.</span><span class="comment">上面的都省略了</span>
+<span class="comment">/**</span> <span class="comment">WordPress目录的绝对路径。</span> <span class="comment">*/</span>
+<span class="comment">if</span> <span class="comment">(</span> <span class="comment">!defined('ABSPATH')</span> <span class="comment">)</span>
+    <span class="comment">define('ABSPATH'</span>, <span class="comment">dirname(__FILE__)</span> <span class="string">.</span> <span class="comment">'/');</span>  
+
+<span class="comment">/**</span> <span class="comment">设置WordPress变量和包含文件。</span> <span class="comment">*/</span>
+<span class="comment">require_once(ABSPATH</span> <span class="string">.</span> <span class="comment">'wp</span>-<span class="comment">settings</span>.<span class="comment">php');</span>  
+
+<span class="comment">//</span>-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">无法定位WordPress</span> <span class="comment">Content目录(wp</span>-<span class="comment">content)</span>  <span class="comment">解决方案</span>-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">begin</span>
+<span class="comment">if(is_admin())</span> <span class="comment">{add_filter('filesystem_method'</span>, <span class="comment">create_function('$a'</span>, <span class="comment">'return</span> <span class="comment">"direct";'</span> <span class="comment">));define(</span> <span class="comment">'FS_CHMOD_DIR'</span>, <span class="comment">0751</span> <span class="comment">);}</span>
+<span class="comment">//</span>-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">无法定位WordPress</span> <span class="comment">Content目录(wp</span>-<span class="comment">content)</span>  <span class="comment">解决方案</span>-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">end</span>
+<span class="comment">?&amp;gt;
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-20T13:38:02.000Z"><a href="/2010/12/20/sendmail-not-send-mail/">12月 20 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/20/sendmail-not-send-mail/">sendmail无法发信，启动慢解决方案</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>php无法发mail
+用命令行测试下：</p>
+<pre><code><figure class="highlight"><pre><span class="xml"></span><span class="comment">#!/bin/bash</span><span class="xml">
+/usr/sbin/sendmail -t <span class="tag">&lt;<span class="title">&lt;EOF
+From:</span> <span class="attribute">Mail</span> <span class="attribute">testing</span> &lt;<span class="attribute">mail.goapk.gmail.com</span>&gt;</span>
+To: liuyu105@gmail.com
+Subject: mail testing
+-----------
+This is the mail content 
+----------
+EOF`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+发现速度特别慢。查看日志：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tail /var/log/maillog
+Dec </span><span class="number">15</span><span class="xml"> </span><span class="number">23</span><span class="xml">:</span><span class="number">22</span><span class="xml">:</span><span class="number">03</span><span class="xml"> litian sendmail[</span><span class="number">10845</span><span class="xml">]: My unqualified host name (LVSMaster) unknown; sleeping for retry
+Dec </span><span class="number">15</span><span class="xml"> </span><span class="number">23</span><span class="xml">:</span><span class="number">23</span><span class="xml">:</span><span class="number">21</span><span class="xml"> litian sendmail[</span><span class="number">12068</span><span class="xml">]: My unqualified host name (LVSMaster) unknown; sleeping for retry`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+原因是DNS导致，修改hosts
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`</span><span class="number">192.168</span><span class="xml"></span><span class="number">.1</span><span class="xml"></span><span class="number">.6</span><span class="xml"> LVSMaster. LVSMaster`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+本机IP  主机名.  主机名
+
+重启sendmail 
+
+写个PHP测试：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`<span class="tag">&lt;<span class="title">html</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+
+<span class="pi">&lt;?php
+if (isset(</span><span class="variable">$_REQUEST</span><span class="xml">['email']))
+//if "email" is filled out, send email
+  {
+  //send email
+  </span><span class="variable">$email</span><span class="xml"> = </span><span class="variable">$_REQUEST</span><span class="xml">['email'] ; 
+  </span><span class="variable">$subject</span><span class="xml"> = </span><span class="variable">$_REQUEST</span><span class="xml">['subject'] ;
+  </span><span class="variable">$message</span><span class="xml"> = </span><span class="variable">$_REQUEST</span><span class="xml">['message'] ;
+  mail( "someone@example.com", "Subject: </span><span class="variable">$subject</span><span class="xml">",
+  </span><span class="variable">$message</span><span class="xml">, "From: </span><span class="variable">$email</span><span class="xml">" );
+  echo "Thank you for using our mail form";
+  }
+else
+//if "email" is not filled out, display the form
+  {
+  echo "<span class="tag">&lt;<span class="title">form</span> <span class="attribute">method</span>=<span class="value">'post'</span> <span class="attribute">action</span>=<span class="value">'mailform.php'</span>&gt;</span>
+  Email: <span class="tag">&lt;<span class="title">input</span> <span class="attribute">name</span>=<span class="value">'email'</span> <span class="attribute">type</span>=<span class="value">'text'</span> /&gt;</span>
+
+  Subject: <span class="tag">&lt;<span class="title">input</span> <span class="attribute">name</span>=<span class="value">'subject'</span> <span class="attribute">type</span>=<span class="value">'text'</span> /&gt;</span>
+
+  Message:
+
+  <span class="tag">&lt;<span class="title">textarea</span> <span class="attribute">name</span>=<span class="value">'message'</span> <span class="attribute">rows</span>=<span class="value">'</span><span class="number">15</span><span class="xml">' cols='</span><span class="number">40</span><span class="xml">'&gt;
+  <span class="tag">&lt;/<span class="title">textarea</span>&gt;</span>
+
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">'submit'</span> /&gt;</span>
+  <span class="tag">&lt;/<span class="title">form</span>&gt;</span>";
+  }
+?&gt;
+
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span> </span>
+</pre></figure></code></pre>
+<p>如果发送成功。就会返回OK</p>
+<p>参考：
+<a href="http://www.blogjava.net/tacy/archive/2007/12/11/166967.html">http://www.blogjava.net/tacy/archive/2007/12/11/166967.html</a>
+<a href="http://www.w3school.com.cn/php/php_mail.asp">http://www.w3school.com.cn/php/php_mail.asp</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-20T03:27:34.000Z"><a href="/2010/12/20/howto-install-puppet-on-centos5/">12月 20 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/20/howto-install-puppet-on-centos5/">Centos5 yum快速安装puppet 2.6</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Centos 5 使用yum源安装puppet 2.6</p>
+<p>一，配置yum源
+cd /etc/yum.repos.d/</p>
+<p>vim puppet.repo</p>
+<pre><code><figure class="highlight"><pre><span class="xml">[puppetlabs]
+name=Puppet Labs Packages
+baseurl=http://yum.puppetlabs.com/base/
+enabled=</span><span class="number">0</span><span class="xml">
+gpgcheck=</span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+vim epel.repo
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>[epel]
+name=Extra Packages for Enterprise Linux </span><span class="number">5</span><span class="xml"> -</span><span class="variable">$basearch</span><span class="xml">
+</span><span class="comment">#baseurl=http://download.fedoraproject.org/pub/epel/5/$basearch</span><span class="xml">
+mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=epel-</span><span class="number">5</span><span class="xml">&amp;amp;arch=</span><span class="variable">$basearch</span><span class="xml">
+failovermethod=priority
+enabled=</span><span class="number">0</span><span class="xml">
+gpgcheck=</span><span class="number">0</span><span class="xml">
+
+[epel-puppet]
+name=epel puppet
+baseurl=http://tmz.fedorapeople.org/repo/puppet/epel/</span><span class="number">5</span><span class="xml">/</span><span class="variable">$basearch</span><span class="xml">/
+enabled=</span><span class="number">0</span><span class="xml">
+gpgcheck=</span><span class="number">0</span><span class="xml"><span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+编码 问题会有一个乱码：mirrorlist=[http://mirrors.fedoraproject.org/mirrorlist?repo=epel-</span><span class="number">5</span><span class="xml">&amp;amp;arch=</span><span class="variable">$basearch</span><span class="xml">](http://mirrors.fedoraproject.org/mirrorlist?repo=epel-</span><span class="number">5</span><span class="xml">&amp;amp;arch=</span><span class="variable">$basearch</span><span class="xml">)
+
+vim ruby.repo
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`[ruby]
+name=ruby
+baseurl=http://repo.premiumhelp.eu/ruby/
+gpgcheck=</span><span class="number">0</span><span class="xml">
+enabled=</span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+puppet </span><span class="number">2.6</span><span class="xml"> 需要 ruby </span><span class="number">1.8</span><span class="xml"></span><span class="number">.6</span><span class="xml"> 去运行 puppet-dashboard
+升级ruby
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# yum --enablerepo="ruby" update ruby
+如果你没有安装ruby 请使用:
+</span><span class="comment">#yum -y install ruby</span><span class="xml">
+`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+安装 Puppet Server
+Server端：On your puppetmaster server:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# yum --enablerepo=epel,epel-puppet install puppet-server`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+Client 端：On your puppet client
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# yum --enablerepo="epel,epel-puppet" install puppet `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+Server端配置site.pp
+vim /etc/puppet/site.pp
+node default {
+file { "/tmp/temp1.txt": content =&amp;gt; "hello,first puppet manifest"; }
+}
+
+Client端配置hostsname
+echo 'client.example.com' &amp;gt; /etc/hostname
+hostname -F /etc/hostname
+Client端运行：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`puppetd --server master.example.com --test`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+上面的命令让puppetd 从 master.example.com 去读取puppet配置文件. 第一次连接,双方会进行ssl证书的验证,这是一个新的客户端,在服务器端那里还没有被认证,因此需要在服务器端进行证书认证.
+在服务器端的机器上执行下面的命令来认证客户端的证书
+
+Server端：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` puppetca -s client.example.com`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+然后再重新在客户端执行
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`puppetd --server master.example.com --test </span>
+</pre></figure></code></pre>
+<p>配置完成。
+参考：<a href="http://www.craigdunn.org/2010/08/part-1-installing-puppet-2-6-1-on-centos-with-yumrpm/">http://www.craigdunn.org/2010/08/part-1-installing-puppet-2-6-1-on-centos-with-yumrpm/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T15:26:04.000Z"><a href="/2010/12/19/squid-log-detailed/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/squid-log-detailed/">squid 日志详解</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>安装配置完squid，通过日志来看看squid的一些基本的运行状态</p>
+<p>1.access.log</p>
+<p>访问日志，位于squid/var/logs/access.log，常用的记录格式如下</p>
+<pre><code><figure class="highlight"><pre>remotehost rfc931 authuser [date] “method URL” status bytes [Result Codes]:[Hierarchy Codes] `&lt;/pre&gt;
+
+看一些具体的
+&lt;pre&gt;`cd /opt/squid/<span class="keyword">var</span>/logs
+head access.log
+
+<span class="number">221.222</span><span class="number">.213</span><span class="number">.64</span> - - [<span class="number">15</span>/Nov/<span class="number">2006</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">03</span> +<span class="number">0800</span>] “GET http:<span class="comment">//bbs.ci123.com/sample.jpg HTTP/1.1″ 200 240673 TCP_MEM_HIT:NONE</span>
+`&lt;/pre&gt;
+可以通过脚本查看一些统计信息，如各种反应状态所占的比例，通常较好的情况下HIT所占的比例（应该就是所谓的命中率）可以在<span class="number">70</span>%~<span class="number">80</span>%
+&lt;pre&gt;`
+cat access.log|gawk ‘{print $<span class="number">11</span>}’|sort|uniq -c|sort -nr
+cat access.log|grep “http:<span class="comment">//blog”|gawk ‘{print $11}’|sort|uniq -c|sort -nr</span>
+
+<span class="number">154389</span> TCP_MEM_HIT:NONE
+<span class="number">81330</span> TCP_IMS_HIT:NONE
+<span class="number">66991</span> TCP_HIT:NONE
+<span class="number">32413</span> TCP_MISS:FIRST_UP_PARENT
+<span class="number">19900</span> TCP_NEGATIVE_HIT:NONE
+<span class="number">1437</span> TCP_CLIENT_REFRESH_MISS:FIRST_UP_PARENT
+<span class="number">1368</span> TCP_REFRESH_HIT:FIRST_UP_PARENT
+<span class="number">245</span> TCP_MISS:ANY_PARENT
+<span class="number">200</span> TCP_SWAPFAIL_MISS:FIRST_UP_PARENT
+<span class="number">64</span> TCP_REFRESH_MISS:FIRST_UP_PARENT
+<span class="number">23</span> TCP_IMS_HIT:FIRST_UP_PARENT
+<span class="number">7</span> TCP_REFRESH_HIT:ANY_PARENT
+<span class="number">7</span> TCP_CLIENT_REFRESH_MISS:ANY_PARENT
+<span class="number">6</span> TCP_MISS:NONE
+<span class="number">2</span> TCP_SWAPFAIL_MISS:ANY_PARENT`&lt;/pre&gt;
+
+PS:官方文档中关于Result Codes的说明
+============================================================
+
+TCP_HIT
+
+A valid copy of the requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span>.</span>
+TCP_MISS
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">not</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span>.</span>
+TCP_REFRESH_HIT
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">cached</span> <span class="title">but</span> <span class="title">STALE</span>. <span class="title">The</span> <span class="title">IMS</span> <span class="title">query</span> <span class="title">for</span> <span class="title">the</span> <span class="title">object</span> <span class="title">resulted</span> <span class="title">in</span> “304 <span class="title">not</span> <span class="title">modified</span>”.</span>
+TCP_REF_FAIL_HIT
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">cached</span> <span class="title">but</span> <span class="title">STALE</span>. <span class="title">The</span> <span class="title">IMS</span> <span class="title">query</span> <span class="title">failed</span> <span class="title">and</span> <span class="title">the</span> <span class="title">stale</span> <span class="title">object</span> <span class="title">was</span> <span class="title">delivered</span>.</span>
+TCP_REFRESH_MISS
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">cached</span> <span class="title">but</span> <span class="title">STALE</span>. <span class="title">The</span> <span class="title">IMS</span> <span class="title">query</span> <span class="title">returned</span> <span class="title">the</span> <span class="title">new</span> <span class="title">content</span>.</span>
+TCP_CLIENT_REFRESH_MISS
+
+The client issued a “no-cache” pragma, or some analogous cache control command along <span class="keyword">with</span> the request. Thus, the cache
+
+has to refetch the <span class="keyword">object</span>.
+TCP_IMS_HIT
+
+The client issued an IMS request <span class="keyword">for</span> an <span class="class"><span class="keyword">object</span> <span class="title">which</span> <span class="title">was</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span> <span class="title">and</span> <span class="title">fresh</span>.</span>
+TCP_SWAPFAIL_MISS
+
+The <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">believed</span> <span class="title">to</span> <span class="title">be</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span>, <span class="title">but</span> <span class="title">could</span> <span class="title">not</span> <span class="title">be</span> <span class="title">accessed</span>.</span>
+TCP_NEGATIVE_HIT
+
+Request <span class="keyword">for</span> a negatively cached <span class="keyword">object</span>, e.g. “<span class="number">404</span> not found”, <span class="keyword">for</span> which the cache believes to know that it is
+
+inaccessible. Also refer to the explainations <span class="keyword">for</span> negative_ttl in your squid.conf file.
+TCP_MEM_HIT
+
+A valid copy of the requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span> <span class="title">and</span> <span class="title">it</span> <span class="title">was</span> <span class="title">in</span> <span class="title">memory</span>, <span class="title">thus</span> <span class="title">avoiding</span> <span class="title">disk</span> <span class="title">accesses</span>.</span>
+TCP_DENIED
+
+Access was denied <span class="keyword">for</span> <span class="keyword">this</span> request.
+TCP_OFFLINE_HIT
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">retrieved</span> <span class="title">from</span> <span class="title">the</span> <span class="title">cache</span> <span class="title">during</span> <span class="title">offline</span> <span class="title">mode</span>. <span class="title">The</span> <span class="title">offline</span> <span class="title">mode</span> <span class="title">never</span> <span class="title">validates</span> <span class="title">any</span> <span class="title">object</span>, <span class="title">see</span></span>
+
+offline_mode in squid.conf file.
+UDP_HIT
+
+A valid copy of the requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span>.</span>
+UDP_MISS
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">is</span> <span class="title">not</span> <span class="title">in</span> <span class="title">this</span> <span class="title">cache</span>.</span>
+UDP_DENIED
+
+Access was denied <span class="keyword">for</span> <span class="keyword">this</span> request.
+UDP_INVALID
+
+An invalid request was received.
+UDP_MISS_NOFETCH
+
+During “-Y” startup, or during frequent failures, a cache in hit only mode will <span class="keyword">return</span> either UDP_HIT or <span class="keyword">this</span> code.
+
+Neighbours will thus only fetch hits.
+NONE
+
+Seen <span class="keyword">with</span> errors and cachemgr requests.
+
+The following codes are no longer available in Squid-<span class="number">2</span>:
+
+ERR_*
+
+Errors are now contained in the status code.
+TCP_CLIENT_REFRESH
+
+See: TCP_CLIENT_REFRESH_MISS.
+TCP_SWAPFAIL
+
+See: TCP_SWAPFAIL_MISS.
+TCP_IMS_MISS
+
+Deleted, TCP_IMS_HIT used instead.
+UDP_HIT_OBJ
+
+Hit objects are no longer available.
+UDP_RELOADING
+
+See: UDP_MISS_NOFETCH.
+
+后面找到了中文版，补充全一些：
+access.log结果编码
+
+相应于HTTP请求，下列标签可能出现在access.log文件的第四个域。
+
+TCP_HIT
+Squid发现请求资源的貌似新鲜的拷贝，并将其立即发送到客户端。
+
+TCP_MISS
+Squid没有请求资源的cache拷贝。
+
+TCP_REFRESH_HIT
+Squid发现请求资源的貌似陈旧的拷贝，并发送确认请求到原始服务器。原始服务器返回<span class="number">304</span>（未修改）响应，指示squid的拷贝仍旧是新鲜的。
+
+TCP_REF_FAIL_HIT
+Squid发现请求资源的貌似陈旧的拷贝，并发送确认请求到原始服务器。然而，原始服务器响应失败，或者返回的响应Squid不能理解。在此情形下，squid发送现有cache拷贝（很可能是陈旧的）到客户端。
+
+TCP_REFRESH_MISS
+Squid发现请求资源的貌似陈旧的拷贝，并发送确认请求到原始服务器。原始服务器响应新的内容，指示这个cache拷贝确实是陈旧的。
+
+TCP_CLIENT_REFRESH_MISS
+Squid发现了请求资源的拷贝，但客户端的请求包含了Cache-Control: no-cache指令。Squid转发客户端的请求到原始服务器，强迫cache确认。
+
+TCP_IMS_HIT
+客户端发送确认请求，Squid发现更近来的、貌似新鲜的请求资源的拷贝。Squid发送更新的内容到客户端，而不联系原始服务器。
+
+TCP_SWAPFAIL_MISS
+Squid发现请求资源的有效拷贝，但从磁盘装载它失败。这时squid发送请求到原始服务器，就如同这是个cache丢失一样。
+
+TCP_NEGATIVE_HIT
+在对原始服务器的请求导致HTTP错误时，Squid也会cache这个响应。在短时间内对这些资源的重复请求，导致了否命中。negative_ttl指令控制这些错误被cache的时间数量。请注意这些错误只在内存cache，不会写往磁盘。下列HTTP状态码可能导致否定cache（也遵循于其他约束）： <span class="number">204</span>, <span class="number">305</span>, <span class="number">400</span>, <span class="number">403</span>, <span class="number">404</span>, <span class="number">405</span>, <span class="number">414</span>, <span class="number">500</span>, <span class="number">501</span>, <span class="number">502</span>, <span class="number">503</span>, <span class="number">504</span>。
+
+TCP_MEM_HIT
+Squid在内存cache里发现请求资源的有效拷贝，并将其立即发送到客户端。注意这点并非精确的呈现了所有从内存服务的响应。例如，某些cache在内存里，但要求确认的响应，会以TCP_REFRESH_HIT, TCP_REFRESH_MISS等形式记录。
+
+TCP_DENIED
+因为http_access或http_reply_access规则，客户端的请求被拒绝了。注意被http_access拒绝的请求在第<span class="number">9</span>域的值是NONE/-，然而被http_reply_access拒绝的请求，在相应地方有一个有效值。
+
+TCP_OFFLINE_HIT
+当offline_mode激活时，Squid对任何cache响应返回cache命中，而不用考虑它的新鲜程度。
+
+TCP_REDIRECT
+重定向程序告诉Squid产生一个HTTP重定向到新的URI（见<span class="number">11.1</span>节）。正常的，Squid不会记录这些重定向。假如要这样做，必须在编译squid前，手工定义LOG_TCP_REDIRECTS预处理指令。
+
+NONE
+无分类的结果用于特定错误，例如无效主机名。
+
+相应于ICP查询，下列标签可能出现在access.log文件的第四域。
+
+UDP_HIT
+Squid在cache里发现请求资源的貌似新鲜的拷贝。
+
+UDP_MISS
+Squid没有在cache里发现请求资源的貌似新鲜的拷贝。假如同一目标通过HTTP请求，就可能是个cache丢失。请对比UDP_MISS_NOFETCH。
+
+UDP_MISS_NOFETCH
+跟UDP_MISS类似，不同的是这里也指示了Squid不愿去处理相应的HTTP请求。假如使用了-Y命令行选项，Squid在启动并编译其内存索引时，会返回这个标签而不是UDP_MISS。
+
+UDP_DENIED
+因为icp_access规则，ICP查询被拒绝。假如超过<span class="number">95</span>%的到某客户端的ICP响应是UDP_DENIED，并且客户端数据库激活了（见附录A），Squid在<span class="number">1</span>小时内，停止发送任何ICP响应到该客户端。若这点发生，你也可在cache.log里见到一个警告。
+
+UDP_INVALID
+Squid接受到无效查询（例如截断的消息、无效协议版本、URI里的空格等）。Squid发送UDP_INVALID响应到客户端。
+
+<span class="number">13.2</span><span class="number">.2</span> HTTP响应状态码
+
+Table <span class="number">13</span>-<span class="number">1</span>列出了数字HTTP响应CODE和理由短句。注意Squid和其他HTTP客户端仅仅关注这些数字值。理由短句是纯解释性的，不会影响响应的意义。对每个状态码，也提供了一个到RFC <span class="number">2616</span>的具体节的索引。注意状态码<span class="number">0</span>和<span class="number">600</span>是squid使用的非标准的值，不会在RFC里提到。
+Table <span class="number">13</span>-<span class="number">1</span>\. HTTP response status codes
+
+Code    Reason phrase    RFC <span class="number">2616</span> section
+<span class="number">0</span>    No Response Received (Squid-specific)    N/A
+<span class="number">1</span>xx    Informational    <span class="number">10.1</span>
+<span class="number">100</span>    Continue    <span class="number">10.1</span><span class="number">.1</span>
+<span class="number">101</span>    Switching Protocols    <span class="number">10.1</span><span class="number">.2</span>
+<span class="number">2</span>xx    Successful    <span class="number">10.2</span>
+<span class="number">200</span>    OK    <span class="number">10.2</span><span class="number">.1</span>
+<span class="number">201</span>    Created    <span class="number">10.2</span><span class="number">.2</span>
+<span class="number">202</span>    Accepted    <span class="number">10.2</span><span class="number">.3</span>
+<span class="number">203</span>    Non-Authoritative Information    <span class="number">10.2</span><span class="number">.4</span>
+<span class="number">204</span>    No Content    <span class="number">10.2</span><span class="number">.5</span>
+<span class="number">205</span>    Reset Content    <span class="number">10.2</span><span class="number">.6</span>
+<span class="number">206</span>    Partial Content    <span class="number">10.2</span><span class="number">.7</span>
+<span class="number">3</span>xx    Redirection    <span class="number">10.3</span>
+<span class="number">300</span>    Multiple Choices    <span class="number">10.3</span><span class="number">.1</span>
+<span class="number">301</span>    Moved Permanently    <span class="number">10.3</span><span class="number">.2</span>
+<span class="number">302</span>    Found    <span class="number">10.3</span><span class="number">.3</span>
+<span class="number">303</span>    See Other    <span class="number">10.3</span><span class="number">.4</span>
+<span class="number">304</span>    Not Modified    <span class="number">10.3</span><span class="number">.5</span>
+<span class="number">305</span>    Use Proxy    <span class="number">10.3</span><span class="number">.6</span>
+<span class="number">306</span>    (Unused)    <span class="number">10.3</span><span class="number">.7</span>
+<span class="number">307</span>    Temporary Redirect    <span class="number">10.3</span><span class="number">.8</span>
+<span class="number">4</span>xx    Client Error    <span class="number">10.4</span>
+<span class="number">400</span>    Bad Request    <span class="number">10.4</span><span class="number">.1</span>
+<span class="number">401</span>    Unauthorized    <span class="number">10.4</span><span class="number">.2</span>
+<span class="number">402</span>    Payment Required    <span class="number">10.4</span><span class="number">.3</span>
+<span class="number">403</span>    Forbidden    <span class="number">10.4</span><span class="number">.4</span>
+<span class="number">404</span>    Not Found    <span class="number">10.4</span><span class="number">.5</span>
+<span class="number">405</span>    Method Not Allowed    <span class="number">10.4</span><span class="number">.6</span>
+<span class="number">406</span>    Not Acceptable    <span class="number">10.4</span><span class="number">.7</span>
+<span class="number">407</span>    Proxy Authentication Required    <span class="number">10.4</span><span class="number">.8</span>
+<span class="number">408</span>    Request Timeout    <span class="number">10.4</span><span class="number">.9</span>
+<span class="number">409</span>    Conflict    <span class="number">10.4</span><span class="number">.10</span>
+<span class="number">410</span>    Gone    <span class="number">10.4</span><span class="number">.11</span>
+<span class="number">411</span>    Length Required    <span class="number">10.4</span><span class="number">.12</span>
+<span class="number">412</span>    Precondition Failed    <span class="number">10.4</span><span class="number">.13</span>
+<span class="number">413</span>    Request Entity Too Large    <span class="number">10.4</span><span class="number">.14</span>
+<span class="number">414</span>    Request-URI Too Long    <span class="number">10.4</span><span class="number">.15</span>
+<span class="number">415</span>    Unsupported Media Type    <span class="number">10.4</span><span class="number">.16</span>
+<span class="number">416</span>    Requested Range Not Satisfiable    <span class="number">10.4</span><span class="number">.17</span>
+<span class="number">417</span>    Expectation Failed    <span class="number">10.4</span><span class="number">.18</span>
+<span class="number">5</span>xx    Server Error    <span class="number">10.5</span>
+<span class="number">500</span>    Internal Server Error    <span class="number">10.5</span><span class="number">.1</span>
+<span class="number">501</span>    Not Implemented    <span class="number">10.5</span><span class="number">.2</span>
+<span class="number">502</span>    Bad Gateway    <span class="number">10.5</span><span class="number">.3</span>
+<span class="number">503</span>    Service Unavailable    <span class="number">10.5</span><span class="number">.4</span>
+<span class="number">504</span>    Gateway Timeout    <span class="number">10.5</span><span class="number">.5</span>
+<span class="number">505</span>    HTTP Version Not Supported    <span class="number">10.5</span><span class="number">.6</span>
+<span class="number">6</span>xx    Proxy Error    N/A
+<span class="number">600</span>    Unparseable Response Headers (Squid-specific)    N/A
+假如Squid从原始服务器没有接受到任何响应，你可在access.log里看到状态码<span class="number">0</span>。假如Squid接受到的响应没有包含HTTP头部，就会出现状态码<span class="number">600</span>。在少数情况下，某些原始服务器仅发送响应body，而忽略了任何头部。
+
+<span class="number">13.2</span><span class="number">.3</span> access.log对端编码
+
+下列编码可能出现在access.log的第<span class="number">9</span>域。请参考<span class="number">10.10</span>节关于Squid如何对cache丢失情况，选择有效的下一跳。
+
+NONE
+这指明Squid对本次请求，不会与任何其他服务器（邻居或原始服务器）通信。它通常与cache命中、拒绝请求、cache管理请求、错误、和所有的ICP查询这些类型联合出现。
+
+DIRECT
+Squid直接转发请求到原始服务器。该域的第<span class="number">2</span>半部分显示原始服务器的IP地址，或主机名–假如禁止了log_ip_on_direct。
+
+SIBLING_HIT
+在姐妹cache返回ICP或HTCP命中后，Squid发送请求到姐妹cache。
+
+PARENT_HIT
+在父cache返回ICP或HTCP命中后，Squid发送请求到父cache。
+
+DEFAULT_PARENT
+Squid选择该父cache，因为其在squid.conf的cache_peer行里被标志为<span class="keyword">default</span>。
+
+FIRST_UP_PARENT
+Squid转发请求到该父cache，因为它是位于已知活跃列表里的第一个父cache。
+
+FIRST_PARENT_MISS
+Squid转发请求到该父cache，它第一个响应ICP/HTCP丢失消息。换句话说，对这个特殊的ICP/HTCP查询，在这个特殊时刻，被选中的父cache有最佳的往返时间（RTT）。注意标准RTT可能被人工矫正过，取决于cache_peer指令的weight选项。
+
+CLOSEST_PARENT_MISS
+Squid选择该父cache，因为它报告到原始服务器的RTT最低。这点仅在<span class="number">2</span>个cache都激活了netdb，并且原始服务器（或在同一子网内的其他server）返回ICMP ping消息。
+
+CLOSEST_PARENT
+这点类似CLOSEST_PARENT_MISS，除了RTT计算不是来自ICP/HTCP响应消息外。代替的，它们来自Squid保留的更老的计算方式，例如netdb交换功能。
+
+CLOSEST_DIRECT
+Squid基于netdb算法，转发请求到原始服务器。这点在满足下述任何条件时发生：
+
+<span class="number">1</span>）在Squid和原始服务器之间的RTT小于配置的minimum_direct_rtt值。
+<span class="number">2</span>）在Squid和原始服务器之间的标准路由跳数少于配置的minimum_direct_hops值。
+<span class="number">3</span>）在ICP/HTCP响应里返回的RTT值，指示Squid离原始服务器近于任何其他邻居。
+ROUNDROBIN_PARENT
+Squid转发请求到该父cache，因为设置了round-robin选项，并且它有最低的使用计数器。
+
+CD_PARENT_HIT
+Squid基于cache摘要算法（见<span class="number">10.7</span>节）转发请求到该父cache。
+
+CD_SIBLING_HIT
+Squid基于cache摘要算法转发请求到该姐妹cache。
+
+CARP
+Squid选择该父cache，基于cache数组路由协议算法（见<span class="number">10.9</span>节）。
+
+ANY_PARENT
+作为最后的手段，Squid选择该父cache，因为没有其他方法能选择可行的下一跳。
+
+注意大部分上述编码可能以TIMEOUT_开头，这表明在等待ICP/HTCP响应时发生超时。例如：
+
+<span class="number">1066038165.382</span>    <span class="number">345</span> <span class="number">193.233</span><span class="number">.46</span><span class="number">.21</span> TCP_MISS/<span class="number">200</span> <span class="number">2836</span>          GET http:<span class="comment">//www.caida.org/home/../images/home.jpg          TIMEOUT_CLOSEST_DIRECT/213.219.122.19 image/jpeg</span>
+可使用icp_query_timeout指令来调整超时。
+
+事例：
+&lt;pre&gt;` cat access.log|gawk ‘{print $<span class="number">11</span>}’|sort|uniq -c|sort -nr
+  <span class="number">15508</span> TCP_NEGATIVE_HIT:NONE 在对原始服务器的请求导致HTTP错误时，Squid也会cache这个响应。在短时间内对这些资源的重复请求，导致了否命中。
+   <span class="number">8212</span> TCP_IMS_HIT:NONE  客户端发送确认请求，Squid发现更近来的、貌似新鲜的请求资源的拷贝。Squid发送更新的内容到客户端，而不联系原始服务器。（这指明Squid对本次请求，不会与任何其他服务器（邻居或原始服务器）通信。）
+   <span class="number">3771</span> TCP_HIT:NONE Squid发现请求资源的貌似新鲜的拷贝，并将其立即发送到客户端。
+   <span class="number">3468</span> TCP_MISS:DIRECT Squid没有请求资源的cache拷贝。（Squid直接转发请求到原始服务器）
+   <span class="number">2379</span> TCP_MEM_HIT:NONE  从内存的响应
+   <span class="number">1876</span> TCP_DENIED:NONE 因为http_access或http_reply_access规则，客户端的请求被拒绝了   全是错误地址链接
+   <span class="number">1732</span> TCP_REFRESH_HIT:DIRECT Squid发现请求资源的貌似陈旧的拷贝，并发送确认请求到原始服务器。原始服务器返回<span class="number">304</span>（未修改）响应，指示squid的拷贝仍旧是新鲜的。（Squid直接转发请求到原始服务器）
+    <span class="number">708</span> TCP_CLIENT_REFRESH_MISS:DIRECT Squid发现了请求资源的拷贝，但客户端的请求包含了Cache-Control: no-cache指令。Squid转发客户端的请求到原始服务器，强迫cache确认。 （Squid直接转发请求到原始服务器）
+      <span class="number">7</span> TCP_MISS:NONE Squid没有请求资源的cache拷贝。（这指明Squid对本次请求，不会与任何其他服务器（邻居或原始服务器）通信）
+</pre></figure></code></pre>
+<p> 原文地址 h<a href="http://callaly.net/blog/archives/category/%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF/ttp://">http://callaly.net/blog/archives/category/%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF/ttp://</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T09:57:32.000Z"><a href="/2010/12/19/windows7-winsxs/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/windows7-winsxs/">给Windows7减肥如何将winsxs放到其他硬盘分区下</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>不知道大家注意过没有，在Vista和Windows 7系统盘的Windows目录下，有一个名为winscs的文件夹，对于整个Windows目录来说，这个文件夹就占用了其一半多的体积（近3GB）不但如此，随着系统使用时间的不断延长，winscs文件夹的体积还会变得更大，我的现在已经4G多了，这真是一块“赘肉”呀！想想看吧！对于系统盘空间本来就不很富裕的朋友来说，这快“赘肉”难免会拖慢系统的运行速度。如果仅仅是因为这个原因，就对硬盘重新分区以让系统盘的空间变得更大，接着重装系统，这也实在是太麻烦了！其实，我们可以采取一个更简单的方法，将winscs这一块“赘肉”扔到其他硬盘分区下，为系统盘腾出更大的未用空间从而让系统跑得更快。下面，笔者就以 Windows 7为例子，给大家介绍一下具体的操作步骤。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/12/19/windows7-winsxs/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T09:54:27.000Z"><a href="/2010/12/19/sedline/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/sedline/">SED单行脚本快速参考</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>SED单行脚本快速参考（Unix 流编辑器） 2005年12月29日
+英文标题：USEFUL ONE-LINE SCRIPTS FOR SED (Unix stream editor) 原标题：HANDY ONE-LINERS FOR SED (Unix stream editor)
+整理：Eric Pement - 电邮：pemente[at]northpark[dot]edu 版本5.5 译者：Joe Hong - 电邮：hq00e[at]126[dot]com
+在以下地址可找到本文档的最新（英文）版本：
+<a href="http://sed.sourceforge.net/sed1line.txt">http://sed.sourceforge.net/sed1line.txt</a> <a href="http://www.pement.org/sed/sed1line.txt">http://www.pement.org/sed/sed1line.txt</a>
+中文 - <a href="http://sed.sourceforge.net/sed1line_zh-CN.html">http://sed.sourceforge.net/sed1line_zh-CN.html</a></p>
+<p>文本间隔：</p>
+<h1>在每一行后面增加一空行</h1>
+<pre><code><figure class="highlight"><pre><span class="xml">sed G `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将原来的所有空行删除并在每一行后面增加一空行。</span><span class="xml">
+</span><span class="comment"># 这样在输出的文本中每一行后面将有且只有一空行。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/^$/d;G' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 在每一行后面增加两行空行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 'G;G' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+<span class="comment">&lt;!--more--&gt;</span>
+
+</span><span class="comment"># 将第一个脚本所产生的所有空行删除（即删除所有偶数行）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 'n;d' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 在匹配式样“regex”的行之前插入一空行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/regex/{x;p;x;}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 在匹配式样“regex”的行之后插入一空行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/regex/G' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 在匹配式样“regex”的行之前和之后各插入一空行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/regex/{x;p;x;G;}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+编号：
+--------
+</span><span class="comment"># 为文件中的每一行进行编号（简单的左对齐方式）。这里使用了“制表符”</span><span class="xml">
+</span><span class="comment"># （tab，见本文末尾关于'\t'的用法的描述）而不是空格来对齐边缘。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed = filename | sed 'N;s/\n/\t/' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 对文件中的所有行编号（行号在左，文字右端对齐）。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed = filename | sed 'N; s/^/ /; s/ *\(.\{</span><span class="number">6</span><span class="xml">,\}\)\n/\</span><span class="number">1</span><span class="xml"> /' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 对文件中的所有行编号，但只显示非空白行的行号。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/./=' filename | sed '/./N; s/\n/ /' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 计算行数 （模拟 "wc -l"）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '$=' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+文本转换和替代：
+--------
+</span><span class="comment"># Unix环境：转换DOS的新行符（CR/LF）为Unix格式。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/.$//' # 假设所有行以CR/LF结束
+sed 's/</span><span class="keyword">^M</span><span class="xml">$//' # 在bash/tcsh中，将按Ctrl-M改为按Ctrl-V
+sed 's/\x0D$//' # ssed、gsed </span><span class="number">3.02</span><span class="xml"></span><span class="number">.80</span><span class="xml">，及更高版本 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># Unix环境：转换Unix的新行符（LF）为DOS格式。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed "s/$/`echo -e \\\r`/" # 在ksh下所使用的命令
+sed 's/$'"/`echo \\\r`/" # 在bash下所使用的命令
+sed "s/$/`echo \\\r`/" # 在zsh下所使用的命令
+sed 's/$/\r/' # gsed </span><span class="number">3.02</span><span class="xml"></span><span class="number">.80</span><span class="xml"> 及更高版本 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># DOS环境：转换Unix新行符（LF）为DOS格式。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed "s/$//" # 方法 </span><span class="number">1</span><span class="xml">
+sed -n p # 方法 </span><span class="number">2</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># DOS环境：转换DOS新行符（CR/LF）为Unix格式。</span><span class="xml">
+</span><span class="comment"># 下面的脚本只对UnxUtils sed 4.0.7 及更高版本有效。要识别UnxUtils版本的</span><span class="xml">
+</span><span class="comment"># sed可以通过其特有的“--text”选项。你可以使用帮助选项（“--help”）看</span><span class="xml">
+</span><span class="comment"># 其中有无一个“--text”项以此来判断所使用的是否是UnxUtils版本。其它DOS</span><span class="xml">
+</span><span class="comment"># 版本的的sed则无法进行这一转换。但可以用“tr”来实现这一转换。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed "s/\r//" infile &amp;gt;outfile # UnxUtils sed v4</span><span class="number">.0</span><span class="xml"></span><span class="number">.7</span><span class="xml"> 或更高版本
+tr -d \r outfile # GNU tr </span><span class="number">1.22</span><span class="xml"> 或更高版本 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将每一行前导的“空白字符”（空格，制表符）删除</span><span class="xml">
+</span><span class="comment"># 使之左对齐</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/^[ \t]*//' # 见本文末尾关于'\t'用法的描述 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将每一行拖尾的“空白字符”（空格，制表符）删除</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/[ \t]*$//' # 见本文末尾关于'\t'用法的描述 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将每一行中的前导和拖尾的空白字符删除</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/^[ \t]*//;s/[ \t]*$//' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 在每一行开头处插入5个空格（使全文向右移动5个字符的位置）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/^/ /' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 以79个字符为宽度，将所有文本右对齐</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e :a -e 's/</span><span class="keyword">^.</span><span class="xml">\{</span><span class="number">1</span><span class="xml">,</span><span class="number">78</span><span class="xml">\}$/ &amp;amp;/;ta' # </span><span class="number">78</span><span class="xml">个字符外加最后的一个空格 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 以79个字符为宽度，使所有文本居中。在方法1中，为了让文本居中每一行的前</span><span class="xml">
+</span><span class="comment"># 头和后头都填充了空格。 在方法2中，在居中文本的过程中只在文本的前面填充</span><span class="xml">
+</span><span class="comment"># 空格，并且最终这些空格将有一半会被删除。此外每一行的后头并未填充空格。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e :a -e 's/</span><span class="keyword">^.</span><span class="xml">\{</span><span class="number">1</span><span class="xml">,</span><span class="number">77</span><span class="xml">\}$/ &amp;amp; /;ta' # 方法</span><span class="number">1</span><span class="xml">
+sed -e :a -e 's/</span><span class="keyword">^.</span><span class="xml">\{</span><span class="number">1</span><span class="xml">,</span><span class="number">77</span><span class="xml">\}$/ &amp;amp;/;ta' -e 's/\( *\)\</span><span class="number">1</span><span class="xml">/\</span><span class="number">1</span><span class="xml">/' # 方法</span><span class="number">2</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 在每一行中查找字串“foo”，并将找到的“foo”替换为“bar”</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/foo/bar/' # 只替换每一行中的第一个“foo”字串
+sed 's/foo/bar/</span><span class="number">4</span><span class="xml">' # 只替换每一行中的第四个“foo”字串
+sed 's/foo/bar/g' # 将每一行中的所有“foo”都换成“bar”
+sed 's/\(.*\)foo\(.*foo\)/\</span><span class="number">1</span><span class="xml">bar\</span><span class="number">2</span><span class="xml">/' # 替换倒数第二个“foo”
+sed 's/\(.*\)foo/\</span><span class="number">1</span><span class="xml">bar/' # 替换最后一个“foo” `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 只在行中出现字串“baz”的情况下将“foo”替换成“bar”</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/baz/s/foo/bar/g' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将“foo”替换成“bar”，并且只在行中未出现字串“baz”的情况下替换</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/baz/!s/foo/bar/g' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 不管是“scarlet”“ruby”还是“puce”，一律换成“red”</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/scarlet/red/g;s/ruby/red/g;s/puce/red/g' #对多数的sed都有效
+gsed 's/scarlet\|ruby\|puce/red/g' # 只对GNU sed有效 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 倒置所有行，第一行成为最后一行，依次类推（模拟“tac”）。</span><span class="xml">
+</span><span class="comment"># 由于某些原因，使用下面命令时HHsed v1.5会将文件中的空行删除</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '</span><span class="number">1</span><span class="xml">!G;h;$!d' # 方法</span><span class="number">1</span><span class="xml">
+sed -n '</span><span class="number">1</span><span class="xml">!G;h;</span><span class="variable">$p</span><span class="xml">' # 方法</span><span class="number">2</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将行中的字符逆序排列，第一个字成为最后一字，……（模拟“rev”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/\n/!G;s/\(.\)\(.*\n\)/&amp;amp;\</span><span class="number">2</span><span class="xml">\</span><span class="number">1</span><span class="xml">/;//D;s/.//' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将每两行连接成一行（类似“paste”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '$!N;s/\n/ /' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 如果当前行以反斜杠“\”结束，则将下一行并到当前行末尾</span><span class="xml">
+</span><span class="comment"># 并去掉原来行尾的反斜杠</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e :a -e '/\\$/N; s/\\\n//; ta' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 如果当前行以等号开头，将当前行并到上一行末尾</span><span class="xml">
+</span><span class="comment"># 并以单个空格代替原来行头的“=”</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e :a -e '$!N;s/\n=/ /;ta' -e 'P;D' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 为数字字串增加逗号分隔符号，将“1234567”改为“1,234,567”</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gsed ':a;s/\B[</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]\{</span><span class="number">3</span><span class="xml">\}\&amp;gt;/,&amp;amp;/;ta' # GNU sed
+sed -e :a -e 's/\(.*[</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]\)\([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]\{</span><span class="number">3</span><span class="xml">\}\)/\</span><span class="number">1</span><span class="xml">,\</span><span class="number">2</span><span class="xml">/;ta' # 其他sed `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 为带有小数点和负号的数值增加逗号分隔符（GNU sed）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gsed -r ':a;s/(^|[</span><span class="keyword">^0-9.</span><span class="xml">])([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]+)([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]{</span><span class="number">3</span><span class="xml">})/\</span><span class="number">1</span><span class="xml">\</span><span class="number">2</span><span class="xml">,\</span><span class="number">3</span><span class="xml">/g;ta' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 在每5行后增加一空白行 （在第5，10，15，20，等行后增加一空白行）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gsed '</span><span class="number">0</span><span class="xml">~</span><span class="number">5</span><span class="xml">G' # 只对GNU sed有效
+sed 'n;n;n;n;G;' # 其他sed `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+选择性地显示特定行：
+--------
+</span><span class="comment"># 显示文件中的前10行 （模拟“head”的行为）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed </span><span class="number">10</span><span class="xml">q `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示文件中的第一行 （模拟“head -1”命令）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed q `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示文件中的最后10行 （模拟“tail”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e :a -e '</span><span class="variable">$q</span><span class="xml">;N;</span><span class="number">11</span><span class="xml">,</span><span class="variable">$D</span><span class="xml">;ba' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示文件中的最后2行（模拟“tail -2”命令）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '$!N;$!D' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示文件中的最后一行（模拟“tail -1”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '$!d' # 方法</span><span class="number">1</span><span class="xml">
+sed -n '</span><span class="variable">$p</span><span class="xml">' # 方法</span><span class="number">2</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示文件中的倒数第二行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e '$!{h;d;}' -e x # 当文件中只有一行时，输入空行
+sed -e '</span><span class="number">1</span><span class="xml">{</span><span class="variable">$q</span><span class="xml">;}' -e '$!{h;d;}' -e x # 当文件中只有一行时，显示该行
+sed -e '</span><span class="number">1</span><span class="xml">{</span><span class="variable">$d</span><span class="xml">;}' -e '$!{h;d;}' -e x # 当文件中只有一行时，不输出 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 只显示匹配正则表达式的行（模拟“grep”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/regexp/p' # 方法</span><span class="number">1</span><span class="xml">
+sed '/regexp/!d' # 方法</span><span class="number">2</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 只显示“不”匹配正则表达式的行（模拟“grep -v”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/regexp/!p' # 方法</span><span class="number">1</span><span class="xml">，与前面的命令相对应
+sed '/regexp/d' # 方法</span><span class="number">2</span><span class="xml">，类似的语法 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 查找“regexp”并将匹配行的上一行显示出来，但并不显示匹配行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/regexp/{g;</span><span class="number">1</span><span class="xml">!p;};h' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 查找“regexp”并将匹配行的下一行显示出来，但并不显示匹配行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/regexp/{n;p;}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含“regexp”的行及其前后行，并在第一行之前加上“regexp”所</span><span class="xml">
+</span><span class="comment"># 在行的行号 （类似“grep -A1 -B1”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n -e '/regexp/{=;x;</span><span class="number">1</span><span class="xml">!p;g;$!N;p;D;}' -e h `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含“AAA”、“BBB”或“CCC”的行（任意次序）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/AAA/!d; /BBB/!d; /CCC/!d' # 字串的次序不影响结果 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含“AAA”、“BBB”和“CCC”的行（固定次序）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/AAA.*BBB.*CCC/!d' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含“AAA”“BBB”或“CCC”的行 （模拟“egrep”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e '/AAA/b' -e '/BBB/b' -e '/CCC/b' -e d # 多数sed
+gsed '/AAA\|BBB\|CCC/!d' # 对GNU sed有效 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含“AAA”的段落 （段落间以空行分隔）</span><span class="xml">
+</span><span class="comment"># HHsed v1.5 必须在“x;”后加入“G;”，接下来的3个脚本都是这样</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e '/./{H;$!d;}' -e 'x;/AAA/!d;' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含“AAA”“BBB”和“CCC”三个字串的段落 （任意次序）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e '/./{H;$!d;}' -e 'x;/AAA/!d;/BBB/!d;/CCC/!d' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含“AAA”、“BBB”、“CCC”三者中任一字串的段落 （任意次序）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e '/./{H;$!d;}' -e 'x;/AAA/b' -e '/BBB/b' -e '/CCC/b' -e d
+gsed '/./{H;$!d;};x;/AAA\|BBB\|CCC/b;d' # 只对GNU sed有效 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含65个或以上字符的行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/</span><span class="keyword">^.</span><span class="xml">\{</span><span class="number">65</span><span class="xml">\}/p' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含65个以下字符的行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/</span><span class="keyword">^.</span><span class="xml">\{</span><span class="number">65</span><span class="xml">\}/!p' # 方法</span><span class="number">1</span><span class="xml">，与上面的脚本相对应
+sed '/</span><span class="keyword">^.</span><span class="xml">\{</span><span class="number">65</span><span class="xml">\}/d' # 方法</span><span class="number">2</span><span class="xml">，更简便一点的方法 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示部分文本——从包含正则表达式的行开始到最后一行结束</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/regexp/,</span><span class="variable">$p</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示部分文本——指定行号范围（从第8至第12行，含8和12行）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '</span><span class="number">8</span><span class="xml">,</span><span class="number">12</span><span class="xml">p' # 方法</span><span class="number">1</span><span class="xml">
+sed '</span><span class="number">8</span><span class="xml">,</span><span class="number">12</span><span class="xml">!d' # 方法</span><span class="number">2</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示第52行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '</span><span class="number">52</span><span class="xml">p' # 方法</span><span class="number">1</span><span class="xml">
+sed '</span><span class="number">52</span><span class="xml">!d' # 方法</span><span class="number">2</span><span class="xml">
+sed '</span><span class="number">52</span><span class="xml">q;d' # 方法</span><span class="number">3</span><span class="xml">, 处理大文件时更有效率 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 从第3行开始，每7行显示一次</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gsed -n '</span><span class="number">3</span><span class="xml">~</span><span class="number">7</span><span class="xml">p' # 只对GNU sed有效
+sed -n '</span><span class="number">3</span><span class="xml">,</span><span class="variable">${p</span><span class="xml">;n;n;n;n;n;n;}' # 其他sed `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示两个正则表达式之间的文本（包含）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/Iowa/,/Montana/p' # 区分大小写方式 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+选择性地删除特定行：
+--------
+</span><span class="comment"># 显示通篇文档，除了两个正则表达式之间的内容</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/Iowa/,/Montana/d' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件中相邻的重复行（模拟“uniq”）</span><span class="xml">
+</span><span class="comment"># 只保留重复行中的第一行，其他行删除</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '$!N; /^\(.*\)\n\</span><span class="number">1</span><span class="xml">$/!P; D' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件中的重复行，不管有无相邻。注意hold space所能支持的缓存</span><span class="xml">
+</span><span class="comment"># 大小，或者使用GNU sed。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n 'G; s/\n/&amp;amp;&amp;amp;/; /^\([ -~]*\n\).*\n\</span><span class="number">1</span><span class="xml">/d; s/\n//; h; P' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除除重复行外的所有行（模拟“uniq -d”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '$!N; s/^\(.*\)\n\</span><span class="number">1</span><span class="xml">$/\</span><span class="number">1</span><span class="xml">/; t; D' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件中开头的10行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '</span><span class="number">1</span><span class="xml">,</span><span class="number">10</span><span class="xml">d' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件中的最后一行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '</span><span class="variable">$d</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件中的最后两行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 'N;$!P;$!D;</span><span class="variable">$d</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件中的最后10行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e :a -e '</span><span class="variable">$d</span><span class="xml">;N;</span><span class="number">2</span><span class="xml">,</span><span class="number">10</span><span class="xml">ba' -e 'P;D' # 方法</span><span class="number">1</span><span class="xml">
+sed -n -e :a -e '</span><span class="number">1</span><span class="xml">,</span><span class="number">10</span><span class="xml">!{P;N;D;};N;ba' # 方法</span><span class="number">2</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除8的倍数行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gsed '</span><span class="number">0</span><span class="xml">~</span><span class="number">8</span><span class="xml">d' # 只对GNU sed有效
+sed 'n;n;n;n;n;n;n;d;' # 其他sed `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除匹配式样的行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/pattern/d' # 删除含pattern的行。当然pattern `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 可以换成任何有效的正则表达式</span><span class="xml">
+</span><span class="comment"># 删除文件中的所有空行（与“grep '.' ”效果相同）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/^$/d' # 方法</span><span class="number">1</span><span class="xml">
+sed '/./!d' # 方法</span><span class="number">2</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 只保留多个相邻空行的第一行。并且删除文件顶部和尾部的空行。</span><span class="xml">
+</span><span class="comment"># （模拟“cat -s”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/./,/^$/!d' #方法</span><span class="number">1</span><span class="xml">，删除文件顶部的空行，允许尾部保留一空行
+sed '/^$/N;/\n$/D' #方法</span><span class="number">2</span><span class="xml">，允许顶部保留一空行，尾部不留空行 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 只保留多个相邻空行的前两行。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/^$/N;/\n$/N;//D' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件顶部的所有空行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/./,$!d' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件尾部的所有空行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e :a -e '/^\n*$/{</span><span class="variable">$d</span><span class="xml">;N;ba' -e '}' # 对所有sed有效
+sed -e :a -e '/^\n*$/N;/\n$/ba' # 同上，但只对 gsed </span><span class="number">3.02</span><span class="xml">.*有效 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除每个段落的最后一行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/^$/{p;h;};/./{x;/./p;}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+特殊应用：
+--------
+</span><span class="comment"># 移除手册页（man page）中的nroff标记。在Unix System V或bash shell下使</span><span class="xml">
+</span><span class="comment"># 用'echo'命令时可能需要加上 -e 选项。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed "s/.`echo \\\b`//g" # 外层的双括号是必须的（Unix环境）
+sed 's/.</span><span class="keyword">^H</span><span class="xml">//g' # 在bash或tcsh中, 按 Ctrl-V 再按 Ctrl-H
+sed 's/.\x08//g' # sed </span><span class="number">1.5</span><span class="xml">，GNU sed，ssed所使用的十六进制的表示方法 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 提取新闻组或 e-mail 的邮件头</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/^$/q' # 删除第一行空行后的所有内容 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 提取新闻组或 e-mail 的正文部分</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '</span><span class="number">1</span><span class="xml">,/^$/d' # 删除第一行空行之前的所有内容 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 从邮件头提取“Subject”（标题栏字段），并移除开头的“Subject:”字样</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/</span><span class="keyword">^Subject:</span><span class="xml"> */!d; s///;q' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 从邮件头获得回复地址</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/</span><span class="keyword">^Reply-To:</span><span class="xml">/q; /</span><span class="keyword">^From:</span><span class="xml">/h; /./d;g;q' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 获取邮件地址。在上一个脚本所产生的那一行邮件头的基础上进一步的将非电邮</span><span class="xml">
+</span><span class="comment"># 地址的部分剃除。（见上一脚本）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/ *(.*)//; s/&amp;gt;.*//; s/.*[:&amp;lt;] *//' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 在每一行开头加上一个尖括号和空格（引用信息）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/^/&amp;gt; /' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将每一行开头处的尖括号和空格删除（解除引用）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/^&amp;gt; //' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 移除大部分的HTML标签（包括跨行标签）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e :a -e 's/&amp;lt;[^&amp;gt;]*&amp;gt;//g;/ `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将分成多卷的uuencode文件解码。移除文件头信息，只保留uuencode编码部分。</span><span class="xml">
+</span><span class="comment"># 文件必须以特定顺序传给sed。下面第一种版本的脚本可以直接在命令行下输入；</span><span class="xml">
+</span><span class="comment"># 第二种版本则可以放入一个带执行权限的shell脚本中。（由Rahul Dhesi的一</span><span class="xml">
+</span><span class="comment"># 个脚本修改而来。）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/</span><span class="keyword">^end</span><span class="xml">/,/</span><span class="keyword">^begin</span><span class="xml">/d' file1 file2 ... fileX | uudecode # vers. </span><span class="number">1</span><span class="xml">
+sed '/</span><span class="keyword">^end</span><span class="xml">/,/</span><span class="keyword">^begin</span><span class="xml">/d' "$@" | uudecode # vers. </span><span class="number">2</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将文件中的段落以字母顺序排序。段落间以（一行或多行）空行分隔。GNU sed使用</span><span class="xml">
+</span><span class="comment"># 字元“\v”来表示垂直制表符，这里用它来作为换行符的占位符——当然你也可以</span><span class="xml">
+</span><span class="comment"># 用其他未在文件中使用的字符来代替它。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/./{H;d;};x;s/\n/={NL}=/g' file | sort | sed '</span><span class="number">1</span><span class="xml">s/={NL}=//;s/={NL}=/\n/g'
+gsed '/./{H;d};x;y/\n/\v/' file | sort | sed '</span><span class="number">1</span><span class="xml">s/\v//;y/\v/\n/' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 分别压缩每个.TXT文件，压缩后删除原来的文件并将压缩后的.ZIP文件</span><span class="xml">
+</span><span class="comment"># 命名为与原来相同的名字（只是扩展名不同）。（DOS环境：“dir /b”</span><span class="xml">
+</span><span class="comment"># 显示不带路径的文件名）。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`echo @echo off &amp;gt;zipup.bat
+dir /b *.txt | sed "s/^\(.*\)\.TXT/pkzip -mo \</span><span class="number">1</span><span class="xml"> \</span><span class="number">1.</span><span class="xml">TXT/" &amp;gt;&amp;gt;zipup.bat </span>
+</pre></figure></code></pre>
+<p>使用SED：Sed接受一个或多个编辑命令，并且每读入一行后就依次应用这些命令。
+当读入第一行输入后，sed对其应用所有的命令，然后将结果输出。接着再读入第二
+行输入，对其应用所有的命令……并重复这个过程。上一个例子中sed由标准输入设
+备（即命令解释器，通常是以管道输入的形式）获得输入。在命令行给出一个或多
+个文件名作为参数时，这些文件取代标准输入设备成为sed的输入。sed的输出将被
+送到标准输出（显示器）。因此：
+cat filename | sed &#39;10q&#39; # 使用管道输入
+sed &#39;10q&#39; filename # 同样效果，但不使用管道输入
+sed &#39;10q&#39; filename &gt; newfile # 将输出转移（重定向）到磁盘上
+要了解sed命令的使用说明，包括如何通过脚本文件（而非从命令行）来使用这些命
+令，请参阅《sed &amp; awk》第二版，作者Dale Dougherty和Arnold Robbins
+（O&#39;Reilly，1997；<a href="http://www.ora.com），《UNIX">http://www.ora.com），《UNIX</a> Text Processing》，作者
+Dale Dougherty和Tim O&#39;Reilly（Hayden Books，1987）或者是Mike Arst写的教
+程——压缩包的名称是“U-SEDIT2.ZIP”（在许多站点上都找得到）。要发掘sed
+的潜力，则必须对“正则表达式”有足够的理解。正则表达式的资料可以看
+《Mastering Regular Expressions》作者Jeffrey Friedl（O&#39;reilly 1997）。
+Unix系统所提供的手册页（“man”）也会有所帮助（试一下这些命令
+“man sed”、“man regexp”，或者看“man ed”中关于正则表达式的部分），但
+手册提供的信息比较“抽象”——这也是它一直为人所诟病的。不过，它本来就不
+是用来教初学者如何使用sed或正则表达式的教材，而只是为那些熟悉这些工具的人
+提供的一些文本参考。
+括号语法：前面的例子对sed命令基本上都使用单引号（&#39;...&#39;）而非双引号
+（&quot;...&quot;）这是因为sed通常是在Unix平台上使用。单引号下，Unix的shell（命令
+解释器）不会对美元符（$）和后引号（<code>...</code>）进行解释和执行。而在双引号下
+美元符会被展开为变量或参数的值，后引号中的命令被执行并以输出的结果代替
+后引号中的内容。而在“csh”及其衍生的shell中使用感叹号（!）时需要在其前
+面加上转义用的反斜杠（就像这样：!）以保证上面所使用的例子能正常运行
+（包括使用单引号的情况下）。DOS版本的Sed则一律使用双引号（&quot;...&quot;）而不是
+引号来圈起命令。
+&#39;\t&#39;的用法：为了使本文保持行文简洁，我们在脚本中使用&#39;\t&#39;来表示一个制表
+符。但是现在大部分版本的sed还不能识别&#39;\t&#39;的简写方式，因此当在命令行中为
+脚本输入制表符时，你应该直接按TAB键来输入制表符而不是输入&#39;\t&#39;。下列的工
+具软件都支持&#39;\t&#39;做为一个正则表达式的字元来表示制表符：awk、perl、HHsed、
+sedmod以及GNU sed v3.02.80。
+不同版本的SED：不同的版本间的sed会有些不同之处，可以想象它们之间在语法上
+会有差异。具体而言，它们中大部分不支持在编辑命令中间使用标签（:name）或分
+支命令（b,t），除非是放在那些的末尾。这篇文档中我们尽量选用了可移植性较高
+的语法，以使大多数版本的sed的用户都能使用这些脚本。不过GNU版本的sed允许使
+用更简洁的语法。想像一下当读者看到一个很长的命令时的心情：
+sed -e &#39;/AAA/b&#39; -e &#39;/BBB/b&#39; -e &#39;/CCC/b&#39; -e d
+好消息是GNU sed能让命令更紧凑：
+sed &#39;/AAA/b;/BBB/b;/CCC/b;d&#39; # 甚至可以写成
+sed &#39;/AAA|BBB|CCC/b;d&#39;
+此外，请注意虽然许多版本的sed接受象“/one/ s/RE1/RE2/”这种在&#39;s&#39;前带有空
+格的命令，但这些版本中有些却不接受这样的命令:“/one/! s/RE1/RE2/”。这时
+只需要把中间的空格去掉就行了。
+速度优化：当由于某种原因（比如输入文件较大、处理器或硬盘较慢等）需要提高
+命令执行速度时，可以考虑在替换命令（“s/.../.../”）前面加上地址表达式来
+提高速度。举例来说：
+sed &#39;s/foo/bar/g&#39; filename # 标准替换命令
+sed &#39;/foo/ s/foo/bar/g&#39; filename # 速度更快
+sed &#39;/foo/ s//bar/g&#39; filename # 简写形式
+当只需要显示文件的前面的部分或需要删除后面的内容时，可以在脚本中使用“q”
+命令（退出命令）。在处理大的文件时，这会节省大量时间。因此：
+sed -n &#39;45,50p&#39; filename # 显示第45到50行
+sed -n &#39;51q;45,50p&#39; filename # 一样，但快得多
+如果你有其他的单行脚本想与大家分享或者你发现了本文档中错误的地方，请发电
+子邮件给本文档的作者（Eric Pement）。邮件中请记得提供你所使用的sed版本、
+该sed所运行的操作系统及对问题的适当描述。本文所指的单行脚本指命令行的长
+度在65个字符或65个以下的sed脚本〔译注1〕。本文档的各种脚本是由以下所列作
+者所写或提供：
+Al Aab # 建立了“seders”邮件列表
+Edgar Allen # 许多方面
+Yiorgos Adamopoulos # 许多方面
+Dale Dougherty # 《sed &amp; awk》作者
+Carlos Duarte # 《do it with sed》作者
+Eric Pement # 本文档的作者
+Ken Pizzini # GNU sed v3.02 的作者
+S.G. Ravenhall # 去html标签脚本</p>
+<h2>Greg Ubben # 有诸多贡献并提供了许多帮助</h2>
+<p>译注1：大部分情况下，sed脚本无论多长都能写成单行的形式（通过<code>-e&#39;选项和</code>;&#39;
+号）——只要命令解释器支持，所以这里说的单行脚本除了能写成一行还对长度有
+所限制。因为这些单行脚本的意义不在于它们是以单行的形式出现。而是让用户能
+方便地在命令行中使用这些紧凑的脚本才是其意义所在。
+原文：<a href="http://sed.sourceforge.net/sed1line_zh-CN.html">http://sed.sourceforge.net/sed1line_zh-CN.html</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T09:26:05.000Z"><a href="/2010/12/19/sed-vs-awk/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/sed-vs-awk/">sed 和 awk 示例操作对比</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>sed 和 awk 都是 Linux下常用的流编辑器，他们各有各的特色，本文并不是要做什么对比，而是权当好玩，把《SED单行脚本快速参考》这文章，用 awk 做了一遍~至于孰好孰坏，那真是很难评论了。一般来说，sed的命令会更短小一些，同时也更难读懂；而 awk 稍微长点，但是 if、while这样的，逻辑性比较强，更加像“程序”。到底喜欢用哪个，就让各位看官自己决定吧！</p>
+<p>文本间隔：</p>
+<h1>在每一行后面增加一空行</h1>
+<pre><code><figure class="highlight"><pre><span class="xml">sed G
+awk '{printf("%s\n\n",</span><span class="variable">$0</span><span class="xml">)}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将原来的所有空行删除并在每一行后面增加一空行。</span><span class="xml">
+</span><span class="comment"># 这样在输出的文本中每一行后面将有且只有一空行。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/^$/d;G'
+awk '!/^$/{printf("%s\n\n",</span><span class="variable">$0</span><span class="xml">)}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+<span class="comment">&lt;!--more--&gt;</span>
+
+</span><span class="comment"># 在每一行后面增加两行空行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 'G;G'
+awk '{printf("%s\n\n\n",</span><span class="variable">$0</span><span class="xml">)}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将第一个脚本所产生的所有空行删除（即删除所有偶数行）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 'n;d'
+awk '{f=!f;if(f)print </span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 在匹配式样“regex”的行之前插入一空行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/regex/{x;p;x;}'
+awk '{if(/regex/)printf("\n%s\n",</span><span class="variable">$0</span><span class="xml">);else print </span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 在匹配式样“regex”的行之后插入一空行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/regex/G'
+awk '{if(/regex/)printf("%s\n\n",</span><span class="variable">$0</span><span class="xml">);else print </span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 在匹配式样“regex”的行之前和之后各插入一空行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/regex/{x;p;x;G;}'
+awk '{if(/regex/)printf("\n%s\n\n",</span><span class="variable">$0</span><span class="xml">);else print </span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+编号：
+</span><span class="comment"># 为文件中的每一行进行编号（简单的左对齐方式）。这里使用了“制表符”</span><span class="xml">
+</span><span class="comment"># （tab，见本文末尾关于’\t’的用法的描述）而不是空格来对齐边缘。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed = filename | sed 'N;s/\n/\t/'
+awk '{i++;printf("%d\t%s\n",i,</span><span class="variable">$0</span><span class="xml">)}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 对文件中的所有行编号（行号在左，文字右端对齐）。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed = filename | sed 'N; s/^/ /; s/ *\(.\{</span><span class="number">6</span><span class="xml">,\}\)\n/\</span><span class="number">1</span><span class="xml"> /'
+awk '{i++;printf("%</span><span class="number">6</span><span class="xml">d %s\n",i,</span><span class="variable">$0</span><span class="xml">)}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 对文件中的所有行编号，但只显示非空白行的行号。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/./=' filename | sed '/./N; s/\n/ /'
+awk '{i++;if(!/^$/)printf("%d %s\n",i,</span><span class="variable">$0</span><span class="xml">);else print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 计算行数 （模拟 “wc -l”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '$='
+awk '{i++}END{print i}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+文本转换和替代：
+</span><span class="comment"># Unix环境：转换DOS的新行符（CR/LF）为Unix格式。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/.$//' # 假设所有行以CR/LF结束
+sed 's/</span><span class="keyword">^M</span><span class="xml">$//' # 在bash/tcsh中，将按Ctrl-M改为按Ctrl-V
+sed 's/\x0D$//' # ssed、gsed </span><span class="number">3.02</span><span class="xml"></span><span class="number">.80</span><span class="xml">，及更高版本
+awk '{sub(/\x0D$/,"");print </span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># Unix环境：转换Unix的新行符（LF）为DOS格式。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed "s/$/`echo -e \\\r`/" # 在ksh下所使用的命令
+sed 's/$'"/`echo \\\r`/" # 在bash下所使用的命令
+sed "s/$/`echo \\\r`/" # 在zsh下所使用的命令
+sed 's/$/\r/' # gsed </span><span class="number">3.02</span><span class="xml"></span><span class="number">.80</span><span class="xml"> 及更高版本
+awk '{printf("%s\r\n",</span><span class="variable">$0</span><span class="xml">)}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># DOS环境：转换Unix新行符（LF）为DOS格式。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed "s/$//" # 方法 </span><span class="number">1</span><span class="xml">
+sed -n p # 方法 </span><span class="number">2</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+DOS环境的略过
+</span><span class="comment"># DOS环境：转换DOS新行符（CR/LF）为Unix格式。</span><span class="xml">
+</span><span class="comment"># 下面的脚本只对UnxUtils sed 4.0.7 及更高版本有效。要识别UnxUtils版本的</span><span class="xml">
+</span><span class="comment"># sed可以通过其特有的“–text”选项。你可以使用帮助选项（“–help”）看</span><span class="xml">
+</span><span class="comment"># 其中有无一个“–text”项以此来判断所使用的是否是UnxUtils版本。其它DOS</span><span class="xml">
+</span><span class="comment"># 版本的的sed则无法进行这一转换。但可以用“tr”来实现这一转换。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed "s/\r//" infile &amp;gt;outfile # UnxUtils sed v4</span><span class="number">.0</span><span class="xml"></span><span class="number">.7</span><span class="xml"> 或更高版本
+tr -d \r outfile # GNU tr </span><span class="number">1.22</span><span class="xml"> 或更高版本 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+DOS环境的略过
+</span><span class="comment"># 将每一行前导的“空白字符”（空格，制表符）删除</span><span class="xml">
+</span><span class="comment"># 使之左对齐</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/^[ \t]*//' # 见本文末尾关于'\t'用法的描述
+awk '{sub(/^[ \t]+/,"");print </span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将每一行拖尾的“空白字符”（空格，制表符）删除</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/[ \t]*$//' # 见本文末尾关于'\t'用法的描述
+awk '{sub(/[ \t]+$/,"");print </span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将每一行中的前导和拖尾的空白字符删除</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/^[ \t]*//;s/[ \t]*$//'
+awk '{sub(/^[ \t]+/,"");sub(/[ \t]+$/,"");print </span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 在每一行开头处插入5个空格（使全文向右移动5个字符的位置）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/^/ /'
+awk '{printf(" %s\n",</span><span class="variable">$0</span><span class="xml">)}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 以79个字符为宽度，将所有文本右对齐</span><span class="xml">
+</span><span class="comment"># 78个字符外加最后的一个空格</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e :a -e 's/</span><span class="keyword">^.</span><span class="xml">\{</span><span class="number">1</span><span class="xml">,</span><span class="number">78</span><span class="xml">\}$/ &amp;amp;/;ta'
+awk '{printf("%</span><span class="number">79</span><span class="xml">s\n",</span><span class="variable">$0</span><span class="xml">)}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 以79个字符为宽度，使所有文本居中。在方法1中，为了让文本居中每一行的前</span><span class="xml">
+</span><span class="comment"># 头和后头都填充了空格。 在方法2中，在居中文本的过程中只在文本的前面填充</span><span class="xml">
+</span><span class="comment"># 空格，并且最终这些空格将有一半会被删除。此外每一行的后头并未填充空格。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e :a -e 's/</span><span class="keyword">^.</span><span class="xml">\{</span><span class="number">1</span><span class="xml">,</span><span class="number">77</span><span class="xml">\}$/ &amp;amp; /;ta' # 方法</span><span class="number">1</span><span class="xml">
+sed -e :a -e 's/</span><span class="keyword">^.</span><span class="xml">\{</span><span class="number">1</span><span class="xml">,</span><span class="number">77</span><span class="xml">\}$/ &amp;amp;/;ta' -e 's/\( *\)\</span><span class="number">1</span><span class="xml">/\</span><span class="number">1</span><span class="xml">/' # 方法</span><span class="number">2</span><span class="xml">
+awk '{for(i=</span><span class="number">0</span><span class="xml">;i&amp;lt;</span><span class="number">39</span><span class="xml">-length(</span><span class="variable">$0</span><span class="xml">)/</span><span class="number">2</span><span class="xml">;i++)printf(" ");printf("%s\n",</span><span class="variable">$0</span><span class="xml">)}' #相当于上面的方法二 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 在每一行中查找字串“foo”，并将找到的“foo”替换为“bar”</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/foo/bar/' # 只替换每一行中的第一个“foo”字串
+sed 's/foo/bar/</span><span class="number">4</span><span class="xml">' # 只替换每一行中的第四个“foo”字串
+sed 's/foo/bar/g' # 将每一行中的所有“foo”都换成“bar”
+sed 's/\(.*\)foo\(.*foo\)/\</span><span class="number">1</span><span class="xml">bar\</span><span class="number">2</span><span class="xml">/' # 替换倒数第二个“foo”
+sed 's/\(.*\)foo/\</span><span class="number">1</span><span class="xml">bar/' # 替换最后一个“foo”
+awk '{gsub(/foo/,"bar");print </span><span class="variable">$0}</span><span class="xml">' # 将每一行中的所有“foo”都换成“bar” `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 只在行中出现字串“baz”的情况下将“foo”替换成“bar”</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/baz/s/foo/bar/g'
+awk '{if(/baz/)gsub(/foo/,"bar");print </span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将“foo”替换成“bar”，并且只在行中未出现字串“baz”的情况下替换</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/baz/!s/foo/bar/g'
+awk '{if(/baz$/)gsub(/foo/,"bar");print </span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 不管是“scarlet”“ruby”还是“puce”，一律换成“red”</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/scarlet/red/g;s/ruby/red/g;s/puce/red/g' #对多数的sed都有效
+gsed 's/scarlet\|ruby\|puce/red/g' # 只对GNU sed有效
+awk '{gsub(/scarlet|ruby|puce/,"red");print </span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 倒置所有行，第一行成为最后一行，依次类推（模拟“tac”）。</span><span class="xml">
+</span><span class="comment"># 由于某些原因，使用下面命令时HHsed v1.5会将文件中的空行删除</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '</span><span class="number">1</span><span class="xml">!G;h;$!d' # 方法</span><span class="number">1</span><span class="xml">
+sed -n '</span><span class="number">1</span><span class="xml">!G;h;</span><span class="variable">$p</span><span class="xml">' # 方法</span><span class="number">2</span><span class="xml">
+awk '{A[i++]=</span><span class="variable">$0}</span><span class="xml">END{for(j=i-</span><span class="number">1</span><span class="xml">;j&amp;gt;=</span><span class="number">0</span><span class="xml">;j--)print A[j]}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将行中的字符逆序排列，第一个字成为最后一字，……（模拟“rev”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/\n/!G;s/\(.\)\(.*\n\)/&amp;amp;\</span><span class="number">2</span><span class="xml">\</span><span class="number">1</span><span class="xml">/;//D;s/.//'
+awk '{for(i=length(</span><span class="variable">$0</span><span class="xml">);i&amp;gt;</span><span class="number">0</span><span class="xml">;i--)printf("%s",substr(</span><span class="variable">$0</span><span class="xml">,i,</span><span class="number">1</span><span class="xml">));printf("\n")}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将每两行连接成一行（类似“paste”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '$!N;s/\n/ /'
+awk '{f=!f;if(f)printf("%s",</span><span class="variable">$0</span><span class="xml">);else printf(" %s\n",</span><span class="variable">$0</span><span class="xml">)}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 如果当前行以反斜杠“\”结束，则将下一行并到当前行末尾</span><span class="xml">
+</span><span class="comment"># 并去掉原来行尾的反斜杠</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e :a -e '/\\$/N; s/\\\n//; ta'
+awk '{if(/\\$/)printf("%s",substr(</span><span class="variable">$0</span><span class="xml">,</span><span class="number">0</span><span class="xml">,length(</span><span class="variable">$0</span><span class="xml">)-</span><span class="number">1</span><span class="xml">));else printf("%s\n",</span><span class="variable">$0</span><span class="xml">)}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 如果当前行以等号开头，将当前行并到上一行末尾</span><span class="xml">
+</span><span class="comment"># 并以单个空格代替原来行头的“=”</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e :a -e '$!N;s/\n=/ /;ta' -e 'P;D'
+awk '{if(/^=/)printf(" %s",substr(</span><span class="variable">$0</span><span class="xml">,</span><span class="number">2</span><span class="xml">));else printf("%s%s",a,</span><span class="variable">$0</span><span class="xml">);a="\n"}END{printf("\n")}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 为数字字串增加逗号分隔符号，将“1234567”改为“1,234,567”</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gsed ':a;s/\B[</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]\{</span><span class="number">3</span><span class="xml">\}\&amp;gt;/,&amp;amp;/;ta' # GNU sed
+sed -e :a -e 's/\(.*[</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]\)\([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]\{</span><span class="number">3</span><span class="xml">\}\)/\</span><span class="number">1</span><span class="xml">,\</span><span class="number">2</span><span class="xml">/;ta' # 其他sed `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment">#awk的正则没有后向匹配和引用，搞的比较狼狈，呵呵。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`awk '{while(match(</span><span class="variable">$0</span><span class="xml">,/[</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">][</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">][</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">][</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]+/)){</span><span class="variable">$0</span><span class="xml">=sprintf("%s,%s",substr(</span><span class="variable">$0</span><span class="xml">,</span><span class="number">0</span><span class="xml">,RSTART+RLENGTH-</span><span class="number">4</span><span class="xml">),substr(</span><span class="variable">$0</span><span class="xml">,RSTART+RLENGTH-</span><span class="number">3</span><span class="xml">))}print </span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 为带有小数点和负号的数值增加逗号分隔符（GNU sed）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gsed -r ':a;s/(^|[</span><span class="keyword">^0-9.</span><span class="xml">])([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]+)([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]{</span><span class="number">3</span><span class="xml">})/\</span><span class="number">1</span><span class="xml">\</span><span class="number">2</span><span class="xml">,\</span><span class="number">3</span><span class="xml">/g;ta'
+</span><span class="comment">#和上例差不多</span><span class="xml">
+awk '{while(match(</span><span class="variable">$0</span><span class="xml">,/[^\</span><span class="number">.0</span><span class="xml">-</span><span class="number">9</span><span class="xml">][</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">][</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">][</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">][</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]+/)){</span><span class="variable">$0</span><span class="xml">=sprintf("%s,%s",substr(</span><span class="variable">$0</span><span class="xml">,</span><span class="number">0</span><span class="xml">,RSTART+RLENGTH-</span><span class="number">4</span><span class="xml">),substr(</span><span class="variable">$0</span><span class="xml">,RSTART+RLENGTH-</span><span class="number">3</span><span class="xml">))}print </span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 在每5行后增加一空白行 （在第5，10，15，20，等行后增加一空白行）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gsed '</span><span class="number">0</span><span class="xml">~</span><span class="number">5</span><span class="xml">G' # 只对GNU sed有效
+sed 'n;n;n;n;G;' # 其他sed
+awk '{print </span><span class="variable">$0</span><span class="xml">;i++;if(i==</span><span class="number">5</span><span class="xml">){printf("\n");i=</span><span class="number">0</span><span class="xml">}}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+选择性地显示特定行：
+</span><span class="comment"># 显示文件中的前10行 （模拟“head”的行为）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed </span><span class="number">10</span><span class="xml">q
+awk '{print;if(NR==</span><span class="number">10</span><span class="xml">)exit}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示文件中的第一行 （模拟“head -1”命令）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed q
+awk '{print;exit}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示文件中的最后10行 （模拟“tail”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e :a -e '</span><span class="variable">$q</span><span class="xml">;N;</span><span class="number">11</span><span class="xml">,</span><span class="variable">$D</span><span class="xml">;ba' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment">#用awk干这个有点亏，得全文缓存，对于大文件肯定很慢</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`awk '{A[NR]=</span><span class="variable">$0}</span><span class="xml">END{for(i=NR-</span><span class="number">9</span><span class="xml">;i&amp;lt;=NR;i++)print A}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示文件中的最后2行（模拟“tail -2”命令）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '$!N;$!D'
+awk '{A[NR]=</span><span class="variable">$0}</span><span class="xml">END{for(i=NR-</span><span class="number">1</span><span class="xml">;i&amp;lt;=NR;i++)print A}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示文件中的最后一行（模拟“tail -1”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '$!d' # 方法</span><span class="number">1</span><span class="xml">
+sed -n '</span><span class="variable">$p</span><span class="xml">' # 方法</span><span class="number">2</span><span class="xml">
+</span><span class="comment">#这个比较好办，只存最后一行了。</span><span class="xml">
+awk '{A=</span><span class="variable">$0}</span><span class="xml">END{print A}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示文件中的倒数第二行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e '$!{h;d;}' -e x # 当文件中只有一行时，输出空行
+sed -e '</span><span class="number">1</span><span class="xml">{</span><span class="variable">$q</span><span class="xml">;}' -e '$!{h;d;}' -e x # 当文件中只有一行时，显示该行
+sed -e '</span><span class="number">1</span><span class="xml">{</span><span class="variable">$d</span><span class="xml">;}' -e '$!{h;d;}' -e x # 当文件中只有一行时，不输出 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment">#存两行呗（当文件中只有一行时，输出空行）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`awk '{B=A;A=</span><span class="variable">$0}</span><span class="xml">END{print B}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 只显示匹配正则表达式的行（模拟“grep”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/regexp/p' # 方法</span><span class="number">1</span><span class="xml">
+sed '/regexp/!d' # 方法</span><span class="number">2</span><span class="xml">
+awk '/regexp/{print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 只显示“不”匹配正则表达式的行（模拟“grep -v”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/regexp/!p' # 方法</span><span class="number">1</span><span class="xml">，与前面的命令相对应
+sed '/regexp/d' # 方法</span><span class="number">2</span><span class="xml">，类似的语法
+awk '!/regexp/{print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 查找“regexp”并将匹配行的上一行显示出来，但并不显示匹配行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/regexp/{g;</span><span class="number">1</span><span class="xml">!p;};h'
+awk '/regexp/{print A}{A=</span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 查找“regexp”并将匹配行的下一行显示出来，但并不显示匹配行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/regexp/{n;p;}'
+awk '{if(A)print;A=</span><span class="number">0</span><span class="xml">}/regexp/{A=</span><span class="number">1</span><span class="xml">}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含“regexp”的行及其前后行，并在第一行之前加上“regexp”所在行的行号 （类似“grep -A1 -B1”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n -e '/regexp/{=;x;</span><span class="number">1</span><span class="xml">!p;g;$!N;p;D;}' -e h
+awk '{if(F)print;F=</span><span class="number">0</span><span class="xml">}/regexp/{print NR;print b;print;F=</span><span class="number">1</span><span class="xml">}{b=</span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含“AAA”、“BBB”和“CCC”的行（任意次序）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/AAA/!d; /BBB/!d; /CCC/!d' # 字串的次序不影响结果
+awk '{if(match(</span><span class="variable">$0</span><span class="xml">,/AAA/) &amp;amp;&amp;amp; match(</span><span class="variable">$0</span><span class="xml">,/BBB/) &amp;amp;&amp;amp; match(</span><span class="variable">$0</span><span class="xml">,/CCC/))print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含“AAA”、“BBB”和“CCC”的行（固定次序）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/AAA.*BBB.*CCC/!d'
+awk '{if(match(</span><span class="variable">$0</span><span class="xml">,/AAA.*BBB.*CCC/))print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含“AAA”“BBB”或“CCC”的行 （模拟“egrep”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e '/AAA/b' -e '/BBB/b' -e '/CCC/b' -e d # 多数sed
+gsed '/AAA\|BBB\|CCC/!d' # 对GNU sed有效
+awk '/AAA/{print;next}/BBB/{print;next}/CCC/{print}'
+awk '/AAA|BBB|CCC/{print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含“AAA”的段落 （段落间以空行分隔）</span><span class="xml">
+</span><span class="comment"># HHsed v1.5 必须在“x;”后加入“G;”，接下来的3个脚本都是这样</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e '/./{H;$!d;}' -e 'x;/AAA/!d;'
+awk 'BEGIN{RS=""}/AAA/{print}'
+awk -vRS= '/AAA/{print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含“AAA”“BBB”和“CCC”三个字串的段落 （任意次序）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e '/./{H;$!d;}' -e 'x;/AAA/!d;/BBB/!d;/CCC/!d'
+awk -vRS= '{if(match(</span><span class="variable">$0</span><span class="xml">,/AAA/) &amp;amp;&amp;amp; match(</span><span class="variable">$0</span><span class="xml">,/BBB/) &amp;amp;&amp;amp; match(</span><span class="variable">$0</span><span class="xml">,/CCC/))print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含“AAA”、“BBB”、“CCC”三者中任一字串的段落 （任意次序）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e '/./{H;$!d;}' -e 'x;/AAA/b' -e '/BBB/b' -e '/CCC/b' -e d
+gsed '/./{H;$!d;};x;/AAA\|BBB\|CCC/b;d' # 只对GNU sed有效
+awk -vRS= '/AAA|BBB|CCC/{print "";print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含65个或以上字符的行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/</span><span class="keyword">^.</span><span class="xml">\{</span><span class="number">65</span><span class="xml">\}/p'
+cat ll.txt | awk '{if(length(</span><span class="variable">$0</span><span class="xml">)&amp;gt;=</span><span class="number">65</span><span class="xml">)print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示包含65个以下字符的行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/</span><span class="keyword">^.</span><span class="xml">\{</span><span class="number">65</span><span class="xml">\}/!p' # 方法</span><span class="number">1</span><span class="xml">，与上面的脚本相对应
+sed '/</span><span class="keyword">^.</span><span class="xml">\{</span><span class="number">65</span><span class="xml">\}/d' # 方法</span><span class="number">2</span><span class="xml">，更简便一点的方法
+awk '{if(length(</span><span class="variable">$0</span><span class="xml">)&amp;lt;=</span><span class="number">65</span><span class="xml">)print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示部分文本——从包含正则表达式的行开始到最后一行结束</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/regexp/,</span><span class="variable">$p</span><span class="xml">'
+awk '/regexp/{F=</span><span class="number">1</span><span class="xml">}{if(F)print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示部分文本——指定行号范围（从第8至第12行，含8和12行）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '</span><span class="number">8</span><span class="xml">,</span><span class="number">12</span><span class="xml">p' # 方法</span><span class="number">1</span><span class="xml">
+sed '</span><span class="number">8</span><span class="xml">,</span><span class="number">12</span><span class="xml">!d' # 方法</span><span class="number">2</span><span class="xml">
+awk '{if(NR&amp;gt;=</span><span class="number">8</span><span class="xml"> &amp;amp;&amp;amp; NR&amp;lt;</span><span class="number">12</span><span class="xml">)print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示第52行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '</span><span class="number">52</span><span class="xml">p' # 方法</span><span class="number">1</span><span class="xml">
+sed '</span><span class="number">52</span><span class="xml">!d' # 方法</span><span class="number">2</span><span class="xml">
+sed '</span><span class="number">52</span><span class="xml">q;d' # 方法</span><span class="number">3</span><span class="xml">, 处理大文件时更有效率
+awk '{if(NR==</span><span class="number">52</span><span class="xml">){print;exit}}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 从第3行开始，每7行显示一次</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gsed -n '</span><span class="number">3</span><span class="xml">~</span><span class="number">7</span><span class="xml">p' # 只对GNU sed有效
+sed -n '</span><span class="number">3</span><span class="xml">,</span><span class="variable">${p</span><span class="xml">;n;n;n;n;n;n;}' # 其他sed
+awk '{if(NR==</span><span class="number">3</span><span class="xml">)F=</span><span class="number">1</span><span class="xml">}{if(F){i++;if(i%</span><span class="number">7</span><span class="xml">==</span><span class="number">1</span><span class="xml">)print}}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 显示两个正则表达式之间的文本（包含）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/Iowa/,/Montana/p' # 区分大小写方式
+awk '/Iowa/{F=</span><span class="number">1</span><span class="xml">}{if(F)print}/Montana/{F=</span><span class="number">0</span><span class="xml">}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+选择性地删除特定行：
+
+</span><span class="comment"># 显示通篇文档，除了两个正则表达式之间的内容</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/Iowa/,/Montana/d'
+awk '/Iowa/{F=</span><span class="number">1</span><span class="xml">}{if(!F)print}/Montana/{F=</span><span class="number">0</span><span class="xml">}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件中相邻的重复行（模拟“uniq”）</span><span class="xml">
+</span><span class="comment"># 只保留重复行中的第一行，其他行删除</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '$!N; /^\(.*\)\n\</span><span class="number">1</span><span class="xml">$/!P; D'
+awk '{if(</span><span class="variable">$0</span><span class="xml">!=B)print;B=</span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件中的重复行，不管有无相邻。注意hold space所能支持的缓存大小，或者使用GNU sed。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n 'G; s/\n/&amp;amp;&amp;amp;/; /^\([ -~]*\n\).*\n\</span><span class="number">1</span><span class="xml">/d; s/\n//; h; P' #bones7456注：我这里此命令并不能正常工作
+awk '{if(!(</span><span class="variable">$0</span><span class="xml"> in B))print;B[</span><span class="variable">$0</span><span class="xml">]=</span><span class="number">1</span><span class="xml">}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除除重复行外的所有行（模拟“uniq -d”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '$!N; s/^\(.*\)\n\</span><span class="number">1</span><span class="xml">$/\</span><span class="number">1</span><span class="xml">/; t; D'
+awk '{if(</span><span class="variable">$0</span><span class="xml">==B &amp;amp;&amp;amp; </span><span class="variable">$0</span><span class="xml">!=l){print;l=</span><span class="variable">$0}</span><span class="xml">B=</span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件中开头的10行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '</span><span class="number">1</span><span class="xml">,</span><span class="number">10</span><span class="xml">d'
+awk '{if(NR&amp;gt;</span><span class="number">10</span><span class="xml">)print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件中的最后一行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '</span><span class="variable">$d</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment">#awk在过程中并不知道文件一共有几行，所以只能通篇缓存，大文件可能不适合，下面两个也一样</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`awk '{B[NR]=</span><span class="variable">$0}</span><span class="xml">END{for(i=</span><span class="number">0</span><span class="xml">;i&amp;lt;=NR-</span><span class="number">1</span><span class="xml">;i++)print B}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件中的最后两行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 'N;$!P;$!D;</span><span class="variable">$d</span><span class="xml">'
+awk '{B[NR]=</span><span class="variable">$0}</span><span class="xml">END{for(i=</span><span class="number">0</span><span class="xml">;i&amp;lt;=NR-</span><span class="number">2</span><span class="xml">;i++)print B}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件中的最后10行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e :a -e '</span><span class="variable">$d</span><span class="xml">;N;</span><span class="number">2</span><span class="xml">,</span><span class="number">10</span><span class="xml">ba' -e 'P;D' # 方法</span><span class="number">1</span><span class="xml">
+sed -n -e :a -e '</span><span class="number">1</span><span class="xml">,</span><span class="number">10</span><span class="xml">!{P;N;D;};N;ba' # 方法</span><span class="number">2</span><span class="xml">
+awk '{B[NR]=</span><span class="variable">$0}</span><span class="xml">END{for(i=</span><span class="number">0</span><span class="xml">;i&amp;lt;=NR-</span><span class="number">10</span><span class="xml">;i++)print B}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除8的倍数行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gsed '</span><span class="number">0</span><span class="xml">~</span><span class="number">8</span><span class="xml">d' # 只对GNU sed有效
+sed 'n;n;n;n;n;n;n;d;' # 其他sed
+awk '{if(NR%</span><span class="number">8</span><span class="xml">!=</span><span class="number">0</span><span class="xml">)print}' |head `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除匹配式样的行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/pattern/d' # 删除含pattern的行。当然pattern可以换成任何有效的正则表达式
+awk '{if(!match(</span><span class="variable">$0</span><span class="xml">,/pattern/))print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件中的所有空行（与“grep ‘.’ ”效果相同）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/^$/d' # 方法</span><span class="number">1</span><span class="xml">
+sed '/./!d' # 方法</span><span class="number">2</span><span class="xml">
+awk '{if(!match(</span><span class="variable">$0</span><span class="xml">,/^$/))print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 只保留多个相邻空行的第一行。并且删除文件顶部和尾部的空行。</span><span class="xml">
+</span><span class="comment"># （模拟“cat -s”）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/./,/^$/!d' #方法</span><span class="number">1</span><span class="xml">，删除文件顶部的空行，允许尾部保留一空行
+sed '/^$/N;/\n$/D' #方法</span><span class="number">2</span><span class="xml">，允许顶部保留一空行，尾部不留空行
+awk '{if(!match(</span><span class="variable">$0</span><span class="xml">,/^$/)){print;F=</span><span class="number">1</span><span class="xml">}else{if(F)print;F=</span><span class="number">0</span><span class="xml">}}' #同上面的方法</span><span class="number">2</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 只保留多个相邻空行的前两行。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/^$/N;/\n$/N;//D'
+awk '{if(!match(</span><span class="variable">$0</span><span class="xml">,/^$/)){print;F=</span><span class="number">0</span><span class="xml">}else{if(F&amp;lt;</span><span class="number">2</span><span class="xml">)print;F++}}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件顶部的所有空行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/./,$!d'
+awk '{if(F || !match(</span><span class="variable">$0</span><span class="xml">,/^$/)){print;F=</span><span class="number">1</span><span class="xml">}}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除文件尾部的所有空行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e :a -e '/^\n*$/{</span><span class="variable">$d</span><span class="xml">;N;ba' -e '}' # 对所有sed有效
+sed -e :a -e '/^\n*$/N;/\n$/ba' # 同上，但只对 gsed </span><span class="number">3.02</span><span class="xml">.*有效
+awk '/</span><span class="keyword">^.</span><span class="xml">+$/{for(i=l;i `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 删除每个段落的最后一行</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -n '/^$/{p;h;};/./{x;/./p;}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment">#很长，很ugly，应该有更好的办法</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`awk -vRS= '{B=</span><span class="variable">$0</span><span class="xml">;l=</span><span class="number">0</span><span class="xml">;f=</span><span class="number">1</span><span class="xml">;while(match(B,/\n/)&amp;gt;</span><span class="number">0</span><span class="xml">){print substr(B,l,RSTART-l-f);l=RSTART;sub(/\n/,"",B);f=</span><span class="number">0</span><span class="xml">};print ""}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+特殊应用：
+</span><span class="comment"># 移除手册页（man page）中的nroff标记。在Unix System V或bash shell下使</span><span class="xml">
+</span><span class="comment"># 用’echo’命令时可能需要加上 -e 选项。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed "s/.`echo \\\b`//g" # 外层的双括号是必须的（Unix环境）
+sed 's/.</span><span class="keyword">^H</span><span class="xml">//g' # 在bash或tcsh中, 按 Ctrl-V 再按 Ctrl-H
+sed 's/.\x08//g' # sed </span><span class="number">1.5</span><span class="xml">，GNU sed，ssed所使用的十六进制的表示方法
+awk '{gsub(/.\x08/,"",</span><span class="variable">$0</span><span class="xml">);print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 提取新闻组或 e-mail 的邮件头</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/^$/q' # 删除第一行空行后的所有内容
+awk '{print}/^$/{exit}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 提取新闻组或 e-mail 的正文部分</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '</span><span class="number">1</span><span class="xml">,/^$/d' # 删除第一行空行之前的所有内容
+awk '{if(F)print}/^$/{F=</span><span class="number">1</span><span class="xml">}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 从邮件头提取“Subject”（标题栏字段），并移除开头的“Subject:”字样</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/</span><span class="keyword">^Subject:</span><span class="xml"> */!d; s///;q'
+awk '/</span><span class="keyword">^Subject:.</span><span class="xml">*/{print substr(</span><span class="variable">$0</span><span class="xml">,</span><span class="number">10</span><span class="xml">)}/^$/{exit}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 从邮件头获得回复地址</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/</span><span class="keyword">^Reply-To:</span><span class="xml">/q; /</span><span class="keyword">^From:</span><span class="xml">/h; /./d;g;q' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment">#好像是输出第一个Reply-To:开头的行？From是干啥用的？不清楚规则。。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`awk '/</span><span class="keyword">^Reply-To:.</span><span class="xml">*/{print;exit}/^$/{exit}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 获取邮件地址。在上一个脚本所产生的那一行邮件头的基础上进一步的将非电邮地址的部分剃除。（见上一脚本）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/ *(.*)//; s/&amp;gt;.*//; s/.*[:&amp;lt;] *//' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment">#取尖括号里的东西吧？</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`awk -F'[&amp;lt;&amp;gt;]+' '{print </span><span class="variable">$2}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 在每一行开头加上一个尖括号和空格（引用信息）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/^/&amp;gt; /'
+awk '{print "&amp;gt; " </span><span class="variable">$0}</span><span class="xml">' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将每一行开头处的尖括号和空格删除（解除引用）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed 's/^&amp;gt; //'
+awk '/^&amp;gt; /{print substr(</span><span class="variable">$0</span><span class="xml">,</span><span class="number">3</span><span class="xml">)}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 移除大部分的HTML标签（包括跨行标签）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed -e :a -e 's/&amp;lt;[^&amp;gt;]*&amp;gt;//g;/
+awk '{gsub(/&amp;lt;[^&amp;gt;]*&amp;gt;/,"",</span><span class="variable">$0</span><span class="xml">);print}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将分成多卷的uuencode文件解码。移除文件头信息，只保留uuencode编码部分。</span><span class="xml">
+</span><span class="comment"># 文件必须以特定顺序传给sed。下面第一种版本的脚本可以直接在命令行下输入；</span><span class="xml">
+</span><span class="comment"># 第二种版本则可以放入一个带执行权限的shell脚本中。（由Rahul Dhesi的一</span><span class="xml">
+</span><span class="comment"># 个脚本修改而来。）</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/</span><span class="keyword">^end</span><span class="xml">/,/</span><span class="keyword">^begin</span><span class="xml">/d' file1 file2 ... fileX | uudecode # vers. </span><span class="number">1</span><span class="xml">
+sed '/</span><span class="keyword">^end</span><span class="xml">/,/</span><span class="keyword">^begin</span><span class="xml">/d' "$@" | uudecode # vers. </span><span class="number">2</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment">#我不想装个uudecode验证，大致写个吧</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`awk '/</span><span class="keyword">^end</span><span class="xml">/{F=</span><span class="number">0</span><span class="xml">}{if(F)print}/</span><span class="keyword">^begin</span><span class="xml">/{F=</span><span class="number">1</span><span class="xml">}' file1 file2 ... fileX `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 将文件中的段落以字母顺序排序。段落间以（一行或多行）空行分隔。GNU sed使用</span><span class="xml">
+</span><span class="comment"># 字元“\v”来表示垂直制表符，这里用它来作为换行符的占位符——当然你也可以</span><span class="xml">
+</span><span class="comment"># 用其他未在文件中使用的字符来代替它。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`sed '/./{H;d;};x;s/\n/={NL}=/g' file | sort | sed '</span><span class="number">1</span><span class="xml">s/={NL}=//;s/={NL}=/\n/g'
+gsed '/./{H;d};x;y/\n/\v/' file | sort | sed '</span><span class="number">1</span><span class="xml">s/\v//;y/\v/\n/'
+awk -vRS= '{gsub(/\n/,"\v",</span><span class="variable">$0</span><span class="xml">);print}' ll.txt | sort | awk '{gsub(/\v/,"\n",</span><span class="variable">$0</span><span class="xml">);print;print ""}' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># 分别压缩每个.TXT文件，压缩后删除原来的文件并将压缩后的.ZIP文件</span><span class="xml">
+</span><span class="comment"># 命名为与原来相同的名字（只是扩展名不同）。（DOS环境：“dir /b”</span><span class="xml">
+</span><span class="comment"># 显示不带路径的文件名）。</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`echo @echo off &amp;gt;zipup.bat
+dir /b *.txt | sed "s/^\(.*\)\.TXT/pkzip -mo \</span><span class="number">1</span><span class="xml"> \</span><span class="number">1.</span><span class="xml">TXT/" &amp;gt;&amp;gt;zipup.bat </span>
+</pre></figure></code></pre>
+<p>DOS 环境再次略过，而且感觉这里用 bash 的参数 ${i%.TXT}.zip 替换更帅。</p>
+<p><a href="http://bbs.linuxtone.org/thread-4699-1-1.html">http://bbs.linuxtone.org/thread-4699-1-1.html</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T09:15:13.000Z"><a href="/2010/12/19/shell-interview-questions/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/shell-interview-questions/">shell 面试题汇集</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>利用top取某个进程的CPU的脚本:</p>
+<pre><code><figure class="highlight"><pre><span class="xml"></span><span class="comment">#/bin/sh</span><span class="xml">
+Max_CPU=</span><span class="number">0</span><span class="xml">
+Avg_CPU=</span><span class="number">0</span><span class="xml">
+Total_Time=</span><span class="number">1</span><span class="xml">
+ Process=</span><span class="variable">$1</span><span class="xml">
+ Interval=</span><span class="variable">$2</span><span class="xml">
+ # check the parameters
+ if [ $# -ne </span><span class="number">2</span><span class="xml"> ]; then
+    echo "Usage: </span><span class="variable">$0</span><span class="xml"> ProcessName Interval"
+    exit
+ fi
+ LogFile="Per.txt"
+ echo "`date`" &gt; </span><span class="variable">$LogFile</span><span class="xml">
+ while sleep </span><span class="variable">$Interval</span><span class="xml">
+ do
+    top -d </span><span class="number">1</span><span class="xml"> -n </span><span class="number">1</span><span class="xml">|grep </span><span class="variable">$Process</span><span class="xml">|grep -v grep|awk '{print </span><span class="variable">$9</span><span class="xml">"\t"</span><span class="variable">$10}</span><span class="xml">' &gt;&gt; </span><span class="variable">$LogFile</span><span class="xml">
+ done`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+判断是否是设备文件
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`#/bin/bash
+ echo -e "The program will Judge a file is or not a device file.\n\n"
+ read -p "Input a filename:" filename
+ if [ -b </span><span class="variable">$filename</span><span class="xml"> -o -c </span><span class="variable">$filename</span><span class="xml"> ]; then
+         echo "</span><span class="variable">$filename</span><span class="xml"> is a device file"
+         exit </span><span class="number">0</span><span class="xml">
+ else
+         echo "</span><span class="variable">$filename</span><span class="xml"> is not a device file"
+         exit </span><span class="number">1</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+ firead –p：用于在读数据时输出提示信息
+
+注意！ [ 之间是有空格的：if ! [ -f </span><span class="variable">$filename</span><span class="xml"> ] ; then。一般用if [ ! * ]
+
+添加用户：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` #/bin/bash
+ groupadd -f class1
+ for i in {</span><span class="number">9909.</span><span class="xml"></span><span class="number">.9911</span><span class="xml">}
+ do
+         xx=`echo </span><span class="variable">$i</span><span class="xml"> | sed 's/</span><span class="number">99</span><span class="xml">//g'`
+         useradd -g class1 std</span><span class="variable">${xx}</span><span class="xml">
+         echo std</span><span class="variable">${xx}</span><span class="xml"> | passwd std</span><span class="variable">${xx}</span><span class="xml"> --stdin
+         echo -e "user std</span><span class="variable">${xx}</span><span class="xml"> passwd is std</span><span class="variable">${xx}</span><span class="xml">"&gt;&gt;/root/newuser.txt
+ done
+ exit </span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+        注意等号的前后不要有空格：xx=`echo </span><span class="variable">$i</span><span class="xml"> | sed 's/</span><span class="number">99</span><span class="xml">//g'`
+        变量如果前后有字符，要是大括号
+
+统计IP访问：
+要求分析apache访问日志，找出访问页面数量在前</span><span class="number">100</span><span class="xml">位的IP数。日志大小在</span><span class="number">78</span><span class="xml">M左右。以下是apache的访问日志节选
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` </span><span class="number">202.101</span><span class="xml"></span><span class="number">.129</span><span class="xml"></span><span class="number">.218</span><span class="xml"> - - [</span><span class="number">26</span><span class="xml">/Mar/</span><span class="number">2006</span><span class="xml">:</span><span class="number">23</span><span class="xml">:</span><span class="number">59</span><span class="xml">:</span><span class="number">55</span><span class="xml"> +</span><span class="number">0800</span><span class="xml">] "GET /online/stat_inst.php?pid=d065 HTTP/</span><span class="number">1.1</span><span class="xml">" </span><span class="number">302</span><span class="xml"> </span><span class="number">20</span><span class="xml">-"-" "-" "Mozilla/</span><span class="number">4.0</span><span class="xml"> (compatible; MSIE </span><span class="number">6.0</span><span class="xml">; Windows NT </span><span class="number">5.1</span><span class="xml">)"`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# awk '{print </span><span class="variable">$1}</span><span class="xml">' log      |sort |uniq -c|sort -r |head -n10
+      </span><span class="number">5</span><span class="xml"> </span><span class="number">221.224</span><span class="xml"></span><span class="number">.78</span><span class="xml"></span><span class="number">.15</span><span class="xml">
+      </span><span class="number">3</span><span class="xml"> </span><span class="number">221.233</span><span class="xml"></span><span class="number">.19</span><span class="xml"></span><span class="number">.137</span><span class="xml">
+       </span><span class="number">1</span><span class="xml"> </span><span class="number">58.63</span><span class="xml"></span><span class="number">.148</span><span class="xml"></span><span class="number">.135</span><span class="xml">
+       </span><span class="number">1</span><span class="xml"> </span><span class="number">222.90</span><span class="xml"></span><span class="number">.66</span><span class="xml"></span><span class="number">.142</span><span class="xml">
+       </span><span class="number">1</span><span class="xml"> </span><span class="number">222.218</span><span class="xml"></span><span class="number">.90</span><span class="xml"></span><span class="number">.239</span><span class="xml">
+       </span><span class="number">1</span><span class="xml"> </span><span class="number">222.182</span><span class="xml"></span><span class="number">.95</span><span class="xml"></span><span class="number">.155</span><span class="xml">
+       </span><span class="number">1</span><span class="xml"> </span><span class="number">221.7</span><span class="xml"></span><span class="number">.249</span><span class="xml"></span><span class="number">.206</span><span class="xml">
+       </span><span class="number">1</span><span class="xml"> </span><span class="number">221.237</span><span class="xml"></span><span class="number">.232</span><span class="xml"></span><span class="number">.191</span><span class="xml">
+       </span><span class="number">1</span><span class="xml"> </span><span class="number">221.235</span><span class="xml"></span><span class="number">.61</span><span class="xml"></span><span class="number">.109</span><span class="xml">
+       </span><span class="number">1</span><span class="xml"> </span><span class="number">219.129</span><span class="xml"></span><span class="number">.183</span><span class="xml"></span><span class="number">.122</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+这个地方有个疑问，为什么在使用uniq之前要sort。
+
+求</span><span class="number">2</span><span class="xml">个数之和
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` #/bin/bash
+ typeset first second
+ read -p "Input the first number:" first
+ read -p "Input the second number:" second
+ result=$[</span><span class="variable">$first</span><span class="xml">+</span><span class="variable">$second</span><span class="xml">]
+ echo "result is : </span><span class="variable">$result</span><span class="xml">"
+ exit </span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+ 文本分析
+取出password中shell出现的次数
+第一种方法结果:
+    <span class="tag">&lt;<span class="title">pre</span>&gt;</span>`   </span><span class="number">4</span><span class="xml"> /bin/bash
+       </span><span class="number">1</span><span class="xml"> /bin/sync
+       </span><span class="number">1</span><span class="xml"> /sbin/halt
+      </span><span class="number">31</span><span class="xml"> /sbin/nologin
+       </span><span class="number">1</span><span class="xml"> /sbin/shutdown`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+第二种方法结果:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` /bin/sync       </span><span class="number">1</span><span class="xml">
+ /bin/bash       </span><span class="number">1</span><span class="xml">
+ /sbin/nologin   </span><span class="number">30</span><span class="xml">
+ /sbin/halt      </span><span class="number">1</span><span class="xml">
+ /sbin/shutdown  </span><span class="number">1</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+答案：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`cat /etc/passwd|awk -F: '{if (</span><span class="variable">$7</span><span class="xml">!="") print </span><span class="variable">$7}</span><span class="xml">'|sort|uniq –c
+ cat /etc/passwd|awk -F: '{if (</span><span class="variable">$7</span><span class="xml">!="") print </span><span class="variable">$7}</span><span class="xml">'|sort|uniq -c | awk '{print </span><span class="variable">$2</span><span class="xml">,</span><span class="variable">$1}</span><span class="xml">'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+文件整理
+employee文件中记录了工号和姓名
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` employee.txt:
+ </span><span class="number">100</span><span class="xml"> Jason Smith 
+ </span><span class="number">200</span><span class="xml"> John Doe 
+ </span><span class="number">300</span><span class="xml"> Sanjay Gupta 
+ </span><span class="number">400</span><span class="xml"> Ashok Sharma 
+ bonus文件中记录工号和工资
+ bonus.txt:
+ </span><span class="number">100</span><span class="xml"> </span><span class="variable">$5</span><span class="xml">,</span><span class="number">000</span><span class="xml"> 
+ </span><span class="number">200</span><span class="xml"> </span><span class="variable">$500</span><span class="xml"> 
+ </span><span class="number">300</span><span class="xml"> </span><span class="variable">$3</span><span class="xml">,</span><span class="number">000</span><span class="xml"> 
+ </span><span class="number">400</span><span class="xml"> </span><span class="variable">$1</span><span class="xml">,</span><span class="number">250</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+要求把两个文件合并并输出如下
+ 处理结果
+ <span class="tag">&lt;<span class="title">pre</span>&gt;</span>`</span><span class="number">400</span><span class="xml"> ashok sharma </span><span class="variable">$1</span><span class="xml">,</span><span class="number">250</span><span class="xml">
+ </span><span class="number">100</span><span class="xml"> jason smith  </span><span class="variable">$5</span><span class="xml">,</span><span class="number">000</span><span class="xml">
+ </span><span class="number">200</span><span class="xml"> john doe  </span><span class="variable">$500</span><span class="xml">
+ </span><span class="number">300</span><span class="xml"> sanjay gupta  </span><span class="variable">$3</span><span class="xml">,</span><span class="number">000</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+答案：join employee bonus | sort -k </span><span class="number">2</span><span class="xml">
+ 打印本机的交换分区大小
+处理结果:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` Swap:</span><span class="number">1024</span><span class="xml">M
+free -m | sed -n '/Swap/p' | awk '{ print </span><span class="variable">$2}</span><span class="xml">'
+ free -m | sed -n 's/Swap:\ *\([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]*\).*/\</span><span class="number">1</span><span class="xml">/p'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+输出本机创建</span><span class="number">20000</span><span class="xml">个目录所用的时间
+处理结果:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` real    </span><span class="number">0</span><span class="xml">m3</span><span class="number">.367</span><span class="xml">s
+ user    </span><span class="number">0</span><span class="xml">m0</span><span class="number">.066</span><span class="xml">s
+ sys     </span><span class="number">0</span><span class="xml">m1</span><span class="number">.925</span><span class="xml">s`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+答案：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` # time for i in {</span><span class="number">1.</span><span class="xml"></span><span class="number">.2000</span><span class="xml">} ; do mkdir /root/neil</span><span class="variable">$i</span><span class="xml">; done
+  real    </span><span class="number">0</span><span class="xml">m6</span><span class="number">.200</span><span class="xml">s
+ user    </span><span class="number">0</span><span class="xml">m1</span><span class="number">.128</span><span class="xml">s
+ sys     </span><span class="number">0</span><span class="xml">m4</span><span class="number">.710</span><span class="xml">s`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+打印当前sshd的端口和进程id
+ 处理结果:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` sshd Port&amp;&amp;pid: </span><span class="number">22</span><span class="xml"> </span><span class="number">5412</span><span class="xml">
+ 答案：netstat -anp | grep sshd | sed -n 's/.*:::\([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]*\)\ .* \ \([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]*\)\/sshd/\</span><span class="number">1</span><span class="xml"> \</span><span class="number">2</span><span class="xml">/p'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+打印root可以使用可执行文件数
+ 处理结果:
+ <span class="tag">&lt;<span class="title">pre</span>&gt;</span>`root's bins: </span><span class="number">2306</span><span class="xml">
+ echo "root's bins: $(find ./ -type f | xargs ls -l | sed '/-..x/p' | wc -l)"
+ root's bins: </span><span class="number">3664</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+编译当前目录下的所有.c文件：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` for file in *.c; do echo </span><span class="variable">$file</span><span class="xml"> ; gcc -o $(basename </span><span class="variable">$file</span><span class="xml"> .c) </span><span class="variable">$file</span><span class="xml">  ; sleep </span><span class="number">2</span><span class="xml">;  done &gt; compile </span><span class="number">2</span><span class="xml">&gt;&amp;</span><span class="number">1</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+将一目录下所有的文件的扩展名改为bak
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` for i in *.*;do mv </span><span class="variable">$i</span><span class="xml"> </span><span class="variable">${i</span><span class="xml">%%.*}.bak;done </span>
+</pre></figure></code></pre>
+<p>转自：oychw.cublog.cn</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T09:11:33.000Z"><a href="/2010/12/19/linux-if-use/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-if-use/">linux if 命令使用</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>linux if命令
+无论什么编程语言都离不开条件判断。SHELL也不例外。</p>
+<pre><code><figure class="highlight"><pre><span class="keyword">if</span> list <span class="keyword">then</span>
+<span class="keyword">do</span> something here
+<span class="keyword">elif</span> list <span class="keyword">then</span>
+<span class="keyword">do</span> another thing here
+<span class="keyword">else</span>
+<span class="keyword">do</span> something <span class="keyword">else</span> here
+<span class="keyword">fi</span>`&lt;/pre&gt;
+
+EX1:
+&lt;pre&gt;`<span class="shebang">#!/bin/sh</span>
+SYSTEM=`uname -s` <span class="comment">#获取操作系统类型，我本地是linux</span>
+<span class="keyword">if</span> <span class="test_condition">[ <span class="variable">$SYSTEM</span> = <span class="string">"Linux"</span> ]</span> ; <span class="keyword">then</span> <span class="comment">#如果是linux的话打印linux字符串</span>
+<span class="keyword">echo</span> <span class="string">"Linux"</span>
+<span class="keyword">elif</span> <span class="test_condition">[ <span class="variable">$SYSTEM</span> = <span class="string">"FreeBSD"</span> ]</span> ; <span class="keyword">then</span>
+<span class="keyword">echo</span> <span class="string">"FreeBSD"</span>
+<span class="keyword">elif</span> <span class="test_condition">[ <span class="variable">$SYSTEM</span> = <span class="string">"Solaris"</span> ]</span> ; <span class="keyword">then</span>
+<span class="keyword">echo</span> <span class="string">"Solaris"</span>
+<span class="keyword">else</span>
+<span class="keyword">echo</span> <span class="string">"What?"</span>
+<span class="keyword">fi</span> <span class="comment">#ifend`&lt;/pre&gt;</span>
+
+基本上和其他脚本语言一样。没有太大区别。不过值得注意的是。[]里面的条件判断。
+1 字符串判断
+&lt;pre&gt;`str1 = str2　　　　　　当两个串有相同内容、长度时为真
+str1 != str2　　　　　 当串str1和str2不等时为真
+-n str1　　　　　　　 当串的长度大于0时为真(串非空)
+-z str1　　　　　　　 当串的长度为0时为真(空串)
+str1 当串str1为非空时为真`&lt;/pre&gt;
+
+2 数字的判断
+&lt;pre&gt;`int1 -eq int2　　　　两数相等为真
+int1 -ne int2　　　　两数不等为真
+int1 -gt int2　　　　int1大于int2为真
+int1 -ge int2　　　　int1大于等于int2为真
+int1 -lt int2　　　　int1小于int2为真
+int1 -le int2　　　　int1小于等于int2为真`&lt;/pre&gt;
+
+3 文件的判断
+&lt;pre&gt;`-r file　　　　　用户可读为真
+-w file　　　　　用户可写为真
+-x file　　　　　用户可执行为真
+-f file　　　　　文件为正规文件为真
+-d file　　　　　文件为目录为真
+-c file　　　　　文件为字符特殊文件为真
+-b file　　　　　文件为块特殊文件为真
+-s file　　　　　文件大小非0时为真
+-t file　　　　　当文件描述符(默认为1)指定的设备为终端时为真`&lt;/pre&gt;
+
+3 复杂逻辑判断
+&lt;pre&gt;`-a 　 　　　　　 与
+-o　　　　　　　 或
+!　　　　　　　　非
+</pre></figure></code></pre>
+<p>结尾
+语法虽然简单，但是在SHELL里使用的时候，他的功能变得强大了。</p>
+<p>原文地址 <a href="http://hi.baidu.com/hlxcx/blog/item/6a37bc0624e0f37c020881d9.html">http://hi.baidu.com/hlxcx/blog/item/6a37bc0624e0f37c020881d9.html</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T09:09:46.000Z"><a href="/2010/12/19/python-if-while/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/python-if-while/">python学习笔记 if 与while</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>python学习笔记</p>
+<p>今天练习了二个脚本。对比一下：</p>
+<pre><code><figure class="highlight"><pre><span class="xml">if.py
+</span><span class="comment">#!/usr/bin/python</span><span class="xml">
+</span><span class="comment"># filename if.py</span><span class="xml">
+number = </span><span class="number">23</span><span class="xml">
+guess = int(raw_input('Enter an integer : ')) 
+
+if guess == number:
+  print 'ok.'
+  print ''
+elif guess &amp;lt; number:
+  print 'higher'
+else:
+  print 'low'
+print 'Done' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+运行时提示输入数字，也就是猜数字。
+
+<span class="comment">&lt;!--more--&gt;</span>
+
+如果输入</span><span class="number">23</span><span class="xml">则提示：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`J:\python\pythontest&amp;gt;python if.py
+Enter an integer : </span><span class="number">23</span><span class="xml">
+ok.
+prizes
+Done `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+输入大于</span><span class="number">23</span><span class="xml">的数字提示：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`J:\python\pythontest&amp;gt;python if.py
+Enter an integer : </span><span class="number">25</span><span class="xml">
+low
+Done `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+输入小于</span><span class="number">23</span><span class="xml">的数字提示：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`J:\python\pythontest&amp;gt;python if.py
+Enter an integer : </span><span class="number">22</span><span class="xml">
+higher
+Done `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+**问题：**每次输入一次结束运行然后再运行一次。而不是提示后继续输入
+
+如果把上面的if.py放入while就可以很好的解决这个问题
+while.py
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`#!/usr/bin/python
+</span><span class="comment"># filename if.py</span><span class="xml">
+number = </span><span class="number">23</span><span class="xml">
+running = True 
+
+while running:
+  guess = int(raw_input('Enter an integer : ')) 
+
+  if guess == number:
+    print 'ok.'
+    running = False
+  elif guess &amp;lt; number:
+    print 'higher'
+  else:
+    print 'low'
+else:
+  print 'while loop is over.' 
+
+print 'Done' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+输出结果：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`J:\python\pythontest&amp;gt;python while.py
+Enter an integer : </span><span class="number">25</span><span class="xml">
+low
+Enter an integer : </span><span class="number">22</span><span class="xml">
+higher
+Enter an integer : </span><span class="number">23</span><span class="xml">
+ok.
+while loop is over.
+Done `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+看起来就很舒服。这里需要说明下：
+我们为内建的raw_input函数提供一个字符串，这个字符串被打印在屏幕上，然后等待用户的输入。一旦我们输入一些东西，然后按回车键之后，函数返回 输入。对于raw_input函数来说是一个字符串。我们通过int把这个字符串转换为整数，并把它存储在变量guess中。事实上，int是一个类，不 过你想在对它所需了解的只是它把一个字符串转换为一个整数（假设这个字符串含有一个有效的整数文本信息）。
+
+另：
+在命名的时候python 不能使用以下符号：
+- 空格 、
+可以使用_ 字母 数字组合。敏感大小写
+在编写的时候
+首行不能用一个空格代表缩进
+可以使用 单个制表符 或 两个或四个空格 。
+否则会出现如下的问题：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`i = </span><span class="number">5</span><span class="xml">
+ print 'Hello World' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+当你运行这个程序的时候，你会得到下面的错误：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`File "test.py", line </span><span class="number">2</span><span class="xml">
+    print 'Hello World'
+    ^
+SyntaxError: invalid syntax</span>
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/4/" class="alignleft prev">上一页</a>
+  
+  
+    <a href="/page/6/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/1032/">1032</a><small>1</small></li>
+  
+    <li><a href="/tags/1236/">1236</a><small>1</small></li>
+  
+    <li><a href="/tags/403/">403</a><small>1</small></li>
+  
+    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
+  
+    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
+  
+    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
+  
+    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
+  
+    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
+  
+    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
+  
+    <li><a href="/tags/acl/">acl</a><small>2</small></li>
+  
+    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
+  
+    <li><a href="/tags/apache/">apache</a><small>8</small></li>
+  
+    <li><a href="/tags/arp/">arp</a><small>1</small></li>
+  
+    <li><a href="/tags/awk/">awk</a><small>4</small></li>
+  
+    <li><a href="/tags/bash/">bash</a><small>2</small></li>
+  
+    <li><a href="/tags/best/">best</a><small>1</small></li>
+  
+    <li><a href="/tags/binding/">binding</a><small>1</small></li>
+  
+    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
+  
+    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
+  
+    <li><a href="/tags/browser/">browser</a><small>1</small></li>
+  
+    <li><a href="/tags/cache/">cache</a><small>1</small></li>
+  
+    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>8</small></li>
+  
+    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
+  
+    <li><a href="/tags/chown/">chown</a><small>1</small></li>
+  
+    <li><a href="/tags/commands/">commands</a><small>1</small></li>
+  
+    <li><a href="/tags/content/">content</a><small>1</small></li>
+  
+    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
+  
+    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
+  
+    <li><a href="/tags/creating/">creating</a><small>1</small></li>
+  
+    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
+  
+    <li><a href="/tags/dell/">dell</a><small>1</small></li>
+  
+    <li><a href="/tags/diff/">diff</a><small>1</small></li>
+  
+    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
+  
+    <li><a href="/tags/du/">du</a><small>1</small></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
+  
+    <li><a href="/tags/end/">end</a><small>1</small></li>
+  
+    <li><a href="/tags/epel/">epel</a><small>1</small></li>
+  
+    <li><a href="/tags/etag/">etag</a><small>1</small></li>
+  
+    <li><a href="/tags/expires/">expires</a><small>1</small></li>
+  
+    <li><a href="/tags/find/">find</a><small>1</small></li>
+  
+    <li><a href="/tags/for-1/">for</a><small>1</small></li>
+  
+    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
+  
+    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
+  
+    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
+  
+    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
+  
+    <li><a href="/tags/group/">group</a><small>1</small></li>
+  
+    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
+  
+    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
+  
+    <li><a href="/tags/howto/">howto</a><small>2</small></li>
+  
+    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
+  
+    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
+  
+    <li><a href="/tags/if/">if</a><small>2</small></li>
+  
+    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
+  
+    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
+  
+    <li><a href="/tags/init/">init</a><small>1</small></li>
+  
+    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
+  
+    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
+  
+    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
+  
+    <li><a href="/tags/jk/">jk</a><small>1</small></li>
+  
+    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
+  
+    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/kick/">kick</a><small>1</small></li>
+  
+    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>18</small></li>
+  
+    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
+  
+    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
+  
+    <li><a href="/tags/master/">master</a><small>2</small></li>
+  
+    <li><a href="/tags/metric/">metric</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
+  
+    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
+  
+    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
+  
+    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
+  
+    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
+  
+    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
+  
+    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
+  
+    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
+  
+    <li><a href="/tags/packet/">packet</a><small>1</small></li>
+  
+    <li><a href="/tags/pam/">pam</a><small>1</small></li>
+  
+    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
+  
+    <li><a href="/tags/perl/">perl</a><small>1</small></li>
+  
+    <li><a href="/tags/permission/">permission</a><small>1</small></li>
+  
+    <li><a href="/tags/php-1/">php</a><small>2</small></li>
+  
+    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
+  
+    <li><a href="/tags/pil/">pil</a><small>1</small></li>
+  
+    <li><a href="/tags/port/">port</a><small>1</small></li>
+  
+    <li><a href="/tags/practices/">practices</a><small>1</small></li>
+  
+    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
+  
+    <li><a href="/tags/ps/">ps</a><small>2</small></li>
+  
+    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
+  
+    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
+  
+    <li><a href="/tags/python-1/">python</a><small>3</small></li>
+  
+    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
+  
+    <li><a href="/tags/quick/">quick</a><small>1</small></li>
+  
+    <li><a href="/tags/r410/">r410</a><small>1</small></li>
+  
+    <li><a href="/tags/r710/">r710</a><small>1</small></li>
+  
+    <li><a href="/tags/raw/">raw</a><small>1</small></li>
+  
+    <li><a href="/tags/referer/">referer</a><small>1</small></li>
+  
+    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
+  
+    <li><a href="/tags/repo/">repo</a><small>1</small></li>
+  
+    <li><a href="/tags/resources/">resources</a><small>1</small></li>
+  
+    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
+  
+    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
+  
+    <li><a href="/tags/sar/">sar</a><small>1</small></li>
+  
+    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
+  
+    <li><a href="/tags/sed/">sed</a><small>4</small></li>
+  
+    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
+  
+    <li><a href="/tags/sending/">sending</a><small>1</small></li>
+  
+    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>2</small></li>
+  
+    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
+  
+    <li><a href="/tags/slave/">slave</a><small>2</small></li>
+  
+    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
+  
+    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
+  
+    <li><a href="/tags/spec/">spec</a><small>2</small></li>
+  
+    <li><a href="/tags/squid/">squid</a><small>1</small></li>
+  
+    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>1</small></li>
+  
+    <li><a href="/tags/tar/">tar</a><small>1</small></li>
+  
+    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
+  
+    <li><a href="/tags/tools/">tools</a><small>1</small></li>
+  
+    <li><a href="/tags/top/">top</a><small>1</small></li>
+  
+    <li><a href="/tags/tree/">tree</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
+  
+    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
+  
+    <li><a href="/tags/user/">user</a><small>2</small></li>
+  
+    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>2</small></li>
+  
+    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
+  
+    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/while/">while</a><small>1</small></li>
+  
+    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
+  
+    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
+  
+    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
+  
+    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
+  
+    <li><a href="/tags/yum/">yum</a><small>10</small></li>
+  
+    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
+  
+    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
+  
+    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
+  
+    <li><a href="/tags/优化/">优化</a><small>1</small></li>
+  
+    <li><a href="/tags/内核/">内核</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
+  
+    <li><a href="/tags/参考/">参考</a><small>1</small></li>
+  
+    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
+  
+    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
+  
+    <li><a href="/tags/对比/">对比</a><small>1</small></li>
+  
+    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
+  
+    <li><a href="/tags/日志/">日志</a><small>2</small></li>
+  
+    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
+  
+    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
+  
+    <li><a href="/tags/管理/">管理</a><small>1</small></li>
+  
+    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
+  
+    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
+  
+    <li><a href="/tags/老板/">老板</a><small>1</small></li>
+  
+    <li><a href="/tags/认证/">认证</a><small>1</small></li>
+  
+    <li><a href="/tags/详解/">详解</a><small>3</small></li>
+  
+    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
+  
+    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
+  
+    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

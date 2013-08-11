@@ -1,0 +1,985 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 6 页 | 归档：2010/12 | Puppet-in-action</title>
+  <meta name="author" content="Liu Yu">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Puppet-in-action"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Puppet-in-action</a></h1>
+  <h2><a href="/">Puppet</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2010/12</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T10:59:04.000Z"><a href="/2010/12/17/apache-ssi-shtml-config/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/apache-ssi-shtml-config/">Apache ssi shtml配置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>什么是shtml呢？
+使用SSI(Server Side Include)的html文件扩展名，SSI（Server Side Include)，通常称为&quot;服务器端嵌入&quot;或者叫&quot;服务器端包含&quot;，是一种类似于ASP的基于服务器的网页制作技术。默认扩展名是 .stm、.shtm 和 .shtml。
+什么是SSI？
+SSI是英文Server Side Includes的缩写，翻译成中文就是服务器端包含的意思。从技术角度上说，SSI就是在HTML文件中，可以通过注释行调用的命令或指针。SSI具有 强大的功能，只要使用一条简单的SSI命令就可以实现整个网站的内容更新，时间和日期的动态显示，以及执行shell和CGI脚本程序等复杂的功能。 网站维护常常碰到的一个问题是，网站的结构已经固定，却为了更新一点内容而不得不重做一大批网页。SSI提供了一种简单、有效的方法来解决这一问题，它将 一个网站的基本结构放在几个简单的HTML文件中（模板），以后我们要做的只是将文本传到服务器，让程序按照模板自动生成网页，从而使管理大型网站变得容 易。
+实现方法
+建立头文件
+head.html</p>
+<p>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;</p>
+<p>&quot;<a href="http://www.w3.org/TR/html4/loose.dtd"><a href="http://www.w3.org/TR/html4/loose.dtd">http://www.w3.org/TR/html4/loose.dtd</a></a>&quot;&gt;</p>
+<p>&lt;html&gt;</p>
+<p>&lt;head&gt;</p>
+<p>&lt;title&gt;Untitled Document&lt;/title&gt;</p>
+<p>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=gb2312&quot;&gt;</p>
+<p>&lt;/head&gt;&lt;body&gt;</p>
+<p>&lt;div style=&quot;background-color:#00CC66;boder:1px groove orange &quot;&gt;这是头&lt;/div&gt;</p>
+<p>建立尾文件：
+foot.html</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>这是尾</p>
+<p>&lt;/body&gt;&lt;/html&gt;</p>
+<p>连接头和尾</p>
+<p>&lt;!--#include file=&quot;head.html&quot;--&gt;</p>
+<p>&lt;hr&gt;</p>
+<p>&lt;b&gt;头尾文件内容都显示。表示SSI工作正常。shtml显示正常&lt;/b&gt;</p>
+<p>&lt;hr&gt;</p>
+<p>&lt;!--#include file=&quot;foot.html&quot;--&gt;</p>
+<p>linuxtone.shtml配置文件很简单。</p>
+<p>apache配置如下：
+修改如下几处</p>
+<pre><code><figure class="highlight"><pre><span class="comment">AddType</span> <span class="comment">text/html</span> <span class="string">.</span><span class="comment">shtml</span>
+<span class="comment">AddOutputFilter</span> <span class="comment">INCLUDES</span> <span class="string">.</span><span class="comment">shtml</span>
+<span class="comment">Options</span> <span class="comment">Indexes</span> <span class="comment">FollowSymLinks</span> <span class="comment">includes</span>
+<span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">includes</span> <span class="comment">#为追加</span> <span class="comment">你要是感觉麻烦可以用以下命令替换。</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'s##AddType</span> <span class="comment">text/html</span> <span class="string">.</span><span class="comment">shtml#AddType</span> <span class="comment">text/html</span> <span class="string">.</span><span class="comment">shtml#'</span> <span class="comment">/usr/local/apachefile/httpd</span>.<span class="comment">conf</span>
+<span class="comment">sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'s##AddOutputFilter</span> <span class="comment">INCLUDES</span> <span class="string">.</span><span class="comment">shtml#AddOutputFilter</span> <span class="comment">INCLUDES</span> <span class="string">.</span><span class="comment">shtml#'</span>  <span class="comment">/usr/local/apachefile/httpd</span>.<span class="comment">conf</span>
+<span class="comment">sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'s#Options</span> <span class="comment">Indexes</span> <span class="comment">FollowSymLinks#Options</span> <span class="comment">Indexes</span> <span class="comment">FollowSymLinks</span> <span class="comment">includes</span> <span class="comment">#'</span>  <span class="comment">/usr/local/apachefile/httpd</span>.<span class="comment">conf
+</pre></figure></code></pre>
+<p>shtml 的压缩方法不同于js css php
+方法如下：
+AddOutputFilter INCLUDES;DEFLATE shtml</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T10:55:42.000Z"><a href="/2010/12/17/cache-control-translation/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/cache-control-translation/">Cache-control详解</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>“Cache-control”常见的取值有private、no-cache、max-age、must-revalidate等
+网页的缓存是由HTTP消息头中的“Cache-control”来控制的，常见的取值有private、no-cache、max-age、must-revalidate等，默认为private。其作用根据不同的重新浏览方式分为以下几种情况：</p>
+<p>（1） 打开新窗口
+如果指定cache-control的值为private、no-cache、must-revalidate，那么打开新窗口访问时都会重新访问服务器。而如果指定了max-age值，那么在此值内的时间里就不会重新访问服务器，例如：
+Cache-control: max-age=5
+表示当访问此网页后的5秒内再次访问不会去服务器</p>
+<p>（2） 在地址栏回车
+如果值为private或must-revalidate（和网上说的不一样），则只有第一次访问时会访问服务器，以后就不再访问。如果值为no-cache，那么每次都会访问。如果值为max-age，则在过期之前不会重复访问。</p>
+<p>（3） 按后退按扭
+如果值为private、must-revalidate、max-age，则不会重访问，而如果为no-cache，则每次都重复访问</p>
+<p>（4） 按刷新按扭
+无论为何值，都会重复访问
+当指定Cache-control值为“no-cache”时，访问此页面不会在Internet临时文章夹留下页面备份。
+另外，通过指定“Expires”值也会影响到缓存。例如，指定Expires值为一个早已过去的时间，那么访问此网时若重复在地址栏按回车，那么每次都会重复访问：
+Expires: Fri, 31 Dec 1999 16:00:00 GMT</p>
+<p>在ASP中，可以通过Response对象的Expires、ExpiresAbsolute属性控制Expires值；通过Response对象的CacheControl属性控制Cache-control的值，例如：
+Response.ExpiresAbsolute = #2000-1-1# &#39; 指定绝对的过期时间，这个时间用的是服务器当地时间，会被自动转换为GMT时间
+Response.Expires = 20 &#39; 指定相对的过期时间，以分钟为单位，表示从当前时间起过多少分钟过期。
+Response.CacheControl = &quot;no-cache&quot;
+Expires值是可以通过在Internet临时文件夹中查看临时文件的属性看到的</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T10:54:26.000Z"><a href="/2010/12/17/apache-并发数限制mod_limitipconn/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/apache-并发数限制mod_limitipconn/">Apache 并发数限制mod_limitipconn</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>一、对于mod_limitipconn，其实该模块不仅提供客户端并发联接数的控制能力，从安全角度来说还可以起到对抗固定来源IP地址发起的 DOS攻击，包括来源固定的大量访问请求型攻击（大量GET或POST请求型的攻击），当同一来源IP地址的联接数超过限定的值后，会弹回对方的访问请 求，给对方一个“503服务临时无效”的响应。当Apache服务器受到大量的访问请求型攻击的时候，由于大量的Apache进程及PHP和MYSQL运 行消耗，会导致服务器资源迅速耗尽，网站打开缓慢或瘫痪。如果是此种类型的攻击，使用mod_limitipconn模块则可以有效地提升服务器的抗攻击 能力，因为大量的请求被弹回，节省了服务器运行PHP及MYSQL的性能消耗。当然只要请求进了80端口，不管是接受还是弹回请求，Aapche都有运行 成本，所以此方法只能是减轻而无法解决，毕竟应用层的处理效率是比较低的。</p>
+<p>二、对于网站访问量比较大、使用了mod_limitipconn模块且限制同一客户端并发联接数低于3的情况下，如果用Apache默认的配置参数，极 可能经常出现“服务临时无效”的提示。因为Apache默认是设置“KeepAlive on”，且“KeepAliveTimeout 180”，所以一旦建立联接，那么在3分钟内这个联接是不会被释放的。所以如果网站不同页面点击频率比较高或图片资源比较多的话，会经常出现服务临时无效 的提示。那么有两种方式去解决，一是加大并发联接数的量，比如设置为普通站点10个并发联接数，图片站点则20个。另一种方式就是如果你不想加大这个值的 话，可以设置KeepAlive为off，然后缩短Timeout时间，这样联接会很快被释放出来。具体情况根据需要去调整测试，以得到一个最适合自己站 点情况的值。</p>
+<p>三、如果要同时限制并发联接数与带宽的话，就用bw_mod+mod_limitipconn，因为虽然bw_mod也可以控制并发联接数，但他是针对某 个目录或整个网站的并发联接数，是用来控制服务器端的总联接数，比如设置MaxConnection all 1000，那么这个网站所能接受的最大并发联接数为1000，而并不是限制每一客户端的并发联接数，而mod_limitipconn则是针对同一来源 IP的客户端的并发联接数，所以这两者的联接数限制是有所区别的。
+四、个人感觉用了bw_mod及mod_limitipconn模块后，网站访问速度有所下降，能凭直观地感觉出来，并且CPU的负载有所上升。特别是在 网站访问量比较大的情况下，这两个模块会消耗一定的主机性能，所以轻重权衡这个得大家自己根据情况来采用了。另外bw_mod里有个参数是用来设置控制精 度与频率的，默认是1000毫秒，如果你想提高带宽控制精度就改小这个数值，但会消耗更多的CPU资源，反之亦然，降低精度可提升性能。</p>
+<p><a href="http://dominia.org/djao/limitipconn.html">http://dominia.org/djao/limitipconn.html</a></p>
+<p>tar xzvf mod_limitipconn-0.04.tar.gz
+cd mod_limitipconn-0.04
+make
+make install</p>
+<p>You can also copy the source file over to the Apache source tree and rebuild your httpd statically. The highlighted text below illustrates how to enable the proxy client detection feature; it can be omitted if you don&#39;t want this feature.</p>
+<p>tar xzvf apache_1.3.27.tar.gz
+tar xzvf mod_limitipconn-0.04.tar.gz
+cd apache_1.3.27
+patch -p1 &lt; ../mod_limitipconn-0.04/apachesrc.diff
+cp ../mod_limitipconn-0.04/mod_limitipconn.c src/modules/extra/
+./configure --activate-module=src/modules/extra/mod_limitipconn.c --with-forward
+make
+make install</p>
+<p>EXP：</p>
+<pre><code><figure class="highlight"><pre>ExtendedStatus <span class="keyword">On</span>
+
+# Only needed <span class="keyword">if</span> the module <span class="keyword">is</span> compiled as a DSO
+LoadModule limitipconn_module lib/apache/mod_limitipconn.so
+AddModule mod_limitipconn.c
+
+    MaxConnPerIP <span class="number">3</span>
+    # exempting images from the connection limit <span class="keyword">is</span> often a good
+    # idea <span class="keyword">if</span> your web page has lots <span class="keyword">of</span> inline images, since these
+    # pages often <span class="keyword">generate</span> a flurry <span class="keyword">of</span> concurrent image requests
+    NoIPLimit image<span class="comment">/*
+
+    MaxConnPerIP 1
+    # In this case, all MIME types other than audio/mpeg and video*
+    # are exempt from the limit check
+    OnlyIPLimit audio/mpeg video
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T10:52:52.000Z"><a href="/2010/12/17/apache-mod_cband/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/apache-mod_cband/">Apache 带宽限制mod_cband </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>CBandLimit 100M
+    CBandSpeed 1024 10 30
+    CBandRemoteSpeed 10kb/s 3 2
+    CBandPeriod 4W
+    SetHandler cband-status
+    SetHandler cband-status-me</p>
+<p>解释：
+CBandLimit 100M</p>
+<h1>总带宽</h1>
+<h1>Maximal 1024kbps speed for this virtualhost</h1>
+<h1>Maximal 10 requests per second for this virtualhost</h1>
+<h1>Maximal 30 open connections for this virtualhost</h1>
+<p>CBandSpeed 1024 10 30
+限制此虚拟主机最高访问速度1024kbps
+限制此虚拟主机每秒最高接受请求数10个
+限制此虚拟主机最高并发连接30个</p>
+<h1>Maximal 10kB/s speed, 3 requests/s and 2 open connections for any remote client</h1>
+<p>CBandRemoteSpeed 10kb/s 3 2
+限制来自远端访问速度10kB每秒，3个请求每秒，2个连接。</p>
+<h1>a period of time after which the scoreboard will be cleared (4 weeks)</h1>
+<p>CBandPeriod 4W
+设定多久对所记录的全局访问带宽进行重设（清零）。
+4W=4 weeks 4周（一个月）</p>
+<h1>Then you can access the status page with a URL like:<a href="http://server_name/cband-status">http://server_name/cband-status</a></h1>
+<p>SetHandler cband-status
+开启了mod_cband的实时监测功能，可以通过<a href="http://server_name/cband-status进行直观的观测。（全局监测）">http://server_name/cband-status进行直观的观测。（全局监测）</a></p>
+<h1>Then you can access the status page with a URL like:<a href="http://server_name/cband-status-me">http://server_name/cband-status-me</a></h1>
+<p>SetHandler cband-status-me</p>
+<p>开启了mod_cband的实时监测功能，可以通过<a href="http://server_name/cband-status-me进行直观的观测。（单一监测）">http://server_name/cband-status-me进行直观的观测。（单一监测）</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T10:51:14.000Z"><a href="/2010/12/17/apache-exclude-log/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/apache-exclude-log/">Apache过滤日志</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>.过滤掉无需记录的日志</p>
+<h1>在httpd.conf 的</h1>
+<p>LogFormat &quot;%{X-Forwarded-For}i %l %u %t \&quot;%r\&quot; %&gt;s %b \&quot;%{Referer}i\&quot; \&quot;%{User-Agent}i\&quot;&quot; combined
+后面加入如下:</p>
+<pre><code><figure class="highlight"><pre><span class="comment"># filter the localhost visit</span>
+<span class="keyword">SetEnvIf</span> Remote_Addr <span class="string">"127\.0\.0\.1"</span> dontlog
+<span class="comment"># filter some special directories</span>
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"^ZendPlatform.*$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI \.healthcheck\.html$ dontlog
+<span class="keyword">SetEnvIf</span> Remote_Addr <span class="string">"::1"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.getPing.php$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"^/error\.html$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.gif$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.jpg$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.css$"</span> dontlog
+`<span class="tag">&lt;/pre&gt;</span>
+其它根据自己的需要做一些调整。
+另一种日志不记录图片的方法：
+<span class="tag">&lt;pre&gt;</span>`<span class="keyword">SetEnv</span> dontlog 1
+<span class="keyword">CustomLog</span> logs/access_log combined env=!dontlog
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T10:48:24.000Z"><a href="/2010/12/17/apache-referer/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/apache-referer/">Apache referer防盗链</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>防盗链原理：
+http标准协议中有专门的字段记录referer
+一来可以追溯上一个入站地址是什么
+二来对于资源文件，可以跟踪到包含显示他的网页地址是什么。
+因此所有防盗链方法都是基于这个Referer字段
+主要有两种方法实现
+第一种：使用FilesMatch</p>
+<pre><code><figure class="highlight"><pre>    <span class="keyword">ServerAdmin</span> laogui@gmail.com
+    <span class="keyword">DocumentRoot</span> D:/www/www.chinahtml.com
+    <span class="keyword">ServerName</span> www.aaa.com
+    <span class="keyword">ServerName</span> aaa.com
+    盗用连接指定显示的页面。也可以不用此项，这样盗用连接也可无法使用。
+    <span class="keyword">ErrorDocument</span> 404 http://www.chinahtml.com/error.html
+    允许www.aaa.com的网站使用
+    <span class="keyword">SetEnvIfNoCase</span> Referer <span class="string">"^http://www.aaa.com"</span> local_ref=1
+    允许 aaa.com  的网站使用
+    <span class="keyword">SetEnvIfNoCase</span> Referer <span class="string">"^http://aaa.com"</span> local_ref=1
+    定义防盗文件的扩展名
+
+        <span class="keyword">Order</span> <span class="keyword">Allow</span>,<span class="keyword">Deny</span>
+        <span class="keyword">Allow</span> from env=local_ref  允许上面指定域`<span class="tag">&lt;/pre&gt;</span>
+防盗链设置样本：使用正则表达式
+<span class="tag">&lt;pre&gt;</span>`<span class="keyword">SetEnvIf</span> Referer <span class="string">"^http://(.)+\.ilinux\.cn/"</span> local_ref=1
+    <span class="keyword">SetEnvIf</span> Referer <span class="string">"^http://(.)+\.isql\.cn/"</span> local_ref=1
+    <span class="comment">#SetEnvIf Referer "^http://(.)+\.other\.org\.cn/" local_ref=1</span>
+    <span class="keyword">SetEnvIf</span> Request_URI <span class="string">"/logo(.)+"</span> local_ref=0
+
+    <span class="keyword">Order</span> <span class="keyword">Allow</span>,<span class="keyword">Deny</span>
+    <span class="keyword">Allow</span> from env=local_ref
+`<span class="tag">&lt;/pre&gt;</span>
+解释：
+1\. 蓝色部分，表示设置允许访问的referer地址，第一行的意思为所有http协议访问，以.ilinux.cn结尾的域名地址，第二行类似，只是换成 了.isql.cn，表问我前面的鬼符是什么，不懂得可以去翻正则表达式的研究文献，不想深究的可以照猫画虎设置自己的网站。
+2\. 绿色部分，表示不在上述引用域名范围内，但可以被放行的特例，本例中表示网站/目录，所有以logo开头的文件(用作允许其它网站的友情连接引用本站logo)。
+3\. 橙色部分是设置反盗链的关键部分，上面每一个设置都联系到了local_ref这个环境变量，只有这个变量为1，则允许被引用，否则显示一个X。
+4\. 紫色部分设置了哪些扩展名的文件加入反盗链的规则。
+第二种方法：
+使用rewirte方式：
+<span class="tag">&lt;pre&gt;</span>`<span class="keyword">RewriteEngine</span> <span class="literal">on</span>
+    <span class="keyword">RewriteCond</span> <span class="cbracket">%{HTTP_REFERER}</span> !^$
+    <span class="keyword">RewriteCond</span> <span class="cbracket">%{HTTP_REFERER}</span> !^http://bbs.ilinux.cn/.*$   <span class="sqbracket"> [NC]</span>
+    <span class="keyword">RewriteCond</span> <span class="cbracket">%{HTTP_REFERER}</span> !^http://bbs.ilinux.cn$     <span class="sqbracket"> [NC]</span>
+    <span class="keyword">RewriteCond</span> <span class="cbracket">%{HTTP_REFERER}</span> !^http://www.ilinux.cn/.*$     <span class="sqbracket"> [NC]</span>
+    <span class="keyword">RewriteCond</span> <span class="cbracket">%{HTTP_REFERER}</span> !^http://www.ilinux.cn$     <span class="sqbracket"> [NC]</span>
+    <span class="keyword">RewriteCond</span> <span class="cbracket">%{HTTP_REFERER}</span> !^http://ilinux.cn/.*$     <span class="sqbracket"> [NC]</span>
+    <span class="keyword">RewriteCond</span> <span class="cbracket">%{HTTP_REFERER}</span> !^http://ilinux.cn$     <span class="sqbracket"> [NC]</span>
+    <span class="keyword">RewriteRule</span> .*\.(gif|jpg|jpeg|avi|bmp|ram|rmvb|rm|rar|zip)$ http://www.ilinux.cn<span class="sqbracket"> [R,NC]</span>
+`<span class="tag">&lt;/pre&gt;</span>
+上面的，需要Rewrite模板．所有指定的文件，如果Referer不是上面的值，将被重定向到首页．
+还有使用.htaccess 文件的方法，不过不推荐使用，影响apache性能。
+写一个.htaccess
+包括以下代码：
+<span class="tag">&lt;pre&gt;</span>`<span class="keyword">SetEnvIfNoCase</span> Referer <span class="string">"^http://google\.com/"</span> local_ref=1
+
+<span class="keyword">Order</span> <span class="keyword">Allow</span>,<span class="keyword">Deny</span>
+<span class="keyword">Allow</span> from env=local_ref
+<span class="keyword">Allow</span> from 127.0.0.1
+<span class="keyword">Allow</span> from 123.123.123.12
+</pre></figure></code></pre>
+<p>如果你的网址是www.myst.cn就改为
+SetEnvIfNoCase Referer &quot;^<a href="http://www\.myst\.com/">http://www\.myst\.com/</a>&quot; local_ref=1</p>
+<p>这意思是说防止人家连结你的jpg档案.可以增修为</p>
+<p>ps.最后一个不使用区各线
+Allow from 127.0.0.1
+这表示允许连结主机的IP。
+你要是默认其他网站可以连结的话，就填入该主机IP，把上述的code储存为.htaccess然后放入你安装的目录下即可。
+出自：<a href="http://blog.chinaunix.net/u/11765/showart_236561.html">http://blog.chinaunix.net/u/11765/showart_236561.html</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T10:21:01.000Z"><a href="/2010/12/17/apache-etag-expires-gzip/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/apache-etag-expires-gzip/">Apache etag expires gzip </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在Apache的配置文件中找到下面两行，将注释#去掉，重启。</p>
+<pre><code><figure class="highlight"><pre><span class="keyword">LoadModule</span> deflate_module modules/mod_deflate.so
+<span class="keyword">LoadModule</span> expires_module modules/mod_expires.so
+`<span class="tag">&lt;/pre&gt;</span>
+在你网站的目录下新建.htaccess，添加如下内容：
+<span class="tag">&lt;pre&gt;</span>`<span class="keyword">ExpiresActive</span> <span class="literal">On</span>
+<span class="keyword">ExpiresByType</span> image/gif A2592000
+<span class="keyword">ExpiresByType</span> image/jpeg A2592000
+<span class="keyword">ExpiresByType</span> image/png A2592000
+<span class="keyword">ExpiresByType</span> image/x-icon A2592000
+<span class="keyword">ExpiresByType</span> application/x-javascript A604800
+<span class="keyword">ExpiresByType</span> text/css A604800
+<span class="keyword">SetOutputFilter</span> DEFLATE
+<span class="keyword">AddOutputFilterByType</span> DEFLATE text/html text/css image/gif image/jpeg image/png application/x-javascript
+`<span class="tag">&lt;/pre&gt;</span>
+解释一下。<span class="keyword">ExpiresByType</span> 是通过MIME类型来设置具体文件的缓存时间，A表示访问，A后面的数字表示访问后的缓存时间。<span class="keyword">AddOutputFilterByType</span>表示根据后面 的MIME类型来压缩文件，这里对css，html，gif，jpeg，png，JavaScript等进行gzip压缩。更多选项请参考apache手 册哦。
+关闭ETag。Etag的问题在于，它是根据可以辨别网站所在的服务器的具有唯一性的属性来生成的。当浏览器从一台服务器上获得页面 内容后到另外一台服务器上进行验证时ETag就会不匹配，这种情况对于使用服务器组和处理请求的网站来说是非常常见的。在配置文件中写入下面一行即可：
+<span class="tag">&lt;pre&gt;</span>`<span class="keyword">FileETag</span> none
+<span class="keyword">DeflateCompressionLevel</span> 3
+<span class="keyword">AddOutputFilter</span> DEFLATE html xml php js css
+<span class="keyword">SetOutputFilter</span> DEFLATE
+<span class="keyword">BrowserMatch</span> ^Mozilla/4 gzip-only-text/html
+<span class="keyword">BrowserMatch</span> ^Mozilla/4\.0[678] no-gzip
+<span class="keyword">BrowserMatch</span> \bMSIE !no-gzip !gzip-only-text/html
+<span class="keyword">SetEnvIfNoCase</span> Request_URI \\.(?:gif|jpe?g|png)$ no-gzip dont-vary
+<span class="keyword">SetEnvIfNoCase</span> Request_URI .(?:exe|t?gz|zip|bz2|sit|rar)$ no-gzip dont-vary
+<span class="keyword">SetEnvIfNoCase</span> Request_URI .(?:pdf|mov|avi|mp3|mp4|rm)$ no-gzip dont-vary
+<span class="keyword">Header</span> append Vary <span class="keyword">User</span>-Agent env=!dont-vary
+</pre></figure></code></pre>
+<p>如果是多服务器负载均衡，可以设置为FileETag MTime Size，apache默认设置为FileETag INode MTime Size，去掉INode。</p>
+<p>经过上面的设置，开启YSlow，评分A(96)。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T06:25:01.000Z"><a href="/2010/12/17/hello-world/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/hello-world/">Hello world！</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>欢迎使用 WordPress。这是系统自动生成的演示文章。编辑或者删除它，开始您的博客！</p>
+<pre><code><figure class="highlight"><pre><span class="shebang">#!/usr/local/bin/perl</span>
+print “Hello, world!\n”;
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/archives/2010/12/page/5/" class="alignleft prev">上一页</a>
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/1032/">1032</a><small>1</small></li>
+  
+    <li><a href="/tags/1236/">1236</a><small>1</small></li>
+  
+    <li><a href="/tags/403/">403</a><small>1</small></li>
+  
+    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
+  
+    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
+  
+    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
+  
+    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
+  
+    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
+  
+    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
+  
+    <li><a href="/tags/acl/">acl</a><small>2</small></li>
+  
+    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
+  
+    <li><a href="/tags/apache/">apache</a><small>8</small></li>
+  
+    <li><a href="/tags/arp/">arp</a><small>1</small></li>
+  
+    <li><a href="/tags/awk/">awk</a><small>4</small></li>
+  
+    <li><a href="/tags/bash/">bash</a><small>2</small></li>
+  
+    <li><a href="/tags/best/">best</a><small>1</small></li>
+  
+    <li><a href="/tags/binding/">binding</a><small>1</small></li>
+  
+    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
+  
+    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
+  
+    <li><a href="/tags/browser/">browser</a><small>1</small></li>
+  
+    <li><a href="/tags/cache/">cache</a><small>1</small></li>
+  
+    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>8</small></li>
+  
+    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
+  
+    <li><a href="/tags/chown/">chown</a><small>1</small></li>
+  
+    <li><a href="/tags/commands/">commands</a><small>1</small></li>
+  
+    <li><a href="/tags/content/">content</a><small>1</small></li>
+  
+    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
+  
+    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
+  
+    <li><a href="/tags/creating/">creating</a><small>1</small></li>
+  
+    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
+  
+    <li><a href="/tags/dell/">dell</a><small>1</small></li>
+  
+    <li><a href="/tags/diff/">diff</a><small>1</small></li>
+  
+    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
+  
+    <li><a href="/tags/du/">du</a><small>1</small></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
+  
+    <li><a href="/tags/end/">end</a><small>1</small></li>
+  
+    <li><a href="/tags/epel/">epel</a><small>1</small></li>
+  
+    <li><a href="/tags/etag/">etag</a><small>1</small></li>
+  
+    <li><a href="/tags/expires/">expires</a><small>1</small></li>
+  
+    <li><a href="/tags/find/">find</a><small>1</small></li>
+  
+    <li><a href="/tags/for-1/">for</a><small>1</small></li>
+  
+    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
+  
+    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
+  
+    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
+  
+    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
+  
+    <li><a href="/tags/group/">group</a><small>1</small></li>
+  
+    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
+  
+    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
+  
+    <li><a href="/tags/howto/">howto</a><small>2</small></li>
+  
+    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
+  
+    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
+  
+    <li><a href="/tags/if/">if</a><small>2</small></li>
+  
+    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
+  
+    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
+  
+    <li><a href="/tags/init/">init</a><small>1</small></li>
+  
+    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
+  
+    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
+  
+    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
+  
+    <li><a href="/tags/jk/">jk</a><small>1</small></li>
+  
+    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
+  
+    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/kick/">kick</a><small>1</small></li>
+  
+    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>18</small></li>
+  
+    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
+  
+    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
+  
+    <li><a href="/tags/master/">master</a><small>2</small></li>
+  
+    <li><a href="/tags/metric/">metric</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
+  
+    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
+  
+    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
+  
+    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
+  
+    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
+  
+    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
+  
+    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
+  
+    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
+  
+    <li><a href="/tags/packet/">packet</a><small>1</small></li>
+  
+    <li><a href="/tags/pam/">pam</a><small>1</small></li>
+  
+    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
+  
+    <li><a href="/tags/perl/">perl</a><small>1</small></li>
+  
+    <li><a href="/tags/permission/">permission</a><small>1</small></li>
+  
+    <li><a href="/tags/php-1/">php</a><small>2</small></li>
+  
+    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
+  
+    <li><a href="/tags/pil/">pil</a><small>1</small></li>
+  
+    <li><a href="/tags/port/">port</a><small>1</small></li>
+  
+    <li><a href="/tags/practices/">practices</a><small>1</small></li>
+  
+    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
+  
+    <li><a href="/tags/ps/">ps</a><small>2</small></li>
+  
+    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
+  
+    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
+  
+    <li><a href="/tags/python-1/">python</a><small>3</small></li>
+  
+    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
+  
+    <li><a href="/tags/quick/">quick</a><small>1</small></li>
+  
+    <li><a href="/tags/r410/">r410</a><small>1</small></li>
+  
+    <li><a href="/tags/r710/">r710</a><small>1</small></li>
+  
+    <li><a href="/tags/raw/">raw</a><small>1</small></li>
+  
+    <li><a href="/tags/referer/">referer</a><small>1</small></li>
+  
+    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
+  
+    <li><a href="/tags/repo/">repo</a><small>1</small></li>
+  
+    <li><a href="/tags/resources/">resources</a><small>1</small></li>
+  
+    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
+  
+    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
+  
+    <li><a href="/tags/sar/">sar</a><small>1</small></li>
+  
+    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
+  
+    <li><a href="/tags/sed/">sed</a><small>4</small></li>
+  
+    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
+  
+    <li><a href="/tags/sending/">sending</a><small>1</small></li>
+  
+    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>2</small></li>
+  
+    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
+  
+    <li><a href="/tags/slave/">slave</a><small>2</small></li>
+  
+    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
+  
+    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
+  
+    <li><a href="/tags/spec/">spec</a><small>2</small></li>
+  
+    <li><a href="/tags/squid/">squid</a><small>1</small></li>
+  
+    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>1</small></li>
+  
+    <li><a href="/tags/tar/">tar</a><small>1</small></li>
+  
+    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
+  
+    <li><a href="/tags/tools/">tools</a><small>1</small></li>
+  
+    <li><a href="/tags/top/">top</a><small>1</small></li>
+  
+    <li><a href="/tags/tree/">tree</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
+  
+    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
+  
+    <li><a href="/tags/user/">user</a><small>2</small></li>
+  
+    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>2</small></li>
+  
+    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
+  
+    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/while/">while</a><small>1</small></li>
+  
+    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
+  
+    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
+  
+    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
+  
+    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
+  
+    <li><a href="/tags/yum/">yum</a><small>10</small></li>
+  
+    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
+  
+    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
+  
+    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
+  
+    <li><a href="/tags/优化/">优化</a><small>1</small></li>
+  
+    <li><a href="/tags/内核/">内核</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
+  
+    <li><a href="/tags/参考/">参考</a><small>1</small></li>
+  
+    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
+  
+    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
+  
+    <li><a href="/tags/对比/">对比</a><small>1</small></li>
+  
+    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
+  
+    <li><a href="/tags/日志/">日志</a><small>2</small></li>
+  
+    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
+  
+    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
+  
+    <li><a href="/tags/管理/">管理</a><small>1</small></li>
+  
+    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
+  
+    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
+  
+    <li><a href="/tags/老板/">老板</a><small>1</small></li>
+  
+    <li><a href="/tags/认证/">认证</a><small>1</small></li>
+  
+    <li><a href="/tags/详解/">详解</a><small>3</small></li>
+  
+    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
+  
+    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
+  
+    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

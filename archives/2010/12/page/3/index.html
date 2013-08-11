@@ -1,0 +1,1515 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 3 页 | 归档：2010/12 | Puppet-in-action</title>
+  <meta name="author" content="Liu Yu">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Puppet-in-action"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Puppet-in-action</a></h1>
+  <h2><a href="/">Puppet</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2010/12</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:52:33.000Z"><a href="/2010/12/19/linux-ps-detailed/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-ps-detailed/">linux ps 命令详解 </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>linux ps(process status) 命令详解
+功能说明：报告程序状况。</p>
+<p><strong>语　　法</strong>：ps [-aAcdefHjlmNVwy][acefghLnrsSTuvxX][-C &lt;指令名称&gt;][-g &lt;群组名称&gt;][-G &lt;群组识别码&gt;][-p &lt;程序识别码&gt;][p &lt;程序识别码&gt;][-s &lt;阶段作业&gt;][-t &lt;终端机编号&gt;][t &lt;终端机编号&gt;][-u &lt;用户识别码&gt;][-U &lt;用户识别码&gt;][U &lt;用户名称&gt;][-&lt;程序识别码&gt;][--cols &lt;每列字符数&gt;][--columns &lt;每列字符数&gt;][--cumulative][--deselect][--forest][--headers][--help] [--info][--lines &lt;显示列数&gt;][--no-headers][--group &lt;群组名称&gt;][-Group &lt;群组识别码&gt;][--pid &lt;程序识别码&gt;][--rows &lt;显示列数&gt;][--sid &lt;阶段作业&gt;][--tty &lt;终端机编号&gt;][--user &lt;用户名称&gt;][--User &lt;用户识别码&gt;][--version][--width &lt;每列字符数&gt;]
+补充说明：ps是用来报告程序执行状况的指令，您可以搭配kill指令随时中断，删除不必要的程序。
+<strong>
+参　　数：</strong>
+-a 　显示所有终端机下执行的程序，除了阶段作业领导者之外。
+a 　显示现行终端机下的所有程序，包括其他用户的程序。
+-A 　显示所有程序。
+-c 　显示CLS和PRI栏位。
+c 　列出程序时，显示每个程序真正的指令名称，而不包含路径，参数或常驻服务的标示。
+-C&lt;指令名称&gt; 指定执行指令的名称，并列出该指令的程序的状况。
+-d 　显示所有程序，但不包括阶段作业领导者的程序。
+-e 　此参数的效果和指定&quot;A&quot;参数相同。
+e 　列出程序时，显示每个程序所使用的环境变量。
+-f 　显示UID,PPIP,C与STIME栏位。
+f 　用ASCII字符显示树状结构，表达程序间的相互关系。
+-g&lt;群组名称&gt; 此参数的效果和指定&quot;-G&quot;参数相同，当亦能使用阶段作业领导者的名称来指定。
+g 　显示现行终端机下的所有程序，包括群组领导者的程序。
+-G&lt;群组识别码&gt; 列出属于该群组的程序的状况，也可使用群组名称来指定。
+h 　不显示标题列。
+-H 　显示树状结构，表示程序间的相互关系。
+-j或j 　采用工作控制的格式显示程序状况。
+-l或l 　采用详细的格式来显示程序状况。
+L 　列出栏位的相关信息。
+-m或m 　显示所有的执行绪。
+n 　以数字来表示USER和WCHAN栏位。
+-N 　显示所有的程序，除了执行ps指令终端机下的程序之外。
+-p&lt;程序识别码&gt; 指定程序识别码，并列出该程序的状况。
+p&lt;程序识别码&gt; 此参数的效果和指定&quot;-p&quot;参数相同，只在列表格式方面稍有差异。
+r 　只列出现行终端机正在执行中的程序。
+-s&lt;阶段作业&gt; 指定阶段作业的程序识别码，并列出隶属该阶段作业的程序的状况。
+s 　采用程序信号的格式显示程序状况。
+S 　列出程序时，包括已中断的子程序资料。
+-t&lt;终端机编号&gt; 指定终端机编号，并列出属于该终端机的程序的状况。
+t&lt;终端机编号&gt; 此参数的效果和指定&quot;-t&quot;参数相同，只在列表格式方面稍有差异。
+-T 　显示现行终端机下的所有程序。
+-u&lt;用户识别码&gt; 此参数的效果和指定&quot;-U&quot;参数相同。
+u 　以用户为主的格式来显示程序状况。
+-U&lt;用户识别码&gt; 列出属于该用户的程序的状况，也可使用用户名称来指定。
+U&lt;用户名称&gt; 列出属于该用户的程序的状况。
+v 　采用虚拟内存的格式显示程序状况。
+-V或V 　显示版本信息。
+-w或w 　采用宽阔的格式来显示程序状况。
+x 　显示所有程序，不以终端机来区分。
+X 　采用旧式的Linux i386登陆格式显示程序状况。
+-y 　配合参数&quot;-l&quot;使用时，不显示F(flag)栏位，并以RSS栏位取代ADDR栏位　。
+-&lt;程序识别码&gt; 此参数的效果和指定&quot;p&quot;参数相同。
+--cols&lt;每列字符数&gt; 设置每列的最大字符数。
+--columns&lt;每列字符数&gt; 此参数的效果和指定&quot;--cols&quot;参数相同。
+--cumulative 　此参数的效果和指定&quot;S&quot;参数相同。
+--deselect 　此参数的效果和指定&quot;-N&quot;参数相同。
+--forest 　此参数的效果和指定&quot;f&quot;参数相同。
+--headers 　重复显示标题列。
+--help 　在线帮助。
+--info 　显示排错信息。
+--lines&lt;显示列数&gt; 设置显示画面的列数。
+--no-headers 　此参数的效果和指定&quot;h&quot;参数相同，只在列表格式方面稍有差异。
+--group&lt;群组名称&gt; 此参数的效果和指定&quot;-G&quot;参数相同。
+--Group&lt;群组识别码&gt; 此参数的效果和指定&quot;-G&quot;参数相同。
+--pid&lt;程序识别码&gt; 此参数的效果和指定&quot;-p&quot;参数相同。
+--rows&lt;显示列数&gt; 此参数的效果和指定&quot;--lines&quot;参数相同。
+--sid&lt;阶段作业&gt; 此参数的效果和指定&quot;-s&quot;参数相同。
+--tty&lt;终端机编号&gt; 此参数的效果和指定&quot;-t&quot;参数相同。
+--user&lt;用户名称&gt; 此参数的效果和指定&quot;-U&quot;参数相同。
+--User&lt;用户识别码&gt; 此参数的效果和指定&quot;-U&quot;参数相同。
+--version 　此参数的效果和指定&quot;-V&quot;参数相同。
+--widty&lt;每列字符数&gt; 此参数的效果和指定&quot;-cols&quot;参数相同。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:49:04.000Z"><a href="/2010/12/19/linux-diff-命令详解/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-diff-命令详解/">linux diff 命令详解 </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>linux diff(differential) 命令详解
+功能说明：比较文件的差异。</p>
+<p>语　　法：diff [-abBcdefHilnNpPqrstTuvwy][-&lt;行数&gt;][-C &lt;行数&gt;][-D &lt;巨集名称&gt;][-I &lt;字符或字符串&gt;][-S &lt;文件&gt;][-W &lt;宽度&gt;][-x &lt;文件或目录&gt;][-X &lt;文件&gt;][--help][--left-column][--suppress-common-line][文件或目录1][文件或目录 2]
+补充说明：diff以逐行的方式，比较文本文件的异同处。所是指定要比较目录，则diff会比较目录中相同文件名的文件，但不会比较其中子目录。</p>
+<p>参　　数：
+-&lt;行数&gt; 指定要显示多少行的文本。此参数必须与-c或-u参数一并使用。
+-a或--text 　diff预设只会逐行比较文本文件。
+-b或--ignore-space-change 　不检查空格字符的不同。
+-B或--ignore-blank-lines 　不检查空白行。
+-c 　显示全部内文，并标出不同之处。
+-C&lt;行数&gt;或--context&lt;行数&gt; 与执行&quot;-c-&lt;行数&gt;&quot;指令相同。
+-d或--minimal 　使用不同的演算法，以较小的单位来做比较。
+-D&lt;巨集名称&gt;或ifdef&lt;巨集名称&gt; 此参数的输出格式可用于前置处理器巨集。
+-e或--ed 　此参数的输出格式可用于ed的script文件。
+-f或-forward-ed 　输出的格式类似ed的script文件，但按照原来文件的顺序来显示不同处。
+-H或--speed-large-files 　比较大文件时，可加快速度。
+-l&lt;字符或字符串&gt;或--ignore-matching-lines&lt;字符或字符串&gt; 若两个文件在某几行有所不同，而这几行同时都包含了选项中指定的字符或字符串，则不显示这两个文件的差异。
+-i或--ignore-case 　不检查大小写的不同。
+-l或--paginate 　将结果交由pr程序来分页。
+-n或--rcs 　将比较结果以RCS的格式来显示。
+-N或--new-file 　在比较目录时，若文件A仅出现在某个目录中，预设会显示：
+Only in目录：文件A若使用-N参数，则diff会将文件A与一个空白的文件比较。
+-p 　若比较的文件为C语言的程序码文件时，显示差异所在的函数名称。
+-P或--unidirectional-new-file 　与-N类似，但只有当第二个目录包含了一个第一个目录所没有的文件时，才会将这个文件与空白的文件做比较。
+-q或--brief 　仅显示有无差异，不显示详细的信息。
+-r或--recursive 　比较子目录中的文件。
+-s或--report-identical-files 　若没有发现任何差异，仍然显示信息。
+-S&lt;文件&gt;或--starting-file&lt;文件&gt; 在比较目录时，从指定的文件开始比较。
+-t或--expand-tabs 　在输出时，将tab字符展开。
+-T或--initial-tab 　在每行前面加上tab字符以便对齐。
+-u,-U&lt;列数&gt;或--unified=&lt;列数&gt; 以合并的方式来显示文件内容的不同。
+-v或--version 　显示版本信息。
+-w或--ignore-all-space 　忽略全部的空格字符。
+-W&lt;宽度&gt;或--width&lt;宽度&gt; 在使用-y参数时，指定栏宽。
+-x&lt;文件名或目录&gt;或--exclude&lt;文件名或目录&gt; 不比较选项中所指定的文件或目录。
+-X&lt;文件&gt;或--exclude-from&lt;文件&gt; 您可以将文件或目录类型存成文本文件，然后在=&lt;文件&gt;中指定此文本文件。
+-y或--side-by-side 　以并列的方式显示文件的异同之处。
+--help 　显示帮助。
+--left-column 　在使用-y参数时，若两个文件某一行内容相同，则仅在左侧的栏位显示该行内容。
+--suppress-common-lines 　在使用-y参数时，仅显示不同之处</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:48:09.000Z"><a href="/2010/12/19/linux-tar-detailed/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-tar-detailed/">linux tar 命令详解 </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>tar -c|x|u|r|t[z|j][v] -f &lt;归档文件&gt; [未打包文件]</p>
+<p>将多个文件打包为一个归档文件，可以在打包的同时进行压缩。支持的格式为tar（归档）、gz（压缩）、bz2（压缩率更高，比较耗时）</p>
+<pre><code><figure class="highlight"><pre> <span class="literal">-</span><span class="comment">c</span> <span class="comment">创建</span>
+<span class="literal">-</span><span class="comment">x</span> <span class="comment">解包</span>
+<span class="literal">-</span><span class="comment">u</span> <span class="comment">更新</span>
+<span class="literal">-</span><span class="comment">r</span> <span class="comment">添加</span>
+<span class="literal">-</span><span class="comment">t</span> <span class="comment">查看</span>
+<span class="literal">-</span><span class="comment">d</span> <span class="comment">比较压缩包内文件和文件</span>
+<span class="literal">-</span><span class="comment">A</span> <span class="comment">将tar文件添加到归档文件中</span>
+<span class="literal">-</span><span class="comment">z</span> <span class="comment">使用gz压缩格式</span>
+<span class="literal">-</span><span class="comment">j</span> <span class="comment">使用bz2压缩格式</span>
+<span class="literal">-</span><span class="comment">v</span> <span class="comment">显示过程</span>
+<span class="literal">-</span><span class="comment">f</span> &lt;<span class="comment">文件名</span>&gt; <span class="comment">归档文件的文件名</span>
+<span class="literal">-</span><span class="comment">C</span> &lt;<span class="comment">解压路径</span>&gt; <span class="comment">将压缩包中的文件解压到指定目录`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="title">[</span><span class="comment">未打包文件</span>] <span class="comment">创建、更新时必须填写</span>
+
+<span class="comment">示例：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span> <span class="comment">tar</span> <span class="literal">-</span><span class="comment">zcvf</span> <span class="comment">xxx</span>.<span class="comment">tar</span>.<span class="comment">gz</span> <span class="comment">xxx/</span> <span class="comment">xxx1</span> <span class="comment">xxx2</span> <span class="comment">xxx3</span> <span class="comment">多个待打包文件以空格分隔</span>
+<span class="comment">tar</span> <span class="literal">-</span><span class="comment">zxvf</span> <span class="comment">xxx</span>.<span class="comment">tar</span>.<span class="comment">gz</span> <span class="comment">按相对路径解包到当前目录下，或按绝对路径解包</span>
+<span class="comment">tar</span> <span class="literal">-</span><span class="comment">zcvf</span> <span class="comment">xxx</span>.<span class="comment">tar</span>.<span class="comment">gz</span> <span class="comment">xxx</span> <span class="comment">|</span> <span class="comment">split</span> <span class="literal">-</span><span class="comment">b</span> <span class="comment">1m</span> <span class="comment">打包后，使用split分割为1m大小的多个文件`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">**其它参数**</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span> <span class="literal">-</span><span class="comment">P</span> <span class="comment">使用绝对路径压缩时，保留根目录“/”</span>
+<span class="literal">-</span><span class="comment">W</span> <span class="comment">校验</span>
+<span class="literal">-</span><span class="comment">p</span> <span class="comment">还原文件权限</span>
+<span class="literal">-</span><span class="comment">w</span> <span class="comment">询问用户</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">totals</span> <span class="comment">统计</span>
+<span class="literal">-</span><span class="comment">T</span> &lt;<span class="comment">表达式</span>&gt; <span class="comment">处理符合条件的文件</span>
+<span class="literal">-</span><span class="comment">X</span> &lt;<span class="comment">表达式</span>&gt; <span class="comment">排除符合条件的文件`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">**</span>
+<span class="comment">通过ssh传输文件**</span>
+<span class="comment">Code</span> <span class="comment">block</span> 
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span> <span class="comment">scp</span> <span class="literal">-</span><span class="comment">rp</span> <span class="comment">/path/filename</span> <span class="comment">username@remoteIP:/path</span> <span class="comment">#将本地文件拷贝到服务器上</span>
+<span class="comment">scp</span> <span class="literal">-</span><span class="comment">rp</span> <span class="comment">username@remoteIP:/path/filename</span> <span class="comment">/path</span> <span class="comment">#将远程文件从服务器下载到本地</span>
+<span class="comment">tar</span> <span class="comment">cvzf</span> <span class="literal">-</span> <span class="comment">/path/</span> <span class="comment">|</span> <span class="comment">ssh</span> <span class="comment">username@remoteip</span> <span class="comment">"cd</span> <span class="comment">/some/path/;</span> <span class="comment">cat</span> <span class="literal">-</span> &gt; <span class="comment">path</span>.<span class="comment">tar</span>.<span class="comment">gz"</span> <span class="comment">#压缩传输</span>
+<span class="comment">tar</span> <span class="comment">cvzf</span> <span class="literal">-</span> <span class="comment">/path/</span> <span class="comment">|</span> <span class="comment">ssh</span> <span class="comment">username@remoteip</span> <span class="comment">"cd</span> <span class="comment">/some/path/;</span> <span class="comment">tar</span> <span class="comment">xvzf</span> <span class="literal">-</span><span class="comment">"</span> <span class="comment">#压缩传输一个目录并解压缩`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">##直接命令行输入不需要双引号</span>
+
+<span class="comment">功能说明：备份文件。</span>
+<span class="comment">**语　　法**：tar</span> <span class="title">[</span><span class="literal">-</span><span class="comment">ABcdgGhiklmMoOpPrRsStuUvwWxzZ</span>]<span class="title">[</span><span class="literal">-</span><span class="comment">b</span> &lt;<span class="comment">区块数目</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">C</span> &lt;<span class="comment">目的目录</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">f</span> &lt;<span class="comment">备份文件</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">F</span> <span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">K</span> &lt;<span class="comment">文件</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">L</span> &lt;<span class="comment">媒体容量</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">N</span> &lt;<span class="comment">日期时间</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">T</span> &lt;<span class="comment">范本文件</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">V</span> &lt;<span class="comment">卷册名称</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">X</span> &lt;<span class="comment">范本文件</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span>&lt;<span class="comment">设备编号</span>&gt;&lt;<span class="comment">存储密</span> <span class="comment">度</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">after</span>-<span class="comment">date=</span>&lt;<span class="comment">日期时间</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">atime</span>-<span class="comment">preserve</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">backuup=</span>&lt;<span class="comment">备份方式&amp;</span> <span class="comment">amp;</span> <span class="comment">gt;</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">checkpoint</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">concatenate</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">confirmation</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">delete</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">exclude=&amp;</span> <span class="comment">lt;范本样式</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">force</span>-<span class="comment">local</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">group=</span>&lt;<span class="comment">群组名称</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">help</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">ignore</span>- <span class="comment">failed</span>-<span class="comment">read</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">new</span>-<span class="comment">volume</span>-<span class="comment">script=</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">newer</span>-<span class="comment">mtime</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">no</span>- <span class="comment">recursion</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">null</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">numeric</span>-<span class="comment">owner</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">owner=</span>&lt;<span class="comment">用户名称</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">posix</span>] <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">erve</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">preserve</span>-<span class="comment">order</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">preserve</span>-<span class="comment">permissions</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">record</span>-<span class="comment">size=</span>&lt;<span class="comment">区块数</span> <span class="comment">目</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span>-<span class="comment">unlink</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">remove</span>-<span class="comment">files</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">rsh</span>-<span class="comment">command=</span>&lt;<span class="comment">执行指令</span>&gt;<span class="title">]</span> <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">same</span>-<span class="comment">owner</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">suffix=</span>&lt;<span class="comment">备份字尾字符串</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">totals</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">use</span>-<span class="comment">compress</span>- <span class="comment">program=</span>&lt;<span class="comment">执行指令</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">version</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">volno</span>-<span class="comment">file=</span>&lt;<span class="comment">编号文件</span>&gt;<span class="title">]</span><span class="title">[</span><span class="comment">文件或目录</span>.<span class="string">.</span><span class="string">.</span><span class="title">]</span>
+<span class="comment">补充说明：tar是用来建立，还原备份文件的工具程序，它可以加入，解开备份文件内的文件。</span>
+
+<span class="comment">**参　　数**：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span> <span class="literal">-</span><span class="comment">A或</span>-<span class="literal">-</span><span class="comment">catenate</span> <span class="comment">新增温暖件到已存在的备份文件。</span>
+<span class="literal">-</span><span class="comment">b</span>&lt;<span class="comment">区块数目</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">blocking</span>-<span class="comment">factor=</span>&lt;<span class="comment">区块数目</span>&gt; <span class="comment">设置每笔记录的区块数目，每个区块大小为12Bytes。</span>
+<span class="literal">-</span><span class="comment">B或</span>-<span class="literal">-</span><span class="comment">read</span>-<span class="comment">full</span>-<span class="comment">records</span> <span class="comment">读取数据时重设区块大小。</span>
+<span class="literal">-</span><span class="comment">c或</span>-<span class="literal">-</span><span class="comment">create</span> <span class="comment">建立新的备份文件。</span>
+<span class="literal">-</span><span class="comment">C</span>&lt;<span class="comment">目的目录</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">directory=</span>&lt;<span class="comment">目的目录</span>&gt; <span class="comment">切换到指定的目录。</span>
+<span class="literal">-</span><span class="comment">d或</span>-<span class="literal">-</span><span class="comment">diff或</span>-<span class="literal">-</span><span class="comment">compare</span> <span class="comment">对比备份文件内和文件系统上的文件的差异。</span>
+<span class="literal">-</span><span class="comment">f</span>&lt;<span class="comment">备份文件</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">file=</span>&lt;<span class="comment">备份文件</span>&gt; <span class="comment">指定备份文件。</span>
+<span class="literal">-</span><span class="comment">F或</span>-<span class="literal">-</span><span class="comment">info</span>-<span class="comment">script=</span> <span class="comment">每次更换磁带时，就执行指定的Script文件。</span>
+<span class="literal">-</span><span class="comment">g或</span>-<span class="literal">-</span><span class="comment">listed</span>-<span class="comment">incremental</span> <span class="comment">处理GNU格式的大量备份。</span>
+<span class="literal">-</span><span class="comment">G或</span>-<span class="literal">-</span><span class="comment">incremental</span> <span class="comment">处理旧的GNU格式的大量备份。</span>
+<span class="literal">-</span><span class="comment">h或</span>-<span class="literal">-</span><span class="comment">dereference</span> <span class="comment">不建立符号连接，直接复制该连接所指向的原始文件。</span>
+<span class="literal">-</span><span class="comment">i或</span>-<span class="literal">-</span><span class="comment">ignore</span>-<span class="comment">zeros</span> <span class="comment">忽略备份文件中的0</span> <span class="comment">Byte区块，也就是EOF。</span>
+<span class="literal">-</span><span class="comment">k或</span>-<span class="literal">-</span><span class="comment">keep</span>-<span class="comment">old</span>-<span class="comment">files</span> <span class="comment">解开备份文件时，不覆盖已有的文件。</span>
+<span class="literal">-</span><span class="comment">K</span>&lt;<span class="comment">文件</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">starting</span>-<span class="comment">file=</span>&lt;<span class="comment">文件</span>&gt; <span class="comment">从指定的文件开始还原。</span>
+<span class="literal">-</span><span class="comment">l或</span>-<span class="literal">-</span><span class="comment">one</span>-<span class="comment">file</span>-<span class="comment">system</span> <span class="comment">复制的文件或目录存放的文件系统，必须与tar指令执行时所处的文件系统相同，否则不予复制。</span>
+<span class="literal">-</span><span class="comment">L</span>&lt;<span class="comment">媒体容量</span>&gt;<span class="comment">或</span>-<span class="comment">tape</span>-<span class="comment">length=</span>&lt;<span class="comment">媒体容量</span>&gt; <span class="comment">设置存放每体的容量，单位以1024</span> <span class="comment">Bytes计算。</span>
+<span class="literal">-</span><span class="comment">m或</span>-<span class="literal">-</span><span class="comment">modification</span>-<span class="comment">time</span> <span class="comment">还原文件时，不变更文件的更改时间。</span>
+<span class="literal">-</span><span class="comment">M或</span>-<span class="literal">-</span><span class="comment">multi</span>-<span class="comment">volume</span> <span class="comment">在建立，还原备份文件或列出其中的内容时，采用多卷册模式。</span>
+<span class="literal">-</span><span class="comment">N</span>&lt;<span class="comment">日期格式</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">newer=</span>&lt;<span class="comment">日期时间</span>&gt; <span class="comment">只将较指定日期更新的文件保存到备份文件里。</span>
+<span class="literal">-</span><span class="comment">o或</span>-<span class="literal">-</span><span class="comment">old</span>-<span class="comment">archive或</span>-<span class="literal">-</span><span class="comment">portability</span> <span class="comment">将资料写入备份文件时使用V7格式。</span>
+<span class="literal">-</span><span class="comment">O或</span>-<span class="literal">-</span><span class="comment">stdout</span> <span class="comment">把从备份文件里还原的文件输出到标准输出设备。</span>
+<span class="literal">-</span><span class="comment">p或</span>-<span class="literal">-</span><span class="comment">same</span>-<span class="comment">permissions</span> <span class="comment">用原来的文件权限还原文件。</span>
+<span class="literal">-</span><span class="comment">P或</span>-<span class="literal">-</span><span class="comment">absolute</span>-<span class="comment">names</span> <span class="comment">文件名使用绝对名称，不移除文件名称前的"/"号。</span>
+<span class="literal">-</span><span class="comment">r或</span>-<span class="literal">-</span><span class="comment">append</span> <span class="comment">新增文件到已存在的备份文件的结尾部分。</span>
+<span class="literal">-</span><span class="comment">R或</span>-<span class="literal">-</span><span class="comment">block</span>-<span class="comment">number</span> <span class="comment">列出每个信息在备份文件中的区块编号。</span>
+<span class="literal">-</span><span class="comment">s或</span>-<span class="literal">-</span><span class="comment">same</span>-<span class="comment">order</span> <span class="comment">还原文件的顺序和备份文件内的存放顺序相同。</span>
+<span class="literal">-</span><span class="comment">S或</span>-<span class="literal">-</span><span class="comment">sparse</span> <span class="comment">倘若一个文件内含大量的连续0字节，则将此文件存成稀疏文件。</span>
+<span class="literal">-</span><span class="comment">t或</span>-<span class="literal">-</span><span class="comment">list</span> <span class="comment">列出备份文件的内容。</span>
+<span class="literal">-</span><span class="comment">T</span>&lt;<span class="comment">范本文件</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">files</span>-<span class="comment">from=</span>&lt;<span class="comment">范本文件</span>&gt; <span class="comment">指定范本文件，其内含有一个或多个范本样式，让tar解开或建立符合设置条件的文件。</span>
+<span class="literal">-</span><span class="comment">u或</span>-<span class="literal">-</span><span class="comment">update</span> <span class="comment">仅置换较备份文件内的文件更新的文件。</span>
+<span class="literal">-</span><span class="comment">U或</span>-<span class="literal">-</span><span class="comment">unlink</span>-<span class="comment">first</span> <span class="comment">解开压缩文件还原文件之前，先解除文件的连接。</span>
+<span class="literal">-</span><span class="comment">v或</span>-<span class="literal">-</span><span class="comment">verbose</span> <span class="comment">显示指令执行过程。</span>
+<span class="literal">-</span><span class="comment">V</span>&lt;<span class="comment">卷册名称</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">label=</span>&lt;<span class="comment">卷册名称</span>&gt; <span class="comment">建立使用指定的卷册名称的备份文件。</span>
+<span class="literal">-</span><span class="comment">w或</span>-<span class="literal">-</span><span class="comment">interactive</span> <span class="comment">遭遇问题时先询问用户。</span>
+<span class="literal">-</span><span class="comment">W或</span>-<span class="literal">-</span><span class="comment">verify</span> <span class="comment">写入备份文件后，确认文件正确无误。</span>
+<span class="literal">-</span><span class="comment">x或</span>-<span class="literal">-</span><span class="comment">extract或</span>-<span class="literal">-</span><span class="comment">get</span> <span class="comment">从备份文件中还原文件。</span>
+<span class="literal">-</span><span class="comment">X</span>&lt;<span class="comment">范本文件</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">exclude</span>-<span class="comment">from=</span>&lt;<span class="comment">范本文件</span>&gt; <span class="comment">指定范本文件，其内含有一个或多个范本样式，让ar排除符合设置条件的文件。</span>
+<span class="literal">-</span><span class="comment">z或</span>-<span class="literal">-</span><span class="comment">gzip或</span>-<span class="literal">-</span><span class="comment">ungzip</span> <span class="comment">通过gzip指令处理备份文件。</span>
+<span class="literal">-</span><span class="comment">Z或</span>-<span class="literal">-</span><span class="comment">compress或</span>-<span class="literal">-</span><span class="comment">uncompress</span> <span class="comment">通过compress指令处理备份文件。</span>
+<span class="literal">-</span>&lt;<span class="comment">设备编号</span>&gt;&lt;<span class="comment">存储密度</span>&gt; <span class="comment">设置备份用的外围设备编号及存放数据的密度。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">after</span>-<span class="comment">date=</span>&lt;<span class="comment">日期时间</span>&gt; <span class="comment">此参数的效果和指定"</span>-<span class="comment">N"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">atime</span>-<span class="comment">preserve</span> <span class="comment">不变更文件的存取时间。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">backup=</span>&lt;<span class="comment">备份方式</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">backup</span> <span class="comment">移除文件前先进行备份。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">checkpoint</span> <span class="comment">读取备份文件时列出目录名称。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">concatenate</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">A"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">confirmation</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">w"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">delete</span> <span class="comment">从备份文件中删除指定的文件。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">exclude=</span>&lt;<span class="comment">范本样式</span>&gt; <span class="comment">排除符合范本样式的问家。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">group=</span>&lt;<span class="comment">群组名称</span>&gt; <span class="comment">把加入设备文件中的文件的所属群组设成指定的群组。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">help</span> <span class="comment">在线帮助。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">ignore</span>-<span class="comment">failed</span>-<span class="comment">read</span> <span class="comment">忽略数据读取错误，不中断程序的执行。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">new</span>-<span class="comment">volume</span>-<span class="comment">script=</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">F"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">newer</span>-<span class="comment">mtime</span> <span class="comment">只保存更改过的文件。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">no</span>-<span class="comment">recursion</span> <span class="comment">不做递归处理，也就是指定目录下的所有文件及子目录不予处理。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">null</span> <span class="comment">从null设备读取文件名称。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">numeric</span>-<span class="comment">owner</span> <span class="comment">以用户识别码及群组识别码取代用户名称和群组名称。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">owner=</span>&lt;<span class="comment">用户名称</span>&gt; <span class="comment">把加入备份文件中的文件的拥有者设成指定的用户。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">posix</span> <span class="comment">将数据写入备份文件时使用POSIX格式。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">preserve</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">ps"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">preserve</span>-<span class="comment">order</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">A"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">preserve</span>-<span class="comment">permissions</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">p"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">record</span>-<span class="comment">size=</span>&lt;<span class="comment">区块数目</span>&gt; <span class="comment">此参数的效果和指定"</span>-<span class="comment">b"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span>-<span class="comment">unlink</span> <span class="comment">解开压缩文件还原目录之前，先解除整个目录下所有文件的连接。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">remove</span>-<span class="comment">files</span> <span class="comment">文件加入备份文件后，就将其删除。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">rsh</span>-<span class="comment">command=</span>&lt;<span class="comment">执行指令</span>&gt; <span class="comment">设置要在远端主机上执行的指令，以取代rsh指令。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">same</span>-<span class="comment">owner</span> <span class="comment">尝试以相同的文件拥有者还原问家你。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">suffix=</span>&lt;<span class="comment">备份字尾字符串</span>&gt; <span class="comment">移除文件前先行备份。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">totals</span> <span class="comment">备份文件建立后，列出文件大小。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">use</span>-<span class="comment">compress</span>-<span class="comment">program=</span>&lt;<span class="comment">执行指令</span>&gt; <span class="comment">通过指定的指令处理备份文件。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">version</span> <span class="comment">显示版本信息。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">volno</span>-<span class="comment">file=</span>&lt;<span class="comment">编号文件</span>&gt; <span class="comment">使用指定文件内的编号取代预设的卷册编号。
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:18:37.000Z"><a href="/2010/12/19/linux-acl/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-acl/">linux acl 访问控制列表</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>要想使用ACL功能，首先需要正确编译2.6内核，并确保有下列选项：</p>
+<pre><code><figure class="highlight"><pre>CONFIG_EXT2_FS_POSIX_ACL=yCONFIG_EXT3_FS_POSIX_ACL=yCONFIG_FS_POSIX_ACL=y`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+用新内核启动后，还要求在挂载分区的时候添加必要的参数“acl”。
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`mount -t ext3 -o rw,acl /dev/hda8 /your_mount_point
+或在 /etc/fstab 中加入下列行，实现自动mount分区并且带有“acl”参数。
+/dev/hda8
+ext3 /your_mount_point defaults,acl 1 1`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+正确挂载文件系统后，就可以使用ACL的命令来修改文件的ACL属性了。修改ACL属性的命令有setfacl、getfacl 和chacl，其中chacl是一个SGI IRIX兼容命令，主要适用于那些对SGI IRIX以及XFS文件系统比较熟悉的用户。本文只介绍setfacl和getfacl命令，具体用法如下面的例子：
+
+1.使文件1.txt可以被用户test读写
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`setfacl -m u:test:rw 1.txt`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+2.使文件1.txt可以被qmail组的组员读，但不能写
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`setfacl -m g:qmail:r 1.txt`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+3.把某一文件的ACL属性copy给另一文件，比如把文件1.txt的ACL属性copy给2.txt：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`getfacl 1.txt | setfacl -set-file=- 2.txt`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+4.同时为文件设置不同用户或组的权限
+比如对文件2.txt设定testmail用户可读写，qmail组组员可读可执行，nofiles 组组员可执行:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`setfacl -m u:testmail:rw,g:qmail:rx,g:nofiles:x 2.txt
+</pre></figure></code></pre>
+<p>查看man page可获得setfact和getfacl命令更详细的用法。
+在系统管理员的工作中，遇到的最大的困难往往不是高难度的内核问题，也不是配置Apache服务器之类的问题，而是控制文件访问权限的问题。主管领导常常 会提出非常特别的要求，权限配置经常具体到人，这在配置文件服务器Samba时非常难于实现，使用2.6内核中的ACL（访问控制列表）新功能，问题就会 迎刃而解。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:16:45.000Z"><a href="/2010/12/19/linux-binding-hardware-interrupt/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-binding-hardware-interrupt/">Linux 绑定制定硬件中断到不同 CPU</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>硬件中断发生频繁，是件很消耗 CPU 资源的事情，在多核 CPU 条件下如果有办法把大量硬件中断分配给不同的 CPU (core) 处理显然能很好的平衡性能。现在的服务器上动不动就是多 CPU 多核、多网卡、多硬盘，如果能让网卡中断独占1个 CPU (core)、磁盘 IO 中断独占1个 CPU 的话将会大大减轻单一 CPU 的负担、提高整体处理效率。VPSee 前天收到一位网友的邮件提到了 SMP IRQ Affinity，引发了今天的话题：D，以下操作在 SUN FIre X2100 M2 服务器＋ 64位版本 CentOS 5.5 + Linux 2.6.18-194.3.1.el5 上执行。</p>
+<p>什么是中断
+      中文教材上对 “中断” 的定义太生硬了，简单的说就是，每个硬件设备（如：硬盘、网卡等）都需要和 CPU 有某种形式的通信以便 CPU 及时知道发生了什么事情，这样 CPU 可能就会放下手中的事情去处理应急事件，硬件设备主动打扰 CPU 的现象就可称为硬件中断，就像你正在工作的时候受到 QQ 干扰一样，一次 QQ 摇头就可以被称为中断。</p>
+<pre><code><figure class="highlight"><pre>  中断是一种比较好的 CPU 和硬件沟通的方式，还有一种方式叫做轮询（polling），就是让 CPU 定时对硬件状态进行查询然后做相应处理，就好像你每隔<span class="number">5</span>分钟去检查一下 QQ 看看有没有人找你一样，这种方式是不是很浪费你（CPU）的时间？所以中断是硬件主动的方式，比轮询（CPU 主动）更有效一些。
+
+  好了，这里又有了一个问题，每个硬件设备都中断，那么如何区分不同硬件呢？不同设备同时中断如何知道哪个中断是来自硬盘、哪个来自网卡呢？这 个很容易，不是每个 QQ 号码都不相同吗？同样的，系统上的每个硬件设备都会被分配一个 IRQ 号，通过这个唯一的 IRQ 号就能区别张三和李四了。
+
+  在计算机里，中断是一种电信号，由硬件产生，并直接送到中断控制器（如 <span class="number">8259</span>A）上，然后再由中断控制器向 CPU 发送信号，CPU 检测到该信号后，就中断当前的工作转而去处理中断。然后，处理器会通知操作系统已经产生中断，这样操作系统就会对这个中断进行适当的处理。现在来看一下中 断控制器，常见的中断控制器有两种：可编程中断控制器 <span class="number">8259</span>A 和高级可编程中断控制器（APIC），中断控制器应该在大学的硬件接口和计算机体系结构的相关课程中都学过。传统的 <span class="number">8259</span>A 只适合单 CPU 的情况，现在都是多 CPU 多核的 SMP 体系，所以为了充分利用 SMP 体系结构、把中断传递给系统上的每个 CPU 以便更好实现并行和提高性能，Intel 引入了高级可编程中断控制器（APIC）。
+
+  光有高级可编程中断控制器的硬件支持还不够，Linux 内核还必须能利用到这些硬件特质，所以只有 kernel <span class="number">2.4</span> 以后的版本才支持把不同的硬件中断请求（IRQs）分配到特定的 CPU 上，这个绑定技术被称为 SMP IRQ <span class="transposed_variable">Affinity.</span> 更多介绍请参看 Linux 内核源代码自带的文档：linux-<span class="number">2.6</span><span class="number">.31</span><span class="number">.8</span>/Documentation/IRQ-<span class="transposed_variable">affinity.</span>txt
+</pre></figure></code></pre>
+<p>如何使用
+     先看看系统上的中断是怎么分配在 CPU 上的，很显然 CPU0 上处理的中断多一些：</p>
+<pre><code><figure class="highlight"><pre><span class="xml"></span><span class="comment"># cat /proc/interrupts</span><span class="xml">
+           CPU0       CPU1
+  </span><span class="number">0</span><span class="xml">:  </span><span class="number">918926335</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  timer
+  </span><span class="number">1</span><span class="xml">:          </span><span class="number">2</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
+  </span><span class="number">8</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  rtc
+  </span><span class="number">9</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  acpi
+</span><span class="number">12</span><span class="xml">:          </span><span class="number">4</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
+</span><span class="number">14</span><span class="xml">:    </span><span class="number">8248017</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  ide0
+</span><span class="number">50</span><span class="xml">:        </span><span class="number">194</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ohci_hcd:usb2
+</span><span class="number">58</span><span class="xml">:      </span><span class="number">31673</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  sata_nv
+</span><span class="number">90</span><span class="xml">:    </span><span class="number">1070374</span><span class="xml">          </span><span class="number">0</span><span class="xml">         PCI-MSI  eth0
+</span><span class="number">233</span><span class="xml">:         </span><span class="number">10</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ehci_hcd:usb1
+NMI:       </span><span class="number">5077</span><span class="xml">       </span><span class="number">2032</span><span class="xml">
+LOC:  </span><span class="number">918809969</span><span class="xml">  </span><span class="number">918809894</span><span class="xml">
+ERR:          </span><span class="number">0</span><span class="xml">
+MIS:          </span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+     为了不让 CPU0 很累怎么把部分中断转移到 CPU1 上呢？或者说如何把 eth0 网卡的中断转到 CPU1 上呢？先查看一下 IRQ </span><span class="number">90</span><span class="xml"> 中断的 smp affinity，看看当前中断是怎么分配在不同 CPU 上的（ffffffff 意味着分配在所有可用 CPU 上）：
+
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# cat /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity
+</span><span class="number">7</span><span class="xml">fffffff,ffffffff,ffffffff,ffffffff,ffffffff,ffffffff,ffffffff,ffffffff`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+在进一步动手之前我们需要先停掉 IRQ 自动调节的服务进程，这样才能手动绑定 IRQ 到不同 CPU，否则自己手动绑定做的更改将会被自动调节进程给覆盖掉。如果想修改 IRQ </span><span class="number">90</span><span class="xml"> 的中断处理，绑定到第</span><span class="number">2</span><span class="xml">个 CPU（CPU1）：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# /etc/init.d/irqbalance stop`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># echo "2" &gt; /proc/irq/90/smp_affinity</span><span class="xml">
+      （上面的 echo “</span><span class="number">2</span><span class="xml">″ 是怎么来的？为什么是 ”</span><span class="number">2</span><span class="xml">“？）
+
+这 其实是个二进制数字，代表 </span><span class="number">00000010</span><span class="xml">，</span><span class="number">00000001</span><span class="xml"> 代表 CPU0 的话，</span><span class="number">00000010</span><span class="xml"> 就代表 CPU0， “echo </span><span class="number">2</span><span class="xml"> &gt; /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity” 的意思就是说把 </span><span class="number">90</span><span class="xml"> 中断绑定到 </span><span class="number">00000010</span><span class="xml">（CPU1）上。所以各个 CPU 用二进制和十六进制表示就是：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`               Binary       Hex
+   [separator] CPU </span><span class="number">0</span><span class="xml">    </span><span class="number">00000001</span><span class="xml">         </span><span class="number">1</span><span class="xml">
+    CPU </span><span class="number">1</span><span class="xml">    </span><span class="number">00000010</span><span class="xml">         </span><span class="number">2</span><span class="xml">
+    CPU </span><span class="number">2</span><span class="xml">    </span><span class="number">00000100</span><span class="xml">         </span><span class="number">4</span><span class="xml">
+    CPU </span><span class="number">3</span><span class="xml">    </span><span class="number">00001000</span><span class="xml">         </span><span class="number">8</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+如果我想把 IRQ 绑定到 CPU2 上就是 </span><span class="number">00000100</span><span class="xml">＝</span><span class="number">4</span><span class="xml">：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# echo "</span><span class="number">4</span><span class="xml">" &gt; /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+如果我想把 IRQ 同时平衡到 CPU0 和 CPU2 上就是 </span><span class="number">00000001</span><span class="xml">＋</span><span class="number">00000100</span><span class="xml">＝</span><span class="number">00000101</span><span class="xml">＝</span><span class="number">5</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# echo "</span><span class="number">5</span><span class="xml">" &gt; /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+需要注意的是，在手动绑定 IRQ 到 CPU 之前需要先停掉 irqbalance 这个服务，irqbalance 是个服务进程、是用来自动绑定和平衡 IRQ 的：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` /etc/init.d/irqbalance stop`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+过段时间在看 /proc/interrupts，是不是 </span><span class="number">90</span><span class="xml">:eth0 在 CPU1 上的中断增加了（</span><span class="number">145</span><span class="xml">）、在 CPU0 上的中断没变？不断打印 /proc/interrupts 就会发现 eth0 在 CPU0 上的中断数始终保持不变，而在 CPU1 上的中断数是持续增加的，这正是我们想要的结果：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# cat /proc/interrupts
+           CPU0       CPU1
+  </span><span class="number">0</span><span class="xml">:  </span><span class="number">922506515</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  timer
+  </span><span class="number">1</span><span class="xml">:          </span><span class="number">2</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
+  </span><span class="number">8</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  rtc
+  </span><span class="number">9</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  acpi
+</span><span class="number">12</span><span class="xml">:          </span><span class="number">4</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
+</span><span class="number">14</span><span class="xml">:    </span><span class="number">8280147</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  ide0
+</span><span class="number">50</span><span class="xml">:        </span><span class="number">194</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ohci_hcd:usb2
+</span><span class="number">58</span><span class="xml">:      </span><span class="number">31907</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  sata_nv
+</span><span class="number">90</span><span class="xml">:    </span><span class="number">1073399</span><span class="xml">        </span><span class="number">145</span><span class="xml">         PCI-MSI  eth0
+</span><span class="number">233</span><span class="xml">:         </span><span class="number">10</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ehci_hcd:usb1
+NMI:       </span><span class="number">5093</span><span class="xml">       </span><span class="number">2043</span><span class="xml">
+LOC:  </span><span class="number">922389696</span><span class="xml">  </span><span class="number">922389621</span><span class="xml">
+ERR:          </span><span class="number">0</span><span class="xml">
+MIS:          </span><span class="number">0</span><span class="xml"> </span>
+</pre></figure></code></pre>
+<p>有什么用
+      在网络非常 heavy 的情况下，对于文件服务器、高流量 Web 服务器这样的应用来说，把不同的网卡 IRQ 均衡绑定到不同的 CPU 上将会减轻某个 CPU 的负担，提高多个 CPU 整体处理中断的能力；对于数据库服务器这样的应用来说，把磁盘控制器绑到一个 CPU、把网卡绑定到另一个 CPU 将会提高数据库的响应时间、优化性能。合理的根据自己的生产环境和应用的特点来平衡 IRQ 中断有助于提高系统的整体吞吐能力和性能。
+      VPSee 经常收到网友来信问到如何优化 Linux、优化 VPS、这个问题不太好回答，要记住的是性能优化是一个过程而不是结果，不是看了些文档改了改参数就叫优化了，后面还需要大量的测试、监测以及持续的观察和改进。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:13:20.000Z"><a href="/2010/12/19/howto-only-use-epel-with-yum/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/howto-only-use-epel-with-yum/">Howto only use epel with yum?</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>yum --disablerepo=* --enablerepo=epel list available</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:11:47.000Z"><a href="/2010/12/19/howto-use-dstat-monitoring-linux-system-resources/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/howto-use-dstat-monitoring-linux-system-resources/">Howto Use Dstat Monitoring Linux System Resources</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>官方网站：<a href="http://dag.wieers.com/rpm/packages/dstat/">http://dag.wieers.com/rpm/packages/dstat/</a></p>
+<p>Dstat的安装：</p>
+<pre><code><figure class="highlight"><pre><span class="comment">wget</span> <span class="comment">http://dag</span>.<span class="comment">wieers</span>.<span class="comment">com/rpm/packag</span> <span class="string">.</span><span class="string">.</span><span class="string">.</span> <span class="comment">1</span>.<span class="comment">rh7</span>.<span class="comment">rf</span>.<span class="comment">noarch</span>.<span class="comment">rpm</span>
+<span class="comment">rpm</span> <span class="literal">-</span><span class="comment">ivh</span> <span class="comment">dstat</span>-<span class="comment">0</span>.<span class="comment">6</span>.<span class="comment">7</span>-<span class="comment">1</span>.<span class="comment">rh7</span>.<span class="comment">rf</span>.<span class="comment">noarch</span>.<span class="comment">rpm</span>
+<span class="comment">wget</span>  <span class="comment">http://dag</span>.<span class="comment">wieers</span>.<span class="comment">com/home</span>-<span class="comment">made/dstat/dstat</span>-<span class="comment">0</span>.<span class="comment">7</span>.<span class="comment">2</span>.<span class="comment">tar</span>.<span class="comment">bz2</span> <span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">Dstat的使用：</span>
+<span class="comment">安装完成后，执行</span> <span class="comment">dstat</span> <span class="comment">命令，默认情况它会收集</span>-<span class="comment">cpu</span>-<span class="comment">、</span>-<span class="comment">disk</span>-<span class="comment">、</span>-<span class="comment">net</span>-<span class="comment">、－paging</span>-<span class="comment">、</span>-<span class="comment">system</span>-<span class="comment">的数据，一秒钟收集一次。</span>
+<span class="comment">默认输入</span> <span class="comment">dstat</span> <span class="comment">等于输入了dstat</span> <span class="literal">-</span><span class="comment">cdngy</span> <span class="comment">1或dstat</span> <span class="literal">-</span><span class="comment">a</span> <span class="comment">1；</span>
+<span class="comment">推荐使用</span> <span class="comment">date</span> <span class="comment">&amp;amp;&amp;amp;</span> <span class="comment">dstat</span> <span class="literal">-</span><span class="comment">tclmdny</span> <span class="comment">60</span> <span class="comment">一分钟监视一次（注意调节显示的宽度，或去掉</span>-<span class="comment">t选项）。</span>
+
+<span class="title">[</span><span class="comment">!</span>[<span class="title">]</span><span class="comment">(http://bubbyroom</span>.<span class="comment">com/wp</span>-<span class="comment">content/uploads/2010/12/dstat</span>.<span class="comment">png</span> <span class="comment">"dstat")</span>]<span class="comment">(http://bubbyroom</span>.<span class="comment">com/wp</span>-<span class="comment">content/uploads/2010/12/dstat</span>.<span class="comment">png)</span>
+
+<span class="comment">于SysStat相比，Dstat拥有一个彩色的界面，在手动观察性能状况时，数据比较显眼容易观察；</span>
+<span class="comment">而且Dstat支持即时刷新，譬如：输入</span> <span class="comment">dstat</span> <span class="comment">3，即每三秒收集一次，但最新的数据都会每秒刷新显示。</span>
+<span class="comment">和SysStat相同的是，Dstat也可以收集指定的性能资源。譬如</span> <span class="comment">dstat</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">即显示CPU的使用情况。</span>
+<span class="comment">Dstat</span> <span class="comment">options:</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span>-<span class="comment">c</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">cpu</span> <span class="comment">显示CPU情况</span>
+<span class="literal">-</span><span class="comment">C</span> <span class="comment">0</span>,<span class="comment">3</span>,<span class="comment">total</span> <span class="comment">include</span> <span class="comment">cpu0</span>, <span class="comment">cpu3</span> <span class="comment">and</span> <span class="comment">total</span>
+<span class="literal">-</span><span class="comment">d</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">disk</span> <span class="comment">显示磁盘情况</span>
+<span class="literal">-</span><span class="comment">D</span> <span class="comment">total</span>,<span class="comment">hda</span> <span class="comment">include</span> <span class="comment">hda</span> <span class="comment">and</span> <span class="comment">total</span>
+<span class="literal">-</span><span class="comment">g</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">page</span> <span class="comment">enable</span> <span class="comment">page</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="comment">i</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">int</span> <span class="comment">enable</span> <span class="comment">interrupt</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="comment">I</span> <span class="comment">5</span>,<span class="comment">eth2</span> <span class="comment">include</span> <span class="comment">int5</span> <span class="comment">and</span> <span class="comment">interrupt</span> <span class="comment">used</span> <span class="comment">by</span> <span class="comment">eth2</span>
+<span class="literal">-</span><span class="comment">l</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">load</span> <span class="comment">enable</span> <span class="comment">load</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="comment">m</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">mem</span> <span class="comment">显示内存情况</span>
+<span class="literal">-</span><span class="comment">n</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">net</span> <span class="comment">显示网络情况</span>
+<span class="literal">-</span><span class="comment">N</span> <span class="comment">eth1</span>,<span class="comment">total</span> <span class="comment">可以指定网络接口</span>
+<span class="literal">-</span><span class="comment">p</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">proc</span> <span class="comment">enable</span> <span class="comment">process</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="comment">s</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">swap</span> <span class="comment">显示swap情况</span>
+<span class="literal">-</span><span class="comment">S</span> <span class="comment">swap1</span>,<span class="comment">total</span> <span class="comment">可以指定多个swap</span>
+<span class="literal">-</span><span class="comment">t</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">time</span> <span class="comment">enable</span> <span class="comment">time</span> <span class="comment">counter</span>
+<span class="literal">-</span><span class="comment">y</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">sys</span> <span class="comment">enable</span> <span class="comment">system</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">ipc</span> <span class="comment">报告IPC消息队列和信号量的使用情况</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">lock</span> <span class="comment">enable</span> <span class="comment">lock</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">raw</span> <span class="comment">enable</span> <span class="comment">raw</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">tcp</span> <span class="comment">enable</span> <span class="comment">tcp</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">udp</span> <span class="comment">enable</span> <span class="comment">udp</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">unix</span> <span class="comment">enable</span> <span class="comment">unix</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="comment">M</span> <span class="comment">stat1</span>,<span class="comment">stat2</span> <span class="comment">enable</span> <span class="comment">external</span> <span class="comment">stats</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">mods</span> <span class="comment">stat1</span>,<span class="comment">stat2</span>
+<span class="literal">-</span><span class="comment">a</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">all</span> <span class="comment">使用</span>-<span class="comment">cdngy</span> <span class="comment">缺省的就是这样显示</span>
+<span class="literal">-</span><span class="comment">f</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">full</span> <span class="comment">使用</span> <span class="literal">-</span><span class="comment">C</span>, <span class="literal">-</span><span class="comment">D</span>, <span class="literal">-</span><span class="comment">I</span>, <span class="literal">-</span><span class="comment">N</span> <span class="comment">and</span> <span class="literal">-</span><span class="comment">S</span> <span class="comment">显示</span>
+<span class="literal">-</span><span class="comment">v</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">vmstat</span> <span class="comment">使用</span>-<span class="comment">pmgdsc</span> <span class="literal">-</span><span class="comment">D</span> <span class="comment">显示</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">integer</span> <span class="comment">show</span> <span class="comment">integer</span> <span class="comment">values</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">nocolor</span> <span class="comment">disable</span> <span class="comment">colors</span> <span class="comment">(implies</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">noupdate)</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">noheaders</span> <span class="comment">只显示一次表头以后就不显示了</span>,<span class="comment">使用重定向写入文件时很有用</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">noupdate</span> <span class="comment">disable</span> <span class="comment">intermediate</span> <span class="comment">updates</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">output</span> <span class="comment">file</span> <span class="comment">写入到CVS文件中`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">上个运行结果：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`#</span> <span class="comment">dstat</span>
+<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">total</span>-<span class="comment">cpu</span>-<span class="comment">usage</span>-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span> <span class="literal">-</span><span class="comment">dsk/total</span>- <span class="literal">-</span><span class="comment">net/total</span>- <span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">paging</span>-<span class="literal">-</span> <span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">system</span>-<span class="literal">-</span>
+<span class="comment">usr</span> <span class="comment">sys</span> <span class="comment">idl</span> <span class="comment">wai</span> <span class="comment">hiq</span> <span class="comment">siq|_read</span> <span class="comment">_writ|_recv</span> <span class="comment">_send|__in_</span> <span class="comment">_out_|_int_</span> <span class="comment">_csw_</span>
+<span class="comment">13</span> <span class="comment">49</span> <span class="comment">29</span> <span class="comment">8</span> <span class="comment">1</span> <span class="comment">1|</span> <span class="comment">424k</span> <span class="comment">23k|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">275</span> <span class="comment">200</span>
+<span class="comment">0</span> <span class="comment">1</span> <span class="comment">95</span> <span class="comment">3</span> <span class="comment">0</span> <span class="comment">1|8192B</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">297B</span> <span class="comment">70B|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">241</span> <span class="comment">33</span>
+<span class="comment">0</span> <span class="comment">1</span> <span class="comment">99</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">0|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">92B</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">243</span> <span class="comment">14</span>
+<span class="comment">0</span> <span class="comment">1</span> <span class="comment">99</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">0|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">395B</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">244</span> <span class="comment">20`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">很简单，一看就明白了，</span>
+<span class="comment">要说明的是如果当usr和sys的数值大于80时说明cpu的负载过重，这个软件和vmstat很像</span>,
+<span class="comment">不过和vmstat相比好像少了io部份的显示dstat只能显示磁盘的吞吐量而不是显示负载情况，</span>
+<span class="comment">dstat和几乎所有监控软件一样，只能对整个系统进行监控而不能对某一个进程或某一个程序进行深入分析。</span>
+<span class="comment">如果你知道如何设置，请通知我。</span>
+<span class="comment">我常使用的参数是</span>
+<span class="comment">dstat</span> <span class="literal">-</span><span class="comment">cdlmnpsy</span>
+<span class="comment">在1024×768的屏幕上正好全部显示出来，最好是将上面的命令设置成别名</span>
+<span class="comment">alias</span> <span class="comment">dstat='dstat</span> <span class="literal">-</span><span class="comment">cdlmnpsy'</span>
+
+<span class="comment">常用命令</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`dstat</span> <span class="literal">-</span><span class="comment">cndymlp</span> <span class="literal">-</span><span class="comment">N</span> <span class="comment">total</span> <span class="literal">-</span><span class="comment">D</span> <span class="comment">total</span> <span class="comment">525</span> <span class="comment">统计CPU</span>,<span class="comment">IO</span> <span class="string">,</span><span class="comment">network</span>,<span class="comment">system</span> <span class="comment">load</span>
+<span class="comment">dstat</span> <span class="literal">-</span><span class="comment">cdnsil</span> <span class="literal">-</span><span class="comment">D</span> <span class="comment">hda</span> <span class="literal">-</span><span class="comment">N</span> <span class="comment">eth1</span> <span class="comment">统计网卡1的信息</span>
+<span class="comment">dstat</span> <span class="comment">–vmstat</span> <span class="comment">内存使用情况
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:07:32.000Z"><a href="/2010/12/19/linux-smartctl/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-smartctl/">linux smartctl 磁盘健康监测程序</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>什么是S.M.A.R.T.
+SMART是一种磁盘自我分析检测技术，早在90年代末就基本得到了普及
+每一块硬盘（包括IDE、SCSI）在运行的时候，都会将自身的若干参数记录下来
+这些参数包括型号、容量、温度、密度、扇区、寻道时间、传输、误码率等
+硬盘运行了几千小时后，很多内在的物理参数都会发生变化
+某一参数超过报警阈值，则说明硬盘接近损坏
+此时硬盘依然在工作，如果用户不理睬这个报警继续使用
+那么硬盘将变得非常不可靠，随时可能故障</p>
+<p>启用SMART
+SMART是和主板BIOS上相应功能配合的
+要使用SMART，必须先进入到主板BIOS设置里边启动相关设置</p>
+<p>一般从Pentium2级别起的主板，都支持SMART
+BIOS启动以后，就是操作系统级别的事情了
+很遗憾，Windows没有内置SMART相关工具（需要安装第三方工具软件）
+好在Linux上很早就有了SMART支持了
+如果把Linux装在VMware等虚拟机上，在系统启动时候可以看到有个服务启动报错：smartd
+这个服务器就是smart的daemon进程（因为vmware虚拟机的硬盘不支持SMART，所以报错）</p>
+<p>首先通过dmesg工具，确认一下硬盘的设备符号
+例如一个IDE硬盘连接到Primary IDE 总线上的Slave位置，硬盘设备符号是/dev/hdb
+hdb中的h代表IDE，如果显示为sdb，则代表SATA和SCSI
+最后一个字幕b代表Primary总线，第二块硬盘即Slave位置
+确认硬盘是否打开了SMART支持
+smartctl -i /dev/hdb</p>
+<p>例如看到如下返回结果</p>
+<pre><code><figure class="highlight"><pre>[root@3.6.0Biz-46 ~]# smartctl -i /dev/hdb
+smartctl version 5.33 [i386-redhat-linux-gnu] Copyright (C) 2002-4 Bruce Allen
+Home page is http://smartmontools.sourceforge.net/
+=== <span class="operator"><span class="keyword">START</span> <span class="keyword">OF</span> INFORMATION <span class="keyword">SECTION</span> ===
+Device Model: ST380011A
+Serial <span class="keyword">Number</span>: <span class="number">3</span>JVAPRGH
+Firmware Version: <span class="number">3.04</span>
+<span class="keyword">User</span> Capacity: <span class="number">80</span>,<span class="number">026</span>,<span class="number">361</span>,<span class="number">856</span> bytes
+Device <span class="keyword">is</span>: <span class="keyword">In</span> smartctl database [<span class="keyword">for</span> details use: -P <span class="keyword">show</span>]
+ATA Version <span class="keyword">is</span>: <span class="number">6</span>
+ATA Standard <span class="keyword">is</span>: ATA/ATAPI-<span class="number">6</span> T13 <span class="number">1410</span>D revision <span class="number">2</span>
+<span class="keyword">Local</span> <span class="keyword">Time</span> <span class="keyword">is</span>: Tue Apr <span class="number">3</span> <span class="number">15</span>:<span class="number">39</span>:<span class="number">52</span> <span class="number">2007</span> CST
+SMART support <span class="keyword">is</span>: Available - device has SMART capability.
+SMART support <span class="keyword">is</span>: Disabled
+SMART Disabled. Use <span class="keyword">option</span> -s <span class="keyword">with</span> argument <span class="string">'on'</span> <span class="keyword">to</span> enable it.
+<span class="string">`&lt;/pre&gt;
+
+我们可以看到SMART support is: Disabled表示SMART未启用
+
+执行如下命令，启动SMART：
+&lt;pre&gt;`</span>smartctl --smart=<span class="keyword">on</span> --offlineauto=<span class="keyword">on</span> --saveauto=<span class="keyword">on</span> /dev/hdb<span class="string">`&lt;/pre&gt;
+
+例如看到如下返回结果
+&lt;pre&gt;`</span>[root@<span class="number">3.6</span><span class="number">.0</span>Biz-<span class="number">46</span> ~]# smartctl --smart=<span class="keyword">on</span> --offlineauto=<span class="keyword">on</span> --saveauto=<span class="keyword">on</span> /dev/hdb
+smartctl version <span class="number">5.33</span> [i386-redhat-linux-gnu] Copyright (C) <span class="number">2002</span>-<span class="number">4</span> Bruce Allen
+Home page <span class="keyword">is</span> http://smartmontools.sourceforge.net/
+=== <span class="keyword">START</span> <span class="keyword">OF</span> ENABLE/DISABLE COMMANDS <span class="keyword">SECTION</span> ===
+SMART Enabled.
+SMART Attribute Autosave Enabled.
+SMART Automatic Offline Testing Enabled every four hours.<span class="string">`&lt;/pre&gt;
+
+现在硬盘的SMART功能已经被打开
+执行如下命令查看硬盘的健康状况：
+&lt;pre&gt;`</span>smartctl -H /dev/hda<span class="string">`&lt;/pre&gt;
+
+例如可以看到如下结果：
+&lt;pre&gt;`</span>[root@<span class="number">3.6</span><span class="number">.0</span>Biz-<span class="number">46</span> ~]# smartctl -H /dev/hdb
+smartctl version <span class="number">5.33</span> [i386-redhat-linux-gnu] Copyright (C) <span class="number">2002</span>-<span class="number">4</span> Bruce Allen
+Home page <span class="keyword">is</span> http://smartmontools.sourceforge.net/
+=== <span class="keyword">START</span> <span class="keyword">OF</span> <span class="keyword">READ</span> SMART DATA <span class="keyword">SECTION</span> ===
+SMART overall-health self-assessment test result: PASSED<span class="string">`&lt;/pre&gt;
+
+请注意result后边的结果：PASSED，这表示硬盘健康状态良好
+如果这里显示Failure，那么最好立刻给服务器更换硬盘
+SMART只能报告磁盘已经不再健康，但是报警后还能继续运行多久是不确定的
+通常，SMART报警参数是有预留的，磁盘报警后，不会当场坏掉，一般能坚持一段时间
+有的硬盘SMART报警后还继续跑了好几年，有的硬盘SMART报错后几天就坏了
+但是一旦出现报警，侥幸心里是万万不能的……
+执行如下命令可以看到详细的参数：
+&lt;pre&gt;`</span>smartctl -A /dev/hdb<span class="string">`&lt;/pre&gt;
+
+例如可以看到如下结果：
+&lt;pre&gt;`</span>[root@<span class="number">3.6</span><span class="number">.0</span>Biz-<span class="number">46</span> ~]# smartctl -A /dev/hdb
+smartctl version <span class="number">5.33</span> [i386-redhat-linux-gnu] Copyright (C) <span class="number">2002</span>-<span class="number">4</span> Bruce Allen
+Home page <span class="keyword">is</span> http://smartmontools.sourceforge.net/
+=== <span class="keyword">START</span> <span class="keyword">OF</span> <span class="keyword">READ</span> SMART DATA <span class="keyword">SECTION</span> ===
+SMART Attributes Data Structure revision <span class="keyword">number</span>: <span class="number">10</span>
+Vendor Specific SMART Attributes <span class="keyword">with</span> Thresholds:
+ID# ATTRIBUTE_NAME FLAG <span class="keyword">VALUE</span> WORST THRESH TYPE UPDATED WHEN_FAILED RAW_VALUE
+<span class="number">1</span> Raw_Read_Error_Rate <span class="number">0x000f</span> <span class="number">053</span> <span class="number">051</span> <span class="number">006</span> Pre-fail Always - <span class="number">11338710</span>
+<span class="number">3</span> Spin_Up_Time <span class="number">0x0003</span> <span class="number">098</span> <span class="number">097</span> <span class="number">000</span> Pre-fail Always - <span class="number">0</span>
+<span class="number">4</span> Start_Stop_Count <span class="number">0x0032</span> <span class="number">100</span> <span class="number">100</span> <span class="number">020</span> Old_age Always - <span class="number">17</span>
+<span class="number">5</span> Reallocated_Sector_Ct <span class="number">0x0033</span> <span class="number">100</span> <span class="number">100</span> <span class="number">036</span> Pre-fail Always - <span class="number">0</span>
+<span class="number">7</span> Seek_Error_Rate <span class="number">0x000f</span> <span class="number">087</span> <span class="number">060</span> <span class="number">030</span> Pre-fail Always - <span class="number">610059516</span>
+<span class="number">9</span> Power_On_Hours <span class="number">0x0032</span> <span class="number">087</span> <span class="number">087</span> <span class="number">000</span> Old_age Always - <span class="number">11974</span>
+<span class="number">10</span> Spin_Retry_Count <span class="number">0x0013</span> <span class="number">100</span> <span class="number">100</span> <span class="number">097</span> Pre-fail Always - <span class="number">0</span>
+<span class="number">12</span> Power_Cycle_Count <span class="number">0x0032</span> <span class="number">100</span> <span class="number">100</span> <span class="number">020</span> Old_age Always - <span class="number">110</span>
+<span class="number">194</span> Temperature_Celsius <span class="number">0x0022</span> <span class="number">045</span> <span class="number">052</span> <span class="number">000</span> Old_age Always - <span class="number">45</span>
+<span class="number">195</span> Hardware_ECC_Recovered <span class="number">0x001a</span> <span class="number">053</span> <span class="number">051</span> <span class="number">000</span> Old_age Always - <span class="number">11338710</span>
+<span class="number">197</span> Current_Pending_Sector <span class="number">0x0012</span> <span class="number">100</span> <span class="number">100</span> <span class="number">000</span> Old_age Always - <span class="number">0</span>
+<span class="number">198</span> Offline_Uncorrectable <span class="number">0x0010</span> <span class="number">100</span> <span class="number">100</span> <span class="number">000</span> Old_age Offline - <span class="number">0</span>
+<span class="number">199</span> UDMA_CRC_Error_Count <span class="number">0x003e</span> <span class="number">200</span> <span class="number">200</span> <span class="number">000</span> Old_age Always - <span class="number">0</span>
+<span class="number">200</span> Multi_Zone_Error_Rate <span class="number">0x0000</span> <span class="number">100</span> <span class="number">253</span> <span class="number">000</span> Old_age Offline - <span class="number">0</span>
+<span class="number">202</span> TA_Increase_Count <span class="number">0x0032</span> <span class="number">100</span> <span class="number">253</span> <span class="number">000</span> Old_age Always - <span class="number">0</span>
+<span class="string">`&lt;/pre&gt;
+上边列出的参数表中可供进行技术分析和参考，使用下边的命令可以输出完整结果：
+&lt;pre&gt;`</span>smartctl -a /dev/hdb<span class="string">`&lt;/pre&gt;
+
+定期登录到服务器上运行smartctl是比较麻烦的，linux提供了系统进程smartd
+
+编辑配置文件：
+vi /etc/smartd.conf
+这个配置文件中大部分可能是注释掉的说明，只需要和当前硬盘相关的一行写入正确即可：
+/dev/hdb -H -m test@test123123.com
+上边的配置表示smartd以静默状态工作，当SMART中报告PASSED的时候不理睬
+一旦出现Failure，立刻用邮件通知用户指定的邮箱
+
+修改配置后重启服务：
+/etc/init.d/smartd
+即可完成对SMART的全部配置。
+
+linux下硬盘检测工具: smartmontools
+Smartmontools for SCSI硬盘: http://smartmontools.sourceforge.net/smartmontools_scsi.html
+
+简单用法：
+&lt;pre&gt;`</span><span class="number">1</span>、smartctl -a 检查该设备是否已经打开SMART技术。
+<span class="number">2</span>、smartctl -s <span class="keyword">on</span> 如果没有打开SMART技术，使用该命令打开SMART技术。
+<span class="number">3</span>、smartctl -t short 后台检测硬盘，消耗时间短；
+smartctl -t long 后台检测硬盘，消耗时间长；
+smartctl -C -t short 前台检测硬盘，消耗时间短；
+smartctl -C -t long 前台检测硬盘，消耗时间长。
+其实就是利用硬盘SMART的自检程序。
+<span class="number">4</span>、smartctl -X 中断后台检测硬盘。
+<span class="number">5</span>、smartctl -l selftest 显示硬盘检测日志。
+<span class="number">6</span>、smartctl -l error 显示硬盘错误汇总。
+</pre></figure></code></pre>
+<p>其它：<a href="http://www.cyberciti.biz/tips/monitoring-hard-disk-health-with-smartd-under-linux-or-unix-operating-systems.html">http://www.cyberciti.biz/tips/monitoring-hard-disk-health-with-smartd-under-linux-or-unix-operating-systems.html</a>
+<a href="http://www.linuxjournal.com/article/6983">http://www.linuxjournal.com/article/6983</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:04:01.000Z"><a href="/2010/12/19/linux-user-group-detailed/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-user-group-detailed/">linux 用户user及用户组group 详解</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>一、user相关配置文件</p>
+<pre><code><figure class="highlight"><pre><span class="xml">/etc/passwd
+root:x:</span><span class="number">0</span><span class="xml">:</span><span class="number">0</span><span class="xml">:root:/root:/bin/bash`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+用户名：UID:GID:finger：家目录：shell
+注：UID： </span><span class="number">0</span><span class="xml">即管理员 </span><span class="number">1</span><span class="xml">-</span><span class="number">499</span><span class="xml">系统使用 </span><span class="number">500</span><span class="xml">-</span><span class="number">65535</span><span class="xml">+ 一般用户
+
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`/etc/shadow
+root:</span><span class="variable">$1</span><span class="xml"></span><span class="variable">$jHNFgOBV</span><span class="xml"></span><span class="variable">$br7SAZsvGRyFmySJ9UlUI.:14720:0:99999:7:::</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+用户：加密密码：更改密码日期：不可更改密码天数：需变更日期：过期天数：警告期限：宽限时间：失效日期
+注：日期按</span><span class="number">1970</span><span class="xml">年</span><span class="number">1</span><span class="xml">月</span><span class="number">1</span><span class="xml">日作为起初日期。
+
+二、用户组相关配置
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`/etc/group
+/etc/gshadow`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+三、管理用户（user）的工具或命令
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`useradd adduser 注：添加用户 
+passwd 注：为用户设置密码
+usermod 注：修改用户命令，可以通过usermod 来修改登录名、用户的家目录等等；
+pwconv 注：同步用户从/etc/passwd 到/etc/shadow
+pwck 注：pwck是校验用户配置文件/etc/passwd 和/etc/shadow 文件内容是否合法或完整；
+pwunconv 注：是pwcov 的立逆向操作，是从/etc/shadow和 /etc/passwd 创建/etc/passwd ，然后会删除 /etc/shadow 文件；
+finger 注：查看用户信息工具
+id 注：查看用户的UID、GID及所归属的用户组
+chfn 注：更改用户信息工具
+su 注：用户切换工具
+sudo 注：sudo 是通过另一个用户来执行命令（execute a command as another user），su 是用来切换用户，然后通过切换到的用户来完成相应的任务，但sudo 能后面直接执行命令，比如sudo 不需要root 密码就可以执行root 赋与的执行只有root才能执行相应的命令；但得通过visudo 来编辑/etc/sudoers来实现；
+visudo 注：visodo 是编辑 /etc/sudoers 的命令；也可以不用这个命令，直接用vi 来编辑 /etc/sudoers 的效果是一样的；
+sudoedit 注：和sudo 功能差不多；`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+四、管理用户组（group）的工具或命令
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`groupadd 注：添加用户组；
+groupdel 注：删除用户组；
+groupmod 注：修改用户组信息
+groups 注：显示用户所属的用户组
+grpck
+grpconv 注：通过/etc/group和/etc/gshadow 的文件内容来同步或创建/etc/gshadow ，如果/etc/gshadow 不存在则创建；
+grpunconv 注：通过/etc/group 和/etc/gshadow 文件内容来同步或创建/etc/group ，然后删除gshadow文件；`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="number">1</span><span class="xml">、useradd 命令详解
+功能说明：建立用户帐号。
+语　　法：useradd [-mMnr][-c <span class="tag">&lt;<span class="title">备注</span>&gt;</span>][-d <span class="tag">&lt;<span class="title">登入目录</span>&gt;</span>][-e <span class="tag">&lt;<span class="title">有效期限</span>&gt;</span>][-f <span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span>][-g <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-G <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-s ][-u ][用户帐号] 或 useradd -D [-b][-e <span class="tag">&lt;<span class="title">有效期限</span>&gt;</span>][-f <span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span>][-g <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-G <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-s ]
+
+补充说明：useradd可用来建立用户帐号。帐号建好之后，再用passwd设定帐号的密码．而可用userdel删除帐号。使用useradd指令所建立的帐号，实际上是保存在/etc/passwd文本文件中。
+参　　数：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-c<span class="tag">&lt;<span class="title">备注</span>&gt;</span> 加上备注文字。备注文字会保存在passwd的备注栏位中。
+-d<span class="tag">&lt;<span class="title">登入目录</span>&gt;</span> 指定用户登入时的启始目录。
+-D 　变更预设值．
+-e<span class="tag">&lt;<span class="title">有效期限</span>&gt;</span> 指定帐号的有效期限。
+-f<span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span> 指定在密码过期后多少天即关闭该帐号。
+-g<span class="tag">&lt;<span class="title">群组</span>&gt;</span> 指定用户所属的群组。
+-G<span class="tag">&lt;<span class="title">群组</span>&gt;</span> 指定用户所属的附加群组。
+-m 　自动建立用户的登入目录。
+-M 　不要自动建立用户的登入目录。
+-n 　取消建立以用户名称为名的群组．
+-r 　建立系统帐号。
+-s　 　指定用户登入后所使用的shell。
+-u 　指定用户ID。`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="number">2</span><span class="xml">、usermod
+功能说明：修改用户帐号。
+语　　法：usermod [-LU][-c <span class="tag">&lt;<span class="title">备注</span>&gt;</span>][-d <span class="tag">&lt;<span class="title">登入目录</span>&gt;</span>][-e <span class="tag">&lt;<span class="title">有效期限</span>&gt;</span>][-f <span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span>][-g <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-G <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-l <span class="tag">&lt;<span class="title">帐号名称</span>&gt;</span>][-s ][-u ][用户帐号]
+补充说明：usermod可用来修改用户帐号的各项设定。
+参　　数：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-c<span class="tag">&lt;<span class="title">备注</span>&gt;</span> 修改用户帐号的备注文字。
+-d登入目录&gt; 修改用户登入时的目录。
+-e<span class="tag">&lt;<span class="title">有效期限</span>&gt;</span> 修改帐号的有效期限。
+-f<span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span> 修改在密码过期后多少天即关闭该帐号。
+-g<span class="tag">&lt;<span class="title">群组</span>&gt;</span> 修改用户所属的群组。
+-G<span class="tag">&lt;<span class="title">群组</span>&gt;</span> 修改用户所属的附加群组。
+-l<span class="tag">&lt;<span class="title">帐号名称</span>&gt;</span> 修改用户帐号名称。
+-L 　锁定用户密码，使密码无效。
+-s 　修改用户登入后所使用的shell。
+-u 　修改用户ID。
+-U 　解除密码锁定。`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="number">3</span><span class="xml">、pwconv pwunconv
+功能说明：开启用户的投影密码。
+语　　法：pwconv
+补充说明：Linux系统里的用户和群组密码，分别存放在名称为passwd和group的文件中，　这两个文件位于/etc目录下。因系统运作所需，任 何人都得以读取它们，造成安全上的破绽。投影密码将文件内的密码改存在/etc目录下的shadow和gshadow文件内，只允许系统管理者读取，同时 把原密码置换为"x"字符，有效的强化了系统的安全性。
+功能说明：关闭用户的投影密码。
+语　　法：pwunconv
+补充说明：执行pwunconv指令可以关闭用户投影密码，它会把密码从shadow文件内，重回存到passwd文件里。
+
+</span><span class="number">4</span><span class="xml">、 pwck
+功能：检查用户密码文件的完整性（/etc/passwd以及/etc/shadow文件）。
+用法：pwck [-q] [-s] [passwd [ shadow ]]
+pwck [-q] [-r] [passwd shadow]
+参数：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-q：只显示错误信息，警告不显示
+-s：按id排序
+-r：只读方式检查`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="number">5</span><span class="xml">、grpck命令
+功能：检查用户组及密码文件的完整性（etc/group以及/etc/gshadow文件）
+用法： grpck [-r] [group [ shadow ]]
+grpck [-s] [group [ shadow ]]
+参数：与pwck一样
+
+</span><span class="number">6</span><span class="xml">、finger
+功能说明：查找并显示用户信息。
+语　　法：finger [-lmsp][帐号名称...]
+补充说明：finger指令会去查找，并显示指定帐号的用户相关信息，包括本地与远端主机的用户皆可，帐号名称没有大小写的差别。单独执行finger指 令，它会显示本地主机现在所有的用户的登陆信息，包括帐号名称，真实姓名，登入终端机，闲置时间，登入时间以及地址和电话。
+参　　数：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-l 　列出该用户的帐号名称，真实姓名，用户专属目录，登入所用的Shell，登入时间，转信地址，电子邮件状态，还有计划文件和方案文件内容。
+-m 　排除查找用户的真实姓名。
+-s 　列出该用户的帐号名称，真实姓名，登入终端机，闲置时间，登入时间以及地址和电话。
+-p 　列出该用户的帐号名称，真实姓名，用户专属目录，登入所用的Shell，登入时间，转信地址，电子邮件状态，但不显示该用户的计划文件和方案文件内容。`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="number">7</span><span class="xml">、su
+</span><span class="number">1.</span><span class="xml">作用
+u的作用是变更为其它使用者的身份，超级用户除外，需要键入该使用者的密码。
+
+</span><span class="number">2.</span><span class="xml">格式
+u [选项]... [-] [USER [ARG]...]
+
+</span><span class="number">3.</span><span class="xml">主要参数
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-f ， --fast：不必读启动文件（如 csh.cshrc 等），仅用于csh或tcsh两种Shell。
+-l ， --login：加了这个参数之后，就好像是重新登陆为该使用者一样，大部分环境变量（例如HOME、SHELL和USER等）都是以该使用者（USER）为主，并且工作目录也会改变。如果没有指定USER，缺省情况是root。
+-m， -p ，--preserve-environment：执行su时不改变环境变数。
+-c command：变更账号为USER的使用者，并执行指令（command）后再变回原来使用者。
+USER：欲变更的使用者账号，ARG传入新的Shell参数`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="number">8</span><span class="xml">、sudo
+功能说明：以其他身份来执行指令。
+语　　法：sudo [-bhHpV][-s ][-u <span class="tag">&lt;<span class="title">用户</span>&gt;</span>][指令] 或 sudo [-klv]
+补充说明：sudo 可让用户以其他的身份来执行指定的指令，预设的身份为root。在/etc/sudoers中设置了可执行sudo指令的用户。若其未经授权的用户企图使 用sudo，则会发出警告的邮件给管理员。用户使用sudo时，必须先输入密码，之后有</span><span class="number">5</span><span class="xml">分钟的有效期限，超过期限则必须重新输入密码。
+参　　数：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-b 　在后台执行指令。
+-h 　显示帮助。
+-H 　将HOME环境变量设为新身份的HOME环境变量。
+-k 　结束密码的有效期限，也就是下次再执行sudo时便需要输入密码。
+-l 　列出目前用户可执行与无法执行的指令。
+-p 　改变询问密码的提示符号。
+-s 　执行指定的shell。
+-u<span class="tag">&lt;<span class="title">用户</span>&gt;</span> 以指定的用户作为新的身份。若不加上此参数，则预设以root作为新的身份。
+-v 　延长密码有效期限</span><span class="number">5</span><span class="xml">分钟。
+-V 　显示版本信息。`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="number">9</span><span class="xml">、groupadd
+名称 groupadd - 建 立 新 群 组
+语法
+groupadd [-g gid [-o]] [-r] [-f] group
+参数：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-g gid group's
+ID值。除非使用-o参数不然该值必须是唯一，不可相同。数值不可为负。预设为最小不得小于</span><span class="number">500</span><span class="xml">而逐次增加。</span><span class="number">0</span><span class="xml">~</span><span class="number">499</span><span class="xml">传统上是保留给系统帐号使用。
+-r
+此参数是用来建立系统帐号。的UID会比定义在系统档上/etc/login.defs.的UID_MIN来的小。注意useradd此用法所建立的帐号 不会建立使用者目录，也不会在乎纪录在/etc/login.defs.的定义值。如果你想要有使用者目录须额外指定-m参数来建立系统帐号。这是 REDHAT额外增设的选项。它会自动帮你选定一个小于</span><span class="number">499</span><span class="xml">的gif不需要再加上-g参数。这是REDHAT额外增设的选项。
+-f
+Thisisforceflag.新增一个已经存在的群组帐号，系统会出现错误讯息然后结束groupadd。如果是这样的情况，不会新增这个群组(如果 是这个情况下，系统不会再新增一次)也可同时加上-g选项当你加上一个gid，此时gid就不用是唯一值，可不加-o参数，建好群组后会显结果 (addingagroupasneither-gor-ooptionswerespecified).
+这是REDHAT额外增设的选项`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="number">10</span><span class="xml">、groupmod
+功能说明：更改群组识别码或名称。
+语　　法：groupmod [-g <span class="tag">&lt;<span class="title">群组识别码</span>&gt;</span> <span class="tag">&lt;<span class="title">-o</span>&gt;</span>][-n <span class="tag">&lt;<span class="title">新群组名称</span>&gt;</span>][群组名称]
+补充说明：需要更改群组的识别码或名称时，可用groupmod指令来完成这项工作。
+参　　数：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-g <span class="tag">&lt;<span class="title">群组识别码</span>&gt;</span> 设置欲使用的群组识别码。
+-o 　重复使用群组识别码。
+-n <span class="tag">&lt;<span class="title">新群组名称</span>&gt;</span> 设置欲使用的群组名称。</span>
+</pre></figure></code></pre>
+<p>参考：
+鸟哥一书
+互联网
+<a href="http://www.linuxsir.org/main/?q=node/91">http://www.linuxsir.org/main/?q=node/91</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:40:06.000Z"><a href="/2010/12/19/prockcore-what-is/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/prockcore-what-is/">/proc/kcore是什么文件?</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>/proc/kcore is like an &quot;alias&quot; for the memory in your computer. Its
+size is the same as the amount of RAM you have, and if you read it as
+a file, the kernel does memory reads.
+如果内核不能识别全部内存，即&quot;ll /proc/kcore&quot;（查看kcore的真实大小：du -h /proc/kcore)后显示的大小不等于实际的物理内存大小;
+可以用 cat /proc/meminfo 命令来校验.如果所显示的数量与系统的物理内存不同，则在 /boot/grub/grub.conf 文件中添加：
+mem=xxM</p>
+<p>例如 ：</p>
+<pre><code><figure class="highlight"><pre>#boot=/dev/hda
+<span class="title">default</span>=<span class="number">0</span>
+<span class="title">timeout</span>=<span class="number">5</span>
+<span class="title">splashimage</span>=(hd0,<span class="number">0</span>)/boot/grub/splash.xpm.gz
+<span class="title">hiddenmenu</span>
+<span class="title">title</span> <span class="type">CentOS</span> (<span class="number">2.6</span><span class="number">.18</span>-<span class="number">164.</span>el5)
+<span class="title">root</span> (hd0,<span class="number">0</span>)
+<span class="title">kernel</span> /boot/vmlinuz-<span class="number">2.6</span><span class="number">.18</span>-<span class="number">164.</span>el5 ro root=<span class="type">LABEL</span>=/ mem=<span class="number">4096</span>M
+<span class="title">initrd</span> /boot/initrd-<span class="number">2.6</span><span class="number">.18</span>-<span class="number">164.</span>el5.img
+</pre></figure></code></pre>
+<p>原文: <a href="http://unixguide.net/linux/faq/04.16.shtml">http://unixguide.net/linux/faq/04.16.shtml</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/archives/2010/12/page/2/" class="alignleft prev">上一页</a>
+  
+  
+    <a href="/archives/2010/12/page/4/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/1032/">1032</a><small>1</small></li>
+  
+    <li><a href="/tags/1236/">1236</a><small>1</small></li>
+  
+    <li><a href="/tags/403/">403</a><small>1</small></li>
+  
+    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
+  
+    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
+  
+    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
+  
+    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
+  
+    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
+  
+    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
+  
+    <li><a href="/tags/acl/">acl</a><small>2</small></li>
+  
+    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
+  
+    <li><a href="/tags/apache/">apache</a><small>8</small></li>
+  
+    <li><a href="/tags/arp/">arp</a><small>1</small></li>
+  
+    <li><a href="/tags/awk/">awk</a><small>4</small></li>
+  
+    <li><a href="/tags/bash/">bash</a><small>2</small></li>
+  
+    <li><a href="/tags/best/">best</a><small>1</small></li>
+  
+    <li><a href="/tags/binding/">binding</a><small>1</small></li>
+  
+    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
+  
+    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
+  
+    <li><a href="/tags/browser/">browser</a><small>1</small></li>
+  
+    <li><a href="/tags/cache/">cache</a><small>1</small></li>
+  
+    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>8</small></li>
+  
+    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
+  
+    <li><a href="/tags/chown/">chown</a><small>1</small></li>
+  
+    <li><a href="/tags/commands/">commands</a><small>1</small></li>
+  
+    <li><a href="/tags/content/">content</a><small>1</small></li>
+  
+    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
+  
+    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
+  
+    <li><a href="/tags/creating/">creating</a><small>1</small></li>
+  
+    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
+  
+    <li><a href="/tags/dell/">dell</a><small>1</small></li>
+  
+    <li><a href="/tags/diff/">diff</a><small>1</small></li>
+  
+    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
+  
+    <li><a href="/tags/du/">du</a><small>1</small></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
+  
+    <li><a href="/tags/end/">end</a><small>1</small></li>
+  
+    <li><a href="/tags/epel/">epel</a><small>1</small></li>
+  
+    <li><a href="/tags/etag/">etag</a><small>1</small></li>
+  
+    <li><a href="/tags/expires/">expires</a><small>1</small></li>
+  
+    <li><a href="/tags/find/">find</a><small>1</small></li>
+  
+    <li><a href="/tags/for-1/">for</a><small>1</small></li>
+  
+    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
+  
+    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
+  
+    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
+  
+    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
+  
+    <li><a href="/tags/group/">group</a><small>1</small></li>
+  
+    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
+  
+    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
+  
+    <li><a href="/tags/howto/">howto</a><small>2</small></li>
+  
+    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
+  
+    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
+  
+    <li><a href="/tags/if/">if</a><small>2</small></li>
+  
+    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
+  
+    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
+  
+    <li><a href="/tags/init/">init</a><small>1</small></li>
+  
+    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
+  
+    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
+  
+    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
+  
+    <li><a href="/tags/jk/">jk</a><small>1</small></li>
+  
+    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
+  
+    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/kick/">kick</a><small>1</small></li>
+  
+    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>18</small></li>
+  
+    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
+  
+    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
+  
+    <li><a href="/tags/master/">master</a><small>2</small></li>
+  
+    <li><a href="/tags/metric/">metric</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
+  
+    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
+  
+    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
+  
+    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
+  
+    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
+  
+    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
+  
+    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
+  
+    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
+  
+    <li><a href="/tags/packet/">packet</a><small>1</small></li>
+  
+    <li><a href="/tags/pam/">pam</a><small>1</small></li>
+  
+    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
+  
+    <li><a href="/tags/perl/">perl</a><small>1</small></li>
+  
+    <li><a href="/tags/permission/">permission</a><small>1</small></li>
+  
+    <li><a href="/tags/php-1/">php</a><small>2</small></li>
+  
+    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
+  
+    <li><a href="/tags/pil/">pil</a><small>1</small></li>
+  
+    <li><a href="/tags/port/">port</a><small>1</small></li>
+  
+    <li><a href="/tags/practices/">practices</a><small>1</small></li>
+  
+    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
+  
+    <li><a href="/tags/ps/">ps</a><small>2</small></li>
+  
+    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
+  
+    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
+  
+    <li><a href="/tags/python-1/">python</a><small>3</small></li>
+  
+    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
+  
+    <li><a href="/tags/quick/">quick</a><small>1</small></li>
+  
+    <li><a href="/tags/r410/">r410</a><small>1</small></li>
+  
+    <li><a href="/tags/r710/">r710</a><small>1</small></li>
+  
+    <li><a href="/tags/raw/">raw</a><small>1</small></li>
+  
+    <li><a href="/tags/referer/">referer</a><small>1</small></li>
+  
+    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
+  
+    <li><a href="/tags/repo/">repo</a><small>1</small></li>
+  
+    <li><a href="/tags/resources/">resources</a><small>1</small></li>
+  
+    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
+  
+    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
+  
+    <li><a href="/tags/sar/">sar</a><small>1</small></li>
+  
+    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
+  
+    <li><a href="/tags/sed/">sed</a><small>4</small></li>
+  
+    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
+  
+    <li><a href="/tags/sending/">sending</a><small>1</small></li>
+  
+    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>2</small></li>
+  
+    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
+  
+    <li><a href="/tags/slave/">slave</a><small>2</small></li>
+  
+    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
+  
+    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
+  
+    <li><a href="/tags/spec/">spec</a><small>2</small></li>
+  
+    <li><a href="/tags/squid/">squid</a><small>1</small></li>
+  
+    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>1</small></li>
+  
+    <li><a href="/tags/tar/">tar</a><small>1</small></li>
+  
+    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
+  
+    <li><a href="/tags/tools/">tools</a><small>1</small></li>
+  
+    <li><a href="/tags/top/">top</a><small>1</small></li>
+  
+    <li><a href="/tags/tree/">tree</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
+  
+    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
+  
+    <li><a href="/tags/user/">user</a><small>2</small></li>
+  
+    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>2</small></li>
+  
+    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
+  
+    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/while/">while</a><small>1</small></li>
+  
+    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
+  
+    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
+  
+    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
+  
+    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
+  
+    <li><a href="/tags/yum/">yum</a><small>10</small></li>
+  
+    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
+  
+    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
+  
+    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
+  
+    <li><a href="/tags/优化/">优化</a><small>1</small></li>
+  
+    <li><a href="/tags/内核/">内核</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
+  
+    <li><a href="/tags/参考/">参考</a><small>1</small></li>
+  
+    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
+  
+    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
+  
+    <li><a href="/tags/对比/">对比</a><small>1</small></li>
+  
+    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
+  
+    <li><a href="/tags/日志/">日志</a><small>2</small></li>
+  
+    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
+  
+    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
+  
+    <li><a href="/tags/管理/">管理</a><small>1</small></li>
+  
+    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
+  
+    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
+  
+    <li><a href="/tags/老板/">老板</a><small>1</small></li>
+  
+    <li><a href="/tags/认证/">认证</a><small>1</small></li>
+  
+    <li><a href="/tags/详解/">详解</a><small>3</small></li>
+  
+    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
+  
+    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
+  
+    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

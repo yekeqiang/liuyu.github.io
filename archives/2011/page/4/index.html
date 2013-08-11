@@ -1,0 +1,1098 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 4 页 | 归档：2011 | Puppet-in-action</title>
+  <meta name="author" content="Liu Yu">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Puppet-in-action"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Puppet-in-action</a></h1>
+  <h2><a href="/">Puppet</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2011</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-26T13:45:41.000Z"><a href="/2011/01/26/cpanm-install-perl-modules/">1月 26 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/26/cpanm-install-perl-modules/">使用cpanm 安装perl模块</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>curl -LO <a href="http://bit.ly/cpanm">http://bit.ly/cpanm</a>
+chmod +x cpanm
+sudo cp cpanm /usr/local/bin</p>
+<p>使用方式</p>
+<p>常用的使用形式如下:</p>
+<p>cpanm 模块名</p>
+<p>参数可接模组名称、带版本号的 Tarball 名、Tarball 网址、或是 Tarball 在本机上的路径。可调整的选项有五个:</p>
+<p>-v, --verbose : 输出完整的资讯
+-f, --force : 强制安装。就算测试过程有错误也照样安装
+-n, --notest : 不跑测试
+-S, --sudo : 安装时以 sudo 指令时进行
+--installdeps : 安装依存的模组</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-22T14:53:20.000Z"><a href="/2011/01/22/proftpd-quick-install-config/">1月 22 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/22/proftpd-quick-install-config/">proftpd 快速安装配置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>配置proftpd 相关</p>
+<pre><code><figure class="highlight"><pre><span class="comment">groupadd</span> <span class="literal">-</span><span class="comment">g</span> <span class="comment">46</span> <span class="comment">proftpd</span> 
+ <span class="comment">useradd</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">proftpd</span> <span class="literal">-</span><span class="comment">d</span> <span class="comment">/data</span> <span class="literal">-</span><span class="comment">g</span> <span class="comment">proftpd</span> <span class="literal">-</span><span class="comment">s</span> <span class="comment">/usr/bin/proftpdshell</span> <span class="literal">-</span><span class="comment">u</span> <span class="comment">46</span> <span class="comment">proftpd</span> 
+ <span class="comment">install</span> <span class="literal">-</span><span class="comment">v</span> <span class="literal">-</span><span class="comment">d</span> <span class="literal">-</span><span class="comment">m775</span> <span class="literal">-</span><span class="comment">o</span> <span class="comment">proftpd</span> <span class="literal">-</span><span class="comment">g</span> <span class="comment">proftpd</span> <span class="comment">/data</span> 
+ <span class="comment">ln</span> <span class="literal">-</span><span class="comment">v</span> <span class="literal">-</span><span class="comment">s</span> <span class="comment">/bin/false</span> <span class="comment">/usr/bin/proftpdshell</span> 
+ <span class="comment">echo</span> <span class="comment">/usr/bin/proftpdshell</span> &gt;&gt; <span class="comment">/etc/shells</span> <span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">ftp://ftp</span>.<span class="comment">proftpd</span>.<span class="comment">org/distrib/source/proftpd</span>-<span class="comment">1</span>.<span class="comment">3</span>.<span class="comment">3d</span>.<span class="comment">tar</span>.<span class="comment">bz2</span>
+
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span>.<span class="comment">/configure</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">prefix=/usr</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">sysconfdir=/etc</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">localstatedir=/var/run</span> 
+<span class="comment">make</span>
+<span class="comment">make</span> <span class="comment">install`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">配置文件就只改下user</span> <span class="comment">group</span>
+
+<span class="comment">添加用户</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`useradd</span> <span class="literal">-</span><span class="comment">g</span> <span class="comment">groupname</span> <span class="literal">-</span><span class="comment">d</span> <span class="comment">/var/www/dirname</span> <span class="literal">-</span><span class="comment">s</span> <span class="comment">/sbin/nologin</span> <span class="comment">loginname`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">修改配置文件：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`User</span>    <span class="comment">loginname</span>
+<span class="comment">Group</span>   <span class="comment">groupname</span>
+<span class="comment">AnonRequirePassword</span>             <span class="comment">on</span>
+<span class="comment">RequireValidShell</span>               <span class="comment">off</span>
+<span class="comment">#</span> <span class="comment">Limit</span> <span class="comment">the</span> <span class="comment">maximum</span> <span class="comment">number</span> <span class="comment">of</span> <span class="comment">anonymous</span> <span class="comment">logins</span>
+<span class="comment">MaxClients</span>                    <span class="comment">100</span>
+<span class="comment">MaxClientsPerHost</span>             <span class="comment">3</span>
+<span class="comment">TransferRate</span>  <span class="comment">RETR</span>            <span class="comment">50000000
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-21T07:33:04.000Z"><a href="/2011/01/21/mysql-master-slave-主从同步配置/">1月 21 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/21/mysql-master-slave-主从同步配置/">mysql master-slave 主从同步配置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天很郁闷。真的很郁闷。。</p>
+<p>上次配置M/S很正常。今天却因为根分区满了，查找了半天的原因。哎。</p>
+<p>记录下配置这程吧。</p>
+<p>master:</p>
+<pre><code><figure class="highlight"><pre><span class="comment">server</span>-<span class="comment">id</span> <span class="comment">=</span> <span class="comment">1</span>
+<span class="comment">log</span>-<span class="comment">bin</span> <span class="comment">=</span> <span class="comment">/data/mysql/3306/logs/binlog/mysql</span>-<span class="comment">bin</span>
+<span class="comment">log</span>-<span class="comment">error</span> <span class="comment">=</span> <span class="comment">/data/mysql/3306/logs/error</span>.<span class="comment">log</span>
+<span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">添加同步账号：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`GRANT</span> <span class="comment">REPLICATION</span> <span class="comment">SLAVE</span> <span class="comment">ON</span> <span class="comment">*</span>.<span class="comment">*</span>  <span class="comment">TO</span> <span class="comment">'repl'@'%</span>.<span class="comment">mydomain</span>.<span class="comment">com'</span> <span class="comment">IDENTIFIED</span> <span class="comment">BY</span> <span class="comment">'slavepass';`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">slave</span> <span class="comment">端：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`server</span>-<span class="comment">id</span> <span class="comment">=</span> <span class="comment">3</span>
+<span class="comment">master</span>-<span class="comment">host=master'ip</span>
+<span class="comment">master</span>-<span class="comment">user=slave</span>
+<span class="comment">master</span>-<span class="comment">password=sinaedgeslave</span>
+<span class="comment">master</span>-<span class="comment">port=3306</span>
+<span class="comment">master</span>-<span class="comment">connect</span>-<span class="comment">retry=10`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">master</span> <span class="comment">开二个终端，锁表：记录值</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`FLUSH</span> <span class="comment">TABLES</span> <span class="comment">WITH</span> <span class="comment">READ</span> <span class="comment">LOCK；`</span>&lt;<span class="comment">/pre</span>&gt;
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`show</span> <span class="comment">master</span> <span class="comment">status;</span>
+
+<span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span>
+
+<span class="comment">|</span> <span class="comment">File</span>             <span class="comment">|</span> <span class="comment">Position</span> <span class="comment">|</span> <span class="comment">Binlog_Do_DB</span> <span class="comment">|</span> <span class="comment">Binlog_Ignore_DB</span> <span class="comment">|</span>
+
+<span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span>
+
+<span class="comment">|</span> <span class="comment">mysql</span>-<span class="comment">bin</span>.<span class="comment">000011</span> <span class="comment">|</span>  <span class="comment">1138574</span> <span class="comment">|</span>              <span class="comment">|</span>                  <span class="comment">|</span>
+
+<span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span>
+
+<span class="comment">1</span> <span class="comment">row</span> <span class="comment">in</span> <span class="comment">set</span> <span class="comment">(0</span>.<span class="comment">00</span> <span class="comment">sec)`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">打包data文件，然后</span> <span class="comment">scp至slave</span> <span class="comment">。解压。如果是首次同步最好是重启下slave库。</span>
+
+<span class="comment">slave</span> <span class="comment">:</span> <span class="comment">change</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`slave</span> <span class="comment">stop;`</span>&lt;<span class="comment">/pre</span>&gt;
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`CHANGE</span> <span class="comment">MASTER</span> <span class="comment">TO</span>  <span class="comment">MASTER_LOG_FILE='mysql</span>-<span class="comment">bin</span>.<span class="comment">000011'</span>, <span class="comment">MASTER_LOG_POS=1140568;`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">master</span> <span class="comment">解锁：</span> <span class="comment">unlock</span> <span class="comment">tables;</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`show</span> <span class="comment">slave</span> <span class="comment">status\G;</span> <span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">看到2个YES</span>
+
+<span class="comment">我这里在COPY的时候出一个错误。</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`ERROR</span> <span class="comment">29</span> <span class="comment">(HY000):</span> <span class="comment">File</span> <span class="comment">'</span>.<span class="comment">/mysql</span>-<span class="comment">relay</span>-<span class="comment">bin</span>.<span class="comment">index'</span> <span class="comment">not</span> <span class="comment">found</span> <span class="comment">(Errcode:</span> <span class="comment">2)</span> 
+</pre></figure></code></pre>
+<p>只需要删除 relay info 然后 重启就OK了</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-20T15:37:12.000Z"><a href="/2011/01/20/ganglia-metric-默认监控项翻译/">1月 20 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/20/ganglia-metric-默认监控项翻译/">ganglia metric 默认监控项翻译</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="111" valign="top">监控项</td>
+<td width="246" valign="top">说明</td>
+<td width="123" valign="top">监控值</td>
+</tr>
+<tr>
+<td width="111" valign="top">Load_one</td>
+<td width="246" valign="top">One minute load average
+
+每分钟的系统平均负载</td>
+<td width="123" valign="top">load_one=0.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">Load_five</td>
+<td width="246" valign="top">Five minute load average
+
+每5分钟的系统平均负载</td>
+<td width="123" valign="top">load_five=0.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">Load_fifteen</td>
+<td width="246" valign="top">Fifteen minute load average
+
+每15分钟的系统平均负载</td>
+<td width="123" valign="top">load_fifteen=0.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">mem_total</td>
+<td width="246" valign="top">Total amount of memory displayed in KBs
+
+物理内存总量（KBs显示）</td>
+<td width="123" valign="top">mem_total=2075288.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">mem_cached</td>
+<td width="246" valign="top">Amount of cached memory
+
+缓存内存大小</td>
+<td width="123" valign="top">mem_cached=470732.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">mem_free</td>
+<td width="246" valign="top">Amount of available memory
+
+空闲内存大小</td>
+<td width="123" valign="top">mem_free=1128860.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">mem_buffers</td>
+<td width="246" valign="top">Amount of buffered memory
+
+内核缓存的内存总量</td>
+<td width="123" valign="top">mem_buffers=353264.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">swap_total</td>
+<td width="246" valign="top">Total amount of swap space displayed in   KBs
+
+交换分区总量（KBs显示）</td>
+<td width="123" valign="top">swap_total=8289532.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">swap_free</td>
+<td width="246" valign="top">Amount of available swap memory
+
+空闲交换分区大小</td>
+<td width="123" valign="top">swap_free=8289532.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">mem_shared</td>
+<td width="246" valign="top">Amount of shared memory
+
+共享内存大小</td>
+<td width="123" valign="top">mem_shared=0.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">proc_run</td>
+<td width="246" valign="top">Total number of running processes
+
+运行的进程总数</td>
+<td width="123" valign="top">proc_run=0.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">proc_total</td>
+<td width="246" valign="top">Total number of processes
+
+进程总数</td>
+<td width="123" valign="top">proc_total=65.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">cpu_idle</td>
+<td width="246" valign="top">Percentage of time that the CPU or CPUs   were idle and the system did not
+have an outstanding disk I/O request
+
+空闲CPU百分比</td>
+<td width="123" valign="top">cpu_idle=99.6</td>
+</tr>
+<tr>
+<td width="111" valign="top">cpu_aidle</td>
+<td width="246" valign="top">Percent of time since boot idle CPU
+
+启动的空闲CPU百分比</td>
+<td width="123" valign="top">cpu_aidle=99.8</td>
+</tr>
+<tr>
+<td width="111" valign="top">cpu_user</td>
+<td width="246" valign="top">Percentage of CPU utilization that   occurred while executing at the user level
+
+用户空间占用CPU百分比</td>
+<td width="123" valign="top">cpu_user=0.2</td>
+</tr>
+<tr>
+<td width="111" valign="top">cpu_nice</td>
+<td width="246" valign="top">Percentage of CPU utilization that   occurred while executing at the user level with nice priority
+
+用户进程空间内改变过优先级的进程占用CPU百分比</td>
+<td width="123" valign="top">cpu_nice=0.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">cpu_system</td>
+<td width="246" valign="top">Percentage of CPU utilization that   occurred while executing at the
+system level
+
+内核空间占用CPU百分比</td>
+<td width="123" valign="top">cpu_system=0.1</td>
+</tr>
+<tr>
+<td width="111" valign="top">cpu_num</td>
+<td width="246" valign="top">Total number of CPUs
+
+CPU线程总数</td>
+<td width="123" valign="top">cpu_num=2.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">cpu_speed</td>
+<td width="246" valign="top">CPU Speed in terms of MHz
+
+CPU速度（MHz）</td>
+<td width="123" valign="top">cpu_speed=2993.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">cpu_wio</td>
+<td width="246" valign="top">Percentage of time that the CPU or CPUs   were idle during which the
+system had an outstanding disk I/O request
+
+Cpu空闲时的最大I/O请求</td>
+<td width="123" valign="top">cpu_wio=0.2</td>
+</tr>
+<tr>
+<td width="111" valign="top">part_max_used</td>
+<td width="246" valign="top">Maximum percent used for all partitions</td>
+<td width="123" valign="top">part_max_used=21.2</td>
+</tr>
+<tr>
+<td width="111" valign="top">disk_total</td>
+<td width="246" valign="top">Total available disk space
+
+磁盘总大小</td>
+<td width="123" valign="top">disk_total=133.991</td>
+</tr>
+<tr>
+<td width="111" valign="top">disk_free</td>
+<td width="246" valign="top">Total free disk space
+
+剩余磁盘空间</td>
+<td width="123" valign="top">disk_free=124.707</td>
+</tr>
+<tr>
+<td width="111" valign="top">boottime</td>
+<td width="246" valign="top">The last time that the system was started
+
+系统启动时间</td>
+<td width="123" valign="top">boottime=1285905983.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">pkts_in</td>
+<td width="246" valign="top">Packets in per second
+
+每秒进来的包</td>
+<td width="123" valign="top">pkts_in=10.5</td>
+</tr>
+<tr>
+<td width="111" valign="top">pkts_out</td>
+<td width="246" valign="top">Packets out per second
+
+每秒出去的包</td>
+<td width="123" valign="top">pkts_out=2.85</td>
+</tr>
+<tr>
+<td width="111" valign="top">bytes_in</td>
+<td width="246" valign="top">Number of bytes in per second
+
+每秒进来字节数</td>
+<td width="123" valign="top">bytes_in=769.35</td>
+</tr>
+<tr>
+<td width="111" valign="top">bytes_out</td>
+<td width="246" valign="top">Number of bytes out per second
+
+每秒出去字节数</td>
+<td width="123" valign="top">bytes_out=3674.02</td>
+</tr>
+<tr>
+<td width="111" valign="top">machine_type</td>
+<td width="246" valign="top">System architecture
+
+系统版本（X86或64）</td>
+<td width="123" valign="top">machine_type=x86</td>
+</tr>
+<tr>
+<td width="111" valign="top">os_name</td>
+<td width="246" valign="top">系统名字</td>
+<td width="123" valign="top">os_name=Linux</td>
+</tr>
+<tr>
+<td width="111" valign="top">os_release</td>
+<td width="246" valign="top">系统版本</td>
+<td width="123" valign="top">os_release=2.6.18-164.el5PAE</td>
+</tr>
+<tr>
+<td width="111" valign="top">gexec</td>
+<td width="246" valign="top">gexec available</td>
+<td width="123" valign="top">gexec=OFF</td>
+</tr>
+<tr>
+<td width="111" valign="top">disk_free_rootfs</td>
+<td width="246" valign="top">Disk space available on</td>
+<td width="123" valign="top">WARN: &#39; disk_free_rootfs &#39;</td>
+</tr>
+</tbody>
+</table>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-20T15:32:19.000Z"><a href="/2011/01/20/puppet-dashboard/">1月 20 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/20/puppet-dashboard/">puppet dashboard 配置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>puppet dashboard 配置
+Puppet Dashboard可以为你的Puppet环境添加一个图形用户界面（GUI）。Puppet Dashboard可以显示主机上Puppet的运行结果，并且可以提供一个节点分类工具来配置你的主机。
+Dashboard是一种运行在Rails上的Ruby应用程序，它还不是可以添加到系统版本中的程序包，但是我们可以从Puppet Labs以RPM或者DEB包的形式获得该软件。我们也可以选择从资源进行安装。</p>
+<p>rpm -Uvh <a href="http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm">http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm</a></p>
+<p>yum install -y mysql mysql-devel mysql-server ruby ruby-devel ruby-irb ruby-mysql ruby-rdoc ruby-ri</p>
+<p>如果MYSQL 是源码包安装则：yum install -y ruby ruby-devel ruby-irb ruby-mysql ruby-rdoc ruby-ri</p>
+<p>安装rubygem 1.3.5 请不要安装1.3.6及更高版本。不支持。。哈哈</p>
+<pre><code><figure class="highlight"><pre><span class="xml">http://production.cf.rubygems.org/rubygems/rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">.tgz
+tar xfz rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">.tgz
+cd rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">
+ruby setup.rb `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+使用gem安装rake
+gem install rake
+
+安装git 下载dashboard 包
+yum -y install git
+
+下载puppet-dashboard
+我把它放在/data/www/wwwroot/
+mkdir -p /data/www/wwwroot/
+cd /data/www/wwwroot/
+git clone git://github.com/puppetlabs/puppet-dashboard.git
+
+修改数据配置YML文件
+/data/www/wwwroot/puppet-dashboard/config/database.yml
+cp database.yml.example database.yml
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`production:
+database: root
+username: dashboard
+password: linuxtone
+encoding: utf8
+adapter: mysql`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+创建库和表：
+</span><span class="number">1</span><span class="xml">\. 使用rake 创建：
+回到   puppet-dashboard目录执行
+rake RAILS_ENV=production db:create
+
+</span><span class="number">2</span><span class="xml"> 手动创建
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`CREATE DATABASE dashboard CHARACTER SET utf8;
+CREATE USER 'dashboard'@'localhost' IDENTIFIED BY 'my_password';
+GRANT ALL PRIVILEGES ON dashboard.* TO 'dashboard'@'localhost';`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+创建表：rake RAILS_ENV=production db:migrate
+
+我在使用development的时候老是报错。如下：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# rake db:migrate db:test:prepare --trace
+(in /data/www/wwwroot/puppet-dashboard)
+** Invoke db:migrate (first_time)
+** Invoke environment (first_time)
+** Execute environment
+** Execute db:migrate
+rake aborted!
+Access denied for user 'root'@'localhost' (using password: NO) `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+因此我换成了production。大家可以仔细看官网说明。尽管很烂，但也能解决问题
+
+production 与 development 区别：
+启动时：
+production ：Start a production server on port </span><span class="number">3000</span><span class="xml">:
+./script/server -e production
+
+development：start a development server on port </span><span class="number">8080</span><span class="xml">, where the development environment is used by default:
+./script/server -p </span><span class="number">8080</span><span class="xml">
+
+运行：先查看位置：puppetmasterd --configprint libdir
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`cp ext/puppet/puppet_dashboard.rb  /var/lib/puppet/reports/
+chmod </span><span class="number">644</span><span class="xml"> /var/lib/puppet/reports/puppet_dashboard.rb
+</span><span class="comment">#more puppet_dashboard.rb</span><span class="xml">
+HOST = 'localhost'  #主机
+PORT = </span><span class="number">3000</span><span class="xml">    #启动端口 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+导入：Import existing reports 详见官网
+rake RAILS_ENV=production reports:import REPORT_DIR=/path/to/your/reports
+本例：rake RAILS_ENV=production reports:import REPORT_DIR=/var/lib/puppet/reports/
+
+注：/var/lib/puppet/reports/ 为puppet.conf 里vardir 的定义目录
+
+配置puppetmaster
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`[master]
+reports = http, store
+reporturl = http://IP:</span><span class="number">3000</span><span class="xml">/reports
+modulepath = /etc/puppet/modules`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+puppetclient
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`server = puppetmaster.linuxtone.org
+listen = true
+report = true
+runinterval = </span><span class="number">10</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># more /etc/init.d/puppet-dashboard  注意修改脚本里的IP</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`#!/bin/bash
+</span><span class="comment"># Description: Puppet Dashboard init.d script</span><span class="xml">
+
+</span><span class="comment"># Get function from functions library</span><span class="xml">
+. /etc/init.d/functions
+
+</span><span class="comment"># Start the service Puppet Dashboard</span><span class="xml">
+start() {
+echo -n "Starting Puppet Dashboard: "
+/usr/bin/ruby /data/www/wwwroot/puppet-dashboard/script/server -e production -b IP &amp;
+</span><span class="comment">### Create the lock file ###</span><span class="xml">
+touch /var/lock/subsys/puppetdb
+success $"Puppet Dashboard startup"
+echo
+}
+
+</span><span class="comment"># Restart the service Puppet Dashboard</span><span class="xml">
+stop() {
+echo -n "Stopping Puppet Dashboard: "
+kill -</span><span class="number">9</span><span class="xml"> `ps ax | grep "/usr/bin/ruby /data/www/wwwroot/puppet-dashboard/script/server" | grep -v grep | awk '{ print </span><span class="variable">$1</span><span class="xml"> }' ` 
+</span><span class="comment">### Now, delete the lock file ###</span><span class="xml">
+rm -f /var/lock/subsys/puppetdb
+success $"Puppet Dashboard shutdown"
+echo
+}
+
+</span><span class="comment">### main logic ###</span><span class="xml">
+case "</span><span class="variable">$1</span><span class="xml">" in
+start)
+start
+;;
+stop)
+stop
+;;
+status)
+status Puppet DB
+;;
+restart|reload|condrestart)
+stop
+start
+;;
+*)
+echo $"Usage: </span><span class="variable">$0</span><span class="xml"> {start|stop|restart|reload|status}"
+exit </span><span class="number">1</span><span class="xml">
+esac
+
+exit </span><span class="number">0</span><span class="xml"></span>
+</pre></figure></code></pre>
+<p>chmod 755 /etc/init.d/puppet-dashboard
+/etc/init.d/puppet-dashboard start</p>
+<p>参考
+<a href="http://docs.puppetlabs.com/guides/installing_dashboard.html">http://docs.puppetlabs.com/guides/installing_dashboard.html</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/archives/2011/page/3/" class="alignleft prev">上一页</a>
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/1032/">1032</a><small>1</small></li>
+  
+    <li><a href="/tags/1236/">1236</a><small>1</small></li>
+  
+    <li><a href="/tags/403/">403</a><small>1</small></li>
+  
+    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
+  
+    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
+  
+    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
+  
+    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
+  
+    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
+  
+    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
+  
+    <li><a href="/tags/acl/">acl</a><small>2</small></li>
+  
+    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
+  
+    <li><a href="/tags/apache/">apache</a><small>8</small></li>
+  
+    <li><a href="/tags/arp/">arp</a><small>1</small></li>
+  
+    <li><a href="/tags/awk/">awk</a><small>4</small></li>
+  
+    <li><a href="/tags/bash/">bash</a><small>2</small></li>
+  
+    <li><a href="/tags/best/">best</a><small>1</small></li>
+  
+    <li><a href="/tags/binding/">binding</a><small>1</small></li>
+  
+    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
+  
+    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
+  
+    <li><a href="/tags/browser/">browser</a><small>1</small></li>
+  
+    <li><a href="/tags/cache/">cache</a><small>1</small></li>
+  
+    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>8</small></li>
+  
+    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
+  
+    <li><a href="/tags/chown/">chown</a><small>1</small></li>
+  
+    <li><a href="/tags/commands/">commands</a><small>1</small></li>
+  
+    <li><a href="/tags/content/">content</a><small>1</small></li>
+  
+    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
+  
+    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
+  
+    <li><a href="/tags/creating/">creating</a><small>1</small></li>
+  
+    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
+  
+    <li><a href="/tags/dell/">dell</a><small>1</small></li>
+  
+    <li><a href="/tags/diff/">diff</a><small>1</small></li>
+  
+    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
+  
+    <li><a href="/tags/du/">du</a><small>1</small></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
+  
+    <li><a href="/tags/end/">end</a><small>1</small></li>
+  
+    <li><a href="/tags/epel/">epel</a><small>1</small></li>
+  
+    <li><a href="/tags/etag/">etag</a><small>1</small></li>
+  
+    <li><a href="/tags/expires/">expires</a><small>1</small></li>
+  
+    <li><a href="/tags/find/">find</a><small>1</small></li>
+  
+    <li><a href="/tags/for-1/">for</a><small>1</small></li>
+  
+    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
+  
+    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
+  
+    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
+  
+    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
+  
+    <li><a href="/tags/group/">group</a><small>1</small></li>
+  
+    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
+  
+    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
+  
+    <li><a href="/tags/howto/">howto</a><small>2</small></li>
+  
+    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
+  
+    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
+  
+    <li><a href="/tags/if/">if</a><small>2</small></li>
+  
+    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
+  
+    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
+  
+    <li><a href="/tags/init/">init</a><small>1</small></li>
+  
+    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
+  
+    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
+  
+    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
+  
+    <li><a href="/tags/jk/">jk</a><small>1</small></li>
+  
+    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
+  
+    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/kick/">kick</a><small>1</small></li>
+  
+    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>18</small></li>
+  
+    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
+  
+    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
+  
+    <li><a href="/tags/master/">master</a><small>2</small></li>
+  
+    <li><a href="/tags/metric/">metric</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
+  
+    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
+  
+    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
+  
+    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
+  
+    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
+  
+    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
+  
+    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
+  
+    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
+  
+    <li><a href="/tags/packet/">packet</a><small>1</small></li>
+  
+    <li><a href="/tags/pam/">pam</a><small>1</small></li>
+  
+    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
+  
+    <li><a href="/tags/perl/">perl</a><small>1</small></li>
+  
+    <li><a href="/tags/permission/">permission</a><small>1</small></li>
+  
+    <li><a href="/tags/php-1/">php</a><small>2</small></li>
+  
+    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
+  
+    <li><a href="/tags/pil/">pil</a><small>1</small></li>
+  
+    <li><a href="/tags/port/">port</a><small>1</small></li>
+  
+    <li><a href="/tags/practices/">practices</a><small>1</small></li>
+  
+    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
+  
+    <li><a href="/tags/ps/">ps</a><small>2</small></li>
+  
+    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
+  
+    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
+  
+    <li><a href="/tags/python-1/">python</a><small>3</small></li>
+  
+    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
+  
+    <li><a href="/tags/quick/">quick</a><small>1</small></li>
+  
+    <li><a href="/tags/r410/">r410</a><small>1</small></li>
+  
+    <li><a href="/tags/r710/">r710</a><small>1</small></li>
+  
+    <li><a href="/tags/raw/">raw</a><small>1</small></li>
+  
+    <li><a href="/tags/referer/">referer</a><small>1</small></li>
+  
+    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
+  
+    <li><a href="/tags/repo/">repo</a><small>1</small></li>
+  
+    <li><a href="/tags/resources/">resources</a><small>1</small></li>
+  
+    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
+  
+    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
+  
+    <li><a href="/tags/sar/">sar</a><small>1</small></li>
+  
+    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
+  
+    <li><a href="/tags/sed/">sed</a><small>4</small></li>
+  
+    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
+  
+    <li><a href="/tags/sending/">sending</a><small>1</small></li>
+  
+    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>2</small></li>
+  
+    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
+  
+    <li><a href="/tags/slave/">slave</a><small>2</small></li>
+  
+    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
+  
+    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
+  
+    <li><a href="/tags/spec/">spec</a><small>2</small></li>
+  
+    <li><a href="/tags/squid/">squid</a><small>1</small></li>
+  
+    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>1</small></li>
+  
+    <li><a href="/tags/tar/">tar</a><small>1</small></li>
+  
+    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
+  
+    <li><a href="/tags/tools/">tools</a><small>1</small></li>
+  
+    <li><a href="/tags/top/">top</a><small>1</small></li>
+  
+    <li><a href="/tags/tree/">tree</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
+  
+    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
+  
+    <li><a href="/tags/user/">user</a><small>2</small></li>
+  
+    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>2</small></li>
+  
+    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
+  
+    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/while/">while</a><small>1</small></li>
+  
+    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
+  
+    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
+  
+    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
+  
+    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
+  
+    <li><a href="/tags/yum/">yum</a><small>10</small></li>
+  
+    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
+  
+    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
+  
+    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
+  
+    <li><a href="/tags/优化/">优化</a><small>1</small></li>
+  
+    <li><a href="/tags/内核/">内核</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
+  
+    <li><a href="/tags/参考/">参考</a><small>1</small></li>
+  
+    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
+  
+    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
+  
+    <li><a href="/tags/对比/">对比</a><small>1</small></li>
+  
+    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
+  
+    <li><a href="/tags/日志/">日志</a><small>2</small></li>
+  
+    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
+  
+    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
+  
+    <li><a href="/tags/管理/">管理</a><small>1</small></li>
+  
+    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
+  
+    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
+  
+    <li><a href="/tags/老板/">老板</a><small>1</small></li>
+  
+    <li><a href="/tags/认证/">认证</a><small>1</small></li>
+  
+    <li><a href="/tags/详解/">详解</a><small>3</small></li>
+  
+    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
+  
+    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
+  
+    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

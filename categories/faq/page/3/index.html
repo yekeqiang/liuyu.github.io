@@ -1,0 +1,1030 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 3 页 | faq | Puppet-in-action</title>
+  <meta name="author" content="Liu Yu">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Puppet-in-action"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Puppet-in-action</a></h1>
+  <h2><a href="/">Puppet</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title category">faq</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T09:15:13.000Z"><a href="/2010/12/19/shell-interview-questions/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/shell-interview-questions/">shell 面试题汇集</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>利用top取某个进程的CPU的脚本:</p>
+<pre><code><figure class="highlight"><pre><span class="xml"></span><span class="comment">#/bin/sh</span><span class="xml">
+Max_CPU=</span><span class="number">0</span><span class="xml">
+Avg_CPU=</span><span class="number">0</span><span class="xml">
+Total_Time=</span><span class="number">1</span><span class="xml">
+ Process=</span><span class="variable">$1</span><span class="xml">
+ Interval=</span><span class="variable">$2</span><span class="xml">
+ # check the parameters
+ if [ $# -ne </span><span class="number">2</span><span class="xml"> ]; then
+    echo "Usage: </span><span class="variable">$0</span><span class="xml"> ProcessName Interval"
+    exit
+ fi
+ LogFile="Per.txt"
+ echo "`date`" &gt; </span><span class="variable">$LogFile</span><span class="xml">
+ while sleep </span><span class="variable">$Interval</span><span class="xml">
+ do
+    top -d </span><span class="number">1</span><span class="xml"> -n </span><span class="number">1</span><span class="xml">|grep </span><span class="variable">$Process</span><span class="xml">|grep -v grep|awk '{print </span><span class="variable">$9</span><span class="xml">"\t"</span><span class="variable">$10}</span><span class="xml">' &gt;&gt; </span><span class="variable">$LogFile</span><span class="xml">
+ done`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+判断是否是设备文件
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`#/bin/bash
+ echo -e "The program will Judge a file is or not a device file.\n\n"
+ read -p "Input a filename:" filename
+ if [ -b </span><span class="variable">$filename</span><span class="xml"> -o -c </span><span class="variable">$filename</span><span class="xml"> ]; then
+         echo "</span><span class="variable">$filename</span><span class="xml"> is a device file"
+         exit </span><span class="number">0</span><span class="xml">
+ else
+         echo "</span><span class="variable">$filename</span><span class="xml"> is not a device file"
+         exit </span><span class="number">1</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+ firead –p：用于在读数据时输出提示信息
+
+注意！ [ 之间是有空格的：if ! [ -f </span><span class="variable">$filename</span><span class="xml"> ] ; then。一般用if [ ! * ]
+
+添加用户：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` #/bin/bash
+ groupadd -f class1
+ for i in {</span><span class="number">9909.</span><span class="xml"></span><span class="number">.9911</span><span class="xml">}
+ do
+         xx=`echo </span><span class="variable">$i</span><span class="xml"> | sed 's/</span><span class="number">99</span><span class="xml">//g'`
+         useradd -g class1 std</span><span class="variable">${xx}</span><span class="xml">
+         echo std</span><span class="variable">${xx}</span><span class="xml"> | passwd std</span><span class="variable">${xx}</span><span class="xml"> --stdin
+         echo -e "user std</span><span class="variable">${xx}</span><span class="xml"> passwd is std</span><span class="variable">${xx}</span><span class="xml">"&gt;&gt;/root/newuser.txt
+ done
+ exit </span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+        注意等号的前后不要有空格：xx=`echo </span><span class="variable">$i</span><span class="xml"> | sed 's/</span><span class="number">99</span><span class="xml">//g'`
+        变量如果前后有字符，要是大括号
+
+统计IP访问：
+要求分析apache访问日志，找出访问页面数量在前</span><span class="number">100</span><span class="xml">位的IP数。日志大小在</span><span class="number">78</span><span class="xml">M左右。以下是apache的访问日志节选
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` </span><span class="number">202.101</span><span class="xml"></span><span class="number">.129</span><span class="xml"></span><span class="number">.218</span><span class="xml"> - - [</span><span class="number">26</span><span class="xml">/Mar/</span><span class="number">2006</span><span class="xml">:</span><span class="number">23</span><span class="xml">:</span><span class="number">59</span><span class="xml">:</span><span class="number">55</span><span class="xml"> +</span><span class="number">0800</span><span class="xml">] "GET /online/stat_inst.php?pid=d065 HTTP/</span><span class="number">1.1</span><span class="xml">" </span><span class="number">302</span><span class="xml"> </span><span class="number">20</span><span class="xml">-"-" "-" "Mozilla/</span><span class="number">4.0</span><span class="xml"> (compatible; MSIE </span><span class="number">6.0</span><span class="xml">; Windows NT </span><span class="number">5.1</span><span class="xml">)"`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# awk '{print </span><span class="variable">$1}</span><span class="xml">' log      |sort |uniq -c|sort -r |head -n10
+      </span><span class="number">5</span><span class="xml"> </span><span class="number">221.224</span><span class="xml"></span><span class="number">.78</span><span class="xml"></span><span class="number">.15</span><span class="xml">
+      </span><span class="number">3</span><span class="xml"> </span><span class="number">221.233</span><span class="xml"></span><span class="number">.19</span><span class="xml"></span><span class="number">.137</span><span class="xml">
+       </span><span class="number">1</span><span class="xml"> </span><span class="number">58.63</span><span class="xml"></span><span class="number">.148</span><span class="xml"></span><span class="number">.135</span><span class="xml">
+       </span><span class="number">1</span><span class="xml"> </span><span class="number">222.90</span><span class="xml"></span><span class="number">.66</span><span class="xml"></span><span class="number">.142</span><span class="xml">
+       </span><span class="number">1</span><span class="xml"> </span><span class="number">222.218</span><span class="xml"></span><span class="number">.90</span><span class="xml"></span><span class="number">.239</span><span class="xml">
+       </span><span class="number">1</span><span class="xml"> </span><span class="number">222.182</span><span class="xml"></span><span class="number">.95</span><span class="xml"></span><span class="number">.155</span><span class="xml">
+       </span><span class="number">1</span><span class="xml"> </span><span class="number">221.7</span><span class="xml"></span><span class="number">.249</span><span class="xml"></span><span class="number">.206</span><span class="xml">
+       </span><span class="number">1</span><span class="xml"> </span><span class="number">221.237</span><span class="xml"></span><span class="number">.232</span><span class="xml"></span><span class="number">.191</span><span class="xml">
+       </span><span class="number">1</span><span class="xml"> </span><span class="number">221.235</span><span class="xml"></span><span class="number">.61</span><span class="xml"></span><span class="number">.109</span><span class="xml">
+       </span><span class="number">1</span><span class="xml"> </span><span class="number">219.129</span><span class="xml"></span><span class="number">.183</span><span class="xml"></span><span class="number">.122</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+这个地方有个疑问，为什么在使用uniq之前要sort。
+
+求</span><span class="number">2</span><span class="xml">个数之和
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` #/bin/bash
+ typeset first second
+ read -p "Input the first number:" first
+ read -p "Input the second number:" second
+ result=$[</span><span class="variable">$first</span><span class="xml">+</span><span class="variable">$second</span><span class="xml">]
+ echo "result is : </span><span class="variable">$result</span><span class="xml">"
+ exit </span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+ 文本分析
+取出password中shell出现的次数
+第一种方法结果:
+    <span class="tag">&lt;<span class="title">pre</span>&gt;</span>`   </span><span class="number">4</span><span class="xml"> /bin/bash
+       </span><span class="number">1</span><span class="xml"> /bin/sync
+       </span><span class="number">1</span><span class="xml"> /sbin/halt
+      </span><span class="number">31</span><span class="xml"> /sbin/nologin
+       </span><span class="number">1</span><span class="xml"> /sbin/shutdown`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+第二种方法结果:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` /bin/sync       </span><span class="number">1</span><span class="xml">
+ /bin/bash       </span><span class="number">1</span><span class="xml">
+ /sbin/nologin   </span><span class="number">30</span><span class="xml">
+ /sbin/halt      </span><span class="number">1</span><span class="xml">
+ /sbin/shutdown  </span><span class="number">1</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+答案：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`cat /etc/passwd|awk -F: '{if (</span><span class="variable">$7</span><span class="xml">!="") print </span><span class="variable">$7}</span><span class="xml">'|sort|uniq –c
+ cat /etc/passwd|awk -F: '{if (</span><span class="variable">$7</span><span class="xml">!="") print </span><span class="variable">$7}</span><span class="xml">'|sort|uniq -c | awk '{print </span><span class="variable">$2</span><span class="xml">,</span><span class="variable">$1}</span><span class="xml">'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+文件整理
+employee文件中记录了工号和姓名
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` employee.txt:
+ </span><span class="number">100</span><span class="xml"> Jason Smith 
+ </span><span class="number">200</span><span class="xml"> John Doe 
+ </span><span class="number">300</span><span class="xml"> Sanjay Gupta 
+ </span><span class="number">400</span><span class="xml"> Ashok Sharma 
+ bonus文件中记录工号和工资
+ bonus.txt:
+ </span><span class="number">100</span><span class="xml"> </span><span class="variable">$5</span><span class="xml">,</span><span class="number">000</span><span class="xml"> 
+ </span><span class="number">200</span><span class="xml"> </span><span class="variable">$500</span><span class="xml"> 
+ </span><span class="number">300</span><span class="xml"> </span><span class="variable">$3</span><span class="xml">,</span><span class="number">000</span><span class="xml"> 
+ </span><span class="number">400</span><span class="xml"> </span><span class="variable">$1</span><span class="xml">,</span><span class="number">250</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+要求把两个文件合并并输出如下
+ 处理结果
+ <span class="tag">&lt;<span class="title">pre</span>&gt;</span>`</span><span class="number">400</span><span class="xml"> ashok sharma </span><span class="variable">$1</span><span class="xml">,</span><span class="number">250</span><span class="xml">
+ </span><span class="number">100</span><span class="xml"> jason smith  </span><span class="variable">$5</span><span class="xml">,</span><span class="number">000</span><span class="xml">
+ </span><span class="number">200</span><span class="xml"> john doe  </span><span class="variable">$500</span><span class="xml">
+ </span><span class="number">300</span><span class="xml"> sanjay gupta  </span><span class="variable">$3</span><span class="xml">,</span><span class="number">000</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+答案：join employee bonus | sort -k </span><span class="number">2</span><span class="xml">
+ 打印本机的交换分区大小
+处理结果:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` Swap:</span><span class="number">1024</span><span class="xml">M
+free -m | sed -n '/Swap/p' | awk '{ print </span><span class="variable">$2}</span><span class="xml">'
+ free -m | sed -n 's/Swap:\ *\([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]*\).*/\</span><span class="number">1</span><span class="xml">/p'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+输出本机创建</span><span class="number">20000</span><span class="xml">个目录所用的时间
+处理结果:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` real    </span><span class="number">0</span><span class="xml">m3</span><span class="number">.367</span><span class="xml">s
+ user    </span><span class="number">0</span><span class="xml">m0</span><span class="number">.066</span><span class="xml">s
+ sys     </span><span class="number">0</span><span class="xml">m1</span><span class="number">.925</span><span class="xml">s`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+答案：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` # time for i in {</span><span class="number">1.</span><span class="xml"></span><span class="number">.2000</span><span class="xml">} ; do mkdir /root/neil</span><span class="variable">$i</span><span class="xml">; done
+  real    </span><span class="number">0</span><span class="xml">m6</span><span class="number">.200</span><span class="xml">s
+ user    </span><span class="number">0</span><span class="xml">m1</span><span class="number">.128</span><span class="xml">s
+ sys     </span><span class="number">0</span><span class="xml">m4</span><span class="number">.710</span><span class="xml">s`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+打印当前sshd的端口和进程id
+ 处理结果:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` sshd Port&amp;&amp;pid: </span><span class="number">22</span><span class="xml"> </span><span class="number">5412</span><span class="xml">
+ 答案：netstat -anp | grep sshd | sed -n 's/.*:::\([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]*\)\ .* \ \([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]*\)\/sshd/\</span><span class="number">1</span><span class="xml"> \</span><span class="number">2</span><span class="xml">/p'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+打印root可以使用可执行文件数
+ 处理结果:
+ <span class="tag">&lt;<span class="title">pre</span>&gt;</span>`root's bins: </span><span class="number">2306</span><span class="xml">
+ echo "root's bins: $(find ./ -type f | xargs ls -l | sed '/-..x/p' | wc -l)"
+ root's bins: </span><span class="number">3664</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+编译当前目录下的所有.c文件：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` for file in *.c; do echo </span><span class="variable">$file</span><span class="xml"> ; gcc -o $(basename </span><span class="variable">$file</span><span class="xml"> .c) </span><span class="variable">$file</span><span class="xml">  ; sleep </span><span class="number">2</span><span class="xml">;  done &gt; compile </span><span class="number">2</span><span class="xml">&gt;&amp;</span><span class="number">1</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+将一目录下所有的文件的扩展名改为bak
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` for i in *.*;do mv </span><span class="variable">$i</span><span class="xml"> </span><span class="variable">${i</span><span class="xml">%%.*}.bak;done </span>
+</pre></figure></code></pre>
+<p>转自：oychw.cublog.cn</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:18:37.000Z"><a href="/2010/12/19/linux-acl/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-acl/">linux acl 访问控制列表</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>要想使用ACL功能，首先需要正确编译2.6内核，并确保有下列选项：</p>
+<pre><code><figure class="highlight"><pre>CONFIG_EXT2_FS_POSIX_ACL=yCONFIG_EXT3_FS_POSIX_ACL=yCONFIG_FS_POSIX_ACL=y`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+用新内核启动后，还要求在挂载分区的时候添加必要的参数“acl”。
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`mount -t ext3 -o rw,acl /dev/hda8 /your_mount_point
+或在 /etc/fstab 中加入下列行，实现自动mount分区并且带有“acl”参数。
+/dev/hda8
+ext3 /your_mount_point defaults,acl 1 1`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+正确挂载文件系统后，就可以使用ACL的命令来修改文件的ACL属性了。修改ACL属性的命令有setfacl、getfacl 和chacl，其中chacl是一个SGI IRIX兼容命令，主要适用于那些对SGI IRIX以及XFS文件系统比较熟悉的用户。本文只介绍setfacl和getfacl命令，具体用法如下面的例子：
+
+1.使文件1.txt可以被用户test读写
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`setfacl -m u:test:rw 1.txt`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+2.使文件1.txt可以被qmail组的组员读，但不能写
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`setfacl -m g:qmail:r 1.txt`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+3.把某一文件的ACL属性copy给另一文件，比如把文件1.txt的ACL属性copy给2.txt：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`getfacl 1.txt | setfacl -set-file=- 2.txt`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+4.同时为文件设置不同用户或组的权限
+比如对文件2.txt设定testmail用户可读写，qmail组组员可读可执行，nofiles 组组员可执行:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`setfacl -m u:testmail:rw,g:qmail:rx,g:nofiles:x 2.txt
+</pre></figure></code></pre>
+<p>查看man page可获得setfact和getfacl命令更详细的用法。
+在系统管理员的工作中，遇到的最大的困难往往不是高难度的内核问题，也不是配置Apache服务器之类的问题，而是控制文件访问权限的问题。主管领导常常 会提出非常特别的要求，权限配置经常具体到人，这在配置文件服务器Samba时非常难于实现，使用2.6内核中的ACL（访问控制列表）新功能，问题就会 迎刃而解。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:16:45.000Z"><a href="/2010/12/19/linux-binding-hardware-interrupt/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-binding-hardware-interrupt/">Linux 绑定制定硬件中断到不同 CPU</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>硬件中断发生频繁，是件很消耗 CPU 资源的事情，在多核 CPU 条件下如果有办法把大量硬件中断分配给不同的 CPU (core) 处理显然能很好的平衡性能。现在的服务器上动不动就是多 CPU 多核、多网卡、多硬盘，如果能让网卡中断独占1个 CPU (core)、磁盘 IO 中断独占1个 CPU 的话将会大大减轻单一 CPU 的负担、提高整体处理效率。VPSee 前天收到一位网友的邮件提到了 SMP IRQ Affinity，引发了今天的话题：D，以下操作在 SUN FIre X2100 M2 服务器＋ 64位版本 CentOS 5.5 + Linux 2.6.18-194.3.1.el5 上执行。</p>
+<p>什么是中断
+      中文教材上对 “中断” 的定义太生硬了，简单的说就是，每个硬件设备（如：硬盘、网卡等）都需要和 CPU 有某种形式的通信以便 CPU 及时知道发生了什么事情，这样 CPU 可能就会放下手中的事情去处理应急事件，硬件设备主动打扰 CPU 的现象就可称为硬件中断，就像你正在工作的时候受到 QQ 干扰一样，一次 QQ 摇头就可以被称为中断。</p>
+<pre><code><figure class="highlight"><pre>  中断是一种比较好的 CPU 和硬件沟通的方式，还有一种方式叫做轮询（polling），就是让 CPU 定时对硬件状态进行查询然后做相应处理，就好像你每隔<span class="number">5</span>分钟去检查一下 QQ 看看有没有人找你一样，这种方式是不是很浪费你（CPU）的时间？所以中断是硬件主动的方式，比轮询（CPU 主动）更有效一些。
+
+  好了，这里又有了一个问题，每个硬件设备都中断，那么如何区分不同硬件呢？不同设备同时中断如何知道哪个中断是来自硬盘、哪个来自网卡呢？这 个很容易，不是每个 QQ 号码都不相同吗？同样的，系统上的每个硬件设备都会被分配一个 IRQ 号，通过这个唯一的 IRQ 号就能区别张三和李四了。
+
+  在计算机里，中断是一种电信号，由硬件产生，并直接送到中断控制器（如 <span class="number">8259</span>A）上，然后再由中断控制器向 CPU 发送信号，CPU 检测到该信号后，就中断当前的工作转而去处理中断。然后，处理器会通知操作系统已经产生中断，这样操作系统就会对这个中断进行适当的处理。现在来看一下中 断控制器，常见的中断控制器有两种：可编程中断控制器 <span class="number">8259</span>A 和高级可编程中断控制器（APIC），中断控制器应该在大学的硬件接口和计算机体系结构的相关课程中都学过。传统的 <span class="number">8259</span>A 只适合单 CPU 的情况，现在都是多 CPU 多核的 SMP 体系，所以为了充分利用 SMP 体系结构、把中断传递给系统上的每个 CPU 以便更好实现并行和提高性能，Intel 引入了高级可编程中断控制器（APIC）。
+
+  光有高级可编程中断控制器的硬件支持还不够，Linux 内核还必须能利用到这些硬件特质，所以只有 kernel <span class="number">2.4</span> 以后的版本才支持把不同的硬件中断请求（IRQs）分配到特定的 CPU 上，这个绑定技术被称为 SMP IRQ <span class="transposed_variable">Affinity.</span> 更多介绍请参看 Linux 内核源代码自带的文档：linux-<span class="number">2.6</span><span class="number">.31</span><span class="number">.8</span>/Documentation/IRQ-<span class="transposed_variable">affinity.</span>txt
+</pre></figure></code></pre>
+<p>如何使用
+     先看看系统上的中断是怎么分配在 CPU 上的，很显然 CPU0 上处理的中断多一些：</p>
+<pre><code><figure class="highlight"><pre><span class="xml"></span><span class="comment"># cat /proc/interrupts</span><span class="xml">
+           CPU0       CPU1
+  </span><span class="number">0</span><span class="xml">:  </span><span class="number">918926335</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  timer
+  </span><span class="number">1</span><span class="xml">:          </span><span class="number">2</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
+  </span><span class="number">8</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  rtc
+  </span><span class="number">9</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  acpi
+</span><span class="number">12</span><span class="xml">:          </span><span class="number">4</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
+</span><span class="number">14</span><span class="xml">:    </span><span class="number">8248017</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  ide0
+</span><span class="number">50</span><span class="xml">:        </span><span class="number">194</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ohci_hcd:usb2
+</span><span class="number">58</span><span class="xml">:      </span><span class="number">31673</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  sata_nv
+</span><span class="number">90</span><span class="xml">:    </span><span class="number">1070374</span><span class="xml">          </span><span class="number">0</span><span class="xml">         PCI-MSI  eth0
+</span><span class="number">233</span><span class="xml">:         </span><span class="number">10</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ehci_hcd:usb1
+NMI:       </span><span class="number">5077</span><span class="xml">       </span><span class="number">2032</span><span class="xml">
+LOC:  </span><span class="number">918809969</span><span class="xml">  </span><span class="number">918809894</span><span class="xml">
+ERR:          </span><span class="number">0</span><span class="xml">
+MIS:          </span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+     为了不让 CPU0 很累怎么把部分中断转移到 CPU1 上呢？或者说如何把 eth0 网卡的中断转到 CPU1 上呢？先查看一下 IRQ </span><span class="number">90</span><span class="xml"> 中断的 smp affinity，看看当前中断是怎么分配在不同 CPU 上的（ffffffff 意味着分配在所有可用 CPU 上）：
+
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# cat /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity
+</span><span class="number">7</span><span class="xml">fffffff,ffffffff,ffffffff,ffffffff,ffffffff,ffffffff,ffffffff,ffffffff`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+在进一步动手之前我们需要先停掉 IRQ 自动调节的服务进程，这样才能手动绑定 IRQ 到不同 CPU，否则自己手动绑定做的更改将会被自动调节进程给覆盖掉。如果想修改 IRQ </span><span class="number">90</span><span class="xml"> 的中断处理，绑定到第</span><span class="number">2</span><span class="xml">个 CPU（CPU1）：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# /etc/init.d/irqbalance stop`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># echo "2" &gt; /proc/irq/90/smp_affinity</span><span class="xml">
+      （上面的 echo “</span><span class="number">2</span><span class="xml">″ 是怎么来的？为什么是 ”</span><span class="number">2</span><span class="xml">“？）
+
+这 其实是个二进制数字，代表 </span><span class="number">00000010</span><span class="xml">，</span><span class="number">00000001</span><span class="xml"> 代表 CPU0 的话，</span><span class="number">00000010</span><span class="xml"> 就代表 CPU0， “echo </span><span class="number">2</span><span class="xml"> &gt; /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity” 的意思就是说把 </span><span class="number">90</span><span class="xml"> 中断绑定到 </span><span class="number">00000010</span><span class="xml">（CPU1）上。所以各个 CPU 用二进制和十六进制表示就是：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`               Binary       Hex
+   [separator] CPU </span><span class="number">0</span><span class="xml">    </span><span class="number">00000001</span><span class="xml">         </span><span class="number">1</span><span class="xml">
+    CPU </span><span class="number">1</span><span class="xml">    </span><span class="number">00000010</span><span class="xml">         </span><span class="number">2</span><span class="xml">
+    CPU </span><span class="number">2</span><span class="xml">    </span><span class="number">00000100</span><span class="xml">         </span><span class="number">4</span><span class="xml">
+    CPU </span><span class="number">3</span><span class="xml">    </span><span class="number">00001000</span><span class="xml">         </span><span class="number">8</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+如果我想把 IRQ 绑定到 CPU2 上就是 </span><span class="number">00000100</span><span class="xml">＝</span><span class="number">4</span><span class="xml">：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# echo "</span><span class="number">4</span><span class="xml">" &gt; /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+如果我想把 IRQ 同时平衡到 CPU0 和 CPU2 上就是 </span><span class="number">00000001</span><span class="xml">＋</span><span class="number">00000100</span><span class="xml">＝</span><span class="number">00000101</span><span class="xml">＝</span><span class="number">5</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# echo "</span><span class="number">5</span><span class="xml">" &gt; /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+需要注意的是，在手动绑定 IRQ 到 CPU 之前需要先停掉 irqbalance 这个服务，irqbalance 是个服务进程、是用来自动绑定和平衡 IRQ 的：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` /etc/init.d/irqbalance stop`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+过段时间在看 /proc/interrupts，是不是 </span><span class="number">90</span><span class="xml">:eth0 在 CPU1 上的中断增加了（</span><span class="number">145</span><span class="xml">）、在 CPU0 上的中断没变？不断打印 /proc/interrupts 就会发现 eth0 在 CPU0 上的中断数始终保持不变，而在 CPU1 上的中断数是持续增加的，这正是我们想要的结果：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# cat /proc/interrupts
+           CPU0       CPU1
+  </span><span class="number">0</span><span class="xml">:  </span><span class="number">922506515</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  timer
+  </span><span class="number">1</span><span class="xml">:          </span><span class="number">2</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
+  </span><span class="number">8</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  rtc
+  </span><span class="number">9</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  acpi
+</span><span class="number">12</span><span class="xml">:          </span><span class="number">4</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
+</span><span class="number">14</span><span class="xml">:    </span><span class="number">8280147</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  ide0
+</span><span class="number">50</span><span class="xml">:        </span><span class="number">194</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ohci_hcd:usb2
+</span><span class="number">58</span><span class="xml">:      </span><span class="number">31907</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  sata_nv
+</span><span class="number">90</span><span class="xml">:    </span><span class="number">1073399</span><span class="xml">        </span><span class="number">145</span><span class="xml">         PCI-MSI  eth0
+</span><span class="number">233</span><span class="xml">:         </span><span class="number">10</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ehci_hcd:usb1
+NMI:       </span><span class="number">5093</span><span class="xml">       </span><span class="number">2043</span><span class="xml">
+LOC:  </span><span class="number">922389696</span><span class="xml">  </span><span class="number">922389621</span><span class="xml">
+ERR:          </span><span class="number">0</span><span class="xml">
+MIS:          </span><span class="number">0</span><span class="xml"> </span>
+</pre></figure></code></pre>
+<p>有什么用
+      在网络非常 heavy 的情况下，对于文件服务器、高流量 Web 服务器这样的应用来说，把不同的网卡 IRQ 均衡绑定到不同的 CPU 上将会减轻某个 CPU 的负担，提高多个 CPU 整体处理中断的能力；对于数据库服务器这样的应用来说，把磁盘控制器绑到一个 CPU、把网卡绑定到另一个 CPU 将会提高数据库的响应时间、优化性能。合理的根据自己的生产环境和应用的特点来平衡 IRQ 中断有助于提高系统的整体吞吐能力和性能。
+      VPSee 经常收到网友来信问到如何优化 Linux、优化 VPS、这个问题不太好回答，要记住的是性能优化是一个过程而不是结果，不是看了些文档改了改参数就叫优化了，后面还需要大量的测试、监测以及持续的观察和改进。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:13:20.000Z"><a href="/2010/12/19/howto-only-use-epel-with-yum/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/howto-only-use-epel-with-yum/">Howto only use epel with yum?</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>yum --disablerepo=* --enablerepo=epel list available</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:40:06.000Z"><a href="/2010/12/19/prockcore-what-is/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/prockcore-what-is/">/proc/kcore是什么文件?</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>/proc/kcore is like an &quot;alias&quot; for the memory in your computer. Its
+size is the same as the amount of RAM you have, and if you read it as
+a file, the kernel does memory reads.
+如果内核不能识别全部内存，即&quot;ll /proc/kcore&quot;（查看kcore的真实大小：du -h /proc/kcore)后显示的大小不等于实际的物理内存大小;
+可以用 cat /proc/meminfo 命令来校验.如果所显示的数量与系统的物理内存不同，则在 /boot/grub/grub.conf 文件中添加：
+mem=xxM</p>
+<p>例如 ：</p>
+<pre><code><figure class="highlight"><pre>#boot=/dev/hda
+<span class="title">default</span>=<span class="number">0</span>
+<span class="title">timeout</span>=<span class="number">5</span>
+<span class="title">splashimage</span>=(hd0,<span class="number">0</span>)/boot/grub/splash.xpm.gz
+<span class="title">hiddenmenu</span>
+<span class="title">title</span> <span class="type">CentOS</span> (<span class="number">2.6</span><span class="number">.18</span>-<span class="number">164.</span>el5)
+<span class="title">root</span> (hd0,<span class="number">0</span>)
+<span class="title">kernel</span> /boot/vmlinuz-<span class="number">2.6</span><span class="number">.18</span>-<span class="number">164.</span>el5 ro root=<span class="type">LABEL</span>=/ mem=<span class="number">4096</span>M
+<span class="title">initrd</span> /boot/initrd-<span class="number">2.6</span><span class="number">.18</span>-<span class="number">164.</span>el5.img
+</pre></figure></code></pre>
+<p>原文: <a href="http://unixguide.net/linux/faq/04.16.shtml">http://unixguide.net/linux/faq/04.16.shtml</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:30:14.000Z"><a href="/2010/12/19/vim-editor-save-file-without-root-permission/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/vim-editor-save-file-without-root-permission/">vi编辑文件保存时没有root权限</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>使用普通用户编辑nginx.conf 等配置文件：</p>
+<p><a href="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-1.jpg"><img src="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-1.jpg" alt="" title="vim-not-root-1"></a></p>
+<p>保存的时候会提示：没有Root Permission
+可以用如下方法解决：
+保存时加上：
+:w !sudo tee %</p>
+<p><a href="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-2.jpg"><img src="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-2.jpg" alt="" title="vim-not-root-2"></a></p>
+<p>我这里有一个问题。没有配置sudo权限。
+用sudo时提示&quot;xxx is not in the sudoers file. This incident will be reported.其中XXX是你的用户名，也就是你的用户名没有权限使用sudo,我们只要修改一下/etc/sudoers文件就行了。下面是修改方 法：
+1）进入超级用户模式。也就是输入&quot;su -&quot;,系统会让你输入超级用户密码，输入密码后就进入了超级用户模式。（当然，你也可以直接用root用）
+2）添加文件的写权限。也就是输入命令&quot;chmod u+w /etc/sudoers&quot;。
+3）编辑/etc/sudoers文件。也就是输入命令&quot;vim /etc/sudoers&quot;,输入&quot;i&quot;进入编辑模式，找到这一 行：&quot;root ALL=(ALL) ALL&quot;在起下面添加&quot;xxx ALL=(ALL) ALL&quot;(这里的xxx是你的用户名)，然后保存（就是先按一 下Esc键，然后输入&quot;:wq&quot;）退出。
+4）撤销文件的写权限。也就是输入命令&quot;chmod u-w /etc/sudoers&quot;。
+再次保存：</p>
+<p><a href="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-3.jpg"><img src="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-3.jpg" alt="" title="vim-not-root-3"></a></p>
+<p>查看是否成功：
+$ grep sudo nginx.conf</p>
+<h1>test :w !sudo tee %</h1>
+<p>参考：<a href="http://www.cyberciti.biz/faq/vim-vi-text-editor-save-file-without-root-permission/">http://www.cyberciti.biz/faq/vim-vi-text-editor-save-file-without-root-permission/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:16:30.000Z"><a href="/2010/12/19/linux-tools/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-tools/">Linux一些工具整理</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>替代rsync bbcp <a href="http://www.slac.stanford.edu/~abh/bbcp/">http://www.slac.stanford.edu/~abh/bbcp/</a>
+同步：<a href="http://code.google.com/p/sersync/">http://code.google.com/p/sersync/</a>
+图片处理：imagemagick <a href="http://www.imagemagick.org/script/index.php">http://www.imagemagick.org/script/index.php</a>
+替代品(速度快15%): GraphicsMagick <a href="http://www.graphicsmagick.org/">http://www.graphicsmagick.org/</a></p>
+<p>系统管理工具：ipmitool 远程开关机并监控温度等状态
+内存检测工具：kmemcheck <a href="http://www.ibm.com/developerworks/cn/linux/l-cn-kmemcheck/index.html?ca=drs-cn-1119">http://www.ibm.com/developerworks/cn/linux/l-cn-kmemcheck/index.html?ca=drs-cn-1119</a>
+检测漏洞和后门：Rootkit Hunter和Chkrootkit
+性能测试工具：sysbench <a href="http://www.ningoo.net/html/2009/performance_test_tool_sysbench.html">http://www.ningoo.net/html/2009/performance_test_tool_sysbench.html</a>
+网络备份工具: bacula
+测试硬盘性能：iozone</p>
+<p>linux分区修复软件: Testdisk <a href="http://www.php-oa.com/2009/02/13/testdisk.html">http://www.php-oa.com/2009/02/13/testdisk.html</a>
+用Google App Engine做个人代理服务器：<a href="http://blog.chinaunix.net/u/249/showart.php?id=2212119">http://blog.chinaunix.net/u/249/showart.php?id=2212119</a></p>
+<p>INNODB备份：xtrabackup
+MySQL 优化工具 MySQLTuner <a href="http://github.com/rackerhacker/MySQLTuner-perl">http://github.com/rackerhacker/MySQLTuner-perl</a>
+MySQL 监控工具 mytop <a href="http://jeremy.zawodny.com/mysql/mytop/">http://jeremy.zawodny.com/mysql/mytop/</a></p>
+<p>服务器统一配置管理：Cfengine
+社交网络平台上创建的免费的企业级协作套件：CubeTree （简介、活动、微博、WIKI、BLOG、共享、搜索）</p>
+<p>自动化处理：
+opscode <a href="http://www.opscode.com/">http://www.opscode.com/</a>
+puppet <a href="http://reductivelabs.com/products/puppet/">http://reductivelabs.com/products/puppet/</a>
+punc</p>
+<p>集群文件系统：GlusterFS
+Eucalyptus系统 Eucalyptus是一套开源系统，可构建企业内部的私有云及混合云，把电脑、网络和存储等数据中心资源纳入一朵可由IT部门控制并定制的云</p>
+<p>流量：
+speedometer查看流量
+wget <a href="http://excess.org/speedometer/speedometer.py">http://excess.org/speedometer/speedometer.py</a>
+yum install python-urwid
+chmod 755 speedometer
+./speedometer.py -rx eth0 -c -tx eth0</p>
+<p>流量统计： piwik <a href="http://piwik.org/demo/">http://piwik.org/demo/</a>
+Crash 工具分析 Linux dump 文件 <a href="http://www.ibm.com/developerworks/cn/linux/l-cn-dumpanalyse/index.html?ca=drs-cn-0329">http://www.ibm.com/developerworks/cn/linux/l-cn-dumpanalyse/index.html?ca=drs-cn-0329</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/categories/faq/page/2/" class="alignleft prev">上一页</a>
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/1032/">1032</a><small>1</small></li>
+  
+    <li><a href="/tags/1236/">1236</a><small>1</small></li>
+  
+    <li><a href="/tags/403/">403</a><small>1</small></li>
+  
+    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
+  
+    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
+  
+    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
+  
+    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
+  
+    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
+  
+    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
+  
+    <li><a href="/tags/acl/">acl</a><small>2</small></li>
+  
+    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
+  
+    <li><a href="/tags/apache/">apache</a><small>8</small></li>
+  
+    <li><a href="/tags/arp/">arp</a><small>1</small></li>
+  
+    <li><a href="/tags/awk/">awk</a><small>4</small></li>
+  
+    <li><a href="/tags/bash/">bash</a><small>2</small></li>
+  
+    <li><a href="/tags/best/">best</a><small>1</small></li>
+  
+    <li><a href="/tags/binding/">binding</a><small>1</small></li>
+  
+    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
+  
+    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
+  
+    <li><a href="/tags/browser/">browser</a><small>1</small></li>
+  
+    <li><a href="/tags/cache/">cache</a><small>1</small></li>
+  
+    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
+  
+    <li><a href="/tags/centos/">centos</a><small>8</small></li>
+  
+    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
+  
+    <li><a href="/tags/chown/">chown</a><small>1</small></li>
+  
+    <li><a href="/tags/commands/">commands</a><small>1</small></li>
+  
+    <li><a href="/tags/content/">content</a><small>1</small></li>
+  
+    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
+  
+    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
+  
+    <li><a href="/tags/creating/">creating</a><small>1</small></li>
+  
+    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
+  
+    <li><a href="/tags/dell/">dell</a><small>1</small></li>
+  
+    <li><a href="/tags/diff/">diff</a><small>1</small></li>
+  
+    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
+  
+    <li><a href="/tags/du/">du</a><small>1</small></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
+  
+    <li><a href="/tags/end/">end</a><small>1</small></li>
+  
+    <li><a href="/tags/epel/">epel</a><small>1</small></li>
+  
+    <li><a href="/tags/etag/">etag</a><small>1</small></li>
+  
+    <li><a href="/tags/expires/">expires</a><small>1</small></li>
+  
+    <li><a href="/tags/find/">find</a><small>1</small></li>
+  
+    <li><a href="/tags/for-1/">for</a><small>1</small></li>
+  
+    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
+  
+    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
+  
+    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
+  
+    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
+  
+    <li><a href="/tags/group/">group</a><small>1</small></li>
+  
+    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
+  
+    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
+  
+    <li><a href="/tags/howto/">howto</a><small>2</small></li>
+  
+    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
+  
+    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
+  
+    <li><a href="/tags/if/">if</a><small>2</small></li>
+  
+    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
+  
+    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
+  
+    <li><a href="/tags/init/">init</a><small>1</small></li>
+  
+    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
+  
+    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
+  
+    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
+  
+    <li><a href="/tags/jk/">jk</a><small>1</small></li>
+  
+    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
+  
+    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/kick/">kick</a><small>1</small></li>
+  
+    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>18</small></li>
+  
+    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
+  
+    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
+  
+    <li><a href="/tags/master/">master</a><small>2</small></li>
+  
+    <li><a href="/tags/metric/">metric</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
+  
+    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
+  
+    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
+  
+    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
+  
+    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
+  
+    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
+  
+    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
+  
+    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
+  
+    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
+  
+    <li><a href="/tags/packet/">packet</a><small>1</small></li>
+  
+    <li><a href="/tags/pam/">pam</a><small>1</small></li>
+  
+    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
+  
+    <li><a href="/tags/perl/">perl</a><small>1</small></li>
+  
+    <li><a href="/tags/permission/">permission</a><small>1</small></li>
+  
+    <li><a href="/tags/php-1/">php</a><small>2</small></li>
+  
+    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
+  
+    <li><a href="/tags/pil/">pil</a><small>1</small></li>
+  
+    <li><a href="/tags/port/">port</a><small>1</small></li>
+  
+    <li><a href="/tags/practices/">practices</a><small>1</small></li>
+  
+    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
+  
+    <li><a href="/tags/ps/">ps</a><small>2</small></li>
+  
+    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
+  
+    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
+  
+    <li><a href="/tags/python-1/">python</a><small>3</small></li>
+  
+    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
+  
+    <li><a href="/tags/quick/">quick</a><small>1</small></li>
+  
+    <li><a href="/tags/r410/">r410</a><small>1</small></li>
+  
+    <li><a href="/tags/r710/">r710</a><small>1</small></li>
+  
+    <li><a href="/tags/raw/">raw</a><small>1</small></li>
+  
+    <li><a href="/tags/referer/">referer</a><small>1</small></li>
+  
+    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
+  
+    <li><a href="/tags/repo/">repo</a><small>1</small></li>
+  
+    <li><a href="/tags/resources/">resources</a><small>1</small></li>
+  
+    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
+  
+    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
+  
+    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
+  
+    <li><a href="/tags/sar/">sar</a><small>1</small></li>
+  
+    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
+  
+    <li><a href="/tags/sed/">sed</a><small>4</small></li>
+  
+    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
+  
+    <li><a href="/tags/sending/">sending</a><small>1</small></li>
+  
+    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
+  
+    <li><a href="/tags/shell/">shell</a><small>2</small></li>
+  
+    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
+  
+    <li><a href="/tags/slave/">slave</a><small>2</small></li>
+  
+    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
+  
+    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
+  
+    <li><a href="/tags/spec/">spec</a><small>2</small></li>
+  
+    <li><a href="/tags/squid/">squid</a><small>1</small></li>
+  
+    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
+  
+    <li><a href="/tags/system/">system</a><small>1</small></li>
+  
+    <li><a href="/tags/tar/">tar</a><small>1</small></li>
+  
+    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
+  
+    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
+  
+    <li><a href="/tags/tools/">tools</a><small>1</small></li>
+  
+    <li><a href="/tags/top/">top</a><small>1</small></li>
+  
+    <li><a href="/tags/tree/">tree</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
+  
+    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
+  
+    <li><a href="/tags/user/">user</a><small>2</small></li>
+  
+    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
+  
+    <li><a href="/tags/vim/">vim</a><small>2</small></li>
+  
+    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
+  
+    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
+  
+    <li><a href="/tags/while/">while</a><small>1</small></li>
+  
+    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
+  
+    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
+  
+    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
+  
+    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
+  
+    <li><a href="/tags/yum/">yum</a><small>10</small></li>
+  
+    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
+  
+    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
+  
+    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
+  
+    <li><a href="/tags/优化/">优化</a><small>1</small></li>
+  
+    <li><a href="/tags/内核/">内核</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
+  
+    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
+  
+    <li><a href="/tags/参考/">参考</a><small>1</small></li>
+  
+    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
+  
+    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
+  
+    <li><a href="/tags/对比/">对比</a><small>1</small></li>
+  
+    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
+  
+    <li><a href="/tags/日志/">日志</a><small>2</small></li>
+  
+    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
+  
+    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
+  
+    <li><a href="/tags/管理/">管理</a><small>1</small></li>
+  
+    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
+  
+    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
+  
+    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
+  
+    <li><a href="/tags/老板/">老板</a><small>1</small></li>
+  
+    <li><a href="/tags/认证/">认证</a><small>1</small></li>
+  
+    <li><a href="/tags/详解/">详解</a><small>3</small></li>
+  
+    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
+  
+    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
+  
+    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
