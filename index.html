@@ -41,12 +41,73 @@
     
       <li><a href="/about">About</a></li>
     
+    <li> <a href="/atom.xml">RSS</a> </li>
   </ul>
   <div class="clearfix"></div>
 </nav>
-<div class="clearfix"></div></header>
+<div class="clearfix"></div>
+</header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-08-11T07:14:17.000Z"><a href="/2013/08/11/migrate-my-blog-from-wordpress-to-hexo/">8月 11 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/08/11/migrate-my-blog-from-wordpress-to-hexo/">migrate My blog from WordPress to Hexo</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>正式将Blog从WordPress迁移至Hexo，并从VPS托管至Github。整个组合模式为：hexo+github+vim+markdown.由于文档很多，并且很详细，这里只是列出相关的参考文档链接。</p>
+<h2>Hexo</h2>
+<ul>
+<li><a href="http://zipperary.com/2013/05/28/hexo-guide-1/">Hexo介绍</a></li>
+<li><a href="http://zipperary.com/2013/05/29/hexo-guide-3/">Hexo安装配置</a></li>
+<li><a href="http://zipperary.com/2013/05/30/hexo-guide-4/">Hexo优化</a></li>
+<li><a href="https://github.com/tommy351/hexo/wiki/Plugins">Hexo插件列表</a></li>
+<li><a href="https://github.com/tommy351/hexo-plugins/tree/master/migrator/wordpress">WordPress迁移插件</a></li>
+</ul>
+<h2>Markdown</h2>
+<ul>
+<li><a href="http://upwith.me/?p=503">Markdown基本语法</a></li>
+<li><a href="http://zipperary.com/2013/05/22/introduction-to-markdown/">Markdown指南</a></li>
+<li><a href="https://github.com/volca/markdown-preview">实时预览插件</a></li>
+<li><a href="https://github.com/plasticboy/vim-markdown">vim语法高亮</a></li>
+</ul>
+<h2>我的配置</h2>
+<h3>WordPress</h3>
+<ol>
+<li>安装插件
+<code>npm install hexo-migrator-wordpress</code></li>
+<li>登录WordPress后台，选择&quot;工具&quot;--&gt;&quot;导出&quot; 导出所有文章至本地XML</li>
+<li>运行如下命令，\<source>为你本地的XML文件路径
+<code>hexo migrate wordpress \<source></code></li>
+</ol>
+<h3>RSS</h3>
+<h3>搜索引擎sitemap</h3>
+<h3>Baidu Analytics</h3>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -277,53 +338,6 @@ rm -rf %{buildroot}</p>
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2011-05-17T01:56:39.000Z"><a href="/2011/05/17/转linux内核软中断引起大量丢包/">5月 17 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/05/17/转linux内核软中断引起大量丢包/">[转]linux内核软中断引起大量丢包</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>最近用linux做nat多出口时，遇到的几个问题，经过一个星期的资料查找跟具体实践终于给解决了，由于的问题复杂性，加之个人水平十分有限，解决的过程十分的痛苦，为了使更多的人，不痛苦或者少痛苦一点，介绍一下问题解决的过程。</p>
-<p>先说说环境</p>
-<p>1.硬件:DELL R410</p>
-<p>2.网卡:板载1000M BCM5709</p>
-<p>2.OS: RHEL 5.5 x86_64</p>
-<p>3.KERNEL: 2.6.18-194.el5</p>
-<p>所出现的问题</p>
-<p>1.网卡毫无征兆的down掉，而且没有任何log信息</p>
-<p>2.当流量增大时，不到理论上限的1/3时机器出现网络延迟严重，伴随大量的丢包</p>
-<p>3.机器的cpu软中断不均衡，只有1个cpu处理软中断，并且该cpu的软中断周期性的达到100%</p>
-<p>4.内外网网卡做nat丢包数据量不一致，差别很大，不在同一个数量级</p>
-<p>想必第一个问题，大部分使用bcm网卡，rhel 5.3以后得机器都会遇到这种情况，网上的资料比较的多，我也不多啰嗦了，直接升级网卡驱动就可以解决了。第二，三，四其实是同一个问题都是由于网卡中断过多，cpu处理不过来(准确的说，cpu分配不均衡，导致只有一个cpu处理，处理不过来)，引起丢包，那么为什么两个网卡丢包的数量级不一样呢，下面从原理上进行解释，既然是做nat多出口，那么就有大量的路由信息，是一个网络应用，当一个数据包请求nat时，数据包先被网卡驱动的数据接收，网卡收到数据时，触发中断。在中断执行例程中，把skb挂入输入队列，并触发软中断。稍后的某个时刻，当软中断执行时，再从该队列中把skb取下来，投递给上层协议。</p>
-<p>如果在这个过程当中cpu没有及时处理完这个队列导致网卡的buffer满了，网卡将直接丢弃该数据包。这里牵涉到2个队列，一个是tx，一个是rx，它的队列的大小默认都是255，可以通过ethtool -g eth0(你指定的网卡)，为了防止丢包，当时我通过ethtool -G eth0 rx xxx 把它调大了，但是调大以后，还是杯水车薪啊，通过ethtool -S eth0 |grep rx_fw_discards,发现数值还是不停的在增长，也就是说还在不停的丢包，cpu处理不过来，这时候找到网上有人在利用lvs时也遇到这个问题，cpu软中断分配不均衡，只有一个cpu处理软中断的问题，网上的资料五花八门，有建议使用修改设备中断方式。即通过修改设置中断/proc/irq/${网卡中断号}/smp_affinit这时候，我也修改过，没有什么实质的效果，</p>
-<p>从官方的bug报告，<a href="https://bugzilla.redhat.com/show_bug.cgi?id=520888，其中提到rhel5.6已经修复了这个bug，这其中也提到目前我们的版本可以升级内核到kernel-2.6.18-194.3.1.el5可以解决这个问题。">https://bugzilla.redhat.com/show_bug.cgi?id=520888，其中提到rhel5.6已经修复了这个bug，这其中也提到目前我们的版本可以升级内核到kernel-2.6.18-194.3.1.el5可以解决这个问题。</a></p>
-<p>红帽子官方修复报告中的说明如下：<a href="http://rhn.redhat.com/errata/RHSA-2010-0398.html，我们升级了这个内核算是解决单核处理软中断的问题，升级后各个cpu已经能够平均的分配这个软中断，也不丢包了，那么为什么cpu处理不过来这个软中断呢，数据量并不是特别的大啊，上层应用接到这个数据包后，通过路由协议，找到某个出口给nat出去，找nat出口是需要查找路由表，查询路由表是一件很耗时的工作，而每一个不同源地址，不同目的地址的数据包都得重新查找一次路由表，导致cpu处理不过来，为了提高路由查询的效率。Linux内核引用了路由缓存，用于减少对路由表的查询。Linux的路由缓存是被设计来与协议无关的独立子系统，查看路由缓存可以通过命令route">http://rhn.redhat.com/errata/RHSA-2010-0398.html，我们升级了这个内核算是解决单核处理软中断的问题，升级后各个cpu已经能够平均的分配这个软中断，也不丢包了，那么为什么cpu处理不过来这个软中断呢，数据量并不是特别的大啊，上层应用接到这个数据包后，通过路由协议，找到某个出口给nat出去，找nat出口是需要查找路由表，查询路由表是一件很耗时的工作，而每一个不同源地址，不同目的地址的数据包都得重新查找一次路由表，导致cpu处理不过来，为了提高路由查询的效率。Linux内核引用了路由缓存，用于减少对路由表的查询。Linux的路由缓存是被设计来与协议无关的独立子系统，查看路由缓存可以通过命令route</a> -Cn,由于路由缓存当中是采用hash算法进行才找，它的查找速度非常之快，既然是cache就有超时这一概念。系统默认为10分钟，可以通过这个文件进行查看和修改/proc/sys/net/ipv4/route/secret_interval。而当路由缓存当中未找到或者已经超时的路由信息才开始查找路由表，查询到的结果保存在路由缓存中。如果路由表越大，那么查询的时间就越长，一个新的连接进来后或者是老连接cache超时后，占用大量的cpu查询时间，导致cpu周期性的软中断出现100%，而两个网卡丢包的情况来看不均衡也是因为用户的数据包是经过其中一个网卡进来后查询路由表耗时过长，cpu处理不过来，导致那块网卡的队列满了，丢包严重。当然在路由表变动不大的情况下可以加大cache的时间，修改上述内容后，从我监测的情况来看，扛流量能力得到了大大的提升。</p>
-<p>转正哥们周灵杰BLOG <a href="http://blog.netzhou.net/?p=152">http://blog.netzhou.net/?p=152</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
 
 <nav id="pagination">
   
@@ -398,7 +412,8 @@ rm -rf %{buildroot}</p>
 </div>
 
 
-  
+  <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=0&uid=1054764633&verifier=8fd6ea04&dpc=1"></iframe>
+
 </aside>
     <div class="clearfix"></div>
   </div>

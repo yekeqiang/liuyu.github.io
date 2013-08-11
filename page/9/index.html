@@ -41,12 +41,50 @@
     
       <li><a href="/about">About</a></li>
     
+    <li> <a href="/atom.xml">RSS</a> </li>
   </ul>
   <div class="clearfix"></div>
 </nav>
-<div class="clearfix"></div></header>
+<div class="clearfix"></div>
+</header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-20T13:44:10.000Z"><a href="/2010/12/20/ubuntu-could-not-update-ideauthority-file-homeuser-iceauthority/">12月 20 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/20/ubuntu-could-not-update-ideauthority-file-homeuser-iceauthority/">当登录UBUNTU时出现 “Could not update IDEauthority file home{user}.ICEauthority”</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>登录用户时会出现Could not update IDEauthority file /home/{user}/.ICEauthority</p>
+<p>郁闷    home/{user}/.ICEauthority文件的所有权被改成ROOT了 </p>
+<p>进入ROOT用户
+chown -R {user}:{user} /home/{user}
+注销即可。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -628,42 +666,6 @@ ANY_PARENT
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-19T09:57:32.000Z"><a href="/2010/12/19/windows7-winsxs/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/windows7-winsxs/">给Windows7减肥如何将winsxs放到其他硬盘分区下</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>不知道大家注意过没有，在Vista和Windows 7系统盘的Windows目录下，有一个名为winscs的文件夹，对于整个Windows目录来说，这个文件夹就占用了其一半多的体积（近3GB）不但如此，随着系统使用时间的不断延长，winscs文件夹的体积还会变得更大，我的现在已经4G多了，这真是一块“赘肉”呀！想想看吧！对于系统盘空间本来就不很富裕的朋友来说，这快“赘肉”难免会拖慢系统的运行速度。如果仅仅是因为这个原因，就对硬盘重新分区以让系统盘的空间变得更大，接着重装系统，这也实在是太麻烦了！其实，我们可以采取一个更简单的方法，将winscs这一块“赘肉”扔到其他硬盘分区下，为系统盘腾出更大的未用空间从而让系统跑得更快。下面，笔者就以 Windows 7为例子，给大家介绍一下具体的操作步骤。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2010/12/19/windows7-winsxs/#more" class="more-link">Read More</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
 
 <nav id="pagination">
   
@@ -740,7 +742,8 @@ ANY_PARENT
 </div>
 
 
-  
+  <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=0&uid=1054764633&verifier=8fd6ea04&dpc=1"></iframe>
+
 </aside>
     <div class="clearfix"></div>
   </div>

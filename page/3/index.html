@@ -41,12 +41,85 @@
     
       <li><a href="/about">About</a></li>
     
+    <li> <a href="/atom.xml">RSS</a> </li>
   </ul>
   <div class="clearfix"></div>
 </nav>
-<div class="clearfix"></div></header>
+<div class="clearfix"></div>
+</header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-03-14T06:29:43.000Z"><a href="/2011/03/14/ubuntu-install-moinmoin/">3月 14 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/03/14/ubuntu-install-moinmoin/">ubuntu install moinmoin WIKI系统</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>官方网站：<a href="http://moinmo.in/"><a href="http://moinmo.in">http://moinmo.in</a></a></p>
+<p>下载1.9的包后，在docs里有INSTALL.html文档，可以看下依赖包。</p>
+<p>本文是最新ubuntu python2.6+ nginx fcgi</p>
+<p>安装：</p>
+<pre><code><figure class="highlight"><pre> python2<span class="number">.6</span> setup.py install <span class="comment">--force --record=install.log --prefix='/usr/local' --install-data=/data/moin  `&lt;/pre&gt;</span>
+
+<span class="type">COPY</span> <span class="type">WIKI</span>相关的目录
+
+&lt;pre&gt;`
+<span class="title">cp</span> -<span class="type">R</span> /usr/local/share/moin/<span class="typedef"><span class="keyword">data</span> /<span class="keyword">data</span>/moin</span>
+<span class="title">cp</span> -<span class="type">R</span> /usr/local/share/moin/underlay /<span class="typedef"><span class="keyword">data</span>/moin</span>
+<span class="title">cp</span> /usr/local/share/moin/config/wikiconfig.py /<span class="typedef"><span class="keyword">data</span>/moin</span>
+<span class="title">cp</span> /usr/local/share/moin/server/moin.fcgi  /<span class="typedef"><span class="keyword">data</span>/moin </span>
+`&lt;/pre&gt;
+
+启动moin
+
+&lt;pre&gt;` spawn-fcgi -a <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> -p <span class="number">9001</span> -u daemon -g daemon -<span class="type">F</span> <span class="number">1</span> -f /<span class="typedef"><span class="keyword">data</span>/moin/moin.fcgi `&lt;/pre&gt;</span>
+
+新建<span class="type">WIKI</span>的虚拟主机
+<span class="title">wiki</span>.bubbyroom.com.conf
+&lt;pre&gt;` 
+<span class="title">server</span>
+{
+<span class="title">listen</span>    <span class="number">80</span>;
+<span class="title">server_name</span> wiki.bubbyroom.com;
+<span class="title">index</span> index.php index.html index.htm;
+<span class="title">root</span>   /<span class="typedef"><span class="keyword">data</span>/wwwroot/moin;</span>
+#access_log /<span class="typedef"><span class="keyword">data</span>/logs/access_test.com.log  combined;</span>
+#error_log  /<span class="typedef"><span class="keyword">data</span>/logs/error_test.com.log;</span>
+<span class="title">location</span> / {
+<span class="title">include</span>        fastcgi_params;
+<span class="title">fastcgi_pass</span>   <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9001</span>;
+<span class="title">fastcgi_param</span>  <span class="type">SCRIPT_FILENAME</span>  $fastcgi_script_name;
+<span class="title">fastcgi_param</span>   <span class="type">SCRIPT_NAME</span> /;
+<span class="title">fastcgi_param</span> <span class="type">PATH_INFO</span> $fastcgi_script_name;
+}
+} 
+</pre></figure></code></pre>
+<p>访问wiki.bubbyroom.com 就好了</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -377,57 +450,6 @@ action = <span class="string">"allow"</span>
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2011-03-03T09:34:20.000Z"><a href="/2011/03/03/kernel-contact-your-bios-vendor-to-see-if-the-e752x-error/">3月 3 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/03/03/kernel-contact-your-bios-vendor-to-see-if-the-e752x-error/">kernel: Contact your BIOS vendor to see if the E752x error</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>今天遇到这种错误。感觉很奇怪。看似像内存的问题，实际上不是。</p>
-<p>搜索一下。发现HP官网有说明。但机器是DELL 2850 再搜索发现同样也有说明。</p>
-<p>是模块与系统的问题导致。</p>
-<p>E752x error</p>
-<p>服务器dmesg信息中包含如下信息：</p>
-<p>Contact your BIOS vendor to see if the E752x error registers can be safely un-hidden</p>
-<p>e752x_edac: probe of 0000:00:00.0 failed with error -12</p>
-<p>出现此报错信息的服务器是Dell 2850,其实同样有此报错的还有HP的服务器，下面是HP官方的解释。</p>
-<p><a href="http://www.icare.hp.com.cn/TechCenter_StaticArticle/44490/44490.html">http://www.icare.hp.com.cn/TechCenter_StaticArticle/44490/44490.html</a></p>
-<p>启动配有 Intel E7520、E7525 或 E7320 芯片组并且运行 Red Hat Enterprise Linux 5.1 的 HP ProLiant 服务器时，可能会出现下列 Error Detection and Correction (EDAC) 模块消息：</p>
-<p>kernel: Contact your BIOS vendor to see if the E752x error registers can be safely un-hidden</p>
-<p>kernel: e752x_edac: probe of 0000:00:00.0 failed with error -12</p>
-<p>出现这个问题是因为服务器 System ROM 配置这些寄存器兼容 HP Management Agents for Linux，以求提供错误检测与硬件事件报告功能。</p>
-<p>下面“受影响平台”部分所列出的任何 HP ProLiant 服务器，配有 Intel 7520、E7525 或 E7320 服务器芯片组并运行 Red Hat Enterprise Linux 5.1。</p>
-<p>为了避免出现这个消息，请在 /etc/modprobe.conf 中添加下列内容：</p>
-<p>alias e752x_edac off</p>
-<p>这个新条目将能避免 Linux EDAC 模块在启动过程中自动加载。</p>
-<p>目前FreeBSD系统下还没有发现此现象，在Dell服务器上如果要运行Dell日志清除工具的话可能会造成服务器的短暂不响应，不过很快就会恢复正常.</p>
-<p>如果大家觉得这个选项没有太大用处的话可以按照上面的方法禁用。</p>
-<p>参考： <a href="http://mycoding.spaces.live.com/?_c11_BlogPart_pagedir=Next&amp;_c11_BlogPart_handle=cns!337B0545DDC11E83!251&amp;_c11_BlogPart_BlogPart=blogview&amp;_c=BlogPart"><a href="http://mycoding.spaces.live.com/?_c11_BlogPart_pagedir=Next&amp;_c11_BlogPart_handle=cns!337B0545DDC11E83!251&amp;_c11_BlogPart_BlogPart=blogview&amp;_c=BlogPart">http://mycoding.spaces.live.com/?_c11_BlogPart_pagedir=Next&amp;_c11_BlogPart_handle=cns!337B0545DDC11E83!251&amp;_c11_BlogPart_BlogPart=blogview&amp;_c=BlogPart</a></a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
 
 <nav id="pagination">
   
@@ -504,7 +526,8 @@ action = <span class="string">"allow"</span>
 </div>
 
 
-  
+  <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=0&uid=1054764633&verifier=8fd6ea04&dpc=1"></iframe>
+
 </aside>
     <div class="clearfix"></div>
   </div>

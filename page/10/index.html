@@ -41,12 +41,50 @@
     
       <li><a href="/about">About</a></li>
     
+    <li> <a href="/atom.xml">RSS</a> </li>
   </ul>
   <div class="clearfix"></div>
 </nav>
-<div class="clearfix"></div></header>
+<div class="clearfix"></div>
+</header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T09:57:32.000Z"><a href="/2010/12/19/windows7-winsxs/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/windows7-winsxs/">给Windows7减肥如何将winsxs放到其他硬盘分区下</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>不知道大家注意过没有，在Vista和Windows 7系统盘的Windows目录下，有一个名为winscs的文件夹，对于整个Windows目录来说，这个文件夹就占用了其一半多的体积（近3GB）不但如此，随着系统使用时间的不断延长，winscs文件夹的体积还会变得更大，我的现在已经4G多了，这真是一块“赘肉”呀！想想看吧！对于系统盘空间本来就不很富裕的朋友来说，这快“赘肉”难免会拖慢系统的运行速度。如果仅仅是因为这个原因，就对硬盘重新分区以让系统盘的空间变得更大，接着重装系统，这也实在是太麻烦了！其实，我们可以采取一个更简单的方法，将winscs这一块“赘肉”扔到其他硬盘分区下，为系统盘腾出更大的未用空间从而让系统跑得更快。下面，笔者就以 Windows 7为例子，给大家介绍一下具体的操作步骤。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/12/19/windows7-winsxs/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -1052,125 +1090,6 @@ int1 -le int2　　　　int1小于等于int2为真`&lt;/pre&gt;
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-19T09:09:46.000Z"><a href="/2010/12/19/python-if-while/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/python-if-while/">python学习笔记 if 与while</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>python学习笔记</p>
-<p>今天练习了二个脚本。对比一下：</p>
-<pre><code><figure class="highlight"><pre><span class="xml">if.py
-</span><span class="comment">#!/usr/bin/python</span><span class="xml">
-</span><span class="comment"># filename if.py</span><span class="xml">
-number = </span><span class="number">23</span><span class="xml">
-guess = int(raw_input('Enter an integer : ')) 
-
-if guess == number:
-  print 'ok.'
-  print ''
-elif guess &amp;lt; number:
-  print 'higher'
-else:
-  print 'low'
-print 'Done' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-运行时提示输入数字，也就是猜数字。
-
-<span class="comment">&lt;!--more--&gt;</span>
-
-如果输入</span><span class="number">23</span><span class="xml">则提示：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`J:\python\pythontest&amp;gt;python if.py
-Enter an integer : </span><span class="number">23</span><span class="xml">
-ok.
-prizes
-Done `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-输入大于</span><span class="number">23</span><span class="xml">的数字提示：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`J:\python\pythontest&amp;gt;python if.py
-Enter an integer : </span><span class="number">25</span><span class="xml">
-low
-Done `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-输入小于</span><span class="number">23</span><span class="xml">的数字提示：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`J:\python\pythontest&amp;gt;python if.py
-Enter an integer : </span><span class="number">22</span><span class="xml">
-higher
-Done `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-**问题：**每次输入一次结束运行然后再运行一次。而不是提示后继续输入
-
-如果把上面的if.py放入while就可以很好的解决这个问题
-while.py
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`#!/usr/bin/python
-</span><span class="comment"># filename if.py</span><span class="xml">
-number = </span><span class="number">23</span><span class="xml">
-running = True 
-
-while running:
-  guess = int(raw_input('Enter an integer : ')) 
-
-  if guess == number:
-    print 'ok.'
-    running = False
-  elif guess &amp;lt; number:
-    print 'higher'
-  else:
-    print 'low'
-else:
-  print 'while loop is over.' 
-
-print 'Done' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-输出结果：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`J:\python\pythontest&amp;gt;python while.py
-Enter an integer : </span><span class="number">25</span><span class="xml">
-low
-Enter an integer : </span><span class="number">22</span><span class="xml">
-higher
-Enter an integer : </span><span class="number">23</span><span class="xml">
-ok.
-while loop is over.
-Done `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-看起来就很舒服。这里需要说明下：
-我们为内建的raw_input函数提供一个字符串，这个字符串被打印在屏幕上，然后等待用户的输入。一旦我们输入一些东西，然后按回车键之后，函数返回 输入。对于raw_input函数来说是一个字符串。我们通过int把这个字符串转换为整数，并把它存储在变量guess中。事实上，int是一个类，不 过你想在对它所需了解的只是它把一个字符串转换为一个整数（假设这个字符串含有一个有效的整数文本信息）。
-
-另：
-在命名的时候python 不能使用以下符号：
-- 空格 、
-可以使用_ 字母 数字组合。敏感大小写
-在编写的时候
-首行不能用一个空格代表缩进
-可以使用 单个制表符 或 两个或四个空格 。
-否则会出现如下的问题：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`i = </span><span class="number">5</span><span class="xml">
- print 'Hello World' `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-当你运行这个程序的时候，你会得到下面的错误：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`File "test.py", line </span><span class="number">2</span><span class="xml">
-    print 'Hello World'
-    ^
-SyntaxError: invalid syntax</span>
-</pre></figure></code></pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
 
 <nav id="pagination">
   
@@ -1247,7 +1166,8 @@ SyntaxError: invalid syntax</span>
 </div>
 
 
-  
+  <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=0&uid=1054764633&verifier=8fd6ea04&dpc=1"></iframe>
+
 </aside>
     <div class="clearfix"></div>
   </div>

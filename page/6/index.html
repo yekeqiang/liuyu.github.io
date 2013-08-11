@@ -41,12 +41,144 @@
     
       <li><a href="/about">About</a></li>
     
+    <li> <a href="/atom.xml">RSS</a> </li>
   </ul>
   <div class="clearfix"></div>
 </nav>
-<div class="clearfix"></div></header>
+<div class="clearfix"></div>
+</header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-27T09:45:39.000Z"><a href="/2011/01/27/centos-puppet-foreman-instal/">1月 27 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/27/centos-puppet-foreman-instal/">centos puppet  foreman 安装 </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>foreman 和 dashboard 一样。可以直观地查看puppet client 同步状态等。详细情况看官方的截图：
+<a href="http://theforeman.org/projects/foreman/wiki/Screenshots">http://theforeman.org/projects/foreman/wiki/Screenshots</a></p>
+<p>简单说下安装的顺序：
+1. 安装puppet 
+2. 升级ruby 至 1.8.6
+3. 安装相关的依赖 gem rake  rails i18n
+4. 创建库和用户并授权
+5. 安装foreman 
+6. 修改database.yml
+7. 创建foreman表
+8. 配置 foreman.rb 文件，并放至puppet reports目录
+9. 配置 puppet server client 配置文件
+10. 启动</p>
+<p>注意版本的要求。特别是ruby 只能是1.8 升级ruby 参考： <a href="http://bubbyroom.com/2011/01/centos-yum-update-ruby/">http://bubbyroom.com/2011/01/centos-yum-update-ruby/</a></p>
+<pre><code><figure class="highlight"><pre><span class="xml">Ruby </span><span class="number">1.9</span><span class="xml"> is not supported yet. You have to use Ruby </span><span class="number">1.8</span><span class="xml">.x as stated above.
+RubyGems </span><span class="number">1.3</span><span class="xml"></span><span class="number">.1</span><span class="xml"> or higher is required
+Rake </span><span class="number">0.8</span><span class="xml"></span><span class="number">.3</span><span class="xml"> or higher is required
+Rack </span><span class="number">1.0</span><span class="xml"></span><span class="number">.1</span><span class="xml"> is required. If you don't have this exact version, database migration would fail.
+I18n </span><span class="number">0.4</span><span class="xml"></span><span class="number">.2</span><span class="xml"> is required for Redmine &amp;gt;= </span><span class="number">1.0</span><span class="xml"></span><span class="number">.5</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`rpm -Uvh http://download.fedora.redhat.com/pub/epel/</span><span class="number">5</span><span class="xml">/i386/epel-release-</span><span class="number">5</span><span class="xml">-</span><span class="number">3.</span><span class="xml">noarch.rpm `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`yum install -y mysql mysql-devel mysql-server ruby ruby-devel ruby-irb ruby-mysql ruby-rdoc ruby-ri `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+如果MYSQL 是源码包安装则：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`yum install -y ruby ruby-devel ruby-irb ruby-mysql ruby-rdoc ruby-ri `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+安装rubygem </span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`http://production.cf.rubygems.org/rubygems/rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">.tgz
+tar xfz rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">.tgz
+cd rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">
+ruby setup.rb `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+安装rails 和rack
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gem install rails -v=</span><span class="number">2.3</span><span class="xml"></span><span class="number">.5</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gem install rack -v=</span><span class="number">1.0</span><span class="xml"></span><span class="number">.1</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gem install -v=</span><span class="number">0.4</span><span class="xml"></span><span class="number">.2</span><span class="xml"> i18n `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+下载foreman
+地址：http://www.redmine.org/projects/redmine/wiki/Download
+
+我喜欢用GIT下载：
+有人问过我git 怎么安装：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`yum -y install git `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`git clone git://github.com/edavis10/redmine.git `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+源码包地址：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`wget http://rubyforge.org/frs/download.php/</span><span class="number">73900</span><span class="xml">/redmine-</span><span class="number">1.1</span><span class="xml"></span><span class="number">.0</span><span class="xml">.tar.gz `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+下载 后解压。可以放在/usr/local/redmine 目录
+
+Mysql 配置： 创建库和用户
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`create database redmine character set utf8;
+create user 'redmine'@'localhost' identified by 'my_password';
+grant all privileges on redmine.* to 'redmine'@'localhost'; `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+mysql </span><span class="number">5</span><span class="xml"> 以上
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`grant all privileges on redmine.* to 'redmine'@'localhost' identified by 'my_password'; `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+进去foreman配置 database.yml
+config/database.yml
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`production:
+adapter: mysql
+database: redmine
+host: localhost
+username: redmine
+password: my_password `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+建表：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`RAILS_ENV=production rake db:migrate `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+启动：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`ruby script/server webrick -e production `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+库备份：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`/usr/bin/mysqldump-u  -p
+  |gzip &amp;gt; /path/to/backup/db/redmine_`date +%y_%m_%d`.gz `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+puppet master配置
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`reports=log, foreman `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+puppet client 配置
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`report = true `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+配置puppet 提交至foreman
+</span><span class="comment"># cp extras/puppet/foreman/files/foreman-report.rb /usr/lib/ruby/site_ruby/1.8/puppet/reports/foreman.rb</span><span class="xml">
+</span><span class="comment"># chmod 644 /usr/lib/ruby/site_ruby/1.8/puppet/reports/foreman.rb</span><span class="xml">
+</span><span class="comment"># vim /usr/lib/ruby/site_ruby/1.8/puppet/reports/foreman.rb</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# URL of your Foreman installation
+</span><span class="variable">$foreman_url</span><span class="xml">="http://" + `hostname`.strip + ":</span><span class="number">8000</span><span class="xml">"`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+cron 清数据：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`rake reports:expire days=</span><span class="number">7</span><span class="xml"> RAILS_ENV="production" `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+</span><span class="comment">###########################################################</span><span class="xml">
+
+foreman 可以采用yum 安装
+
+配置源：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`cat &gt; /etc/yum.repos.d/foreman.repo <span class="tag">&lt;<span class="title">&lt;</span> <span class="attribute">EOF</span>
+[<span class="attribute">foreman</span>]
+<span class="attribute">name</span>=<span class="value">Foreman</span> <span class="attribute">Repo</span>
+<span class="attribute">baseurl</span>=<span class="value">http:</span>//<span class="attribute">theforeman.org</span>/<span class="attribute">repo</span>
+<span class="attribute">gpgcheck</span>=</span><span class="number">0</span><span class="xml">
+enabled=</span><span class="number">1</span><span class="xml">
+EOF</span>
+</pre></figure></code></pre>
+<p>yum install foreman
+使用yum 安装后会产生/etc/init.d/foreman  配置文件也在/etc/foreman 目录 。其它的配置一样。</p>
+<p>我在安装时遇到过一些错误，但主要是ruby 版本  和mysql 依赖 建议都用yum 来安装 </p>
+<p>参考： 还是国外的文档给力。
+<a href="http://www.how2centos.com/installing-puppet-master-with-foreman-frontend-on-centos-5-5/">http://www.how2centos.com/installing-puppet-master-with-foreman-frontend-on-centos-5-5/</a>
+<a href="http://miao5.blogspot.com/2010/01/setup-puppetmaster-foreman.html">http://miao5.blogspot.com/2010/01/setup-puppetmaster-foreman.html</a>
+<a href="http://www.redmine.org/projects/redmine/wiki/RedmineInstall">http://www.redmine.org/projects/redmine/wiki/RedmineInstall</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -331,45 +463,6 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-</span><span class="number">5<
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2011-01-26T14:16:16.000Z"><a href="/2011/01/26/cpan-error-make-test-had-returned-bad-status/">1月 26 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/01/26/cpan-error-make-test-had-returned-bad-status/">CPAN error: make test had returned bad status</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>CPAN error: make test had returned bad status, won’t install without force</p>
-<p>To solve “CPAN error: make test had returned bad status, won’t install without force” follow the command below:-</p>
-<p>First go into perl CPAN shell
-then you can do force install of module using the command below:-</p>
-<p>cpan&gt;<span style="color: #ff0000;"> force install #module#</span>
-Change the #module# to your Module name.</p>
-<p>Your CPAN module should be able to install successfully by now.
-<a href="http://www.techiecorner.com/1839/cpan-error-make-test-had-returned-bad-status-wont-install-without-force/">http://www.techiecorner.com/1839/cpan-error-make-test-had-returned-bad-status-wont-install-without-force/</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
 
 <nav id="pagination">
   
@@ -446,7 +539,8 @@ Change the #module# to your Module name.</p>
 </div>
 
 
-  
+  <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=0&uid=1054764633&verifier=8fd6ea04&dpc=1"></iframe>
+
 </aside>
     <div class="clearfix"></div>
   </div>

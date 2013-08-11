@@ -41,12 +41,66 @@
     
       <li><a href="/about">About</a></li>
     
+    <li> <a href="/atom.xml">RSS</a> </li>
   </ul>
   <div class="clearfix"></div>
 </nav>
-<div class="clearfix"></div></header>
+<div class="clearfix"></div>
+</header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T10:51:14.000Z"><a href="/2010/12/17/apache-exclude-log/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/apache-exclude-log/">Apache过滤日志</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>.过滤掉无需记录的日志</p>
+<h1>在httpd.conf 的</h1>
+<p>LogFormat &quot;%{X-Forwarded-For}i %l %u %t \&quot;%r\&quot; %&gt;s %b \&quot;%{Referer}i\&quot; \&quot;%{User-Agent}i\&quot;&quot; combined
+后面加入如下:</p>
+<pre><code><figure class="highlight"><pre><span class="comment"># filter the localhost visit</span>
+<span class="keyword">SetEnvIf</span> Remote_Addr <span class="string">"127\.0\.0\.1"</span> dontlog
+<span class="comment"># filter some special directories</span>
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"^ZendPlatform.*$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI \.healthcheck\.html$ dontlog
+<span class="keyword">SetEnvIf</span> Remote_Addr <span class="string">"::1"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.getPing.php$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"^/error\.html$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.gif$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.jpg$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.css$"</span> dontlog
+`<span class="tag">&lt;/pre&gt;</span>
+其它根据自己的需要做一些调整。
+另一种日志不记录图片的方法：
+<span class="tag">&lt;pre&gt;</span>`<span class="keyword">SetEnv</span> dontlog 1
+<span class="keyword">CustomLog</span> logs/access_log combined env=!dontlog
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -315,7 +369,8 @@ print “Hello, world!\n”;
 </div>
 
 
-  
+  <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=0&uid=1054764633&verifier=8fd6ea04&dpc=1"></iframe>
+
 </aside>
     <div class="clearfix"></div>
   </div>
