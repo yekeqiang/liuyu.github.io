@@ -84,15 +84,59 @@
 <h2>我的配置</h2>
 <h3>WordPress</h3>
 <ol>
-<li>安装插件
-<code>npm install hexo-migrator-wordpress</code></li>
+<li>安装插件<code>npm install hexo-migrator-wordpress</code></li>
 <li>登录WordPress后台，选择&quot;工具&quot;--&gt;&quot;导出&quot; 导出所有文章至本地XML</li>
-<li>运行如下命令，\<source>为你本地的XML文件路径
-<code>hexo migrate wordpress \<source></code></li>
+<li>运行如下命令，\<source>为你本地的XML文件路径<code>hexo migrate wordpress \&lt;source&gt;</code></li>
 </ol>
+<h3>导航添加about</h3>
+<ol>
+<li><code>hexo new page &quot;about&quot;</code></li>
+<li>编辑<code>source/about/index.md</code></li>
+<li><code>themes/light/_config.yml</code>中，添加如下：</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre><span class="keyword">menu</span>:
+  关于: /<span class="keyword">about</span>
+</pre></td></tr></table></figure>
+
 <h3>RSS</h3>
+<ol>
+<li>安装插件<code>npm install hexo-generator-feed</code></li>
+<li>编辑<code>hexo/_config.yml</code>添加如下代码:</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre><span class="comment">plugins:</span>
+<span class="literal">-</span> <span class="comment">hexo</span>-<span class="comment">generator</span>-<span class="comment">feed
+</pre></td></tr></table></figure>
+
+<ol>
+<li>编辑<code>themes/light/_config.yml</code> 添加RSS链接<code>rss: /atom.xml</code></li>
+<li>编辑<code>themes/light/layout/_partial/header.ejs</code> 在<code>&lt;ul&gt;&lt;/ul&gt;</code> 之间添加<code>&lt;li&gt; &lt;a href=&quot;/atom.xml&quot;&gt;RSS&lt;/a&gt; &lt;/li&gt;</code></li>
+</ol>
 <h3>搜索引擎sitemap</h3>
+<ol>
+<li>安装插件<code>npm install hexo-generator-sitemap</code></li>
+<li>编辑<code>hexo/_config.yml</code>添加如下代码:</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre><span class="comment">plugins:</span>
+<span class="literal">-</span> <span class="comment">hexo</span>-<span class="comment">generator</span>-<span class="comment">sitemap
+</pre></td></tr></table></figure>
+
 <h3>Baidu Analytics</h3>
+<ol>
+<li>获取网站的相关代码<a href="http://tongji.baidu.com/web/welcome/login">百度统计</a></li>
+<li>可以直接插入在Google Analytics中，编辑<code>themes/light/layout/_partial/google_analytics.ejs</code>插入代码</li>
+</ol>
+<h3>插入代码</h3>
+<ol>
+<li>直接使用 ``包围</li>
+<li><img src="http://m3.img.libdd.com/farm5/2012/0913/15/73D9410B78B12835FE79BEC176AB49EE19D57A05049E_500_244.PNG" alt="image"></li>
+<li>或者不输入语言名</li>
+</ol>
 
       
     </div>
@@ -412,7 +456,7 @@ rm -rf %{buildroot}</p>
 </div>
 
 
-  <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=0&uid=1054764633&verifier=8fd6ea04&dpc=1"></iframe>
+  
 
 </aside>
     <div class="clearfix"></div>
