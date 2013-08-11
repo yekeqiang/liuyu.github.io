@@ -3,21 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>smartctl | Puppet-in-action</title>
+  <title>smartctl | Liuyu blog</title>
   <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="Puppet cdn AutoMate">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-  <meta property="og:site_name" content="Puppet-in-action"/>
+  <meta property="og:site_name" content="Liuyu blog"/>
 
   
     <meta property="og:image" content="undefined"/>
   
 
   <link href="/favicon.png" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="Liuyu blog" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
@@ -27,8 +29,8 @@
 
 <body>
   <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">Puppet-in-action</a></h1>
-  <h2><a href="/">Puppet</a></h2>
+  <h1><a href="/">Liuyu blog</a></h1>
+  <h2><a href="/">Puppet in action</a></h2>
 </div>
 <nav id="main-nav" class="alignright">
   <ul>
@@ -36,6 +38,8 @@
       <li><a href="/">Home</a></li>
     
       <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -46,176 +50,21 @@
 <h2 class="archive-title tag">smartctl</h2>
 
 
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-19T08:07:32.000Z"><a href="/2010/12/19/linux-smartctl/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/linux-smartctl/">linux smartctl 磁盘健康监测程序</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>什么是S.M.A.R.T.
-SMART是一种磁盘自我分析检测技术，早在90年代末就基本得到了普及
-每一块硬盘（包括IDE、SCSI）在运行的时候，都会将自身的若干参数记录下来
-这些参数包括型号、容量、温度、密度、扇区、寻道时间、传输、误码率等
-硬盘运行了几千小时后，很多内在的物理参数都会发生变化
-某一参数超过报警阈值，则说明硬盘接近损坏
-此时硬盘依然在工作，如果用户不理睬这个报警继续使用
-那么硬盘将变得非常不可靠，随时可能故障</p>
-<p>启用SMART
-SMART是和主板BIOS上相应功能配合的
-要使用SMART，必须先进入到主板BIOS设置里边启动相关设置</p>
-<p>一般从Pentium2级别起的主板，都支持SMART
-BIOS启动以后，就是操作系统级别的事情了
-很遗憾，Windows没有内置SMART相关工具（需要安装第三方工具软件）
-好在Linux上很早就有了SMART支持了
-如果把Linux装在VMware等虚拟机上，在系统启动时候可以看到有个服务启动报错：smartd
-这个服务器就是smart的daemon进程（因为vmware虚拟机的硬盘不支持SMART，所以报错）</p>
-<p>首先通过dmesg工具，确认一下硬盘的设备符号
-例如一个IDE硬盘连接到Primary IDE 总线上的Slave位置，硬盘设备符号是/dev/hdb
-hdb中的h代表IDE，如果显示为sdb，则代表SATA和SCSI
-最后一个字幕b代表Primary总线，第二块硬盘即Slave位置
-确认硬盘是否打开了SMART支持
-smartctl -i /dev/hdb</p>
-<p>例如看到如下返回结果</p>
-<pre><code><figure class="highlight"><pre>[root@3.6.0Biz-46 ~]# smartctl -i /dev/hdb
-smartctl version 5.33 [i386-redhat-linux-gnu] Copyright (C) 2002-4 Bruce Allen
-Home page is http://smartmontools.sourceforge.net/
-=== <span class="operator"><span class="keyword">START</span> <span class="keyword">OF</span> INFORMATION <span class="keyword">SECTION</span> ===
-Device Model: ST380011A
-Serial <span class="keyword">Number</span>: <span class="number">3</span>JVAPRGH
-Firmware Version: <span class="number">3.04</span>
-<span class="keyword">User</span> Capacity: <span class="number">80</span>,<span class="number">026</span>,<span class="number">361</span>,<span class="number">856</span> bytes
-Device <span class="keyword">is</span>: <span class="keyword">In</span> smartctl database [<span class="keyword">for</span> details use: -P <span class="keyword">show</span>]
-ATA Version <span class="keyword">is</span>: <span class="number">6</span>
-ATA Standard <span class="keyword">is</span>: ATA/ATAPI-<span class="number">6</span> T13 <span class="number">1410</span>D revision <span class="number">2</span>
-<span class="keyword">Local</span> <span class="keyword">Time</span> <span class="keyword">is</span>: Tue Apr <span class="number">3</span> <span class="number">15</span>:<span class="number">39</span>:<span class="number">52</span> <span class="number">2007</span> CST
-SMART support <span class="keyword">is</span>: Available - device has SMART capability.
-SMART support <span class="keyword">is</span>: Disabled
-SMART Disabled. Use <span class="keyword">option</span> -s <span class="keyword">with</span> argument <span class="string">'on'</span> <span class="keyword">to</span> enable it.
-<span class="string">`&lt;/pre&gt;
-
-我们可以看到SMART support is: Disabled表示SMART未启用
-
-执行如下命令，启动SMART：
-&lt;pre&gt;`</span>smartctl --smart=<span class="keyword">on</span> --offlineauto=<span class="keyword">on</span> --saveauto=<span class="keyword">on</span> /dev/hdb<span class="string">`&lt;/pre&gt;
-
-例如看到如下返回结果
-&lt;pre&gt;`</span>[root@<span class="number">3.6</span><span class="number">.0</span>Biz-<span class="number">46</span> ~]# smartctl --smart=<span class="keyword">on</span> --offlineauto=<span class="keyword">on</span> --saveauto=<span class="keyword">on</span> /dev/hdb
-smartctl version <span class="number">5.33</span> [i386-redhat-linux-gnu] Copyright (C) <span class="number">2002</span>-<span class="number">4</span> Bruce Allen
-Home page <span class="keyword">is</span> http://smartmontools.sourceforge.net/
-=== <span class="keyword">START</span> <span class="keyword">OF</span> ENABLE/DISABLE COMMANDS <span class="keyword">SECTION</span> ===
-SMART Enabled.
-SMART Attribute Autosave Enabled.
-SMART Automatic Offline Testing Enabled every four hours.<span class="string">`&lt;/pre&gt;
-
-现在硬盘的SMART功能已经被打开
-执行如下命令查看硬盘的健康状况：
-&lt;pre&gt;`</span>smartctl -H /dev/hda<span class="string">`&lt;/pre&gt;
-
-例如可以看到如下结果：
-&lt;pre&gt;`</span>[root@<span class="number">3.6</span><span class="number">.0</span>Biz-<span class="number">46</span> ~]# smartctl -H /dev/hdb
-smartctl version <span class="number">5.33</span> [i386-redhat-linux-gnu] Copyright (C) <span class="number">2002</span>-<span class="number">4</span> Bruce Allen
-Home page <span class="keyword">is</span> http://smartmontools.sourceforge.net/
-=== <span class="keyword">START</span> <span class="keyword">OF</span> <span class="keyword">READ</span> SMART DATA <span class="keyword">SECTION</span> ===
-SMART overall-health self-assessment test result: PASSED<span class="string">`&lt;/pre&gt;
-
-请注意result后边的结果：PASSED，这表示硬盘健康状态良好
-如果这里显示Failure，那么最好立刻给服务器更换硬盘
-SMART只能报告磁盘已经不再健康，但是报警后还能继续运行多久是不确定的
-通常，SMART报警参数是有预留的，磁盘报警后，不会当场坏掉，一般能坚持一段时间
-有的硬盘SMART报警后还继续跑了好几年，有的硬盘SMART报错后几天就坏了
-但是一旦出现报警，侥幸心里是万万不能的……
-执行如下命令可以看到详细的参数：
-&lt;pre&gt;`</span>smartctl -A /dev/hdb<span class="string">`&lt;/pre&gt;
-
-例如可以看到如下结果：
-&lt;pre&gt;`</span>[root@<span class="number">3.6</span><span class="number">.0</span>Biz-<span class="number">46</span> ~]# smartctl -A /dev/hdb
-smartctl version <span class="number">5.33</span> [i386-redhat-linux-gnu] Copyright (C) <span class="number">2002</span>-<span class="number">4</span> Bruce Allen
-Home page <span class="keyword">is</span> http://smartmontools.sourceforge.net/
-=== <span class="keyword">START</span> <span class="keyword">OF</span> <span class="keyword">READ</span> SMART DATA <span class="keyword">SECTION</span> ===
-SMART Attributes Data Structure revision <span class="keyword">number</span>: <span class="number">10</span>
-Vendor Specific SMART Attributes <span class="keyword">with</span> Thresholds:
-ID# ATTRIBUTE_NAME FLAG <span class="keyword">VALUE</span> WORST THRESH TYPE UPDATED WHEN_FAILED RAW_VALUE
-<span class="number">1</span> Raw_Read_Error_Rate <span class="number">0x000f</span> <span class="number">053</span> <span class="number">051</span> <span class="number">006</span> Pre-fail Always - <span class="number">11338710</span>
-<span class="number">3</span> Spin_Up_Time <span class="number">0x0003</span> <span class="number">098</span> <span class="number">097</span> <span class="number">000</span> Pre-fail Always - <span class="number">0</span>
-<span class="number">4</span> Start_Stop_Count <span class="number">0x0032</span> <span class="number">100</span> <span class="number">100</span> <span class="number">020</span> Old_age Always - <span class="number">17</span>
-<span class="number">5</span> Reallocated_Sector_Ct <span class="number">0x0033</span> <span class="number">100</span> <span class="number">100</span> <span class="number">036</span> Pre-fail Always - <span class="number">0</span>
-<span class="number">7</span> Seek_Error_Rate <span class="number">0x000f</span> <span class="number">087</span> <span class="number">060</span> <span class="number">030</span> Pre-fail Always - <span class="number">610059516</span>
-<span class="number">9</span> Power_On_Hours <span class="number">0x0032</span> <span class="number">087</span> <span class="number">087</span> <span class="number">000</span> Old_age Always - <span class="number">11974</span>
-<span class="number">10</span> Spin_Retry_Count <span class="number">0x0013</span> <span class="number">100</span> <span class="number">100</span> <span class="number">097</span> Pre-fail Always - <span class="number">0</span>
-<span class="number">12</span> Power_Cycle_Count <span class="number">0x0032</span> <span class="number">100</span> <span class="number">100</span> <span class="number">020</span> Old_age Always - <span class="number">110</span>
-<span class="number">194</span> Temperature_Celsius <span class="number">0x0022</span> <span class="number">045</span> <span class="number">052</span> <span class="number">000</span> Old_age Always - <span class="number">45</span>
-<span class="number">195</span> Hardware_ECC_Recovered <span class="number">0x001a</span> <span class="number">053</span> <span class="number">051</span> <span class="number">000</span> Old_age Always - <span class="number">11338710</span>
-<span class="number">197</span> Current_Pending_Sector <span class="number">0x0012</span> <span class="number">100</span> <span class="number">100</span> <span class="number">000</span> Old_age Always - <span class="number">0</span>
-<span class="number">198</span> Offline_Uncorrectable <span class="number">0x0010</span> <span class="number">100</span> <span class="number">100</span> <span class="number">000</span> Old_age Offline - <span class="number">0</span>
-<span class="number">199</span> UDMA_CRC_Error_Count <span class="number">0x003e</span> <span class="number">200</span> <span class="number">200</span> <span class="number">000</span> Old_age Always - <span class="number">0</span>
-<span class="number">200</span> Multi_Zone_Error_Rate <span class="number">0x0000</span> <span class="number">100</span> <span class="number">253</span> <span class="number">000</span> Old_age Offline - <span class="number">0</span>
-<span class="number">202</span> TA_Increase_Count <span class="number">0x0032</span> <span class="number">100</span> <span class="number">253</span> <span class="number">000</span> Old_age Always - <span class="number">0</span>
-<span class="string">`&lt;/pre&gt;
-上边列出的参数表中可供进行技术分析和参考，使用下边的命令可以输出完整结果：
-&lt;pre&gt;`</span>smartctl -a /dev/hdb<span class="string">`&lt;/pre&gt;
-
-定期登录到服务器上运行smartctl是比较麻烦的，linux提供了系统进程smartd
-
-编辑配置文件：
-vi /etc/smartd.conf
-这个配置文件中大部分可能是注释掉的说明，只需要和当前硬盘相关的一行写入正确即可：
-/dev/hdb -H -m test@test123123.com
-上边的配置表示smartd以静默状态工作，当SMART中报告PASSED的时候不理睬
-一旦出现Failure，立刻用邮件通知用户指定的邮箱
-
-修改配置后重启服务：
-/etc/init.d/smartd
-即可完成对SMART的全部配置。
-
-linux下硬盘检测工具: smartmontools
-Smartmontools for SCSI硬盘: http://smartmontools.sourceforge.net/smartmontools_scsi.html
-
-简单用法：
-&lt;pre&gt;`</span><span class="number">1</span>、smartctl -a 检查该设备是否已经打开SMART技术。
-<span class="number">2</span>、smartctl -s <span class="keyword">on</span> 如果没有打开SMART技术，使用该命令打开SMART技术。
-<span class="number">3</span>、smartctl -t short 后台检测硬盘，消耗时间短；
-smartctl -t long 后台检测硬盘，消耗时间长；
-smartctl -C -t short 前台检测硬盘，消耗时间短；
-smartctl -C -t long 前台检测硬盘，消耗时间长。
-其实就是利用硬盘SMART的自检程序。
-<span class="number">4</span>、smartctl -X 中断后台检测硬盘。
-<span class="number">5</span>、smartctl -l selftest 显示硬盘检测日志。
-<span class="number">6</span>、smartctl -l error 显示硬盘错误汇总。
-</pre></figure></code></pre>
-<p>其它：<a href="http://www.cyberciti.biz/tips/monitoring-hard-disk-health-with-smartd-under-linux-or-unix-operating-systems.html">http://www.cyberciti.biz/tips/monitoring-hard-disk-health-with-smartd-under-linux-or-unix-operating-systems.html</a>
-<a href="http://www.linuxjournal.com/article/6983">http://www.linuxjournal.com/article/6983</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+  <div class="archive">
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-19T08:07:32.000Z"><a href="/2010/12/19/linux-smartctl/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-smartctl/">linux smartctl 磁盘健康监测程序</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
   </div>
-</article>
-
-
-  
-
-  <nav id="pagination">
-  
-  
-  <div class="clearfix"></div>
-</nav>
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
@@ -275,354 +124,15 @@ smartctl -C -t long 前台检测硬盘，消耗时间长。
 
 
   
-<div class="widget tag">
-  <h3 class="title">标签</h3>
-  <ul class="entry">
-  
-    <li><a href="/tags/1032/">1032</a><small>1</small></li>
-  
-    <li><a href="/tags/1236/">1236</a><small>1</small></li>
-  
-    <li><a href="/tags/403/">403</a><small>1</small></li>
-  
-    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
-  
-    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
-  
-    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
-  
-    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
-  
-    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
-  
-    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
-  
-    <li><a href="/tags/acl/">acl</a><small>2</small></li>
-  
-    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
-  
-    <li><a href="/tags/apache/">apache</a><small>8</small></li>
-  
-    <li><a href="/tags/arp/">arp</a><small>1</small></li>
-  
-    <li><a href="/tags/awk/">awk</a><small>4</small></li>
-  
-    <li><a href="/tags/bash/">bash</a><small>2</small></li>
-  
-    <li><a href="/tags/best/">best</a><small>1</small></li>
-  
-    <li><a href="/tags/binding/">binding</a><small>1</small></li>
-  
-    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
-  
-    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
-  
-    <li><a href="/tags/browser/">browser</a><small>1</small></li>
-  
-    <li><a href="/tags/cache/">cache</a><small>1</small></li>
-  
-    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
-  
-    <li><a href="/tags/centos/">centos</a><small>8</small></li>
-  
-    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
-  
-    <li><a href="/tags/chown/">chown</a><small>1</small></li>
-  
-    <li><a href="/tags/commands/">commands</a><small>1</small></li>
-  
-    <li><a href="/tags/content/">content</a><small>1</small></li>
-  
-    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
-  
-    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
-  
-    <li><a href="/tags/creating/">creating</a><small>1</small></li>
-  
-    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
-  
-    <li><a href="/tags/dell/">dell</a><small>1</small></li>
-  
-    <li><a href="/tags/diff/">diff</a><small>1</small></li>
-  
-    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
-  
-    <li><a href="/tags/du/">du</a><small>1</small></li>
-  
-    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
-  
-    <li><a href="/tags/end/">end</a><small>1</small></li>
-  
-    <li><a href="/tags/epel/">epel</a><small>1</small></li>
-  
-    <li><a href="/tags/etag/">etag</a><small>1</small></li>
-  
-    <li><a href="/tags/expires/">expires</a><small>1</small></li>
-  
-    <li><a href="/tags/find/">find</a><small>1</small></li>
-  
-    <li><a href="/tags/for-1/">for</a><small>1</small></li>
-  
-    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
-  
-    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
-  
-    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
-  
-    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
-  
-    <li><a href="/tags/group/">group</a><small>1</small></li>
-  
-    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
-  
-    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
-  
-    <li><a href="/tags/howto/">howto</a><small>2</small></li>
-  
-    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
-  
-    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
-  
-    <li><a href="/tags/if/">if</a><small>2</small></li>
-  
-    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
-  
-    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
-  
-    <li><a href="/tags/init/">init</a><small>1</small></li>
-  
-    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
-  
-    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
-  
-    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
-  
-    <li><a href="/tags/jk/">jk</a><small>1</small></li>
-  
-    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
-  
-    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
-  
-    <li><a href="/tags/kick/">kick</a><small>1</small></li>
-  
-    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
-  
-    <li><a href="/tags/linux/">linux</a><small>18</small></li>
-  
-    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
-  
-    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
-  
-    <li><a href="/tags/master/">master</a><small>2</small></li>
-  
-    <li><a href="/tags/metric/">metric</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
-  
-    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
-  
-    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
-  
-    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
-  
-    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
-  
-    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
-  
-    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
-  
-    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
-  
-    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
-  
-    <li><a href="/tags/packet/">packet</a><small>1</small></li>
-  
-    <li><a href="/tags/pam/">pam</a><small>1</small></li>
-  
-    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
-  
-    <li><a href="/tags/perl/">perl</a><small>1</small></li>
-  
-    <li><a href="/tags/permission/">permission</a><small>1</small></li>
-  
-    <li><a href="/tags/php-1/">php</a><small>2</small></li>
-  
-    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
-  
-    <li><a href="/tags/pil/">pil</a><small>1</small></li>
-  
-    <li><a href="/tags/port/">port</a><small>1</small></li>
-  
-    <li><a href="/tags/practices/">practices</a><small>1</small></li>
-  
-    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
-  
-    <li><a href="/tags/ps/">ps</a><small>2</small></li>
-  
-    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
-  
-    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
-  
-    <li><a href="/tags/python-1/">python</a><small>3</small></li>
-  
-    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
-  
-    <li><a href="/tags/quick/">quick</a><small>1</small></li>
-  
-    <li><a href="/tags/r410/">r410</a><small>1</small></li>
-  
-    <li><a href="/tags/r710/">r710</a><small>1</small></li>
-  
-    <li><a href="/tags/raw/">raw</a><small>1</small></li>
-  
-    <li><a href="/tags/referer/">referer</a><small>1</small></li>
-  
-    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
-  
-    <li><a href="/tags/repo/">repo</a><small>1</small></li>
-  
-    <li><a href="/tags/resources/">resources</a><small>1</small></li>
-  
-    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
-  
-    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
-  
-    <li><a href="/tags/sar/">sar</a><small>1</small></li>
-  
-    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
-  
-    <li><a href="/tags/sed/">sed</a><small>4</small></li>
-  
-    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
-  
-    <li><a href="/tags/sending/">sending</a><small>1</small></li>
-  
-    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
-  
-    <li><a href="/tags/shell/">shell</a><small>2</small></li>
-  
-    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
-  
-    <li><a href="/tags/slave/">slave</a><small>2</small></li>
-  
-    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
-  
-    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
-  
-    <li><a href="/tags/spec/">spec</a><small>2</small></li>
-  
-    <li><a href="/tags/squid/">squid</a><small>1</small></li>
-  
-    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
-  
-    <li><a href="/tags/system/">system</a><small>1</small></li>
-  
-    <li><a href="/tags/tar/">tar</a><small>1</small></li>
-  
-    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
-  
-    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
-  
-    <li><a href="/tags/tools/">tools</a><small>1</small></li>
-  
-    <li><a href="/tags/top/">top</a><small>1</small></li>
-  
-    <li><a href="/tags/tree/">tree</a><small>1</small></li>
-  
-    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
-  
-    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
-  
-    <li><a href="/tags/user/">user</a><small>2</small></li>
-  
-    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
-  
-    <li><a href="/tags/vim/">vim</a><small>2</small></li>
-  
-    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
-  
-    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/while/">while</a><small>1</small></li>
-  
-    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
-  
-    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
-  
-    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
-  
-    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
-  
-    <li><a href="/tags/yum/">yum</a><small>10</small></li>
-  
-    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
-  
-    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
-  
-    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
-  
-    <li><a href="/tags/优化/">优化</a><small>1</small></li>
-  
-    <li><a href="/tags/内核/">内核</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
-  
-    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
-  
-    <li><a href="/tags/参考/">参考</a><small>1</small></li>
-  
-    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
-  
-    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
-  
-    <li><a href="/tags/对比/">对比</a><small>1</small></li>
-  
-    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
-  
-    <li><a href="/tags/日志/">日志</a><small>2</small></li>
-  
-    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
-  
-    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
-  
-    <li><a href="/tags/管理/">管理</a><small>1</small></li>
-  
-    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
-  
-    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
-  
-    <li><a href="/tags/老板/">老板</a><small>1</small></li>
-  
-    <li><a href="/tags/认证/">认证</a><small>1</small></li>
-  
-    <li><a href="/tags/详解/">详解</a><small>3</small></li>
-  
-    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
-  
-    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
-  
-    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
-  
-  </ul>
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Cache-control/" style="font-size: 16.75px;">Cache-control</a><a href="/tags/Cluster-bacst/" style="font-size: 12.00px;">Cluster-bacst</a><a href="/tags/Header-V3-DSA-signature/" style="font-size: 15.75px;">Header V3 DSA signature</a><a href="/tags/object-Object/" style="font-size: 14.75px;">[object Object]</a><a href="/tags/apache/" style="font-size: 19.50px;">apache</a><a href="/tags/awk/" style="font-size: 18.25px;">awk</a><a href="/tags/bash/" style="font-size: 17.00px;">bash</a><a href="/tags/browser/" style="font-size: 13.75px;">browser</a><a href="/tags/cache/" style="font-size: 14.00px;">cache</a><a href="/tags/cdn/" style="font-size: 16.25px;">cdn</a><a href="/tags/centos/" style="font-size: 19.25px;">centos</a><a href="/tags/cpan/" style="font-size: 12.75px;">cpan</a><a href="/tags/cpanm/" style="font-size: 12.25px;">cpanm</a><a href="/tags/etag/" style="font-size: 14.25px;">etag</a><a href="/tags/expires/" style="font-size: 13.00px;">expires</a><a href="/tags/foreman/" style="font-size: 15.25px;">foreman</a><a href="/tags/gzip/" style="font-size: 10.50px;">gzip</a><a href="/tags/libmemcached/" style="font-size: 15.00px;">libmemcached</a><a href="/tags/mod_cband/" style="font-size: 11.00px;">mod_cband</a><a href="/tags/mod_limitipconn/" style="font-size: 12.50px;">mod_limitipconn</a><a href="/tags/moudles/" style="font-size: 10.25px;">moudles</a><a href="/tags/mysql/" style="font-size: 18.75px;">mysql</a><a href="/tags/nginx/" style="font-size: 18.00px;">nginx</a><a href="/tags/php-1/" style="font-size: 16.50px;">php</a><a href="/tags/php-fpm/" style="font-size: 17.50px;">php-fpm</a><a href="/tags/puppet/" style="font-size: 19.00px;">puppet</a><a href="/tags/python26/" style="font-size: 15.50px;">python2.6</a><a href="/tags/referer/" style="font-size: 11.25px;">referer</a><a href="/tags/repo/" style="font-size: 16.00px;">repo</a><a href="/tags/ruby/" style="font-size: 14.50px;">ruby</a><a href="/tags/shell/" style="font-size: 17.25px;">shell</a><a href="/tags/shtml/" style="font-size: 11.50px;">shtml</a><a href="/tags/ssi/" style="font-size: 11.75px;">ssi</a><a href="/tags/tomcat/" style="font-size: 18.50px;">tomcat</a><a href="/tags/yum/" style="font-size: 19.75px;">yum</a><a href="/tags/单引号/" style="font-size: 13.25px;">单引号</a><a href="/tags/双引号/" style="font-size: 13.50px;">双引号</a><a href="/tags/环境变量/" style="font-size: 10.00px;">环境变量</a><a href="/tags/详解/" style="font-size: 17.75px;">详解</a><a href="/tags/过滤日志/" style="font-size: 10.75px;">过滤日志</a>
+  </div>
 </div>
 
 
   
-
 </aside>
     <div class="clearfix"></div>
   </div>

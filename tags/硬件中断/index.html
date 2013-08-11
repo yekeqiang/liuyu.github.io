@@ -3,21 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>硬件中断 | Puppet-in-action</title>
+  <title>硬件中断 | Liuyu blog</title>
   <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="Puppet cdn AutoMate">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-  <meta property="og:site_name" content="Puppet-in-action"/>
+  <meta property="og:site_name" content="Liuyu blog"/>
 
   
     <meta property="og:image" content="undefined"/>
   
 
   <link href="/favicon.png" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="Liuyu blog" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
@@ -27,8 +29,8 @@
 
 <body>
   <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">Puppet-in-action</a></h1>
-  <h2><a href="/">Puppet</a></h2>
+  <h1><a href="/">Liuyu blog</a></h1>
+  <h2><a href="/">Puppet in action</a></h2>
 </div>
 <nav id="main-nav" class="alignright">
   <ul>
@@ -36,6 +38,8 @@
       <li><a href="/">Home</a></li>
     
       <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -46,121 +50,21 @@
 <h2 class="archive-title tag">硬件中断</h2>
 
 
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-19T08:16:45.000Z"><a href="/2010/12/19/linux-binding-hardware-interrupt/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/linux-binding-hardware-interrupt/">Linux 绑定制定硬件中断到不同 CPU</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>硬件中断发生频繁，是件很消耗 CPU 资源的事情，在多核 CPU 条件下如果有办法把大量硬件中断分配给不同的 CPU (core) 处理显然能很好的平衡性能。现在的服务器上动不动就是多 CPU 多核、多网卡、多硬盘，如果能让网卡中断独占1个 CPU (core)、磁盘 IO 中断独占1个 CPU 的话将会大大减轻单一 CPU 的负担、提高整体处理效率。VPSee 前天收到一位网友的邮件提到了 SMP IRQ Affinity，引发了今天的话题：D，以下操作在 SUN FIre X2100 M2 服务器＋ 64位版本 CentOS 5.5 + Linux 2.6.18-194.3.1.el5 上执行。</p>
-<p>什么是中断
-      中文教材上对 “中断” 的定义太生硬了，简单的说就是，每个硬件设备（如：硬盘、网卡等）都需要和 CPU 有某种形式的通信以便 CPU 及时知道发生了什么事情，这样 CPU 可能就会放下手中的事情去处理应急事件，硬件设备主动打扰 CPU 的现象就可称为硬件中断，就像你正在工作的时候受到 QQ 干扰一样，一次 QQ 摇头就可以被称为中断。</p>
-<pre><code><figure class="highlight"><pre>  中断是一种比较好的 CPU 和硬件沟通的方式，还有一种方式叫做轮询（polling），就是让 CPU 定时对硬件状态进行查询然后做相应处理，就好像你每隔<span class="number">5</span>分钟去检查一下 QQ 看看有没有人找你一样，这种方式是不是很浪费你（CPU）的时间？所以中断是硬件主动的方式，比轮询（CPU 主动）更有效一些。
-
-  好了，这里又有了一个问题，每个硬件设备都中断，那么如何区分不同硬件呢？不同设备同时中断如何知道哪个中断是来自硬盘、哪个来自网卡呢？这 个很容易，不是每个 QQ 号码都不相同吗？同样的，系统上的每个硬件设备都会被分配一个 IRQ 号，通过这个唯一的 IRQ 号就能区别张三和李四了。
-
-  在计算机里，中断是一种电信号，由硬件产生，并直接送到中断控制器（如 <span class="number">8259</span>A）上，然后再由中断控制器向 CPU 发送信号，CPU 检测到该信号后，就中断当前的工作转而去处理中断。然后，处理器会通知操作系统已经产生中断，这样操作系统就会对这个中断进行适当的处理。现在来看一下中 断控制器，常见的中断控制器有两种：可编程中断控制器 <span class="number">8259</span>A 和高级可编程中断控制器（APIC），中断控制器应该在大学的硬件接口和计算机体系结构的相关课程中都学过。传统的 <span class="number">8259</span>A 只适合单 CPU 的情况，现在都是多 CPU 多核的 SMP 体系，所以为了充分利用 SMP 体系结构、把中断传递给系统上的每个 CPU 以便更好实现并行和提高性能，Intel 引入了高级可编程中断控制器（APIC）。
-
-  光有高级可编程中断控制器的硬件支持还不够，Linux 内核还必须能利用到这些硬件特质，所以只有 kernel <span class="number">2.4</span> 以后的版本才支持把不同的硬件中断请求（IRQs）分配到特定的 CPU 上，这个绑定技术被称为 SMP IRQ <span class="transposed_variable">Affinity.</span> 更多介绍请参看 Linux 内核源代码自带的文档：linux-<span class="number">2.6</span><span class="number">.31</span><span class="number">.8</span>/Documentation/IRQ-<span class="transposed_variable">affinity.</span>txt
-</pre></figure></code></pre>
-<p>如何使用
-     先看看系统上的中断是怎么分配在 CPU 上的，很显然 CPU0 上处理的中断多一些：</p>
-<pre><code><figure class="highlight"><pre><span class="xml"></span><span class="comment"># cat /proc/interrupts</span><span class="xml">
-           CPU0       CPU1
-  </span><span class="number">0</span><span class="xml">:  </span><span class="number">918926335</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  timer
-  </span><span class="number">1</span><span class="xml">:          </span><span class="number">2</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
-  </span><span class="number">8</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  rtc
-  </span><span class="number">9</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  acpi
-</span><span class="number">12</span><span class="xml">:          </span><span class="number">4</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
-</span><span class="number">14</span><span class="xml">:    </span><span class="number">8248017</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  ide0
-</span><span class="number">50</span><span class="xml">:        </span><span class="number">194</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ohci_hcd:usb2
-</span><span class="number">58</span><span class="xml">:      </span><span class="number">31673</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  sata_nv
-</span><span class="number">90</span><span class="xml">:    </span><span class="number">1070374</span><span class="xml">          </span><span class="number">0</span><span class="xml">         PCI-MSI  eth0
-</span><span class="number">233</span><span class="xml">:         </span><span class="number">10</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ehci_hcd:usb1
-NMI:       </span><span class="number">5077</span><span class="xml">       </span><span class="number">2032</span><span class="xml">
-LOC:  </span><span class="number">918809969</span><span class="xml">  </span><span class="number">918809894</span><span class="xml">
-ERR:          </span><span class="number">0</span><span class="xml">
-MIS:          </span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-     为了不让 CPU0 很累怎么把部分中断转移到 CPU1 上呢？或者说如何把 eth0 网卡的中断转到 CPU1 上呢？先查看一下 IRQ </span><span class="number">90</span><span class="xml"> 中断的 smp affinity，看看当前中断是怎么分配在不同 CPU 上的（ffffffff 意味着分配在所有可用 CPU 上）：
-
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# cat /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity
-</span><span class="number">7</span><span class="xml">fffffff,ffffffff,ffffffff,ffffffff,ffffffff,ffffffff,ffffffff,ffffffff`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-在进一步动手之前我们需要先停掉 IRQ 自动调节的服务进程，这样才能手动绑定 IRQ 到不同 CPU，否则自己手动绑定做的更改将会被自动调节进程给覆盖掉。如果想修改 IRQ </span><span class="number">90</span><span class="xml"> 的中断处理，绑定到第</span><span class="number">2</span><span class="xml">个 CPU（CPU1）：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# /etc/init.d/irqbalance stop`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-</span><span class="comment"># echo "2" &gt; /proc/irq/90/smp_affinity</span><span class="xml">
-      （上面的 echo “</span><span class="number">2</span><span class="xml">″ 是怎么来的？为什么是 ”</span><span class="number">2</span><span class="xml">“？）
-
-这 其实是个二进制数字，代表 </span><span class="number">00000010</span><span class="xml">，</span><span class="number">00000001</span><span class="xml"> 代表 CPU0 的话，</span><span class="number">00000010</span><span class="xml"> 就代表 CPU0， “echo </span><span class="number">2</span><span class="xml"> &gt; /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity” 的意思就是说把 </span><span class="number">90</span><span class="xml"> 中断绑定到 </span><span class="number">00000010</span><span class="xml">（CPU1）上。所以各个 CPU 用二进制和十六进制表示就是：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`               Binary       Hex
-   [separator] CPU </span><span class="number">0</span><span class="xml">    </span><span class="number">00000001</span><span class="xml">         </span><span class="number">1</span><span class="xml">
-    CPU </span><span class="number">1</span><span class="xml">    </span><span class="number">00000010</span><span class="xml">         </span><span class="number">2</span><span class="xml">
-    CPU </span><span class="number">2</span><span class="xml">    </span><span class="number">00000100</span><span class="xml">         </span><span class="number">4</span><span class="xml">
-    CPU </span><span class="number">3</span><span class="xml">    </span><span class="number">00001000</span><span class="xml">         </span><span class="number">8</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-如果我想把 IRQ 绑定到 CPU2 上就是 </span><span class="number">00000100</span><span class="xml">＝</span><span class="number">4</span><span class="xml">：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# echo "</span><span class="number">4</span><span class="xml">" &gt; /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-如果我想把 IRQ 同时平衡到 CPU0 和 CPU2 上就是 </span><span class="number">00000001</span><span class="xml">＋</span><span class="number">00000100</span><span class="xml">＝</span><span class="number">00000101</span><span class="xml">＝</span><span class="number">5</span><span class="xml">
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# echo "</span><span class="number">5</span><span class="xml">" &gt; /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-需要注意的是，在手动绑定 IRQ 到 CPU 之前需要先停掉 irqbalance 这个服务，irqbalance 是个服务进程、是用来自动绑定和平衡 IRQ 的：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` /etc/init.d/irqbalance stop`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-过段时间在看 /proc/interrupts，是不是 </span><span class="number">90</span><span class="xml">:eth0 在 CPU1 上的中断增加了（</span><span class="number">145</span><span class="xml">）、在 CPU0 上的中断没变？不断打印 /proc/interrupts 就会发现 eth0 在 CPU0 上的中断数始终保持不变，而在 CPU1 上的中断数是持续增加的，这正是我们想要的结果：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# cat /proc/interrupts
-           CPU0       CPU1
-  </span><span class="number">0</span><span class="xml">:  </span><span class="number">922506515</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  timer
-  </span><span class="number">1</span><span class="xml">:          </span><span class="number">2</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
-  </span><span class="number">8</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  rtc
-  </span><span class="number">9</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  acpi
-</span><span class="number">12</span><span class="xml">:          </span><span class="number">4</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
-</span><span class="number">14</span><span class="xml">:    </span><span class="number">8280147</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  ide0
-</span><span class="number">50</span><span class="xml">:        </span><span class="number">194</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ohci_hcd:usb2
-</span><span class="number">58</span><span class="xml">:      </span><span class="number">31907</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  sata_nv
-</span><span class="number">90</span><span class="xml">:    </span><span class="number">1073399</span><span class="xml">        </span><span class="number">145</span><span class="xml">         PCI-MSI  eth0
-</span><span class="number">233</span><span class="xml">:         </span><span class="number">10</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ehci_hcd:usb1
-NMI:       </span><span class="number">5093</span><span class="xml">       </span><span class="number">2043</span><span class="xml">
-LOC:  </span><span class="number">922389696</span><span class="xml">  </span><span class="number">922389621</span><span class="xml">
-ERR:          </span><span class="number">0</span><span class="xml">
-MIS:          </span><span class="number">0</span><span class="xml"> </span>
-</pre></figure></code></pre>
-<p>有什么用
-      在网络非常 heavy 的情况下，对于文件服务器、高流量 Web 服务器这样的应用来说，把不同的网卡 IRQ 均衡绑定到不同的 CPU 上将会减轻某个 CPU 的负担，提高多个 CPU 整体处理中断的能力；对于数据库服务器这样的应用来说，把磁盘控制器绑到一个 CPU、把网卡绑定到另一个 CPU 将会提高数据库的响应时间、优化性能。合理的根据自己的生产环境和应用的特点来平衡 IRQ 中断有助于提高系统的整体吞吐能力和性能。
-      VPSee 经常收到网友来信问到如何优化 Linux、优化 VPS、这个问题不太好回答，要记住的是性能优化是一个过程而不是结果，不是看了些文档改了改参数就叫优化了，后面还需要大量的测试、监测以及持续的观察和改进。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+  <div class="archive">
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-19T08:16:45.000Z"><a href="/2010/12/19/linux-binding-hardware-interrupt/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-binding-hardware-interrupt/">Linux 绑定制定硬件中断到不同 CPU</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
   </div>
-</article>
-
-
-  
-
-  <nav id="pagination">
-  
-  
-  <div class="clearfix"></div>
-</nav>
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
@@ -220,354 +124,15 @@ MIS:          </span><span class="number">0</span><span class="xml"> </span>
 
 
   
-<div class="widget tag">
-  <h3 class="title">标签</h3>
-  <ul class="entry">
-  
-    <li><a href="/tags/1032/">1032</a><small>1</small></li>
-  
-    <li><a href="/tags/1236/">1236</a><small>1</small></li>
-  
-    <li><a href="/tags/403/">403</a><small>1</small></li>
-  
-    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
-  
-    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
-  
-    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
-  
-    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
-  
-    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
-  
-    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
-  
-    <li><a href="/tags/acl/">acl</a><small>2</small></li>
-  
-    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
-  
-    <li><a href="/tags/apache/">apache</a><small>8</small></li>
-  
-    <li><a href="/tags/arp/">arp</a><small>1</small></li>
-  
-    <li><a href="/tags/awk/">awk</a><small>4</small></li>
-  
-    <li><a href="/tags/bash/">bash</a><small>2</small></li>
-  
-    <li><a href="/tags/best/">best</a><small>1</small></li>
-  
-    <li><a href="/tags/binding/">binding</a><small>1</small></li>
-  
-    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
-  
-    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
-  
-    <li><a href="/tags/browser/">browser</a><small>1</small></li>
-  
-    <li><a href="/tags/cache/">cache</a><small>1</small></li>
-  
-    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
-  
-    <li><a href="/tags/centos/">centos</a><small>8</small></li>
-  
-    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
-  
-    <li><a href="/tags/chown/">chown</a><small>1</small></li>
-  
-    <li><a href="/tags/commands/">commands</a><small>1</small></li>
-  
-    <li><a href="/tags/content/">content</a><small>1</small></li>
-  
-    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
-  
-    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
-  
-    <li><a href="/tags/creating/">creating</a><small>1</small></li>
-  
-    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
-  
-    <li><a href="/tags/dell/">dell</a><small>1</small></li>
-  
-    <li><a href="/tags/diff/">diff</a><small>1</small></li>
-  
-    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
-  
-    <li><a href="/tags/du/">du</a><small>1</small></li>
-  
-    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
-  
-    <li><a href="/tags/end/">end</a><small>1</small></li>
-  
-    <li><a href="/tags/epel/">epel</a><small>1</small></li>
-  
-    <li><a href="/tags/etag/">etag</a><small>1</small></li>
-  
-    <li><a href="/tags/expires/">expires</a><small>1</small></li>
-  
-    <li><a href="/tags/find/">find</a><small>1</small></li>
-  
-    <li><a href="/tags/for-1/">for</a><small>1</small></li>
-  
-    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
-  
-    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
-  
-    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
-  
-    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
-  
-    <li><a href="/tags/group/">group</a><small>1</small></li>
-  
-    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
-  
-    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
-  
-    <li><a href="/tags/howto/">howto</a><small>2</small></li>
-  
-    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
-  
-    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
-  
-    <li><a href="/tags/if/">if</a><small>2</small></li>
-  
-    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
-  
-    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
-  
-    <li><a href="/tags/init/">init</a><small>1</small></li>
-  
-    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
-  
-    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
-  
-    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
-  
-    <li><a href="/tags/jk/">jk</a><small>1</small></li>
-  
-    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
-  
-    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
-  
-    <li><a href="/tags/kick/">kick</a><small>1</small></li>
-  
-    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
-  
-    <li><a href="/tags/linux/">linux</a><small>18</small></li>
-  
-    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
-  
-    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
-  
-    <li><a href="/tags/master/">master</a><small>2</small></li>
-  
-    <li><a href="/tags/metric/">metric</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
-  
-    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
-  
-    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
-  
-    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
-  
-    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
-  
-    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
-  
-    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
-  
-    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
-  
-    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
-  
-    <li><a href="/tags/packet/">packet</a><small>1</small></li>
-  
-    <li><a href="/tags/pam/">pam</a><small>1</small></li>
-  
-    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
-  
-    <li><a href="/tags/perl/">perl</a><small>1</small></li>
-  
-    <li><a href="/tags/permission/">permission</a><small>1</small></li>
-  
-    <li><a href="/tags/php-1/">php</a><small>2</small></li>
-  
-    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
-  
-    <li><a href="/tags/pil/">pil</a><small>1</small></li>
-  
-    <li><a href="/tags/port/">port</a><small>1</small></li>
-  
-    <li><a href="/tags/practices/">practices</a><small>1</small></li>
-  
-    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
-  
-    <li><a href="/tags/ps/">ps</a><small>2</small></li>
-  
-    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
-  
-    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
-  
-    <li><a href="/tags/python-1/">python</a><small>3</small></li>
-  
-    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
-  
-    <li><a href="/tags/quick/">quick</a><small>1</small></li>
-  
-    <li><a href="/tags/r410/">r410</a><small>1</small></li>
-  
-    <li><a href="/tags/r710/">r710</a><small>1</small></li>
-  
-    <li><a href="/tags/raw/">raw</a><small>1</small></li>
-  
-    <li><a href="/tags/referer/">referer</a><small>1</small></li>
-  
-    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
-  
-    <li><a href="/tags/repo/">repo</a><small>1</small></li>
-  
-    <li><a href="/tags/resources/">resources</a><small>1</small></li>
-  
-    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
-  
-    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
-  
-    <li><a href="/tags/sar/">sar</a><small>1</small></li>
-  
-    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
-  
-    <li><a href="/tags/sed/">sed</a><small>4</small></li>
-  
-    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
-  
-    <li><a href="/tags/sending/">sending</a><small>1</small></li>
-  
-    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
-  
-    <li><a href="/tags/shell/">shell</a><small>2</small></li>
-  
-    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
-  
-    <li><a href="/tags/slave/">slave</a><small>2</small></li>
-  
-    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
-  
-    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
-  
-    <li><a href="/tags/spec/">spec</a><small>2</small></li>
-  
-    <li><a href="/tags/squid/">squid</a><small>1</small></li>
-  
-    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
-  
-    <li><a href="/tags/system/">system</a><small>1</small></li>
-  
-    <li><a href="/tags/tar/">tar</a><small>1</small></li>
-  
-    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
-  
-    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
-  
-    <li><a href="/tags/tools/">tools</a><small>1</small></li>
-  
-    <li><a href="/tags/top/">top</a><small>1</small></li>
-  
-    <li><a href="/tags/tree/">tree</a><small>1</small></li>
-  
-    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
-  
-    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
-  
-    <li><a href="/tags/user/">user</a><small>2</small></li>
-  
-    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
-  
-    <li><a href="/tags/vim/">vim</a><small>2</small></li>
-  
-    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
-  
-    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/while/">while</a><small>1</small></li>
-  
-    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
-  
-    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
-  
-    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
-  
-    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
-  
-    <li><a href="/tags/yum/">yum</a><small>10</small></li>
-  
-    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
-  
-    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
-  
-    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
-  
-    <li><a href="/tags/优化/">优化</a><small>1</small></li>
-  
-    <li><a href="/tags/内核/">内核</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
-  
-    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
-  
-    <li><a href="/tags/参考/">参考</a><small>1</small></li>
-  
-    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
-  
-    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
-  
-    <li><a href="/tags/对比/">对比</a><small>1</small></li>
-  
-    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
-  
-    <li><a href="/tags/日志/">日志</a><small>2</small></li>
-  
-    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
-  
-    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
-  
-    <li><a href="/tags/管理/">管理</a><small>1</small></li>
-  
-    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
-  
-    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
-  
-    <li><a href="/tags/老板/">老板</a><small>1</small></li>
-  
-    <li><a href="/tags/认证/">认证</a><small>1</small></li>
-  
-    <li><a href="/tags/详解/">详解</a><small>3</small></li>
-  
-    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
-  
-    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
-  
-    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
-  
-  </ul>
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Cache-control/" style="font-size: 16.75px;">Cache-control</a><a href="/tags/Cluster-bacst/" style="font-size: 12.00px;">Cluster-bacst</a><a href="/tags/Header-V3-DSA-signature/" style="font-size: 15.75px;">Header V3 DSA signature</a><a href="/tags/object-Object/" style="font-size: 14.75px;">[object Object]</a><a href="/tags/apache/" style="font-size: 19.50px;">apache</a><a href="/tags/awk/" style="font-size: 18.25px;">awk</a><a href="/tags/bash/" style="font-size: 17.00px;">bash</a><a href="/tags/browser/" style="font-size: 13.75px;">browser</a><a href="/tags/cache/" style="font-size: 14.00px;">cache</a><a href="/tags/cdn/" style="font-size: 16.25px;">cdn</a><a href="/tags/centos/" style="font-size: 19.25px;">centos</a><a href="/tags/cpan/" style="font-size: 12.75px;">cpan</a><a href="/tags/cpanm/" style="font-size: 12.25px;">cpanm</a><a href="/tags/etag/" style="font-size: 14.25px;">etag</a><a href="/tags/expires/" style="font-size: 13.00px;">expires</a><a href="/tags/foreman/" style="font-size: 15.25px;">foreman</a><a href="/tags/gzip/" style="font-size: 10.50px;">gzip</a><a href="/tags/libmemcached/" style="font-size: 15.00px;">libmemcached</a><a href="/tags/mod_cband/" style="font-size: 11.00px;">mod_cband</a><a href="/tags/mod_limitipconn/" style="font-size: 12.50px;">mod_limitipconn</a><a href="/tags/moudles/" style="font-size: 10.25px;">moudles</a><a href="/tags/mysql/" style="font-size: 18.75px;">mysql</a><a href="/tags/nginx/" style="font-size: 18.00px;">nginx</a><a href="/tags/php-1/" style="font-size: 16.50px;">php</a><a href="/tags/php-fpm/" style="font-size: 17.50px;">php-fpm</a><a href="/tags/puppet/" style="font-size: 19.00px;">puppet</a><a href="/tags/python26/" style="font-size: 15.50px;">python2.6</a><a href="/tags/referer/" style="font-size: 11.25px;">referer</a><a href="/tags/repo/" style="font-size: 16.00px;">repo</a><a href="/tags/ruby/" style="font-size: 14.50px;">ruby</a><a href="/tags/shell/" style="font-size: 17.25px;">shell</a><a href="/tags/shtml/" style="font-size: 11.50px;">shtml</a><a href="/tags/ssi/" style="font-size: 11.75px;">ssi</a><a href="/tags/tomcat/" style="font-size: 18.50px;">tomcat</a><a href="/tags/yum/" style="font-size: 19.75px;">yum</a><a href="/tags/单引号/" style="font-size: 13.25px;">单引号</a><a href="/tags/双引号/" style="font-size: 13.50px;">双引号</a><a href="/tags/环境变量/" style="font-size: 10.00px;">环境变量</a><a href="/tags/详解/" style="font-size: 17.75px;">详解</a><a href="/tags/过滤日志/" style="font-size: 10.75px;">过滤日志</a>
+  </div>
 </div>
 
 
   
-
 </aside>
     <div class="clearfix"></div>
   </div>

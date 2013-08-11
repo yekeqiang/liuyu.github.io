@@ -3,21 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>tomcat | Puppet-in-action</title>
+  <title>tomcat | Liuyu blog</title>
   <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="Puppet cdn AutoMate">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-  <meta property="og:site_name" content="Puppet-in-action"/>
+  <meta property="og:site_name" content="Liuyu blog"/>
 
   
     <meta property="og:image" content="undefined"/>
   
 
   <link href="/favicon.png" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="Liuyu blog" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
@@ -27,8 +29,8 @@
 
 <body>
   <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">Puppet-in-action</a></h1>
-  <h2><a href="/">Puppet</a></h2>
+  <h1><a href="/">Liuyu blog</a></h1>
+  <h2><a href="/">Puppet in action</a></h2>
 </div>
 <nav id="main-nav" class="alignright">
   <ul>
@@ -36,6 +38,8 @@
       <li><a href="/">Home</a></li>
     
       <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -46,491 +50,57 @@
 <h2 class="archive-title tag">tomcat</h2>
 
 
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-21T15:28:58.000Z"><a href="/2010/12/21/ubuntu-apache-proxy-tomcat/">12月 21 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/21/ubuntu-apache-proxy-tomcat/">ubuntu 配置apache 代理tomcat</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>安装软件和包：</p>
-<pre><code><figure class="highlight"><pre>apt-get install apache2 sun-java5-jdk tomcat5.5 libapache2-mod-proxy-html `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-1\. 加载proxy模块
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` a2enmod proxy`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-2\. tomcat :server.xml 
-   去掉以下注释：
-  <span class="tag">&lt;<span class="title">pre</span>&gt;</span>` <span class="tag">&lt;<span class="title">Connector</span> <span class="attribute">port</span>=<span class="value">"8009"</span> <span class="attribute">protocol</span>=<span class="value">"AJP/1.3"</span> <span class="attribute">redirectPort</span>=<span class="value">"8443"</span> /&gt;</span>`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-3\. 修改apache 虚拟主机：
-  <span class="tag">&lt;<span class="title">pre</span>&gt;</span>` <span class="tag">&lt;<span class="title">VirtualHost</span> *<span class="attribute">:80</span>&gt;</span>
-    ServerName www.host.com
-    ProxyRequests Off
-    ProxyPreserveHost On
-
-   <span class="tag">&lt;<span class="title">Proxy</span> *&gt;</span>
-       Order deny,allow
-       Allow from all
-   <span class="tag">&lt;/<span class="title">Proxy</span>&gt;</span>
-
-  <span class="tag">&lt;<span class="title">IfModule</span> <span class="attribute">proxy_ajp_module</span>&gt;</span>
-        ProxyPass /JTEducation/ ajp://localhost:8009/JTEducation/
-        ProxyPassReverse /JTEducation/ ajp://localhost:8009/JTEducation/
-        ProxyPass / ajp://localhost:8009/JTEducation/
-        ProxyPassReverse / ajp://localhost:8009/JTEducation/
-   <span class="tag">&lt;/<span class="title">IfModule</span>&gt;</span>
-
-   <span class="tag">&lt;<span class="title">Location</span> /&gt;</span>
-       Order allow,deny
-       Allow from all
-   <span class="tag">&lt;/<span class="title">Location</span>&gt;</span>
-
-   <span class="tag">&lt;/<span class="title">VirtualHost</span>&gt;</span>`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-4\. 重启apache
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`/etc/init.d/apache2 reload
-</pre></figure></code></pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+  <div class="archive">
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-21T15:28:58.000Z"><a href="/2010/12/21/ubuntu-apache-proxy-tomcat/">12月 21 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/21/ubuntu-apache-proxy-tomcat/">ubuntu 配置apache 代理tomcat</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-17T23:56:54.000Z"><a href="/2010/12/18/apache-tomcat-cluster-bacst/">12月 18 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/18/apache-tomcat-cluster-bacst/">Apache Tomcat Cluster-bacst 配置</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-17T23:53:12.000Z"><a href="/2010/12/18/tomcat-optimization-sending-end-packet/">12月 18 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/18/tomcat-optimization-sending-end-packet/">Tomcat 优化sending end packet</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-17T23:51:58.000Z"><a href="/2010/12/18/tomcat-jk-no-connection/">12月 18 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/18/tomcat-jk-no-connection/">tomcat经常挂 JK无法连接</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
   </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-17T23:56:54.000Z"><a href="/2010/12/18/apache-tomcat-cluster-bacst/">12月 18 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/18/apache-tomcat-cluster-bacst/">Apache Tomcat Cluster-bacst 配置</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>关于Apache+Tomcat的Cluster的郁闷问题，终于得到解决</p>
-<p>此类话题已经很多，可以参考的文档也不少，我是参考这个blog的文档做的：</p>
-<p><a href="http://blogger.org.cn/blog/blog.asp?name=lhwork">http://blogger.org.cn/blog/blog.asp?name=lhwork</a></p>
-<p>1）环境和版本：</p>
-<p>Apache2.0.59+Tomcat5.5.15（两个），一开始用的是Tomcat5.0.28，一直有问题（在后面总结），就升级到5.5去做试验了，冤枉5.0.28兄弟了:)</p>
-<p>步骤小结为：</p>
-<p>1、安装（忽略）；</p>
-<p>2、配置Tomcat：</p>
-<p>1）第一个Tomcat：</p>
-<p>A.启用jvmRoute</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;!-- You should set jvmRoute to support load-balancing via AJP ie :--&gt;</p>
-<p>&lt;Engine name=&quot;Standalone&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;tomcat1&quot;&gt;</p>
-<p>&lt;!-- Define the top level container in our container hierarchy</p>
-<p>&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;--&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>B.启用原来禁用的Cluster设置</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;Cluster className=&quot;org.apache.catalina.cluster.tcp.SimpleTcpCluster&quot;</p>
-<p>managerClassName=&quot;org.apache.catalina.cluster.session.DeltaManager&quot;</p>
-<p>expireSessionsOnShutdown=&quot;false&quot;</p>
-<p>useDirtyFlag=&quot;true&quot;</p>
-<p>notifyListenersOnReplication=&quot;true&quot;&gt;</p>
-<p>&lt;Membership</p>
-<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
-<p>mcastBindAddress=&quot;127.0.0.1&quot;</p>
-<p>mcastAddr=&quot;224.1.2.3&quot;</p>
-<p>mcastPort=&quot;2525&quot;</p>
-<p>mcastFrequency=&quot;500&quot;</p>
-<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
-<p>&lt;Receiver</p>
-<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;</p>
-<p>tcpListenAddress=&quot;auto&quot;</p>
-<p>tcpListenPort=&quot;4001&quot;</p>
-<p>tcpSelectorTimeout=&quot;100&quot;</p>
-<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
-<p>&lt;Sender</p>
-<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationTransmitter&quot;</p>
-<p>replicationMode=&quot;pooled&quot;</p>
-<p>ackTimeout=&quot;15000&quot;/&gt;</p>
-<p>&lt;Valve className=&quot;org.apache.catalina.cluster.tcp.ReplicationValve&quot;</p>
-<p>filter=&quot;.<em>.gif;.</em>.js;.<em>.jpg;.</em>.png;.<em>.htm;.</em>.html;.<em>.css;.</em>.txt;&quot;/&gt;</p>
-<p>&lt;Deployer className=&quot;org.apache.catalina.cluster.deploy.FarmWarDeployer&quot;</p>
-<p>tempDir=&quot;/tmp/war-temp/&quot;</p>
-<p>deployDir=&quot;/tmp/war-deploy/&quot;</p>
-<p>watchDir=&quot;/tmp/war-listen/&quot;</p>
-<p>watchEnabled=&quot;false&quot;/&gt;</p>
-<p>&lt;ClusterListener className=&quot;org.apache.catalina.cluster.session.ClusterSessionListener&quot;/&gt;</p>
-<p>&lt;/Cluster&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>C.搞定</p>
-<p>2）配置第二个Tomcat（要注意端口冲突了）：</p>
-<p>A.变更端口</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;Server port=&quot;8005&quot; shutdown=&quot;SHUTDOWN&quot;&gt;</p>
-<p>＝》</p>
-<p>&lt;Server port=&quot;8004&quot; shutdown=&quot;SHUTDOWN&quot;&gt;</p>
-<p>B.变更端口</p>
-<p>&lt;Connector port=&quot;8009&quot;</p>
-<p>enableLookups=&quot;false&quot; redirectPort=&quot;8443&quot; protocol=&quot;AJP/1.3&quot; /&gt;</p>
-<p>＝》</p>
-<p>&lt;Connector port=&quot;9009&quot;</p>
-<p>enableLookups=&quot;false&quot; redirectPort=&quot;8443&quot; protocol=&quot;AJP/1.3&quot; /&gt;</p>
-<p>C.启用jvmRoute</p>
-<p>&lt;!-- You should set jvmRoute to support load-balancing via AJP ie :--&gt;</p>
-<p>&lt;Engine name=&quot;Standalone&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;tomcat2&quot;&gt;</p>
-<p>&lt;!-- Define the top level container in our container hierarchy</p>
-<p>&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;--&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>D.启用原来禁用的Cluster设置</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;Cluster className=&quot;org.apache.catalina.cluster.tcp.SimpleTcpCluster&quot;</p>
-<p>managerClassName=&quot;org.apache.catalina.cluster.session.DeltaManager&quot;</p>
-<p>expireSessionsOnShutdown=&quot;false&quot;</p>
-<p>useDirtyFlag=&quot;true&quot;</p>
-<p>notifyListenersOnReplication=&quot;true&quot;&gt;</p>
-<p>&lt;Membership</p>
-<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
-<p>mcastBindAddress=&quot;127.0.0.1&quot;</p>
-<p>mcastAddr=&quot;224.1.2.3&quot;</p>
-<p>mcastPort=&quot;2525&quot;</p>
-<p>mcastFrequency=&quot;500&quot;</p>
-<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
-<p>&lt;Receiver</p>
-<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;</p>
-<p>tcpListenAddress=&quot;auto&quot;</p>
-<p>tcpListenPort=&quot;4002&quot;</p>
-<p>tcpSelectorTimeout=&quot;100&quot;</p>
-<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
-<p>&lt;Sender</p>
-<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationTransmitter&quot;</p>
-<p>replicationMode=&quot;pooled&quot;</p>
-<p>ackTimeout=&quot;15000&quot;/&gt;</p>
-<p>&lt;Valve className=&quot;org.apache.catalina.cluster.tcp.ReplicationValve&quot;</p>
-<p>filter=&quot;.<em>.gif;.</em>.js;.<em>.jpg;.</em>.png;.<em>.htm;.</em>.html;.<em>.css;.</em>.txt;&quot;/&gt;</p>
-<p>&lt;Deployer className=&quot;org.apache.catalina.cluster.deploy.FarmWarDeployer&quot;</p>
-<p>tempDir=&quot;/tmp/war-temp/&quot;</p>
-<p>deployDir=&quot;/tmp/war-deploy/&quot;</p>
-<p>watchDir=&quot;/tmp/war-listen/&quot;</p>
-<p>watchEnabled=&quot;false&quot;/&gt;</p>
-<p>&lt;ClusterListener className=&quot;org.apache.catalina.cluster.session.ClusterSessionListener&quot;/&gt;</p>
-<p>&lt;/Cluster&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>E.搞定</p>
-<p>3、配置apache：</p>
-<p>1）修订conf/httpd.conf</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<h1>add by zhengxq</h1>
-<p>LoadModule jk2_module modules/mod_jk2.so</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>2）新增worders2.properties并放到conf下</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>[shm]</p>
-<p>info=Scoreboard. Requried for reconfiguration and status with multiprocess servers.</p>
-<p>file=anon</p>
-<h1>Defines a load balancer named lb. Use even if you only have one machine.</h1>
-<p>[lb:lb]</p>
-<p>worker=ajp13:tomcat1</p>
-<p>worker=ajp13:tomcat2</p>
-<h1>Example socket channel, override port and host.</h1>
-<p>[channel.socket:localhost:9009]</p>
-<p>port=9009</p>
-<p>host=127.0.0.1</p>
-<h1>define the worker</h1>
-<p>[ajp13:localhost:9009]</p>
-<p>channel=channel.socket:localhost:9009</p>
-<p>group=lb</p>
-<h1>Example socket channel, override port and host.</h1>
-<p>[channel.socket:localhost:8009]</p>
-<p>port=8009</p>
-<p>host=127.0.0.1</p>
-<h1>define the worker</h1>
-<p>[ajp13:localhost:8009]</p>
-<p>channel=channel.socket:localhost:8009</p>
-<p>group=lb</p>
-<h1>Map the Tomcat examples webapp to the Web server uri space</h1>
-<p>[uri:/clusterapp/*]</p>
-<p>group=lb</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>3）搞定</p>
-<p>3.测试程序，请参考上述参考文档，如下：</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;%@ page contentType=&quot;text/html; charset=GBK&quot; import=&quot;java.util.*&quot;%&gt;</p>
-<p>&lt;html&gt;&lt;head&gt;&lt;title&gt;Cluster App Test&lt;/title&gt;&lt;/head&gt;</p>
-<p>&lt;body&gt;</p>
-<p>Server Info: &lt;%out.print(request.getLocalAddr() + &quot; : &quot; + request.getLocalPort());%&gt;</p>
-<p>&lt;%</p>
-<p>out.println(&quot;&lt;br&gt; ID &quot; + session.getId());</p>
-<p>// 如果有新的 Session 属性设置</p>
-<p>String dataName = request.getParameter(&quot;dataName&quot;);</p>
-<p>if (dataName != null &amp;&amp; dataName.length() &gt; 0) {</p>
-<p>String dataValue = request.getParameter(&quot;dataValue&quot;);</p>
-<p>session.setAttribute(dataName, dataValue);</p>
-<p>}</p>
-<p>out.print(&quot;&lt;b&gt;Session 列表&lt;/b&gt;&quot;);</p>
-<p>Enumeration e = session.getAttributeNames();</p>
-<p>while (e.hasMoreElements()) {</p>
-<p>String name = (String)e.nextElement();</p>
-<p>String value = session.getAttribute(name).toString();</p>
-<p>out.println( name + &quot; = &quot; + value);</p>
-<p>}</p>
-<p>%&gt;</p>
-<p>&lt;form action=&quot;index.jsp&quot; method=&quot;POST&quot;&gt;</p>
-<p>名称:&lt;input type=text size=20 name=&quot;dataName&quot;&gt;</p>
-<p>&lt;br&gt;</p>
-<p>值:&lt;input type=text size=20 name=&quot;dataValue&quot;&gt;</p>
-<p>&lt;br&gt;</p>
-<p>&lt;input type=submit&gt;</p>
-<p>&lt;/form&gt;</p>
-<p>&lt;/body&gt;</p>
-<p>&lt;/html&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>所需要注意的是：</p>
-<p>1、测试应用的web.xml必须加上：</p>
-<p>2、我搞了很久，发现三个东西起来后，可以访问，但只能做到负载均衡，不能session复制，这点我重复配置了一次，就是不行，郁闷之下找了tomcat的邮件列表，这样做：</p>
-<p>1）测试广播是否正常</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>A. download this jar</p>
-<p><a href="http://cvs.apache.org/~fhanik/tomcat-replication.jar">http://cvs.apache.org/~fhanik/tomcat-replication.jar</a></p>
-<p>B. Open two terminals</p>
-<p>a) Terminal one run</p>
-<p>java -cp tomcat-replication.jar MCaster 239.255.10.10 2525 Terminal1</p>
-<p>b) Terminal two run</p>
-<p>java -cp tomcat-replication.jar MCaster 239.255.10.10 2525 Terminal2</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>发现结果如下：</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>C:\&gt;java -cp tomcat-replication.jar MCaster 224.1.2.3 2525 Terminal1</p>
-<p>Usage MCaster [address port message]</p>
-<p>BEGIN TO RECEIVE</p>
-<p>SENT:Terminal11</p>
-<p>SENT:Terminal12</p>
-<p>SENT:Terminal13</p>
-<p>SENT:Terminal14</p>
-<p>SENT:Terminal15</p>
-<p>SENT:Terminal16</p>
-<p>SENT:Terminal17</p>
-<p>SENT:Terminal18</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>表明广播有问题，气死了，难怪Tomcat总是在启动的时候提示：</p>
-<p>信息: Manager [/clusterapp]: skipping state transfer. No members active in cluster group.</p>
-<p>后来终于发现猫腻，必须注意在server.xml的</p>
-<p>为什么呢？很简单，因为我安装了VPN，这家伙会设置一个虚拟网卡，导致绑定失败（没地方责怪了，只好让它垫背）？！这是通过邮件列表里面所描述的多网卡绑定问题举一反三得到的判断。</p>
-<p>具体请参考：<a href="http://www.servlets.com/archive/servlet/ReadMsg?msgId=475067&amp;listName=tomcat-user">http://www.servlets.com/archive/servlet/ReadMsg?msgId=475067&amp;listName=tomcat-user</a></p>
-<p>三、tomcat集群配置，session 同步配置：</p>
-<p>1、tomca1 tomcat 2 在同一台机器</p>
-<p>Tomcat 1 （IP: 192.168.19.199）</p>
-<p>A、修改Engine节点信息：</p>
-<p>B、去掉 &lt;\Cluster&gt; 的注释符</p>
-<p>C、修改Cluster 节点信息</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;Membership</p>
-<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;                mcastBindAddress=&quot;192.168.19.199&quot;</p>
-<p>mcastAddr=&quot;224.0.0.1&quot;</p>
-<p>mcastPort=&quot;45564&quot;</p>
-<p>mcastFrequency=&quot;500&quot;</p>
-<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
-<p>&lt;Receiver</p>
-<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;                tcpListenAddress=&quot;192.168.19.199&quot;</p>
-<p>tcpListenPort=&quot;4001&quot;</p>
-<p>tcpSelectorTimeout=&quot;100&quot;</p>
-<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>Tomcat 2 （IP: 192.168.19.81）</p>
-<p>A、修改Engine节点信息：</p>
-<p>B、去掉 &lt;\Cluster&gt; 的注释符</p>
-<p>C、修改Cluster 节点信息</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;Membership</p>
-<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
-<p>mcastBindAddress=&quot;192.168.19.199&quot;</p>
-<p>mcastAddr=&quot;224.0.0.1&quot;</p>
-<p>mcastPort=&quot;45564&quot;</p>
-<p>mcastFrequency=&quot;500&quot;</p>
-<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
-<p>&lt;Receiver</p>
-<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;</p>
-<p>tcpListenAddress=&quot;192.168.19.199&quot;</p>
-<p>tcpListenPort=&quot;4002&quot;    一定要改</p>
-<p>tcpSelectorTimeout=&quot;100&quot;</p>
-<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>D、将8080 8009 8082三个节点的端口改为</p>
-<p>9080 9009 9082 避免 与tomcat1端口冲突</p>
-<p>注：这里的IP也可以不改</p>
-<p>2、tomca1 tomcat 2 在不同机器上</p>
-<p>Tomcat 1 （IP: 192.168.19.199）</p>
-<p>A、修改Engine节点信息：</p>
-<p>B、去掉 &lt;\Cluster&gt; 的注释符</p>
-<p>C、修改Cluster 节点信息</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;Membership</p>
-<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
-<p>mcastBindAddress=&quot;192.168.19.199&quot;</p>
-<p>mcastAddr=&quot;224.0.0.1&quot;</p>
-<p>mcastPort=&quot;45564&quot;</p>
-<p>mcastFrequency=&quot;500&quot;</p>
-<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
-<p>&lt;Receiver</p>
-<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;</p>
-<p>tcpListenAddress=&quot;192.168.19.199&quot;</p>
-<p>tcpListenPort=&quot;4001&quot;</p>
-<p>tcpSelectorTimeout=&quot;100&quot;</p>
-<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>Tomcat 2 （IP: 192.168.19.81）</p>
-<p>A、修改Engine节点信息：</p>
-<p>B、去掉 &lt;\Cluster&gt; 的注释符</p>
-<p>C、修改Cluster 节点信息</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>&lt;Membership</p>
-<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
-<p>mcastBindAddress=&quot;192.168.19.81&quot;</p>
-<p>mcastAddr=&quot;224.0.0.1&quot;</p>
-<p>mcastPort=&quot;45564&quot;     mcastFrequency=&quot;500&quot;</p>
-<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
-<p>&lt;Receiver</p>
-<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;            tcpListenAddress=&quot;192.168.19.81&quot;</p>
-<p>tcpListenPort=&quot;4001&quot;</p>
-<p>tcpSelectorTimeout=&quot;100&quot;</p>
-<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
-<p>&lt;/code&gt;&lt;/pre&gt;</p>
-<p>修改web应用里面WEB-INF目录下的web.xml文件，加入标签</p>
-<p>直接加在之前就可以了</p>
-<p>做tomcat集群必须需要这一步，否则用户的session就无法正常使用。</p>
-<p>源文档 &lt;<a href="http://www.opendoc.com.cn/webserver/Apache_Tomcat_Cluster.html&amp;gt">http://www.opendoc.com.cn/webserver/Apache_Tomcat_Cluster.html&amp;gt</a>;</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-17T23:53:12.000Z"><a href="/2010/12/18/tomcat-optimization-sending-end-packet/">12月 18 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/18/tomcat-optimization-sending-end-packet/">Tomcat 优化sending end packet</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>优化sending end packet</p>
-<p>性能调整：
-<a href="http://vod.sjtu.edu.cn/help/Article_Print.asp?ArticleID=1387">http://vod.sjtu.edu.cn/help/Article_Print.asp?ArticleID=1387</a></p>
-<p>症状:
-WARNING: Error sending end packet
-java.net.SocketException: Broken pipe
-资料:
-Broken pipe产生的原因通常是当管道读端没有在读，而管道的写端继续有线程在写，就会造成管道中断。（由于管道是单向通信的） SIGSEGV(Segment fault)意味着指针所对应的地址是无效地址，没有物理内存对应该地址。 以下是UNIX的信号解释： 11 / SIGSEGV: Unerlaubter Zugriff auf Hauptspeicher (Adressfehler). 12 / SIGUSER2: User-defined Signal 2 (POSIX). 把_JAVA_SR_SIGNUM改成12只是将信号至成user-defined，让它不报出来而已，不能解决问题。 </p>
-<p>建议采取的方式：
-1． 资源没有完全释放，用完后要至NULL 值（JAVA的GC没那么完善）
-2． 数据库连接顺序关闭！（RS，PS，CONN）
-3． 优化JAVA虚拟机 加入相应的内存参数！
-4． 不要在数据库中获取大段文本（即一个栏位的值不要太大）
-5． JAVA 不推荐 用String 获取大量信息。（容易造成内存泄露，建议用StringBuffer）
-6． 页面重复提交
-7． 尽量将METHOD移到JAVA中，在JSP中所有的方法都看做全局变量，编译执行本身就有很多问题。
-8． 尽量用较新较稳定版本的JDK，低版本的JVM本身也有很多BUG，比如1。5的垃圾回收比起1。2，1。3一定是非常明显的进步。
-9． LINUX系统本身没有这么稳定，有些问题无法避免的~~：）</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-17T23:51:58.000Z"><a href="/2010/12/18/tomcat-jk-no-connection/">12月 18 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/18/tomcat-jk-no-connection/">tomcat经常挂 JK无法连接</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>解决tomcat死掉JK无法连接故障</p>
-<p>近日，发现网站jsp部分无法访问，或者访问速度极其缓慢。经过近二天的时间，问题得到了解决，现在把这解决步骤及思考方法详细的记录下来。其中也走了不少弯路。其结果也是让人无法琢磨！
-发现问题时处理思路：</p>
-<p>1、检查服务器是否正常连接。掉网、死机啥的。－－－&gt;SSH登录正常
-2、检查负载情况，load是否超高,vmstat 检查资源占用率 --－&gt;只有mysql占少量资源，起初以为是mysql导致（检查mysql 状态后发现并没有锁表及DDL语句堆积，执行sql语句速度也很快。因此判断出不是mysql导致）
-3、查看tcp连接状态。是不是并发太大被拖死了－－－&gt;其中ESTABLISHED大约有1000左右。TIME_WAIT CLOSE_WAIT 在40左右。看样子tomcat是被拖死了。并发这么大？
-4、重启了tomcat 访问正常了。先观察一段时间。
-5、查看分析日志，希望能从这里面找出一点蛛丝马迹来。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2010/12/18/tomcat-jk-no-connection/#more" class="more-link">Read More</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-
-  <nav id="pagination">
-  
-  
-  <div class="clearfix"></div>
-</nav>
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
@@ -590,354 +160,15 @@ Broken pipe产生的原因通常是当管道读端没有在读，而管道的写
 
 
   
-<div class="widget tag">
-  <h3 class="title">标签</h3>
-  <ul class="entry">
-  
-    <li><a href="/tags/1032/">1032</a><small>1</small></li>
-  
-    <li><a href="/tags/1236/">1236</a><small>1</small></li>
-  
-    <li><a href="/tags/403/">403</a><small>1</small></li>
-  
-    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
-  
-    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
-  
-    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
-  
-    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
-  
-    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
-  
-    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
-  
-    <li><a href="/tags/acl/">acl</a><small>2</small></li>
-  
-    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
-  
-    <li><a href="/tags/apache/">apache</a><small>8</small></li>
-  
-    <li><a href="/tags/arp/">arp</a><small>1</small></li>
-  
-    <li><a href="/tags/awk/">awk</a><small>4</small></li>
-  
-    <li><a href="/tags/bash/">bash</a><small>2</small></li>
-  
-    <li><a href="/tags/best/">best</a><small>1</small></li>
-  
-    <li><a href="/tags/binding/">binding</a><small>1</small></li>
-  
-    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
-  
-    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
-  
-    <li><a href="/tags/browser/">browser</a><small>1</small></li>
-  
-    <li><a href="/tags/cache/">cache</a><small>1</small></li>
-  
-    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
-  
-    <li><a href="/tags/centos/">centos</a><small>8</small></li>
-  
-    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
-  
-    <li><a href="/tags/chown/">chown</a><small>1</small></li>
-  
-    <li><a href="/tags/commands/">commands</a><small>1</small></li>
-  
-    <li><a href="/tags/content/">content</a><small>1</small></li>
-  
-    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
-  
-    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
-  
-    <li><a href="/tags/creating/">creating</a><small>1</small></li>
-  
-    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
-  
-    <li><a href="/tags/dell/">dell</a><small>1</small></li>
-  
-    <li><a href="/tags/diff/">diff</a><small>1</small></li>
-  
-    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
-  
-    <li><a href="/tags/du/">du</a><small>1</small></li>
-  
-    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
-  
-    <li><a href="/tags/end/">end</a><small>1</small></li>
-  
-    <li><a href="/tags/epel/">epel</a><small>1</small></li>
-  
-    <li><a href="/tags/etag/">etag</a><small>1</small></li>
-  
-    <li><a href="/tags/expires/">expires</a><small>1</small></li>
-  
-    <li><a href="/tags/find/">find</a><small>1</small></li>
-  
-    <li><a href="/tags/for-1/">for</a><small>1</small></li>
-  
-    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
-  
-    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
-  
-    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
-  
-    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
-  
-    <li><a href="/tags/group/">group</a><small>1</small></li>
-  
-    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
-  
-    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
-  
-    <li><a href="/tags/howto/">howto</a><small>2</small></li>
-  
-    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
-  
-    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
-  
-    <li><a href="/tags/if/">if</a><small>2</small></li>
-  
-    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
-  
-    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
-  
-    <li><a href="/tags/init/">init</a><small>1</small></li>
-  
-    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
-  
-    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
-  
-    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
-  
-    <li><a href="/tags/jk/">jk</a><small>1</small></li>
-  
-    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
-  
-    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
-  
-    <li><a href="/tags/kick/">kick</a><small>1</small></li>
-  
-    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
-  
-    <li><a href="/tags/linux/">linux</a><small>18</small></li>
-  
-    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
-  
-    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
-  
-    <li><a href="/tags/master/">master</a><small>2</small></li>
-  
-    <li><a href="/tags/metric/">metric</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
-  
-    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
-  
-    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
-  
-    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
-  
-    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
-  
-    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
-  
-    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
-  
-    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
-  
-    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
-  
-    <li><a href="/tags/packet/">packet</a><small>1</small></li>
-  
-    <li><a href="/tags/pam/">pam</a><small>1</small></li>
-  
-    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
-  
-    <li><a href="/tags/perl/">perl</a><small>1</small></li>
-  
-    <li><a href="/tags/permission/">permission</a><small>1</small></li>
-  
-    <li><a href="/tags/php-1/">php</a><small>2</small></li>
-  
-    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
-  
-    <li><a href="/tags/pil/">pil</a><small>1</small></li>
-  
-    <li><a href="/tags/port/">port</a><small>1</small></li>
-  
-    <li><a href="/tags/practices/">practices</a><small>1</small></li>
-  
-    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
-  
-    <li><a href="/tags/ps/">ps</a><small>2</small></li>
-  
-    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
-  
-    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
-  
-    <li><a href="/tags/python-1/">python</a><small>3</small></li>
-  
-    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
-  
-    <li><a href="/tags/quick/">quick</a><small>1</small></li>
-  
-    <li><a href="/tags/r410/">r410</a><small>1</small></li>
-  
-    <li><a href="/tags/r710/">r710</a><small>1</small></li>
-  
-    <li><a href="/tags/raw/">raw</a><small>1</small></li>
-  
-    <li><a href="/tags/referer/">referer</a><small>1</small></li>
-  
-    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
-  
-    <li><a href="/tags/repo/">repo</a><small>1</small></li>
-  
-    <li><a href="/tags/resources/">resources</a><small>1</small></li>
-  
-    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
-  
-    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
-  
-    <li><a href="/tags/sar/">sar</a><small>1</small></li>
-  
-    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
-  
-    <li><a href="/tags/sed/">sed</a><small>4</small></li>
-  
-    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
-  
-    <li><a href="/tags/sending/">sending</a><small>1</small></li>
-  
-    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
-  
-    <li><a href="/tags/shell/">shell</a><small>2</small></li>
-  
-    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
-  
-    <li><a href="/tags/slave/">slave</a><small>2</small></li>
-  
-    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
-  
-    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
-  
-    <li><a href="/tags/spec/">spec</a><small>2</small></li>
-  
-    <li><a href="/tags/squid/">squid</a><small>1</small></li>
-  
-    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
-  
-    <li><a href="/tags/system/">system</a><small>1</small></li>
-  
-    <li><a href="/tags/tar/">tar</a><small>1</small></li>
-  
-    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
-  
-    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
-  
-    <li><a href="/tags/tools/">tools</a><small>1</small></li>
-  
-    <li><a href="/tags/top/">top</a><small>1</small></li>
-  
-    <li><a href="/tags/tree/">tree</a><small>1</small></li>
-  
-    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
-  
-    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
-  
-    <li><a href="/tags/user/">user</a><small>2</small></li>
-  
-    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
-  
-    <li><a href="/tags/vim/">vim</a><small>2</small></li>
-  
-    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
-  
-    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/while/">while</a><small>1</small></li>
-  
-    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
-  
-    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
-  
-    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
-  
-    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
-  
-    <li><a href="/tags/yum/">yum</a><small>10</small></li>
-  
-    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
-  
-    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
-  
-    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
-  
-    <li><a href="/tags/优化/">优化</a><small>1</small></li>
-  
-    <li><a href="/tags/内核/">内核</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
-  
-    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
-  
-    <li><a href="/tags/参考/">参考</a><small>1</small></li>
-  
-    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
-  
-    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
-  
-    <li><a href="/tags/对比/">对比</a><small>1</small></li>
-  
-    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
-  
-    <li><a href="/tags/日志/">日志</a><small>2</small></li>
-  
-    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
-  
-    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
-  
-    <li><a href="/tags/管理/">管理</a><small>1</small></li>
-  
-    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
-  
-    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
-  
-    <li><a href="/tags/老板/">老板</a><small>1</small></li>
-  
-    <li><a href="/tags/认证/">认证</a><small>1</small></li>
-  
-    <li><a href="/tags/详解/">详解</a><small>3</small></li>
-  
-    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
-  
-    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
-  
-    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
-  
-  </ul>
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Cache-control/" style="font-size: 16.75px;">Cache-control</a><a href="/tags/Cluster-bacst/" style="font-size: 12.00px;">Cluster-bacst</a><a href="/tags/Header-V3-DSA-signature/" style="font-size: 15.75px;">Header V3 DSA signature</a><a href="/tags/object-Object/" style="font-size: 14.75px;">[object Object]</a><a href="/tags/apache/" style="font-size: 19.50px;">apache</a><a href="/tags/awk/" style="font-size: 18.25px;">awk</a><a href="/tags/bash/" style="font-size: 17.00px;">bash</a><a href="/tags/browser/" style="font-size: 13.75px;">browser</a><a href="/tags/cache/" style="font-size: 14.00px;">cache</a><a href="/tags/cdn/" style="font-size: 16.25px;">cdn</a><a href="/tags/centos/" style="font-size: 19.25px;">centos</a><a href="/tags/cpan/" style="font-size: 12.75px;">cpan</a><a href="/tags/cpanm/" style="font-size: 12.25px;">cpanm</a><a href="/tags/etag/" style="font-size: 14.25px;">etag</a><a href="/tags/expires/" style="font-size: 13.00px;">expires</a><a href="/tags/foreman/" style="font-size: 15.25px;">foreman</a><a href="/tags/gzip/" style="font-size: 10.50px;">gzip</a><a href="/tags/libmemcached/" style="font-size: 15.00px;">libmemcached</a><a href="/tags/mod_cband/" style="font-size: 11.00px;">mod_cband</a><a href="/tags/mod_limitipconn/" style="font-size: 12.50px;">mod_limitipconn</a><a href="/tags/moudles/" style="font-size: 10.25px;">moudles</a><a href="/tags/mysql/" style="font-size: 18.75px;">mysql</a><a href="/tags/nginx/" style="font-size: 18.00px;">nginx</a><a href="/tags/php-1/" style="font-size: 16.50px;">php</a><a href="/tags/php-fpm/" style="font-size: 17.50px;">php-fpm</a><a href="/tags/puppet/" style="font-size: 19.00px;">puppet</a><a href="/tags/python26/" style="font-size: 15.50px;">python2.6</a><a href="/tags/referer/" style="font-size: 11.25px;">referer</a><a href="/tags/repo/" style="font-size: 16.00px;">repo</a><a href="/tags/ruby/" style="font-size: 14.50px;">ruby</a><a href="/tags/shell/" style="font-size: 17.25px;">shell</a><a href="/tags/shtml/" style="font-size: 11.50px;">shtml</a><a href="/tags/ssi/" style="font-size: 11.75px;">ssi</a><a href="/tags/tomcat/" style="font-size: 18.50px;">tomcat</a><a href="/tags/yum/" style="font-size: 19.75px;">yum</a><a href="/tags/单引号/" style="font-size: 13.25px;">单引号</a><a href="/tags/双引号/" style="font-size: 13.50px;">双引号</a><a href="/tags/环境变量/" style="font-size: 10.00px;">环境变量</a><a href="/tags/详解/" style="font-size: 17.75px;">详解</a><a href="/tags/过滤日志/" style="font-size: 10.75px;">过滤日志</a>
+  </div>
 </div>
 
 
   
-
 </aside>
     <div class="clearfix"></div>
   </div>

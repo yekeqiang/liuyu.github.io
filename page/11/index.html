@@ -1,0 +1,655 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 11 页 | Liuyu blog</title>
+  <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="Puppet cdn AutoMate">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Liuyu blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Liuyu blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Liuyu blog</a></h1>
+  <h2><a href="/">Puppet in action</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T09:06:37.000Z"><a href="/2010/12/19/awk-use-bash-shell-export/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/awk-use-bash-shell-export/">awk中使用shell的环境变量</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>awk中使用shell的环境变量
+一:&quot;&#39;$var&#39;&quot;
+这种写法大家无需改变用&#39;括起awk程序的习惯,是老外常用的写法.如:</p>
+<pre><code><figure class="highlight"><pre><span class="xml">var="test"
+awk 'BEGIN{print "'</span><span class="variable">$var</span><span class="xml">'"}'
+`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+这种写法其实际是双括号变为单括号的常量,传递给了awk.
+如果var中含空格,为了shell不把空格作为分格符,便应该如下使用:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`var="this is a test"
+awk 'BEGIN{print "'"</span><span class="variable">$var</span><span class="xml">"'"}'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+二:'"</span><span class="variable">$var</span><span class="xml">"'
+
+这种写法与上一种类似.如果变量含空格,则变为'""</span><span class="variable">$var</span><span class="xml">""'较为可靠.
+
+<span class="comment">&lt;!--more--&gt;</span>
+
+三.把括起awk程序的''变为"",使用"</span><span class="variable">$var</span><span class="xml">"
+
+如:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`</span><span class="variable">$var</span><span class="xml">="this is a test"
+awk 'BEGIN{print "</span><span class="variable">$var</span><span class="xml">"}"`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+这是因为在""里$是特殊字符,而在''里$是普通字符.
+
+四:export 变量,使用ENVIRON["var"]形式,
+
+如:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`</span><span class="variable">$var</span><span class="xml">="this is a test";export </span><span class="variable">$var</span><span class="xml">
+awk 'BEGIN{print ENVIRON["var"]}'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+五:当然也可以使用-v选项
+如:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`</span><span class="variable">$var</span><span class="xml">="this is a test"
+awk -vnvar="</span><span class="variable">$var</span><span class="xml">" '{print nvar}'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+这样便把系统变量定义成了awk变量.
+
+二.在awk中给系统变量附值
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`eval $(awk 'BEGIN{print "a=ggg b=</span><span class="number">3</span><span class="xml">"}')
+eval $(grep -v '#' "</span><span class="variable">$CONFFILE</span><span class="xml">" | awk 'BEGIN{FS="|"} NR=="'</span><span class="variable">$var_list</span><span class="xml">'"{printf("HOST=\"%s\" MAX=\"%s\" EMAILLIST=\"%s\" PHONE=\"%s\"\n",</span><span class="variable">$1</span><span class="xml">,</span><span class="variable">$2</span><span class="xml">,</span><span class="variable">$3</span><span class="xml">,</span><span class="variable">$4</span><span class="xml">)}')</span>
+</pre></figure></code></pre>
+<p>转自：<a href="http://hi.baidu.com/%CA%AB%D5%B9/blog/item/ad30993d12c69700bba16776.html">http://hi.baidu.com/%CA%AB%D5%B9/blog/item/ad30993d12c69700bba16776.html</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T09:00:42.000Z"><a href="/2010/12/19/iostat-detailed/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/iostat-detailed/">iostat 命令详解</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>iostat 结果解析</p>
+<pre><code><figure class="highlight"><pre>[root<span class="variable">@20081006</span>-<span class="number">1724</span> ~]<span class="comment"># iostat -x</span>
+Linux <span class="number">2.6</span>.<span class="number">9</span>-<span class="number">78</span>.ELsmp (<span class="number">20081006</span>-<span class="number">1724</span>) <span class="number">11</span>/<span class="number">20</span>/<span class="number">2009</span>
+avg-cpu: <span class="variable">%user</span> <span class="variable">%nice</span> <span class="variable">%sys</span> <span class="variable">%iowait</span> <span class="variable">%idle</span>
+<span class="number">0</span>.<span class="number">19</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">04</span> <span class="number">0</span>.<span class="number">03</span> <span class="number">99.73</span>
+Device: rrqm/<span class="keyword">s</span> wrqm/<span class="keyword">s</span> r/<span class="keyword">s</span> w/<span class="keyword">s</span> rsec/<span class="keyword">s</span> wsec/<span class="keyword">s</span> rkB/<span class="keyword">s</span> wkB/<span class="keyword">s</span> avgrq-sz avgqu-sz await svctm <span class="variable">%util</span>
+sda <span class="number">0</span>.<span class="number">05</span> <span class="number">17.60</span> <span class="number">1.46</span> <span class="number">7.72</span> <span class="number">80.69</span> <span class="number">202.57</span> <span class="number">40.34</span> <span class="number">101.29</span> <span class="number">30.87</span> <span class="number">0</span>.<span class="number">01</span> <span class="number">1.06</span> <span class="number">0</span>.<span class="number">37</span> <span class="number">0</span>.<span class="number">34</span>
+sda1 <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">29.90</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">3.14</span> <span class="number">3.14</span> <span class="number">0</span>.<span class="number">00</span>
+sda2 <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">16.25</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">1.51</span> <span class="number">1.30</span> <span class="number">0</span>.<span class="number">00</span>
+sda3 <span class="number">0</span>.<span class="number">05</span> <span class="number">17.60</span> <span class="number">1.46</span> <span class="number">7.72</span> <span class="number">80.69</span> <span class="number">202.57</span> <span class="number">40.34</span> <span class="number">101.29</span> <span class="number">30.87</span> <span class="number">0</span>.<span class="number">01</span> <span class="number">1.06</span> <span class="number">0</span>.<span class="number">37</span> <span class="number">0</span>.<span class="number">34</span>
+dm-<span class="number">0</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">1.46</span> <span class="number">25.28</span> <span class="number">80.32</span> <span class="number">202.26</span> <span class="number">40.16</span> <span class="number">101.13</span> <span class="number">10.57</span> <span class="number">0</span>.<span class="number">36</span> <span class="number">13.56</span> <span class="number">0</span>.<span class="number">13</span> <span class="number">0</span>.<span class="number">34</span>
+dm-<span class="number">1</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">0</span>.<span class="number">05</span> <span class="number">0</span>.<span class="number">04</span> <span class="number">0</span>.<span class="number">37</span> <span class="number">0</span>.<span class="number">32</span> <span class="number">0</span>.<span class="number">18</span> <span class="number">0</span>.<span class="number">16</span> <span class="number">8.00</span> <span class="number">0</span>.<span class="number">00</span> <span class="number">6.84</span> <span class="number">1.30</span> <span class="number">0</span>.<span class="number">01</span>
+</pre></figure></code></pre>
+<p>rrqm/s: 每秒进行 merge 的读操作数目。即 delta(rmerge)/s
+wrqm/s: 每秒进行 merge 的写操作数目。即 delta(wmerge)/s
+r/s: 每秒完成的读 I/O 设备次数。即 delta(rio)/s
+w/s: 每秒完成的写 I/O 设备次数。即 delta(wio)/s
+rsec/s: 每秒读扇区数。即 delta(rsect)/s
+wsec/s: 每秒写扇区数。即 delta(wsect)/s
+rkB/s: 每秒读K字节数。是 rsect/s 的一半，因为每扇区大小为512字节。
+wkB/s: 每秒写K字节数。是 wsect/s 的一半。
+avgrq-sz: 平均每次设备I/O操作的数据大小 (扇区)。即 delta(rsect+wsect)/delta(rio+wio)
+avgqu-sz: 平均I/O队列长度。即 delta(aveq)/s/1000 (因为aveq的单位为毫秒)。
+await: 平均每次设备I/O操作的等待时间 (毫秒)。即 delta(ruse+wuse)/delta(rio+wio)
+svctm: 平均每次设备I/O操作的服务时间 (毫秒)。即 delta(use)/delta(rio+wio)
+%util: 一秒中有百分之多少的时间用于 I/O 操作，或者说一秒中有多少时间 I/O 队列是非空的。
+即 delta(use)/s/1000 (因为use的单位为毫秒)</p>
+<p><span style="color: #ff0000;"><strong>如果 %util 接近 100%，说明产生的I/O请求太多，I/O系统已经满负荷，该磁盘
+可能存在瓶颈</strong>。</span></p>
+<p><strong>
+比较重要的参数</strong>
+%util: 一秒中有百分之多少的时间用于 I/O 操作，或者说一秒中有多少时间 I/O 队列是非空的
+svctm: 平均每次设备I/O操作的服务时间
+await: 平均每次设备I/O操作的等待时间
+avgqu-sz: 平均I/O队列长度</p>
+<p><span style="color: #ff0000;"><strong>如果%util接近100%,表明i/o请求太多,i/o系统已经满负荷,磁盘可能存在瓶颈,一 般%util大于70%,i/o压力就比较大,读取速度有较多的wait.同时可以结合vmstat查看查看b参数(等待资源的进程数)和wa参数(IO 等待所占用的CPU时间的百分比,高过30%时IO压力高)。</strong></span>
+await 的大小一般取决于服务时间(svctm) 以及 I/O 队列的长度和 I/O 请求的发出模式。如果 svctm 比较接近 await，说明 I/O 几乎没有等待时间；如果 await 远大于 svctm，说明 I/O 队列太长，应用得到的响应时间变慢。</p>
+<p>形象的比喻
+r/s+w/s 类似于交款人的总数
+平均队列长度(avgqu-sz)类似于单位时间里平均排队人的个数
+平均服务时间(svctm)类似于收银员的收款速度
+平均等待时间(await)类似于平均每人的等待时间
+平均I/O数据(avgrq-sz)类似于平均每人所买的东西多少
+I/O 操作率 (%util)类似于收款台前有人排队的时间比例
+设备IO操作:总IO(io)/s = r/s(读) +w/s(写) =1.46 + 25.28=26.74
+平均每次设备I/O操作只需要0.36毫秒完成,现在却需要10.57毫秒完成，因为发出的请求太多(每秒26.74个)，假如请求时同时发出的，可以这样计算平均等待时间:
+平均等待时间=单个I/O服务器时间*(1+2+...+请求总数-1)/请求总数
+每秒发出的I/0请求很多,但是平均队列就4,表示这些请求比较均匀,大部分处理还是比较及时</p>
+<p>svctm 一般要小于 await (因为同时等待的请求的等待时间被重复计算了)，
+svctm 的大小一般和磁盘性能有关，CPU/内存的负荷也会对其有影响，请求过多
+也会间接导致 svctm 的增加。await 的大小一般取决于服务时间(svctm) 以及
+I/O 队列的长度和 I/O 请求的发出模式。如果 svctm 比较接近 await，说明
+I/O 几乎没有等待时间；如果 await 远大于 svctm，说明 I/O 队列太长，应用
+得到的响应时间变慢，如果响应时间超过了用户可以容许的范围，这时可以考虑
+更换更快的磁盘，调整内核 elevator 算法，优化应用，或者升级 CPU。
+队列长度(avgqu-sz)也可作为衡量系统 I/O 负荷的指标，但由于 avgqu-sz 是
+按照单位时间的平均值，所以不能反映瞬间的 I/O 洪水。</p>
+<p>转自：<a href="http://blog.csdn.net/wyzxg/archive/2009/03/12/3985221.aspx">http://blog.csdn.net/wyzxg/archive/2009/03/12/3985221.aspx</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:58:42.000Z"><a href="/2010/12/19/vmstat-detailed/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/vmstat-detailed/">vmstat 命令详解</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>vmstat介绍</p>
+<p><strong>.Procs</strong>
+-r: 运行的和等待（CPU时间片）运行的进程数，这个值也可以判断是否需要增加CPU（长期大于1）
+-b: 处于不可中断状态的进程数，常见的情况是由I/O引起的。</p>
+<p><strong>MEMORY</strong>
+-swap:切换到交换内存上的内存（默认以KB为单位）
+如果SWAP的值不为0，或者还比较大，比如超过100M了，但是SI，SO的值长期为0，这种情况我们可以不用担心，不会影响系统性能。
+-free:p空闲的物理内存
+- buff:作为buffer cache的内存，对块设备的读写进行缓冲
+-cache：作为page cache的内存，文件系统的cache
+如果cache的值大的时候，说明cache处的文件数多，如果频繁访问到的文件都能被cache处，那么磁盘的读IO bi会非常小。</p>
+<p><strong>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/12/19/vmstat-detailed/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:57:14.000Z"><a href="/2010/12/19/linux-lsof-detailed/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-lsof-detailed/">linux lsof 命令详解</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>lsof简介
+lsof（list open files）是一个列出当前系统打开文件的工具。在linux环境下，任何事物都以文件的形式存在，通过文件不仅仅可以访问常规数据，还可以访问网络连接 和硬件。所以如传输控制协议 (TCP) 和用户数据报协议 (UDP) 套接字等，系统在后台都为该应用程序分配了一个文件描述符，无论这个文件的本质如何，该文件描述符为应用程序与基础操作系统之间的交互提供了通用接口。因 为应用程序打开文件的描述符列表提供了大量关于这个应用程序本身的信息，因此通过lsof工具能够查看这个列表对系统监测以及排错将是很有帮助的。</p>
+<p>lsof使用
+lsof输出信息含义
+在终端下输入lsof即可显示系统打开的文件，因为 lsof 需要访问核心内存和各种文件，所以必须以 root 用户的身份运行它才能够充分地发挥其功能。
+[code]COMMAND PID USER FD TYPE DEVICE SIZE NODE NAME
+init 1 root cwd DIR 3,3 1024 2 /
+init 1 root rtd DIR 3,3 1024 2 /
+init 1 root txt REG 3,3 38432 1763452 /sbin/init
+init 1 root mem REG 3,3 106114 1091620 /lib/libdl-2.6.so
+init 1 root mem REG 3,3 7560696 1091614 /lib/libc-2.6.so
+init 1 root mem REG 3,3 79460 1091669 /lib/libselinux.so.1
+init 1 root mem REG 3,3 223280 1091668 /lib/libsepol.so.1
+init 1 root mem REG 3,3 564136 1091607 /lib/ld-2.6.so
+init 1 root 10u FIFO 0,15 1309 /dev/initctl[/code]</p>
+<p>每行显示一个打开的文件，若不指定条件默认将显示所有进程打开的所有文件。lsof输出各列信息的意义如下：</p>
+<p>COMMAND：进程的名称
+PID：进程标识符
+USER：进程所有者
+FD：文件描述符，应用程序通过文件描述符识别该文件。如cwd、txt等
+TYPE：文件类型，如DIR、REG等
+DEVICE：指定磁盘的名称
+SIZE：文件的大小
+NODE：索引节点（文件在磁盘上的标识）
+NAME：打开文件的确切名称</p>
+<p>其中FD 列中的文件描述符cwd 值表示应用程序的当前工作目录，这是该应用程序启动的目录，除非它本身对这个目录进行更改。
+txt 类型的文件是程序代码，如应用程序二进制文件本身或共享库，如上列表中显示的 /sbin/init 程序。其次数值表示应用
+程序的文件描述符，这是打开该文件时返回的一个整数。如上的最后一行文件/dev/initctl，其文件描述符为 10。u 表示该
+文件被打开并处于读取/写入模式，而不是只读 ® 或只写 (w) 模式。同时还有大写 的W 表示该应用程序具有对整个文件的写
+锁。该文件描述符用于确保每次只能打开一个应用程序实例。初始打开每个应用程序时，都具有三个文件描述符，从 0 到 2，
+分别表示标准输入、输出和错误流。所以大多数应用程序所打开的文件的 FD 都是从 3 开始。</p>
+<p>与 FD 列相比，Type 列则比较直观。文件和目录分别称为 REG 和 DIR。而CHR 和 BLK，分别表示字符和块设备；
+或者 UNIX、FIFO 和 IPv4，分别表示 UNIX 域套接字、先进先出 (FIFO) 队列和网际协议 (IP) 套接字。
+<strong>
+lsof常用参数</strong>
+lsof 常见的用法是查找应用程序打开的文件的名称和数目。可用于查找出某个特定应用程序将日志数据记录到何处，或者正在跟踪某个问题。
+例如，linux限制了进程能够打开文件的数目。通常这个数值很大，所以不会产生问题，并且在需要时，应用程序可以请求更大的值（直到某
+个上限）。如果你怀疑应用程序耗尽了文件描述符，那么可以使用 lsof 统计打开的文件数目，以进行验证。lsof语法格式是：
+lsof ［options］ filename</p>
+<p><strong>常用的参数列表：</strong>
+lsof filename 显示打开指定文件的所有进程
+lsof -a 表示两个参数都必须满足时才显示结果
+lsof -c string 显示COMMAND列中包含指定字符的进程所有打开的文件
+lsof -u username 显示所属user进程打开的文件
+lsof -g gid 显示归属gid的进程情况
+lsof +d /DIR/ 显示目录下被进程打开的文件
+lsof +D /DIR/ 同上，但是会搜索目录下的所有目录，时间相对较长
+lsof -d FD 显示指定文件描述符的进程
+lsof -n 不将IP转换为hostname，缺省是不加上-n参数
+lsof -i 用以显示符合条件的进程情况
+lsof -i[46] [protocol][@hostname|hostaddr][:service|port]</p>
+<p>46 --&gt; IPv4 or IPv6
+protocol --&gt; TCP or UDP
+hostname --&gt; Internet host name
+hostaddr --&gt; IPv4地址
+service --&gt; /etc/service中的 service name (可以不只一个)
+port --&gt; 端口号 (可以不只一个)</p>
+<p>例如： 查看22端口现在运行的情况
+[code]# lsof -i :22
+COMMAND PID USER FD TYPE DEVICE SIZE NODE NAME
+sshd 1409 root 3u IPv6 5678 TCP *:ssh (LISTEN)]/code]</p>
+<p>查进程：
+[code]# lsof -a -p pid[/code]</p>
+<p>查看所属root用户进程所打开的文件类型为txt的文件:
+[code]# lsof -a -u root -d txt
+COMMAND PID USER FD TYPE DEVICE SIZE NODE NAME
+init 1 root txt REG 3,3 38432 1763452 /sbin/init
+mingetty 1632 root txt REG 3,3 14366 1763337 /sbin/mingetty
+mingetty 1633 root txt REG 3,3 14366 1763337 /sbin/mingetty
+mingetty 1634 root txt REG 3,3 14366 1763337 /sbin/mingetty
+mingetty 1635 root txt REG 3,3 14366 1763337 /sbin/mingetty
+mingetty 1636 root txt REG 3,3 14366 1763337 /sbin/mingetty
+mingetty 1637 root txt REG 3,3 14366 1763337 /sbin/mingetty
+kdm 1638 root txt REG 3,3 132548 1428194 /usr/bin/kdm
+X 1670 root txt REG 3,3 1716396 1428336 /usr/bin/Xorg
+kdm 1671 root txt REG 3,3 132548 1428194 /usr/bin/kdm
+startkde 2427 root txt REG 3,3 645408 1544195 /bin/bash
+... ...
+[/code]
+lsof使用实例
+一、查找谁在使用文件系统
+在卸载文件系统时，如果该文件系统中有任何打开的文件，操作通常将会失败。那么通过lsof可以找出那些进程在使用当前要卸载的文件系统，如下：
+[code]# lsof /GTES11/
+COMMAND PID USER FD TYPE DEVICE SIZE NODE NAME
+bash 4208 root cwd DIR 3,1 4096 2 /GTES11/
+vim 4230 root cwd DIR 3,1 4096 2 /GTES11/[/code]</p>
+<p>在这个示例中，用户root正在其/GTES11目录中进行一些操作。一个 bash是实例正在运行，并且它当前的目录为/GTES11，另一个则显示的是vim正在编辑/GTES11下的文件。要成功地卸载/GTES11，应该 在通知用户以确保情况正常之后，中止这些进程。 这个示例说明了应用程序的当前工作目录非常重要，因为它仍保持着文件资源，并且可以防止文件系统被卸载。这就是为什么大部分守护进程（后台进程）将它们的 目录更改为根目录、或服务特定的目录（如 sendmail 示例中的 /var/spool/mqueue）的原因，以避免该守护进程阻止卸载不相关的文件系统。</p>
+<p>二、恢复删除的文件
+当Linux计算机受到入侵时，常见的情况是日志文件被删除，以掩盖攻击者的踪迹。管理错误也可能导致意外删除重要的文件，比如在清理旧日志时，意外地删除了数据库的活动事务日志。有时可以通过lsof来恢复这些文件。
+当进程打开了某个文件时，只要该进程保持打开该文件，即使将其删除，它依然存在于磁盘中。这意味着，进程并不知道文件已经被删除，它仍然可以向打开该文件时提供给它的文件描述符进行读取和写入。除了该进程之外，这个文件是不可见的，因为已经删除了其相应的目录索引节点。
+在/proc 目录下，其中包含了反映内核和进程树的各种文件。/proc目录挂载的是在内存中所映射的一块区域，所以这些文件和目录并不存在于磁盘中，因此当我们对这 些文件进行读取和写入时，实际上是在从内存中获取相关信息。大多数与 lsof 相关的信息都存储于以进程的 PID 命名的目录中，即 /proc/1234 中包含的是 PID 为 1234 的进程的信息。每个进程目录中存在着各种文件，它们可以使得应用程序简单地了解进程的内存空间、文件描述符列表、指向磁盘上的文件的符号链接和其他系统信 息。lsof 程序使用该信息和其他关于内核内部状态的信息来产生其输出。所以lsof 可以显示进程的文件描述符和相关的文件名等信息。也就是我们通过访问进程的文件描述符可以找到该文件的相关信息。
+当系统中的某个文件被意外 地删除了，只要这个时候系统中还有进程正在访问该文件，那么我们就可以通过lsof从/proc目录下恢复该文件的内容。 假如由于误操作将/var/log/messages文件删除掉了，那么这时要将/var/log/messages文件恢复的方法如下：</p>
+<p>首先使用lsof来查看当前是否有进程打开/var/logmessages文件，如下：
+[code]# lsof |grep /var/log/messages
+syslogd 1283 root 2w REG 3,3 5381017 1773647 /var/log/messages (deleted)[/code]
+从上面的信息可以看到 PID 1283（syslogd）打开文件的文件描述符为 2。同时还可以看到/var/log/messages已经标记被删除了。因此我们可以在 /proc/1283/fd/2 （fd下的每个以数字命名的</p>
+<p>文件表示进程对应的文件描述符）中查看相应的信息，如下：
+[code]# head -n 10 /proc/1283/fd/2
+Aug 4 13:50:15 holmes86 syslogd 1.4.1: restart.
+Aug 4 13:50:15 holmes86 kernel: klogd 1.4.1, log source = /proc/kmsg started.
+Aug 4 13:50:15 holmes86 kernel: Linux version 2.6.22.1-8 (root@everestbuilder.linux-ren.org) (gcc version 4.2.0) #1 SMP Wed Jul 18 11:18:32 EDT 2007
+Aug 4 13:50:15 holmes86 kernel: BIOS-provided physical RAM map:
+Aug 4 13:50:15 holmes86 kernel: BIOS-e820: 0000000000000000 - 000000000009f000 (usable)
+Aug 4 13:50:15 holmes86 kernel: BIOS-e820: 000000000009f000 - 00000000000a0000 (reserved)
+Aug 4 13:50:15 holmes86 kernel: BIOS-e820: 0000000000100000 - 000000001f7d3800 (usable)
+Aug 4 13:50:15 holmes86 kernel: BIOS-e820: 000000001f7d3800 - 0000000020000000 (reserved)
+Aug 4 13:50:15 holmes86 kernel: BIOS-e820: 00000000e0000000 - 00000000f0007000 (reserved)
+Aug 4 13:50:15 holmes86 kernel: BIOS-e820: 00000000f0008000 - 00000000f000c000 (reserved)[/code]</p>
+<p>从上面的信息可以看出，查看 /proc/8663/fd/15 就可以得到所要恢复的数据。如果可以通过文件描述符查看相应的数据，那么就可以使用 I/O 重定向将其复制到文件中，如:
+[code]cat /proc/1283/fd/2 &gt; /var/log/messages[/code]
+对于许多应用程序，尤其是日志文件和数据库，这种恢复删除文件的方法非常有用。</p>
+<p>原文：<a href="http://blog.csdn.net/guoguo1980/archive/2008/04/24/2324454.aspx">http://blog.csdn.net/guoguo1980/archive/2008/04/24/2324454.aspx</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:54:35.000Z"><a href="/2010/12/19/linux-top-detailed/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-top-detailed/">linux top 命令详解</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>linux下top命令参数解释</p>
+<p>top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于Windows的任务管理器。下面详细介绍它的使用方法。</p>
+<pre><code><figure class="highlight"><pre>top - 01:06:48 up 1:22, 1 user, <span class="operator"><span class="keyword">load</span> average: <span class="number">0.06</span>, <span class="number">0.60</span>, <span class="number">0.48</span>
+Tasks: <span class="number">29</span> total, <span class="number">1</span> running, <span class="number">28</span> sleeping, <span class="number">0</span> stopped, <span class="number">0</span> zombie
+Cpu(s): <span class="number">0.3</span>% us, <span class="number">1.0</span>% sy, <span class="number">0.0</span>% ni, <span class="number">98.7</span>% id, <span class="number">0.0</span>% wa, <span class="number">0.0</span>% hi, <span class="number">0.0</span>% si
+Mem: <span class="number">191272</span>k total, <span class="number">173656</span>k used, <span class="number">17616</span>k free, <span class="number">22052</span>k buffers
+Swap: <span class="number">192772</span>k total, <span class="number">0</span>k used, <span class="number">192772</span>k free, <span class="number">123988</span>k cached
+PID <span class="keyword">USER</span> PR NI VIRT RES SHR S %CPU %MEM <span class="keyword">TIME</span>+ COMMAND
+<span class="number">1379</span> root <span class="number">16</span> <span class="number">0</span> <span class="number">7976</span> <span class="number">2456</span> <span class="number">1980</span> S <span class="number">0.7</span> <span class="number">1.3</span> <span class="number">0</span>:<span class="number">11.03</span> sshd
+<span class="number">14704</span> root <span class="number">16</span> <span class="number">0</span> <span class="number">2128</span> <span class="number">980</span> <span class="number">796</span> R <span class="number">0.7</span> <span class="number">0.5</span> <span class="number">0</span>:<span class="number">02.72</span> top
+<span class="number">1</span> root <span class="number">16</span> <span class="number">0</span> <span class="number">1992</span> <span class="number">632</span> <span class="number">544</span> S <span class="number">0.0</span> <span class="number">0.3</span> <span class="number">0</span>:<span class="number">00.90</span> init
+<span class="number">2</span> root <span class="number">34</span> <span class="number">19</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> S <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">0</span>:<span class="number">00.00</span> ksoftirqd/<span class="number">0</span>
+<span class="number">3</span> root RT <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> S <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">0</span>:<span class="number">00.00</span> watchdog/<span class="number">0</span>
+</pre></figure></code></pre>
+<p>统计信息区
+前五行是系统整体的统计信息。第一行是任务队列信息，同 uptime 命令的执行结果。其内容如下：</p>
+<p>01:06:48 当前时间
+up 1:22 系统运行时间，格式为时:分
+1 user 当前登录用户数
+load average: 0.06, 0.60, 0.48 系统负载，即任务队列的平均长度。
+三个数值分别为 1分钟、5分钟、15分钟前到现在的平均值。</p>
+<p>第二、三行为进程和CPU的信息。当有多个CPU时，这些内容可能会超过两行。内容如下：
+Tasks: 29 total 进程总数
+1 running 正在运行的进程数
+28 sleeping 睡眠的进程数
+0 stopped 停止的进程数
+0 zombie 僵尸进程数</p>
+<p>Cpu(s): 0.3% us 用户空间占用CPU百分比
+1.0% sy 内核空间占用CPU百分比
+0.0% ni 用户进程空间内改变过优先级的进程占用CPU百分比
+98.7% id 空闲CPU百分比
+0.0% wa 等待输入输出的CPU时间百分比
+0.0% hi 
+0.0% si </p>
+<p>最后两行为内存信息。内容如下：
+Mem: 191272k total 物理内存总量
+173656k used 使用的物理内存总量
+17616k free 空闲内存总量
+22052k buffers 用作内核缓存的内存量
+Swap: 192772k total 交换区总量
+0k used 使用的交换区总量
+192772k free 空闲交换区总量
+123988k cached 缓冲的交换区总量。</p>
+<p>内存中的内容被换出到交换区，而后又被换入到内存，但使用过的交换区尚未被覆盖，
+该数值即为这些内容已存在于内存中的交换区的大小。
+相应的内存再次被换出时可不必再对交换区写入。</p>
+<p>进程信息区
+统计信息区域的下方显示了各个进程的详细信息。首先来认识一下各列的含义。
+序号 列名 含义
+a PID 进程id
+b PPID 父进程id
+c RUSER Real user name
+d UID 进程所有者的用户id
+e USER 进程所有者的用户名
+f GROUP 进程所有者的组名
+g TTY 启动进程的终端名。不是从终端启动的进程则显示为 ?
+h PR 优先级
+i NI nice值。负值表示高优先级，正值表示低优先级
+j P 最后使用的CPU，仅在多CPU环境下有意义
+k %CPU 上次更新到现在的CPU时间占用百分比
+l TIME 进程使用的CPU时间总计，单位秒
+m TIME+ 进程使用的CPU时间总计，单位1/100秒
+n %MEM 进程使用的物理内存百分比
+o VIRT 进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES
+p SWAP 进程使用的虚拟内存中，被换出的大小，单位kb。
+q RES 进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA
+r CODE 可执行代码占用的物理内存大小，单位kb
+s DATA 可执行代码以外的部分(数据段+栈)占用的物理内存大小，单位kb
+t SHR 共享内存大小，单位kb
+u nFLT 页面错误次数
+v nDRT 最后一次写入到现在，被修改过的页面数。
+w S 进程状态。
+D=不可中断的睡眠状态
+R=运行
+S=睡眠
+T=跟踪/停止
+Z=僵尸进程
+x COMMAND 命令名/命令行
+y WCHAN 若该进程在睡眠，则显示睡眠中的系统函数名
+z Flags 任务标志，参考 sched.h</p>
+<p>默认情况下仅显示比较重要的 PID、USER、PR、NI、VIRT、RES、SHR、S、%CPU、%MEM、TIME+、COMMAND 列。可以通过下面的快捷键来更改显示内容。</p>
+<p>更改显示内容
+通过 f 键可以选择显示的内容。按 f 键之后会显示列的列表，按 a-z 即可显示或隐藏对应的列，最后按回车键确定。
+按 o 键可以改变列的显示顺序。按小写的 a-z 可以将相应的列向右移动，而大写的 A-Z 可以将相应的列向左移动。最后按回车键确定。
+按大写的 F 或 O 键，然后按 a-z 可以将进程按照相应的列进行排序。而大写的 R 键可以将当前的排序倒转。</p>
+<p>命令使用
+1． 工具（命令）名称
+top</p>
+<p>2．工具（命令）作用
+显示系统当前的进程和其他状况； top是一个动态显示过程,即可以通过用户按键来不断刷新当前状态.如果在前台执行该命令,它将独占前台,直到用户终止该程序为止. 比较准确的说,top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间 对任务进行排序；而且该命令的很多特性都可以通过交互式命令或者在个人定制文件中进行设定.</p>
+<p>3．环境设置
+在Linux下使用。</p>
+<p>4．使用方法
+4．1使用格式
+top [-] [d] [p] [q] [c] [C] [S] [s] [n]</p>
+<p>4．2参数说明
+d 指定每两次屏幕信息刷新之间的时间间隔。当然用户可以使用s交互命令来改变之。
+p 通过指定监控进程ID来仅仅监控某个进程的状态。
+q该选项将使top没有任何延迟的进行刷新。如果调用程序有超级用户权限，那么top将以尽可能高的优先级运行。
+S 指定累计模式
+s 使top命令在安全模式中运行。这将去除交互命令所带来的潜在危险。
+i 使top不显示任何闲置或者僵死进程。
+c 显示整个命令行而不只是显示命令名</p>
+<p>4.3其他
+下面介绍在top命令执行过程中可以使用的一些交互命令。从使用角度来看，熟练的掌握这些命令比掌握选项还重要一些。这些命令都是单字母的，如果在命令行选项中使用了s选项，则可能其中一些命令会被屏蔽掉。
+Ctrl+L 擦除并且重写屏幕。
+h或者? 显示帮助画面，给出一些简短的命令总结说明。
+k 终止一个进程。系统将提示用户输入需要终止的进程PID，以及需要发送给该进程什么样的信号。一般的终止进程可以使用15信号；如果不能正常结束那就使用信号9强制结束该进程。默认值是信号15。在安全模式中此命令被屏蔽。
+i 忽略闲置和僵死进程。这是一个开关式命令。
+q 退出程序。
+r 重新安排一个进程的优先级别。系统提示用户输入需要改变的进程PID以及需要设置的进程优先级值。输入一个正值将使优先级降低，反之则可以使该进程拥有更高的优先权。默认值是10。
+S 切换到累计模式。
+s 改变两次刷新之间的延迟时间。系统将提示用户输入新的时间，单位为s。如果有小数，就换算成m s。输入0值则系统将不断刷新，默认值是5 s。需要注意的是如果设置太小的时间，很可能会引起不断刷新，从而根本来不及看清显示的情况，而且系统负载也会大大增加。
+f或者F 从当前显示中添加或者删除项目。
+o或者O 改变显示项目的顺序。
+l 切换显示平均负载和启动时间信息。
+m 切换显示内存信息。
+t 切换显示进程和CPU状态信息。
+c 切换显示命令名称和完整命令行。
+M 根据驻留内存大小进行排序。
+P 根据CPU使用百分比大小进行排序。
+T 根据时间/累计时间进行排序。
+W 将当前设置写入~/.toprc文件中。这是写top配置文件的推荐方法。</p>
+<p>原文：<a href="http://blog.csdn.net/guoguo1980/archive/2008/04/19/2307254.aspx">http://blog.csdn.net/guoguo1980/archive/2008/04/19/2307254.aspx</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/10/" class="alignleft prev">上一页</a>
+  
+  
+    <a href="/page/12/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Cache-control/" style="font-size: 16.75px;">Cache-control</a><a href="/tags/Cluster-bacst/" style="font-size: 12.00px;">Cluster-bacst</a><a href="/tags/Header-V3-DSA-signature/" style="font-size: 15.75px;">Header V3 DSA signature</a><a href="/tags/object-Object/" style="font-size: 14.75px;">[object Object]</a><a href="/tags/apache/" style="font-size: 19.50px;">apache</a><a href="/tags/awk/" style="font-size: 18.25px;">awk</a><a href="/tags/bash/" style="font-size: 17.00px;">bash</a><a href="/tags/browser/" style="font-size: 13.75px;">browser</a><a href="/tags/cache/" style="font-size: 14.00px;">cache</a><a href="/tags/cdn/" style="font-size: 16.25px;">cdn</a><a href="/tags/centos/" style="font-size: 19.25px;">centos</a><a href="/tags/cpan/" style="font-size: 12.75px;">cpan</a><a href="/tags/cpanm/" style="font-size: 12.25px;">cpanm</a><a href="/tags/etag/" style="font-size: 14.25px;">etag</a><a href="/tags/expires/" style="font-size: 13.00px;">expires</a><a href="/tags/foreman/" style="font-size: 15.25px;">foreman</a><a href="/tags/gzip/" style="font-size: 10.50px;">gzip</a><a href="/tags/libmemcached/" style="font-size: 15.00px;">libmemcached</a><a href="/tags/mod_cband/" style="font-size: 11.00px;">mod_cband</a><a href="/tags/mod_limitipconn/" style="font-size: 12.50px;">mod_limitipconn</a><a href="/tags/moudles/" style="font-size: 10.25px;">moudles</a><a href="/tags/mysql/" style="font-size: 18.75px;">mysql</a><a href="/tags/nginx/" style="font-size: 18.00px;">nginx</a><a href="/tags/php-1/" style="font-size: 16.50px;">php</a><a href="/tags/php-fpm/" style="font-size: 17.50px;">php-fpm</a><a href="/tags/puppet/" style="font-size: 19.00px;">puppet</a><a href="/tags/python26/" style="font-size: 15.50px;">python2.6</a><a href="/tags/referer/" style="font-size: 11.25px;">referer</a><a href="/tags/repo/" style="font-size: 16.00px;">repo</a><a href="/tags/ruby/" style="font-size: 14.50px;">ruby</a><a href="/tags/shell/" style="font-size: 17.25px;">shell</a><a href="/tags/shtml/" style="font-size: 11.50px;">shtml</a><a href="/tags/ssi/" style="font-size: 11.75px;">ssi</a><a href="/tags/tomcat/" style="font-size: 18.50px;">tomcat</a><a href="/tags/yum/" style="font-size: 19.75px;">yum</a><a href="/tags/单引号/" style="font-size: 13.25px;">单引号</a><a href="/tags/双引号/" style="font-size: 13.50px;">双引号</a><a href="/tags/环境变量/" style="font-size: 10.00px;">环境变量</a><a href="/tags/详解/" style="font-size: 17.75px;">详解</a><a href="/tags/过滤日志/" style="font-size: 10.75px;">过滤日志</a>
+  </div>
+</div>
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

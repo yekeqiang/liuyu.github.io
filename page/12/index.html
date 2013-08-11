@@ -1,0 +1,633 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 12 页 | Liuyu blog</title>
+  <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="Puppet cdn AutoMate">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Liuyu blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Liuyu blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Liuyu blog</a></h1>
+  <h2><a href="/">Puppet in action</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:52:33.000Z"><a href="/2010/12/19/linux-ps-detailed/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-ps-detailed/">linux ps 命令详解 </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>linux ps(process status) 命令详解
+功能说明：报告程序状况。</p>
+<p><strong>语　　法</strong>：ps [-aAcdefHjlmNVwy][acefghLnrsSTuvxX][-C &lt;指令名称&gt;][-g &lt;群组名称&gt;][-G &lt;群组识别码&gt;][-p &lt;程序识别码&gt;][p &lt;程序识别码&gt;][-s &lt;阶段作业&gt;][-t &lt;终端机编号&gt;][t &lt;终端机编号&gt;][-u &lt;用户识别码&gt;][-U &lt;用户识别码&gt;][U &lt;用户名称&gt;][-&lt;程序识别码&gt;][--cols &lt;每列字符数&gt;][--columns &lt;每列字符数&gt;][--cumulative][--deselect][--forest][--headers][--help] [--info][--lines &lt;显示列数&gt;][--no-headers][--group &lt;群组名称&gt;][-Group &lt;群组识别码&gt;][--pid &lt;程序识别码&gt;][--rows &lt;显示列数&gt;][--sid &lt;阶段作业&gt;][--tty &lt;终端机编号&gt;][--user &lt;用户名称&gt;][--User &lt;用户识别码&gt;][--version][--width &lt;每列字符数&gt;]
+补充说明：ps是用来报告程序执行状况的指令，您可以搭配kill指令随时中断，删除不必要的程序。
+<strong>
+参　　数：</strong>
+-a 　显示所有终端机下执行的程序，除了阶段作业领导者之外。
+a 　显示现行终端机下的所有程序，包括其他用户的程序。
+-A 　显示所有程序。
+-c 　显示CLS和PRI栏位。
+c 　列出程序时，显示每个程序真正的指令名称，而不包含路径，参数或常驻服务的标示。
+-C&lt;指令名称&gt; 指定执行指令的名称，并列出该指令的程序的状况。
+-d 　显示所有程序，但不包括阶段作业领导者的程序。
+-e 　此参数的效果和指定&quot;A&quot;参数相同。
+e 　列出程序时，显示每个程序所使用的环境变量。
+-f 　显示UID,PPIP,C与STIME栏位。
+f 　用ASCII字符显示树状结构，表达程序间的相互关系。
+-g&lt;群组名称&gt; 此参数的效果和指定&quot;-G&quot;参数相同，当亦能使用阶段作业领导者的名称来指定。
+g 　显示现行终端机下的所有程序，包括群组领导者的程序。
+-G&lt;群组识别码&gt; 列出属于该群组的程序的状况，也可使用群组名称来指定。
+h 　不显示标题列。
+-H 　显示树状结构，表示程序间的相互关系。
+-j或j 　采用工作控制的格式显示程序状况。
+-l或l 　采用详细的格式来显示程序状况。
+L 　列出栏位的相关信息。
+-m或m 　显示所有的执行绪。
+n 　以数字来表示USER和WCHAN栏位。
+-N 　显示所有的程序，除了执行ps指令终端机下的程序之外。
+-p&lt;程序识别码&gt; 指定程序识别码，并列出该程序的状况。
+p&lt;程序识别码&gt; 此参数的效果和指定&quot;-p&quot;参数相同，只在列表格式方面稍有差异。
+r 　只列出现行终端机正在执行中的程序。
+-s&lt;阶段作业&gt; 指定阶段作业的程序识别码，并列出隶属该阶段作业的程序的状况。
+s 　采用程序信号的格式显示程序状况。
+S 　列出程序时，包括已中断的子程序资料。
+-t&lt;终端机编号&gt; 指定终端机编号，并列出属于该终端机的程序的状况。
+t&lt;终端机编号&gt; 此参数的效果和指定&quot;-t&quot;参数相同，只在列表格式方面稍有差异。
+-T 　显示现行终端机下的所有程序。
+-u&lt;用户识别码&gt; 此参数的效果和指定&quot;-U&quot;参数相同。
+u 　以用户为主的格式来显示程序状况。
+-U&lt;用户识别码&gt; 列出属于该用户的程序的状况，也可使用用户名称来指定。
+U&lt;用户名称&gt; 列出属于该用户的程序的状况。
+v 　采用虚拟内存的格式显示程序状况。
+-V或V 　显示版本信息。
+-w或w 　采用宽阔的格式来显示程序状况。
+x 　显示所有程序，不以终端机来区分。
+X 　采用旧式的Linux i386登陆格式显示程序状况。
+-y 　配合参数&quot;-l&quot;使用时，不显示F(flag)栏位，并以RSS栏位取代ADDR栏位　。
+-&lt;程序识别码&gt; 此参数的效果和指定&quot;p&quot;参数相同。
+--cols&lt;每列字符数&gt; 设置每列的最大字符数。
+--columns&lt;每列字符数&gt; 此参数的效果和指定&quot;--cols&quot;参数相同。
+--cumulative 　此参数的效果和指定&quot;S&quot;参数相同。
+--deselect 　此参数的效果和指定&quot;-N&quot;参数相同。
+--forest 　此参数的效果和指定&quot;f&quot;参数相同。
+--headers 　重复显示标题列。
+--help 　在线帮助。
+--info 　显示排错信息。
+--lines&lt;显示列数&gt; 设置显示画面的列数。
+--no-headers 　此参数的效果和指定&quot;h&quot;参数相同，只在列表格式方面稍有差异。
+--group&lt;群组名称&gt; 此参数的效果和指定&quot;-G&quot;参数相同。
+--Group&lt;群组识别码&gt; 此参数的效果和指定&quot;-G&quot;参数相同。
+--pid&lt;程序识别码&gt; 此参数的效果和指定&quot;-p&quot;参数相同。
+--rows&lt;显示列数&gt; 此参数的效果和指定&quot;--lines&quot;参数相同。
+--sid&lt;阶段作业&gt; 此参数的效果和指定&quot;-s&quot;参数相同。
+--tty&lt;终端机编号&gt; 此参数的效果和指定&quot;-t&quot;参数相同。
+--user&lt;用户名称&gt; 此参数的效果和指定&quot;-U&quot;参数相同。
+--User&lt;用户识别码&gt; 此参数的效果和指定&quot;-U&quot;参数相同。
+--version 　此参数的效果和指定&quot;-V&quot;参数相同。
+--widty&lt;每列字符数&gt; 此参数的效果和指定&quot;-cols&quot;参数相同。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:49:04.000Z"><a href="/2010/12/19/linux-diff-命令详解/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-diff-命令详解/">linux diff 命令详解 </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>linux diff(differential) 命令详解
+功能说明：比较文件的差异。</p>
+<p>语　　法：diff [-abBcdefHilnNpPqrstTuvwy][-&lt;行数&gt;][-C &lt;行数&gt;][-D &lt;巨集名称&gt;][-I &lt;字符或字符串&gt;][-S &lt;文件&gt;][-W &lt;宽度&gt;][-x &lt;文件或目录&gt;][-X &lt;文件&gt;][--help][--left-column][--suppress-common-line][文件或目录1][文件或目录 2]
+补充说明：diff以逐行的方式，比较文本文件的异同处。所是指定要比较目录，则diff会比较目录中相同文件名的文件，但不会比较其中子目录。</p>
+<p>参　　数：
+-&lt;行数&gt; 指定要显示多少行的文本。此参数必须与-c或-u参数一并使用。
+-a或--text 　diff预设只会逐行比较文本文件。
+-b或--ignore-space-change 　不检查空格字符的不同。
+-B或--ignore-blank-lines 　不检查空白行。
+-c 　显示全部内文，并标出不同之处。
+-C&lt;行数&gt;或--context&lt;行数&gt; 与执行&quot;-c-&lt;行数&gt;&quot;指令相同。
+-d或--minimal 　使用不同的演算法，以较小的单位来做比较。
+-D&lt;巨集名称&gt;或ifdef&lt;巨集名称&gt; 此参数的输出格式可用于前置处理器巨集。
+-e或--ed 　此参数的输出格式可用于ed的script文件。
+-f或-forward-ed 　输出的格式类似ed的script文件，但按照原来文件的顺序来显示不同处。
+-H或--speed-large-files 　比较大文件时，可加快速度。
+-l&lt;字符或字符串&gt;或--ignore-matching-lines&lt;字符或字符串&gt; 若两个文件在某几行有所不同，而这几行同时都包含了选项中指定的字符或字符串，则不显示这两个文件的差异。
+-i或--ignore-case 　不检查大小写的不同。
+-l或--paginate 　将结果交由pr程序来分页。
+-n或--rcs 　将比较结果以RCS的格式来显示。
+-N或--new-file 　在比较目录时，若文件A仅出现在某个目录中，预设会显示：
+Only in目录：文件A若使用-N参数，则diff会将文件A与一个空白的文件比较。
+-p 　若比较的文件为C语言的程序码文件时，显示差异所在的函数名称。
+-P或--unidirectional-new-file 　与-N类似，但只有当第二个目录包含了一个第一个目录所没有的文件时，才会将这个文件与空白的文件做比较。
+-q或--brief 　仅显示有无差异，不显示详细的信息。
+-r或--recursive 　比较子目录中的文件。
+-s或--report-identical-files 　若没有发现任何差异，仍然显示信息。
+-S&lt;文件&gt;或--starting-file&lt;文件&gt; 在比较目录时，从指定的文件开始比较。
+-t或--expand-tabs 　在输出时，将tab字符展开。
+-T或--initial-tab 　在每行前面加上tab字符以便对齐。
+-u,-U&lt;列数&gt;或--unified=&lt;列数&gt; 以合并的方式来显示文件内容的不同。
+-v或--version 　显示版本信息。
+-w或--ignore-all-space 　忽略全部的空格字符。
+-W&lt;宽度&gt;或--width&lt;宽度&gt; 在使用-y参数时，指定栏宽。
+-x&lt;文件名或目录&gt;或--exclude&lt;文件名或目录&gt; 不比较选项中所指定的文件或目录。
+-X&lt;文件&gt;或--exclude-from&lt;文件&gt; 您可以将文件或目录类型存成文本文件，然后在=&lt;文件&gt;中指定此文本文件。
+-y或--side-by-side 　以并列的方式显示文件的异同之处。
+--help 　显示帮助。
+--left-column 　在使用-y参数时，若两个文件某一行内容相同，则仅在左侧的栏位显示该行内容。
+--suppress-common-lines 　在使用-y参数时，仅显示不同之处</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:48:09.000Z"><a href="/2010/12/19/linux-tar-detailed/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-tar-detailed/">linux tar 命令详解 </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>tar -c|x|u|r|t[z|j][v] -f &lt;归档文件&gt; [未打包文件]</p>
+<p>将多个文件打包为一个归档文件，可以在打包的同时进行压缩。支持的格式为tar（归档）、gz（压缩）、bz2（压缩率更高，比较耗时）</p>
+<pre><code><figure class="highlight"><pre> <span class="literal">-</span><span class="comment">c</span> <span class="comment">创建</span>
+<span class="literal">-</span><span class="comment">x</span> <span class="comment">解包</span>
+<span class="literal">-</span><span class="comment">u</span> <span class="comment">更新</span>
+<span class="literal">-</span><span class="comment">r</span> <span class="comment">添加</span>
+<span class="literal">-</span><span class="comment">t</span> <span class="comment">查看</span>
+<span class="literal">-</span><span class="comment">d</span> <span class="comment">比较压缩包内文件和文件</span>
+<span class="literal">-</span><span class="comment">A</span> <span class="comment">将tar文件添加到归档文件中</span>
+<span class="literal">-</span><span class="comment">z</span> <span class="comment">使用gz压缩格式</span>
+<span class="literal">-</span><span class="comment">j</span> <span class="comment">使用bz2压缩格式</span>
+<span class="literal">-</span><span class="comment">v</span> <span class="comment">显示过程</span>
+<span class="literal">-</span><span class="comment">f</span> &lt;<span class="comment">文件名</span>&gt; <span class="comment">归档文件的文件名</span>
+<span class="literal">-</span><span class="comment">C</span> &lt;<span class="comment">解压路径</span>&gt; <span class="comment">将压缩包中的文件解压到指定目录`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="title">[</span><span class="comment">未打包文件</span>] <span class="comment">创建、更新时必须填写</span>
+
+<span class="comment">示例：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span> <span class="comment">tar</span> <span class="literal">-</span><span class="comment">zcvf</span> <span class="comment">xxx</span>.<span class="comment">tar</span>.<span class="comment">gz</span> <span class="comment">xxx/</span> <span class="comment">xxx1</span> <span class="comment">xxx2</span> <span class="comment">xxx3</span> <span class="comment">多个待打包文件以空格分隔</span>
+<span class="comment">tar</span> <span class="literal">-</span><span class="comment">zxvf</span> <span class="comment">xxx</span>.<span class="comment">tar</span>.<span class="comment">gz</span> <span class="comment">按相对路径解包到当前目录下，或按绝对路径解包</span>
+<span class="comment">tar</span> <span class="literal">-</span><span class="comment">zcvf</span> <span class="comment">xxx</span>.<span class="comment">tar</span>.<span class="comment">gz</span> <span class="comment">xxx</span> <span class="comment">|</span> <span class="comment">split</span> <span class="literal">-</span><span class="comment">b</span> <span class="comment">1m</span> <span class="comment">打包后，使用split分割为1m大小的多个文件`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">**其它参数**</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span> <span class="literal">-</span><span class="comment">P</span> <span class="comment">使用绝对路径压缩时，保留根目录“/”</span>
+<span class="literal">-</span><span class="comment">W</span> <span class="comment">校验</span>
+<span class="literal">-</span><span class="comment">p</span> <span class="comment">还原文件权限</span>
+<span class="literal">-</span><span class="comment">w</span> <span class="comment">询问用户</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">totals</span> <span class="comment">统计</span>
+<span class="literal">-</span><span class="comment">T</span> &lt;<span class="comment">表达式</span>&gt; <span class="comment">处理符合条件的文件</span>
+<span class="literal">-</span><span class="comment">X</span> &lt;<span class="comment">表达式</span>&gt; <span class="comment">排除符合条件的文件`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">**</span>
+<span class="comment">通过ssh传输文件**</span>
+<span class="comment">Code</span> <span class="comment">block</span> 
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span> <span class="comment">scp</span> <span class="literal">-</span><span class="comment">rp</span> <span class="comment">/path/filename</span> <span class="comment">username@remoteIP:/path</span> <span class="comment">#将本地文件拷贝到服务器上</span>
+<span class="comment">scp</span> <span class="literal">-</span><span class="comment">rp</span> <span class="comment">username@remoteIP:/path/filename</span> <span class="comment">/path</span> <span class="comment">#将远程文件从服务器下载到本地</span>
+<span class="comment">tar</span> <span class="comment">cvzf</span> <span class="literal">-</span> <span class="comment">/path/</span> <span class="comment">|</span> <span class="comment">ssh</span> <span class="comment">username@remoteip</span> <span class="comment">"cd</span> <span class="comment">/some/path/;</span> <span class="comment">cat</span> <span class="literal">-</span> &gt; <span class="comment">path</span>.<span class="comment">tar</span>.<span class="comment">gz"</span> <span class="comment">#压缩传输</span>
+<span class="comment">tar</span> <span class="comment">cvzf</span> <span class="literal">-</span> <span class="comment">/path/</span> <span class="comment">|</span> <span class="comment">ssh</span> <span class="comment">username@remoteip</span> <span class="comment">"cd</span> <span class="comment">/some/path/;</span> <span class="comment">tar</span> <span class="comment">xvzf</span> <span class="literal">-</span><span class="comment">"</span> <span class="comment">#压缩传输一个目录并解压缩`</span>&lt;<span class="comment">/pre</span>&gt;
+
+<span class="comment">##直接命令行输入不需要双引号</span>
+
+<span class="comment">功能说明：备份文件。</span>
+<span class="comment">**语　　法**：tar</span> <span class="title">[</span><span class="literal">-</span><span class="comment">ABcdgGhiklmMoOpPrRsStuUvwWxzZ</span>]<span class="title">[</span><span class="literal">-</span><span class="comment">b</span> &lt;<span class="comment">区块数目</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">C</span> &lt;<span class="comment">目的目录</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">f</span> &lt;<span class="comment">备份文件</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">F</span> <span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">K</span> &lt;<span class="comment">文件</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">L</span> &lt;<span class="comment">媒体容量</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">N</span> &lt;<span class="comment">日期时间</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">T</span> &lt;<span class="comment">范本文件</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">V</span> &lt;<span class="comment">卷册名称</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="comment">X</span> &lt;<span class="comment">范本文件</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span>&lt;<span class="comment">设备编号</span>&gt;&lt;<span class="comment">存储密</span> <span class="comment">度</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">after</span>-<span class="comment">date=</span>&lt;<span class="comment">日期时间</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">atime</span>-<span class="comment">preserve</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">backuup=</span>&lt;<span class="comment">备份方式&amp;</span> <span class="comment">amp;</span> <span class="comment">gt;</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">checkpoint</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">concatenate</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">confirmation</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">delete</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">exclude=&amp;</span> <span class="comment">lt;范本样式</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">force</span>-<span class="comment">local</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">group=</span>&lt;<span class="comment">群组名称</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">help</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">ignore</span>- <span class="comment">failed</span>-<span class="comment">read</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">new</span>-<span class="comment">volume</span>-<span class="comment">script=</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">newer</span>-<span class="comment">mtime</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">no</span>- <span class="comment">recursion</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">null</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">numeric</span>-<span class="comment">owner</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">owner=</span>&lt;<span class="comment">用户名称</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">posix</span>] <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">erve</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">preserve</span>-<span class="comment">order</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">preserve</span>-<span class="comment">permissions</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">record</span>-<span class="comment">size=</span>&lt;<span class="comment">区块数</span> <span class="comment">目</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span>-<span class="comment">unlink</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">remove</span>-<span class="comment">files</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">rsh</span>-<span class="comment">command=</span>&lt;<span class="comment">执行指令</span>&gt;<span class="title">]</span> <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">same</span>-<span class="comment">owner</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">suffix=</span>&lt;<span class="comment">备份字尾字符串</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">totals</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">use</span>-<span class="comment">compress</span>- <span class="comment">program=</span>&lt;<span class="comment">执行指令</span>&gt;<span class="title">]</span><span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">version</span>]<span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">volno</span>-<span class="comment">file=</span>&lt;<span class="comment">编号文件</span>&gt;<span class="title">]</span><span class="title">[</span><span class="comment">文件或目录</span>.<span class="string">.</span><span class="string">.</span><span class="title">]</span>
+<span class="comment">补充说明：tar是用来建立，还原备份文件的工具程序，它可以加入，解开备份文件内的文件。</span>
+
+<span class="comment">**参　　数**：</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span> <span class="literal">-</span><span class="comment">A或</span>-<span class="literal">-</span><span class="comment">catenate</span> <span class="comment">新增温暖件到已存在的备份文件。</span>
+<span class="literal">-</span><span class="comment">b</span>&lt;<span class="comment">区块数目</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">blocking</span>-<span class="comment">factor=</span>&lt;<span class="comment">区块数目</span>&gt; <span class="comment">设置每笔记录的区块数目，每个区块大小为12Bytes。</span>
+<span class="literal">-</span><span class="comment">B或</span>-<span class="literal">-</span><span class="comment">read</span>-<span class="comment">full</span>-<span class="comment">records</span> <span class="comment">读取数据时重设区块大小。</span>
+<span class="literal">-</span><span class="comment">c或</span>-<span class="literal">-</span><span class="comment">create</span> <span class="comment">建立新的备份文件。</span>
+<span class="literal">-</span><span class="comment">C</span>&lt;<span class="comment">目的目录</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">directory=</span>&lt;<span class="comment">目的目录</span>&gt; <span class="comment">切换到指定的目录。</span>
+<span class="literal">-</span><span class="comment">d或</span>-<span class="literal">-</span><span class="comment">diff或</span>-<span class="literal">-</span><span class="comment">compare</span> <span class="comment">对比备份文件内和文件系统上的文件的差异。</span>
+<span class="literal">-</span><span class="comment">f</span>&lt;<span class="comment">备份文件</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">file=</span>&lt;<span class="comment">备份文件</span>&gt; <span class="comment">指定备份文件。</span>
+<span class="literal">-</span><span class="comment">F或</span>-<span class="literal">-</span><span class="comment">info</span>-<span class="comment">script=</span> <span class="comment">每次更换磁带时，就执行指定的Script文件。</span>
+<span class="literal">-</span><span class="comment">g或</span>-<span class="literal">-</span><span class="comment">listed</span>-<span class="comment">incremental</span> <span class="comment">处理GNU格式的大量备份。</span>
+<span class="literal">-</span><span class="comment">G或</span>-<span class="literal">-</span><span class="comment">incremental</span> <span class="comment">处理旧的GNU格式的大量备份。</span>
+<span class="literal">-</span><span class="comment">h或</span>-<span class="literal">-</span><span class="comment">dereference</span> <span class="comment">不建立符号连接，直接复制该连接所指向的原始文件。</span>
+<span class="literal">-</span><span class="comment">i或</span>-<span class="literal">-</span><span class="comment">ignore</span>-<span class="comment">zeros</span> <span class="comment">忽略备份文件中的0</span> <span class="comment">Byte区块，也就是EOF。</span>
+<span class="literal">-</span><span class="comment">k或</span>-<span class="literal">-</span><span class="comment">keep</span>-<span class="comment">old</span>-<span class="comment">files</span> <span class="comment">解开备份文件时，不覆盖已有的文件。</span>
+<span class="literal">-</span><span class="comment">K</span>&lt;<span class="comment">文件</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">starting</span>-<span class="comment">file=</span>&lt;<span class="comment">文件</span>&gt; <span class="comment">从指定的文件开始还原。</span>
+<span class="literal">-</span><span class="comment">l或</span>-<span class="literal">-</span><span class="comment">one</span>-<span class="comment">file</span>-<span class="comment">system</span> <span class="comment">复制的文件或目录存放的文件系统，必须与tar指令执行时所处的文件系统相同，否则不予复制。</span>
+<span class="literal">-</span><span class="comment">L</span>&lt;<span class="comment">媒体容量</span>&gt;<span class="comment">或</span>-<span class="comment">tape</span>-<span class="comment">length=</span>&lt;<span class="comment">媒体容量</span>&gt; <span class="comment">设置存放每体的容量，单位以1024</span> <span class="comment">Bytes计算。</span>
+<span class="literal">-</span><span class="comment">m或</span>-<span class="literal">-</span><span class="comment">modification</span>-<span class="comment">time</span> <span class="comment">还原文件时，不变更文件的更改时间。</span>
+<span class="literal">-</span><span class="comment">M或</span>-<span class="literal">-</span><span class="comment">multi</span>-<span class="comment">volume</span> <span class="comment">在建立，还原备份文件或列出其中的内容时，采用多卷册模式。</span>
+<span class="literal">-</span><span class="comment">N</span>&lt;<span class="comment">日期格式</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">newer=</span>&lt;<span class="comment">日期时间</span>&gt; <span class="comment">只将较指定日期更新的文件保存到备份文件里。</span>
+<span class="literal">-</span><span class="comment">o或</span>-<span class="literal">-</span><span class="comment">old</span>-<span class="comment">archive或</span>-<span class="literal">-</span><span class="comment">portability</span> <span class="comment">将资料写入备份文件时使用V7格式。</span>
+<span class="literal">-</span><span class="comment">O或</span>-<span class="literal">-</span><span class="comment">stdout</span> <span class="comment">把从备份文件里还原的文件输出到标准输出设备。</span>
+<span class="literal">-</span><span class="comment">p或</span>-<span class="literal">-</span><span class="comment">same</span>-<span class="comment">permissions</span> <span class="comment">用原来的文件权限还原文件。</span>
+<span class="literal">-</span><span class="comment">P或</span>-<span class="literal">-</span><span class="comment">absolute</span>-<span class="comment">names</span> <span class="comment">文件名使用绝对名称，不移除文件名称前的"/"号。</span>
+<span class="literal">-</span><span class="comment">r或</span>-<span class="literal">-</span><span class="comment">append</span> <span class="comment">新增文件到已存在的备份文件的结尾部分。</span>
+<span class="literal">-</span><span class="comment">R或</span>-<span class="literal">-</span><span class="comment">block</span>-<span class="comment">number</span> <span class="comment">列出每个信息在备份文件中的区块编号。</span>
+<span class="literal">-</span><span class="comment">s或</span>-<span class="literal">-</span><span class="comment">same</span>-<span class="comment">order</span> <span class="comment">还原文件的顺序和备份文件内的存放顺序相同。</span>
+<span class="literal">-</span><span class="comment">S或</span>-<span class="literal">-</span><span class="comment">sparse</span> <span class="comment">倘若一个文件内含大量的连续0字节，则将此文件存成稀疏文件。</span>
+<span class="literal">-</span><span class="comment">t或</span>-<span class="literal">-</span><span class="comment">list</span> <span class="comment">列出备份文件的内容。</span>
+<span class="literal">-</span><span class="comment">T</span>&lt;<span class="comment">范本文件</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">files</span>-<span class="comment">from=</span>&lt;<span class="comment">范本文件</span>&gt; <span class="comment">指定范本文件，其内含有一个或多个范本样式，让tar解开或建立符合设置条件的文件。</span>
+<span class="literal">-</span><span class="comment">u或</span>-<span class="literal">-</span><span class="comment">update</span> <span class="comment">仅置换较备份文件内的文件更新的文件。</span>
+<span class="literal">-</span><span class="comment">U或</span>-<span class="literal">-</span><span class="comment">unlink</span>-<span class="comment">first</span> <span class="comment">解开压缩文件还原文件之前，先解除文件的连接。</span>
+<span class="literal">-</span><span class="comment">v或</span>-<span class="literal">-</span><span class="comment">verbose</span> <span class="comment">显示指令执行过程。</span>
+<span class="literal">-</span><span class="comment">V</span>&lt;<span class="comment">卷册名称</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">label=</span>&lt;<span class="comment">卷册名称</span>&gt; <span class="comment">建立使用指定的卷册名称的备份文件。</span>
+<span class="literal">-</span><span class="comment">w或</span>-<span class="literal">-</span><span class="comment">interactive</span> <span class="comment">遭遇问题时先询问用户。</span>
+<span class="literal">-</span><span class="comment">W或</span>-<span class="literal">-</span><span class="comment">verify</span> <span class="comment">写入备份文件后，确认文件正确无误。</span>
+<span class="literal">-</span><span class="comment">x或</span>-<span class="literal">-</span><span class="comment">extract或</span>-<span class="literal">-</span><span class="comment">get</span> <span class="comment">从备份文件中还原文件。</span>
+<span class="literal">-</span><span class="comment">X</span>&lt;<span class="comment">范本文件</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">exclude</span>-<span class="comment">from=</span>&lt;<span class="comment">范本文件</span>&gt; <span class="comment">指定范本文件，其内含有一个或多个范本样式，让ar排除符合设置条件的文件。</span>
+<span class="literal">-</span><span class="comment">z或</span>-<span class="literal">-</span><span class="comment">gzip或</span>-<span class="literal">-</span><span class="comment">ungzip</span> <span class="comment">通过gzip指令处理备份文件。</span>
+<span class="literal">-</span><span class="comment">Z或</span>-<span class="literal">-</span><span class="comment">compress或</span>-<span class="literal">-</span><span class="comment">uncompress</span> <span class="comment">通过compress指令处理备份文件。</span>
+<span class="literal">-</span>&lt;<span class="comment">设备编号</span>&gt;&lt;<span class="comment">存储密度</span>&gt; <span class="comment">设置备份用的外围设备编号及存放数据的密度。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">after</span>-<span class="comment">date=</span>&lt;<span class="comment">日期时间</span>&gt; <span class="comment">此参数的效果和指定"</span>-<span class="comment">N"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">atime</span>-<span class="comment">preserve</span> <span class="comment">不变更文件的存取时间。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">backup=</span>&lt;<span class="comment">备份方式</span>&gt;<span class="comment">或</span>-<span class="literal">-</span><span class="comment">backup</span> <span class="comment">移除文件前先进行备份。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">checkpoint</span> <span class="comment">读取备份文件时列出目录名称。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">concatenate</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">A"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">confirmation</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">w"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">delete</span> <span class="comment">从备份文件中删除指定的文件。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">exclude=</span>&lt;<span class="comment">范本样式</span>&gt; <span class="comment">排除符合范本样式的问家。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">group=</span>&lt;<span class="comment">群组名称</span>&gt; <span class="comment">把加入设备文件中的文件的所属群组设成指定的群组。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">help</span> <span class="comment">在线帮助。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">ignore</span>-<span class="comment">failed</span>-<span class="comment">read</span> <span class="comment">忽略数据读取错误，不中断程序的执行。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">new</span>-<span class="comment">volume</span>-<span class="comment">script=</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">F"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">newer</span>-<span class="comment">mtime</span> <span class="comment">只保存更改过的文件。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">no</span>-<span class="comment">recursion</span> <span class="comment">不做递归处理，也就是指定目录下的所有文件及子目录不予处理。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">null</span> <span class="comment">从null设备读取文件名称。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">numeric</span>-<span class="comment">owner</span> <span class="comment">以用户识别码及群组识别码取代用户名称和群组名称。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">owner=</span>&lt;<span class="comment">用户名称</span>&gt; <span class="comment">把加入备份文件中的文件的拥有者设成指定的用户。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">posix</span> <span class="comment">将数据写入备份文件时使用POSIX格式。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">preserve</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">ps"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">preserve</span>-<span class="comment">order</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">A"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">preserve</span>-<span class="comment">permissions</span> <span class="comment">此参数的效果和指定"</span>-<span class="comment">p"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">record</span>-<span class="comment">size=</span>&lt;<span class="comment">区块数目</span>&gt; <span class="comment">此参数的效果和指定"</span>-<span class="comment">b"参数相同。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">recursive</span>-<span class="comment">unlink</span> <span class="comment">解开压缩文件还原目录之前，先解除整个目录下所有文件的连接。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">remove</span>-<span class="comment">files</span> <span class="comment">文件加入备份文件后，就将其删除。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">rsh</span>-<span class="comment">command=</span>&lt;<span class="comment">执行指令</span>&gt; <span class="comment">设置要在远端主机上执行的指令，以取代rsh指令。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">same</span>-<span class="comment">owner</span> <span class="comment">尝试以相同的文件拥有者还原问家你。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">suffix=</span>&lt;<span class="comment">备份字尾字符串</span>&gt; <span class="comment">移除文件前先行备份。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">totals</span> <span class="comment">备份文件建立后，列出文件大小。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">use</span>-<span class="comment">compress</span>-<span class="comment">program=</span>&lt;<span class="comment">执行指令</span>&gt; <span class="comment">通过指定的指令处理备份文件。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">version</span> <span class="comment">显示版本信息。</span>
+<span class="literal">-</span><span class="literal">-</span><span class="comment">volno</span>-<span class="comment">file=</span>&lt;<span class="comment">编号文件</span>&gt; <span class="comment">使用指定文件内的编号取代预设的卷册编号。
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:18:37.000Z"><a href="/2010/12/19/linux-acl/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-acl/">linux acl 访问控制列表</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>要想使用ACL功能，首先需要正确编译2.6内核，并确保有下列选项：</p>
+<pre><code><figure class="highlight"><pre>CONFIG_EXT2_FS_POSIX_ACL=yCONFIG_EXT3_FS_POSIX_ACL=yCONFIG_FS_POSIX_ACL=y`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+用新内核启动后，还要求在挂载分区的时候添加必要的参数“acl”。
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`mount -t ext3 -o rw,acl /dev/hda8 /your_mount_point
+或在 /etc/fstab 中加入下列行，实现自动mount分区并且带有“acl”参数。
+/dev/hda8
+ext3 /your_mount_point defaults,acl 1 1`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+正确挂载文件系统后，就可以使用ACL的命令来修改文件的ACL属性了。修改ACL属性的命令有setfacl、getfacl 和chacl，其中chacl是一个SGI IRIX兼容命令，主要适用于那些对SGI IRIX以及XFS文件系统比较熟悉的用户。本文只介绍setfacl和getfacl命令，具体用法如下面的例子：
+
+1.使文件1.txt可以被用户test读写
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`setfacl -m u:test:rw 1.txt`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+2.使文件1.txt可以被qmail组的组员读，但不能写
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`setfacl -m g:qmail:r 1.txt`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+3.把某一文件的ACL属性copy给另一文件，比如把文件1.txt的ACL属性copy给2.txt：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`getfacl 1.txt | setfacl -set-file=- 2.txt`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+4.同时为文件设置不同用户或组的权限
+比如对文件2.txt设定testmail用户可读写，qmail组组员可读可执行，nofiles 组组员可执行:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`setfacl -m u:testmail:rw,g:qmail:rx,g:nofiles:x 2.txt
+</pre></figure></code></pre>
+<p>查看man page可获得setfact和getfacl命令更详细的用法。
+在系统管理员的工作中，遇到的最大的困难往往不是高难度的内核问题，也不是配置Apache服务器之类的问题，而是控制文件访问权限的问题。主管领导常常 会提出非常特别的要求，权限配置经常具体到人，这在配置文件服务器Samba时非常难于实现，使用2.6内核中的ACL（访问控制列表）新功能，问题就会 迎刃而解。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:16:45.000Z"><a href="/2010/12/19/linux-binding-hardware-interrupt/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-binding-hardware-interrupt/">Linux 绑定制定硬件中断到不同 CPU</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>硬件中断发生频繁，是件很消耗 CPU 资源的事情，在多核 CPU 条件下如果有办法把大量硬件中断分配给不同的 CPU (core) 处理显然能很好的平衡性能。现在的服务器上动不动就是多 CPU 多核、多网卡、多硬盘，如果能让网卡中断独占1个 CPU (core)、磁盘 IO 中断独占1个 CPU 的话将会大大减轻单一 CPU 的负担、提高整体处理效率。VPSee 前天收到一位网友的邮件提到了 SMP IRQ Affinity，引发了今天的话题：D，以下操作在 SUN FIre X2100 M2 服务器＋ 64位版本 CentOS 5.5 + Linux 2.6.18-194.3.1.el5 上执行。</p>
+<p>什么是中断
+      中文教材上对 “中断” 的定义太生硬了，简单的说就是，每个硬件设备（如：硬盘、网卡等）都需要和 CPU 有某种形式的通信以便 CPU 及时知道发生了什么事情，这样 CPU 可能就会放下手中的事情去处理应急事件，硬件设备主动打扰 CPU 的现象就可称为硬件中断，就像你正在工作的时候受到 QQ 干扰一样，一次 QQ 摇头就可以被称为中断。</p>
+<pre><code><figure class="highlight"><pre>  中断是一种比较好的 CPU 和硬件沟通的方式，还有一种方式叫做轮询（polling），就是让 CPU 定时对硬件状态进行查询然后做相应处理，就好像你每隔<span class="number">5</span>分钟去检查一下 QQ 看看有没有人找你一样，这种方式是不是很浪费你（CPU）的时间？所以中断是硬件主动的方式，比轮询（CPU 主动）更有效一些。
+
+  好了，这里又有了一个问题，每个硬件设备都中断，那么如何区分不同硬件呢？不同设备同时中断如何知道哪个中断是来自硬盘、哪个来自网卡呢？这 个很容易，不是每个 QQ 号码都不相同吗？同样的，系统上的每个硬件设备都会被分配一个 IRQ 号，通过这个唯一的 IRQ 号就能区别张三和李四了。
+
+  在计算机里，中断是一种电信号，由硬件产生，并直接送到中断控制器（如 <span class="number">8259</span>A）上，然后再由中断控制器向 CPU 发送信号，CPU 检测到该信号后，就中断当前的工作转而去处理中断。然后，处理器会通知操作系统已经产生中断，这样操作系统就会对这个中断进行适当的处理。现在来看一下中 断控制器，常见的中断控制器有两种：可编程中断控制器 <span class="number">8259</span>A 和高级可编程中断控制器（APIC），中断控制器应该在大学的硬件接口和计算机体系结构的相关课程中都学过。传统的 <span class="number">8259</span>A 只适合单 CPU 的情况，现在都是多 CPU 多核的 SMP 体系，所以为了充分利用 SMP 体系结构、把中断传递给系统上的每个 CPU 以便更好实现并行和提高性能，Intel 引入了高级可编程中断控制器（APIC）。
+
+  光有高级可编程中断控制器的硬件支持还不够，Linux 内核还必须能利用到这些硬件特质，所以只有 kernel <span class="number">2.4</span> 以后的版本才支持把不同的硬件中断请求（IRQs）分配到特定的 CPU 上，这个绑定技术被称为 SMP IRQ <span class="transposed_variable">Affinity.</span> 更多介绍请参看 Linux 内核源代码自带的文档：linux-<span class="number">2.6</span><span class="number">.31</span><span class="number">.8</span>/Documentation/IRQ-<span class="transposed_variable">affinity.</span>txt
+</pre></figure></code></pre>
+<p>如何使用
+     先看看系统上的中断是怎么分配在 CPU 上的，很显然 CPU0 上处理的中断多一些：</p>
+<pre><code><figure class="highlight"><pre><span class="xml"></span><span class="comment"># cat /proc/interrupts</span><span class="xml">
+           CPU0       CPU1
+  </span><span class="number">0</span><span class="xml">:  </span><span class="number">918926335</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  timer
+  </span><span class="number">1</span><span class="xml">:          </span><span class="number">2</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
+  </span><span class="number">8</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  rtc
+  </span><span class="number">9</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  acpi
+</span><span class="number">12</span><span class="xml">:          </span><span class="number">4</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
+</span><span class="number">14</span><span class="xml">:    </span><span class="number">8248017</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  ide0
+</span><span class="number">50</span><span class="xml">:        </span><span class="number">194</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ohci_hcd:usb2
+</span><span class="number">58</span><span class="xml">:      </span><span class="number">31673</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  sata_nv
+</span><span class="number">90</span><span class="xml">:    </span><span class="number">1070374</span><span class="xml">          </span><span class="number">0</span><span class="xml">         PCI-MSI  eth0
+</span><span class="number">233</span><span class="xml">:         </span><span class="number">10</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ehci_hcd:usb1
+NMI:       </span><span class="number">5077</span><span class="xml">       </span><span class="number">2032</span><span class="xml">
+LOC:  </span><span class="number">918809969</span><span class="xml">  </span><span class="number">918809894</span><span class="xml">
+ERR:          </span><span class="number">0</span><span class="xml">
+MIS:          </span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+     为了不让 CPU0 很累怎么把部分中断转移到 CPU1 上呢？或者说如何把 eth0 网卡的中断转到 CPU1 上呢？先查看一下 IRQ </span><span class="number">90</span><span class="xml"> 中断的 smp affinity，看看当前中断是怎么分配在不同 CPU 上的（ffffffff 意味着分配在所有可用 CPU 上）：
+
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# cat /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity
+</span><span class="number">7</span><span class="xml">fffffff,ffffffff,ffffffff,ffffffff,ffffffff,ffffffff,ffffffff,ffffffff`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+在进一步动手之前我们需要先停掉 IRQ 自动调节的服务进程，这样才能手动绑定 IRQ 到不同 CPU，否则自己手动绑定做的更改将会被自动调节进程给覆盖掉。如果想修改 IRQ </span><span class="number">90</span><span class="xml"> 的中断处理，绑定到第</span><span class="number">2</span><span class="xml">个 CPU（CPU1）：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# /etc/init.d/irqbalance stop`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</span><span class="comment"># echo "2" &gt; /proc/irq/90/smp_affinity</span><span class="xml">
+      （上面的 echo “</span><span class="number">2</span><span class="xml">″ 是怎么来的？为什么是 ”</span><span class="number">2</span><span class="xml">“？）
+
+这 其实是个二进制数字，代表 </span><span class="number">00000010</span><span class="xml">，</span><span class="number">00000001</span><span class="xml"> 代表 CPU0 的话，</span><span class="number">00000010</span><span class="xml"> 就代表 CPU0， “echo </span><span class="number">2</span><span class="xml"> &gt; /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity” 的意思就是说把 </span><span class="number">90</span><span class="xml"> 中断绑定到 </span><span class="number">00000010</span><span class="xml">（CPU1）上。所以各个 CPU 用二进制和十六进制表示就是：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`               Binary       Hex
+   [separator] CPU </span><span class="number">0</span><span class="xml">    </span><span class="number">00000001</span><span class="xml">         </span><span class="number">1</span><span class="xml">
+    CPU </span><span class="number">1</span><span class="xml">    </span><span class="number">00000010</span><span class="xml">         </span><span class="number">2</span><span class="xml">
+    CPU </span><span class="number">2</span><span class="xml">    </span><span class="number">00000100</span><span class="xml">         </span><span class="number">4</span><span class="xml">
+    CPU </span><span class="number">3</span><span class="xml">    </span><span class="number">00001000</span><span class="xml">         </span><span class="number">8</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+如果我想把 IRQ 绑定到 CPU2 上就是 </span><span class="number">00000100</span><span class="xml">＝</span><span class="number">4</span><span class="xml">：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# echo "</span><span class="number">4</span><span class="xml">" &gt; /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+如果我想把 IRQ 同时平衡到 CPU0 和 CPU2 上就是 </span><span class="number">00000001</span><span class="xml">＋</span><span class="number">00000100</span><span class="xml">＝</span><span class="number">00000101</span><span class="xml">＝</span><span class="number">5</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# echo "</span><span class="number">5</span><span class="xml">" &gt; /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+需要注意的是，在手动绑定 IRQ 到 CPU 之前需要先停掉 irqbalance 这个服务，irqbalance 是个服务进程、是用来自动绑定和平衡 IRQ 的：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` /etc/init.d/irqbalance stop`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+过段时间在看 /proc/interrupts，是不是 </span><span class="number">90</span><span class="xml">:eth0 在 CPU1 上的中断增加了（</span><span class="number">145</span><span class="xml">）、在 CPU0 上的中断没变？不断打印 /proc/interrupts 就会发现 eth0 在 CPU0 上的中断数始终保持不变，而在 CPU1 上的中断数是持续增加的，这正是我们想要的结果：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# cat /proc/interrupts
+           CPU0       CPU1
+  </span><span class="number">0</span><span class="xml">:  </span><span class="number">922506515</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  timer
+  </span><span class="number">1</span><span class="xml">:          </span><span class="number">2</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
+  </span><span class="number">8</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  rtc
+  </span><span class="number">9</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  acpi
+</span><span class="number">12</span><span class="xml">:          </span><span class="number">4</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
+</span><span class="number">14</span><span class="xml">:    </span><span class="number">8280147</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  ide0
+</span><span class="number">50</span><span class="xml">:        </span><span class="number">194</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ohci_hcd:usb2
+</span><span class="number">58</span><span class="xml">:      </span><span class="number">31907</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  sata_nv
+</span><span class="number">90</span><span class="xml">:    </span><span class="number">1073399</span><span class="xml">        </span><span class="number">145</span><span class="xml">         PCI-MSI  eth0
+</span><span class="number">233</span><span class="xml">:         </span><span class="number">10</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ehci_hcd:usb1
+NMI:       </span><span class="number">5093</span><span class="xml">       </span><span class="number">2043</span><span class="xml">
+LOC:  </span><span class="number">922389696</span><span class="xml">  </span><span class="number">922389621</span><span class="xml">
+ERR:          </span><span class="number">0</span><span class="xml">
+MIS:          </span><span class="number">0</span><span class="xml"> </span>
+</pre></figure></code></pre>
+<p>有什么用
+      在网络非常 heavy 的情况下，对于文件服务器、高流量 Web 服务器这样的应用来说，把不同的网卡 IRQ 均衡绑定到不同的 CPU 上将会减轻某个 CPU 的负担，提高多个 CPU 整体处理中断的能力；对于数据库服务器这样的应用来说，把磁盘控制器绑到一个 CPU、把网卡绑定到另一个 CPU 将会提高数据库的响应时间、优化性能。合理的根据自己的生产环境和应用的特点来平衡 IRQ 中断有助于提高系统的整体吞吐能力和性能。
+      VPSee 经常收到网友来信问到如何优化 Linux、优化 VPS、这个问题不太好回答，要记住的是性能优化是一个过程而不是结果，不是看了些文档改了改参数就叫优化了，后面还需要大量的测试、监测以及持续的观察和改进。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/11/" class="alignleft prev">上一页</a>
+  
+  
+    <a href="/page/13/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Cache-control/" style="font-size: 16.75px;">Cache-control</a><a href="/tags/Cluster-bacst/" style="font-size: 12.00px;">Cluster-bacst</a><a href="/tags/Header-V3-DSA-signature/" style="font-size: 15.75px;">Header V3 DSA signature</a><a href="/tags/object-Object/" style="font-size: 14.75px;">[object Object]</a><a href="/tags/apache/" style="font-size: 19.50px;">apache</a><a href="/tags/awk/" style="font-size: 18.25px;">awk</a><a href="/tags/bash/" style="font-size: 17.00px;">bash</a><a href="/tags/browser/" style="font-size: 13.75px;">browser</a><a href="/tags/cache/" style="font-size: 14.00px;">cache</a><a href="/tags/cdn/" style="font-size: 16.25px;">cdn</a><a href="/tags/centos/" style="font-size: 19.25px;">centos</a><a href="/tags/cpan/" style="font-size: 12.75px;">cpan</a><a href="/tags/cpanm/" style="font-size: 12.25px;">cpanm</a><a href="/tags/etag/" style="font-size: 14.25px;">etag</a><a href="/tags/expires/" style="font-size: 13.00px;">expires</a><a href="/tags/foreman/" style="font-size: 15.25px;">foreman</a><a href="/tags/gzip/" style="font-size: 10.50px;">gzip</a><a href="/tags/libmemcached/" style="font-size: 15.00px;">libmemcached</a><a href="/tags/mod_cband/" style="font-size: 11.00px;">mod_cband</a><a href="/tags/mod_limitipconn/" style="font-size: 12.50px;">mod_limitipconn</a><a href="/tags/moudles/" style="font-size: 10.25px;">moudles</a><a href="/tags/mysql/" style="font-size: 18.75px;">mysql</a><a href="/tags/nginx/" style="font-size: 18.00px;">nginx</a><a href="/tags/php-1/" style="font-size: 16.50px;">php</a><a href="/tags/php-fpm/" style="font-size: 17.50px;">php-fpm</a><a href="/tags/puppet/" style="font-size: 19.00px;">puppet</a><a href="/tags/python26/" style="font-size: 15.50px;">python2.6</a><a href="/tags/referer/" style="font-size: 11.25px;">referer</a><a href="/tags/repo/" style="font-size: 16.00px;">repo</a><a href="/tags/ruby/" style="font-size: 14.50px;">ruby</a><a href="/tags/shell/" style="font-size: 17.25px;">shell</a><a href="/tags/shtml/" style="font-size: 11.50px;">shtml</a><a href="/tags/ssi/" style="font-size: 11.75px;">ssi</a><a href="/tags/tomcat/" style="font-size: 18.50px;">tomcat</a><a href="/tags/yum/" style="font-size: 19.75px;">yum</a><a href="/tags/单引号/" style="font-size: 13.25px;">单引号</a><a href="/tags/双引号/" style="font-size: 13.50px;">双引号</a><a href="/tags/环境变量/" style="font-size: 10.00px;">环境变量</a><a href="/tags/详解/" style="font-size: 17.75px;">详解</a><a href="/tags/过滤日志/" style="font-size: 10.75px;">过滤日志</a>
+  </div>
+</div>
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

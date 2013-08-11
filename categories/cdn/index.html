@@ -3,21 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>cdn | Puppet-in-action</title>
+  <title>cdn | Liuyu blog</title>
   <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="Puppet cdn AutoMate">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-  <meta property="og:site_name" content="Puppet-in-action"/>
+  <meta property="og:site_name" content="Liuyu blog"/>
 
   
     <meta property="og:image" content="undefined"/>
   
 
   <link href="/favicon.png" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="Liuyu blog" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
@@ -27,8 +29,8 @@
 
 <body>
   <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">Puppet-in-action</a></h1>
-  <h2><a href="/">Puppet</a></h2>
+  <h1><a href="/">Liuyu blog</a></h1>
+  <h2><a href="/">Puppet in action</a></h2>
 </div>
 <nav id="main-nav" class="alignright">
   <ul>
@@ -36,6 +38,8 @@
       <li><a href="/">Home</a></li>
     
       <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -46,1259 +50,153 @@
 <h2 class="archive-title category">cdn</h2>
 
 
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2011-03-30T08:48:45.000Z"><a href="/2011/03/30/what-are-the-programming-languages-and-frameworks-the-top-nyc-startups-are-using/">3月 30 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/03/30/what-are-the-programming-languages-and-frameworks-the-top-nyc-startups-are-using/">What are the programming languages and frameworks the top NYC startups are using?</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>In a conversation with the NYCEDC and ITAC, I learned that no one has a sense of what are the predominant languages and frameworks that people are using.</p>
-<p>If you are with a startup or company that has more than 1M pageviews a month and is based in NYC (or the boroughs), can you give a sense of the skills/experience you are looking for? This will help people understand what skills we need to grow...</p>
-<p>Companies like:</p>
-<p>Tumblr</p>
-<p>OMGPOP</p>
-<p>Kickstarter</p>
-<p>Makerbot</p>
-<p>AppNexus</p>
-<p>Aviary</p>
-<p>the Fridge</p>
-<p>ideeli</p>
-<p>Daylife</p>
-<p>HowAboutWe</p>
-<p>Thrillist</p>
-<p>Gawker</p>
-<p>Artsy</p>
-<p>Sailthru</p>
-<p>20x200</p>
-<p>fanfeedr</p>
-<p>SolveMedia</p>
-<p>Social Flow</p>
-<p>HuffingtonPost</p>
-<p>AppFund</p>
-<p>betaworks</p>
-<p>Work Market</p>
-<p>Chartbeat</p>
-<p>Producteev</p>
-<p>Voxy</p>
-<p>Food52
-一、</p>
-<p>foursquare:</p>
-<p>Language - Scala
-Web Framework - Lift
-Database - MongoDB
-App Server - Jetty
-Proxy Layer - nginx + HAProxy
-Hosting - Amazon EC2
-Search - Solr
-Email - SendGrid
-Queuing - Kestrel
-JS Library - jQuery
-Etc - FogBugz, Git, CIJoe, ReviewBoard</p>
-<p>PS: If you&#39;d like to work with these tools (or think we should be using something else and want to show us why), we&#39;re hiring! <a href="http://foursquare.com/jobs/"><a href="http://foursquare.com/jobs/">http://foursquare.com/jobs/</a></a></p>
-<p>二、</p>
-<p>At SecondMarket we use :</p>
-<p>Language - Java
-Web Framework - SpringMVC
-Databases - MongoDB &amp; Postgres
-App Server - Jetty
-Proxy Layer - ELB &amp; HAProxy
-Hosting - Amazon EC2
-Email - SendGrid
-Queuing - ActiveMQ
-JS Library - jQuery
-API interface - Rest/JSON
-Etc - Bamboo, Puppet, SVN, JIRA
-QE tools - (ruby, watir, webdriver, selenium)</p>
-<p>Interested - check out our open jobs - <a href="http://www.secondmarket.com/about/careers.php"><a href="http://www.secondmarket.com/abou">http://www.secondmarket.com/abou</a>...</a></p>
-<p>三、</p>
-<p>Here at OMGPOP:</p>
-<p>Language - Ruby, AS3, Erlang, C/C++/Objective C, Javascript
-XMPP - ejabberd, openfire
-Web Frameworks: Rack, Merb, Sinatra, Express
-Database - MySQL, Redis, Memcache, Vertica
-App Server - Thin, node.js
-Proxy Layer - Nginx + HAProxy
-Hosting - Amazon EC2 / Softlayer / Managed Colo
-Queuing - Redis/Resque
-JS Library - jQuery / underscore
-Monitoring - New Relic, Nagios, Munin, Flume, Custom
-Testing - rspec, selenium
-Etc - jira, git, svn, puppet, capistrano</p>
-<p>四、</p>
-<p>Languages: Python, some C, and a little bit of TCL (yes, really)
-Web Framework: Tornado
-Reverse Proxy: nginx
-Redirect App Server: AOLserver
-Databases: MySQL, Tokyo Cabinet, and MongoDB
-Volatile Data Stores: Memcache, MemoryFly (internal)
-Hosting: NTT and EC2
-Queueing - simplequeue (<a href="https://github.com/bitly/simplehttp/tree/master/simplequeue"><a href="https://github.com/bitly/simpleh">https://github.com/bitly/simpleh</a>...</a>)
-JS Library: jQuery
-五、Gilt Groupe/City:</p>
-<p>Frontend: Java/JSP
-Middle Tier: Java/Jetty
-Internal app: lots of Rails
-Javascript: jQuery
-Database: Postgres, Voldemort, used to use a bit of Mongo</p>
-<p>etc: JIRA, Hudson, puppet, git
-六、**GroupMe uses the following:</p>
-<p>Languages:<strong> Ruby, Javascript
-</strong>Web Frameworks:<strong> Rails, Sinatra, node.js
-</strong>Database:<strong> Postgres, Redis
-</strong>Frontend:<strong> Sass, Haml, jQuery
-</strong>Services:<strong> Twilio, Heroku
-</strong>Tools:** RSpec, Git, Github, Pivotal Tracker
-七、Stack: Ruby on Rails, MongoDB, Backbone.js, JQuery</p>
-<p>Tools: Git, Pivotal Tracker, GitHub, CI Joe, RSpec, Steak (BDD), Jasmine (BDD for JS)
-八、Frameworks: Django 1.2, jQuery
-Web Servers: Cherokee, Nginx
-Data: Postgres 8.4
-Hosting: Amazon EC2, Linode
-Caching: memcached
-Queuing: Celery/RabbitMQ
-Web Services: Sailthru, KISSmetrics, Twillio, Recurly, Discus, Google Analytics, Facebook
-Tools: SVN, Unfuddle, Pivotal Tracker, Basecamp, Google Docs/Apps
-Mobile: Objective-C, HTML5/CSS3</p>
-<p>Unlike most NYC startups, we keep our HR in the cloud. Developers work remotely and collaborate through IRC from Madrid, Buenos Aires, Novosibirsk, Chicago and Minneapolis. This greatly reduces start-up costs and also increases our multi-language exposure which is an asset to a language-learning startup.</p>
-<p>We&#39;re hiring... Looking for a talented cross-platform mobile developer.
-<a href="http://voxy.com/about/jobs/en/"><a href="http://voxy.com/about/jobs/en/">http://voxy.com/about/jobs/en/</a></a>
-九、Chartbeat (<a href="http://chartbeat.com/"><a href="http://chartbeat.com">http://chartbeat.com</a></a>)
-Languages: Python, C++, Javascript</p>
-<p>Frameworks: Tornado (Python), django, Google Closure Tools
-Webserver: nginx
-Infrastructure/deployment: puppet, fabric
-Database: MongoDB, MySQL
-Email: Sailthru
-Monitoring: nagios, ganglia, chartbeat :), munin
-Hosting: AWS
-Queueing: RabbitMQ, Gearman
-Versioning: GitHub, <a href="https://github.com/chartbeat/labs"><a href="https://github.com/chartbeat/labs">https://github.com/chartbeat/labs</a></a>
-Etc: fogbugz, reviewboard
-Interested in joining? - <a href="http://chartbeat.com/jobs/"><a href="http://chartbeat.com/jobs/">http://chartbeat.com/jobs/</a></a>
-十、Language: PHP, Java, Javascript; Also Python, Ruby, C# for API clients
-Web Framework: Custom
-Databases: MongoDB
-Web Server: Apache with Pound Load Balancer
-Queuing - ActiveMQ
-JS Library - jQuery
-API interface - Rest/JSON (XML also available but not recommended)
-Hosting - Amazon EC2 with few colocated servers
-Etc - Github, Lighthouse
-十一、Languages: Python, Java, Erlang, Objective-C, Javascript
-Frameworks: Pylons
-Tools: JIRA,SVN
-Database: Postgres
-Search: SOLR
-Servers: apache, rabbitmq</p>
-<p>Evolving to:</p>
-<p>Languages: Python, Java, Erlang, Objective-C, Javascript
-Frameworks: Pylons, JQuery/Backbone
-Tools: JIRA, Puppet, mercurial, Bamboo, Thrift
-Database: Postgres, Hadoop/HBase, CouchDB
-Search: ElasticSearch
-Servers: nginx, rabbitmq,
-十二、anguages: Python, PHP, Javascript
-Frameworks: Tornado (Python), custom MVC (PHP)
-Webserver: Apache and nginx
-Database: MySQL
-Email: Sailthru
-Monitoring: nagios, graphite, statsD, splunk, chartbeat, pingdom
-Hosting: AWS and Slicehost
-Etc: git, vagrant, chef, capistrano, RabbitMQ, jQuery</p>
-<p>Hiring software engineers - <a href="http://www.lot18.com/careers"><a href="http://www.lot18.com/careers">http://www.lot18.com/careers</a></a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+  <div class="archive">
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2011-03-30T08:48:45.000Z"><a href="/2011/03/30/what-are-the-programming-languages-and-frameworks-the-top-nyc-startups-are-using/">3月 30 2011</a></time>
+            
+              <h1 class="title"><a href="/2011/03/30/what-are-the-programming-languages-and-frameworks-the-top-nyc-startups-are-using/">What are the programming languages and frameworks the top NYC startups are using?</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2011-03-14T02:59:18.000Z"><a href="/2011/03/14/ganglia-gmond-acl/">3月 14 2011</a></time>
+            
+              <h1 class="title"><a href="/2011/03/14/ganglia-gmond-acl/">ganglia gmond 安全：增加acl </a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2011-01-29T03:25:38.000Z"><a href="/2011/01/29/puppet-kick/">1月 29 2011</a></time>
+            
+              <h1 class="title"><a href="/2011/01/29/puppet-kick/">puppet puppetrun kick 配置方法 </a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2011-01-27T09:45:39.000Z"><a href="/2011/01/27/centos-puppet-foreman-instal/">1月 27 2011</a></time>
+            
+              <h1 class="title"><a href="/2011/01/27/centos-puppet-foreman-instal/">centos puppet  foreman 安装 </a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2011-01-27T09:19:14.000Z"><a href="/2011/01/27/centos-yum-update-ruby/">1月 27 2011</a></time>
+            
+              <h1 class="title"><a href="/2011/01/27/centos-yum-update-ruby/">centos yum 升级ruby 1.8.6 </a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2011-01-27T06:43:19.000Z"><a href="/2011/01/27/scribe-init/">1月 27 2011</a></time>
+            
+              <h1 class="title"><a href="/2011/01/27/scribe-init/">scribe init 启动脚本</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2011-01-27T06:22:56.000Z"><a href="/2011/01/27/create-scribe-rpm-package/">1月 27 2011</a></time>
+            
+              <h1 class="title"><a href="/2011/01/27/create-scribe-rpm-package/">centos 制作 scribe rpm package</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2011-01-27T03:28:04.000Z"><a href="/2011/01/27/create-yum-repo/">1月 27 2011</a></time>
+            
+              <h1 class="title"><a href="/2011/01/27/create-yum-repo/">创建自己的yum源站</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2011-01-20T15:37:12.000Z"><a href="/2011/01/20/ganglia-metric-默认监控项翻译/">1月 20 2011</a></time>
+            
+              <h1 class="title"><a href="/2011/01/20/ganglia-metric-默认监控项翻译/">ganglia metric 默认监控项翻译</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2011-01-20T15:32:19.000Z"><a href="/2011/01/20/puppet-dashboard/">1月 20 2011</a></time>
+            
+              <h1 class="title"><a href="/2011/01/20/puppet-dashboard/">puppet dashboard 配置</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-21T02:05:17.000Z"><a href="/2010/12/21/browser-cache/">12月 21 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/21/browser-cache/">浏览器缓存机制</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-20T03:27:34.000Z"><a href="/2010/12/20/howto-install-puppet-on-centos5/">12月 20 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/20/howto-install-puppet-on-centos5/">Centos5 yum快速安装puppet 2.6</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
   </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2011-03-14T02:59:18.000Z"><a href="/2011/03/14/ganglia-gmond-acl/">3月 14 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/03/14/ganglia-gmond-acl/">ganglia gmond 安全：增加acl </a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在配置好ganglia 后。可以通过</p>
-<p><code> </code></p>
-<pre><code><figure class="highlight"><pre><span class="title">telnet</span> ip <span class="number">8649</span> `&lt;/pre&gt;
-` `
-
-取到机器所监控的metric 信息。非常 的详细。为了安全起见。需要增加ACL访问控制。
-
-而gmond可以在**udp_recv_channel and tcp_accept_channel **增加ACL
-
-例如：
-
-` `
-&lt;pre&gt;`acl {
-<span class="title">default</span> = <span class="string">"deny"</span>
-access {
-<span class="title">ip</span> = <span class="number">192.168.0.4</span>
-mask = <span class="number">32</span>
-action = <span class="string">"allow"</span>
-}
-} `&lt;/pre&gt;
-` `
-
-或者：
-` `
-&lt;pre&gt;`acl {
-<span class="title">default</span> = <span class="string">"allow"</span>
-access {
-<span class="title">ip</span> = <span class="number">192.168.0.0</span>
-mask = <span class="number">24</span>
-action = <span class="string">"deny"</span>
-}
-access {
-<span class="title">ip</span> = ::ff:<span class="number">1.2.3.0</span>
-mask = <span class="number">120</span>
-action = <span class="string">"deny"</span>
-}
-} `&lt;/pre&gt;
-` `
-
-而取telnet 取得的信息是在tcp_accept_channel 字段。所以只需要在这个字段 增加acl即可 。
-
-例：
-
-` `
-&lt;pre&gt;`tcp_accept_channel {
-<span class="title">port</span> = <span class="number">8649</span>
-acl {
-<span class="title">default</span> = <span class="string">"deny"</span>
-access {
-<span class="title">ip</span> = <span class="number">192.168.1.5</span> <span class="comment">#中心机的IP</span>
-mask = <span class="number">32</span>
-action = <span class="string">"allow"</span>
-}
-}
-} 
-</pre></figure></code></pre>
-<p><code> </code></p>
-<p>参考文档：<a href="http://linux.die.net/man/5/gmond.conf"><a href="http://linux.die.net/man/5/gmond.conf">http://linux.die.net/man/5/gmond.conf</a></a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2011-01-29T03:25:38.000Z"><a href="/2011/01/29/puppet-kick/">1月 29 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/01/29/puppet-kick/">puppet puppetrun kick 配置方法 </a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>2.6 后puppetrun 名字变成要了puppet kick 命令用法一样。puppetrun也能使用
-puppetrun –&gt; puppet kick</p>
-<p>参考 ： <a href="http://www.puppetlabs.com/2dot6/">http://www.puppetlabs.com/2dot6/</a></p>
-<p>配置puppet kick 很简单
-可参考：<a href="http://theforeman.org/projects/foreman/wiki/Puppetrun">http://theforeman.org/projects/foreman/wiki/Puppetrun</a>
-官网上说：
-修改客户端的：</p>
-<pre><code><figure class="highlight"><pre><span class="xml">namespaceauth.conf
-[puppetrunner]
-allow puppet.domain.com`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`auth.conf
-path /run
-method save
-allow puppet.domain.com`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-如果这么修改运行时会报：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`Error </span><span class="number">403</span><span class="xml"> on SERVER: Forbidden request`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-那是因为auth.conf 里有关于认证的顺序问题。只需要修改一下：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`path /run
-method save
-allow puppet.domain.com
-
-</span><span class="comment"># this one is not stricly necessary, but it has the merit</span><span class="xml">
-</span><span class="comment"># to show the default policy which is deny everything else</span><span class="xml">
-path /
-auth any`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-即把path /run 添加到path /的前面。
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# puppetrun -p </span><span class="number">10</span><span class="xml"> client.domain.com
-Triggering client.domain.com
-Getting status
-status is success
-client.domain.com finished with exit code </span><span class="number">0</span><span class="xml">
-Finished`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-附：
-我的**namespaceauth.conf **
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`[fileserver]
-    allow *.domain.com
-
-[puppetmaster]
-    allow *.domain.com
-
-[puppetrunner]
-    allow *.domain.com
-
-[puppetbucket]
-    allow *.domain.com
-
-[puppetreports]
-    allow *.domain.com
-
-[resource]
-    allow puppet.domain.com`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-**auth.conf **
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`path ~ ^/catalog/([^/]+)$
-method find
-allow </span><span class="variable">$1</span><span class="xml">
-path /certificate_revocation_list/ca
-method find
-allow *
-path /report
-method save
-allow *
-path /file
-allow *
-path /certificate/ca
-auth no
-method find
-allow *
-path /certificate/
-auth no
-method find
-allow *
-path /certificate_request
-auth no
-method find, save
-allow *
-path /run
-method save
-allow puppet.domain.com
-path /
-auth any`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-**client puppet.conf **
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`[main]
-    logdir = /var/log/puppet
-    rundir = /var/run/puppet
-    ssldir = </span><span class="variable">$vardir</span><span class="xml">/ssl
-[agent]
-    classfile = </span><span class="variable">$vardir</span><span class="xml">/classes.txt
-    localconfig = </span><span class="variable">$vardir</span><span class="xml">/localconfig
-
-    listen = true
-    report = true
-    server = puppet.domain.com
-[puppetd]</span>
-</pre></figure></code></pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2011-01-27T09:45:39.000Z"><a href="/2011/01/27/centos-puppet-foreman-instal/">1月 27 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/01/27/centos-puppet-foreman-instal/">centos puppet  foreman 安装 </a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>foreman 和 dashboard 一样。可以直观地查看puppet client 同步状态等。详细情况看官方的截图：
-<a href="http://theforeman.org/projects/foreman/wiki/Screenshots">http://theforeman.org/projects/foreman/wiki/Screenshots</a></p>
-<p>简单说下安装的顺序：
-1. 安装puppet 
-2. 升级ruby 至 1.8.6
-3. 安装相关的依赖 gem rake  rails i18n
-4. 创建库和用户并授权
-5. 安装foreman 
-6. 修改database.yml
-7. 创建foreman表
-8. 配置 foreman.rb 文件，并放至puppet reports目录
-9. 配置 puppet server client 配置文件
-10. 启动</p>
-<p>注意版本的要求。特别是ruby 只能是1.8 升级ruby 参考： <a href="http://bubbyroom.com/2011/01/centos-yum-update-ruby/">http://bubbyroom.com/2011/01/centos-yum-update-ruby/</a></p>
-<pre><code><figure class="highlight"><pre><span class="xml">Ruby </span><span class="number">1.9</span><span class="xml"> is not supported yet. You have to use Ruby </span><span class="number">1.8</span><span class="xml">.x as stated above.
-RubyGems </span><span class="number">1.3</span><span class="xml"></span><span class="number">.1</span><span class="xml"> or higher is required
-Rake </span><span class="number">0.8</span><span class="xml"></span><span class="number">.3</span><span class="xml"> or higher is required
-Rack </span><span class="number">1.0</span><span class="xml"></span><span class="number">.1</span><span class="xml"> is required. If you don't have this exact version, database migration would fail.
-I18n </span><span class="number">0.4</span><span class="xml"></span><span class="number">.2</span><span class="xml"> is required for Redmine &amp;gt;= </span><span class="number">1.0</span><span class="xml"></span><span class="number">.5</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`rpm -Uvh http://download.fedora.redhat.com/pub/epel/</span><span class="number">5</span><span class="xml">/i386/epel-release-</span><span class="number">5</span><span class="xml">-</span><span class="number">3.</span><span class="xml">noarch.rpm `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`yum install -y mysql mysql-devel mysql-server ruby ruby-devel ruby-irb ruby-mysql ruby-rdoc ruby-ri `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-如果MYSQL 是源码包安装则：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`yum install -y ruby ruby-devel ruby-irb ruby-mysql ruby-rdoc ruby-ri `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-安装rubygem </span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`http://production.cf.rubygems.org/rubygems/rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">.tgz
-tar xfz rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">.tgz
-cd rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">
-ruby setup.rb `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-安装rails 和rack
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gem install rails -v=</span><span class="number">2.3</span><span class="xml"></span><span class="number">.5</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gem install rack -v=</span><span class="number">1.0</span><span class="xml"></span><span class="number">.1</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`gem install -v=</span><span class="number">0.4</span><span class="xml"></span><span class="number">.2</span><span class="xml"> i18n `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-下载foreman
-地址：http://www.redmine.org/projects/redmine/wiki/Download
-
-我喜欢用GIT下载：
-有人问过我git 怎么安装：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`yum -y install git `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`git clone git://github.com/edavis10/redmine.git `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-源码包地址：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`wget http://rubyforge.org/frs/download.php/</span><span class="number">73900</span><span class="xml">/redmine-</span><span class="number">1.1</span><span class="xml"></span><span class="number">.0</span><span class="xml">.tar.gz `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-下载 后解压。可以放在/usr/local/redmine 目录
-
-Mysql 配置： 创建库和用户
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`create database redmine character set utf8;
-create user 'redmine'@'localhost' identified by 'my_password';
-grant all privileges on redmine.* to 'redmine'@'localhost'; `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-mysql </span><span class="number">5</span><span class="xml"> 以上
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`grant all privileges on redmine.* to 'redmine'@'localhost' identified by 'my_password'; `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-进去foreman配置 database.yml
-config/database.yml
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`production:
-adapter: mysql
-database: redmine
-host: localhost
-username: redmine
-password: my_password `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-建表：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`RAILS_ENV=production rake db:migrate `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-启动：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`ruby script/server webrick -e production `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-库备份：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`/usr/bin/mysqldump-u  -p
-  |gzip &amp;gt; /path/to/backup/db/redmine_`date +%y_%m_%d`.gz `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-puppet master配置
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`reports=log, foreman `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-puppet client 配置
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`report = true `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-配置puppet 提交至foreman
-</span><span class="comment"># cp extras/puppet/foreman/files/foreman-report.rb /usr/lib/ruby/site_ruby/1.8/puppet/reports/foreman.rb</span><span class="xml">
-</span><span class="comment"># chmod 644 /usr/lib/ruby/site_ruby/1.8/puppet/reports/foreman.rb</span><span class="xml">
-</span><span class="comment"># vim /usr/lib/ruby/site_ruby/1.8/puppet/reports/foreman.rb</span><span class="xml">
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# URL of your Foreman installation
-</span><span class="variable">$foreman_url</span><span class="xml">="http://" + `hostname`.strip + ":</span><span class="number">8000</span><span class="xml">"`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-cron 清数据：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`rake reports:expire days=</span><span class="number">7</span><span class="xml"> RAILS_ENV="production" `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="comment">###########################################################</span><span class="xml">
-
-foreman 可以采用yum 安装
-
-配置源：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`cat &gt; /etc/yum.repos.d/foreman.repo <span class="tag">&lt;<span class="title">&lt;</span> <span class="attribute">EOF</span>
-[<span class="attribute">foreman</span>]
-<span class="attribute">name</span>=<span class="value">Foreman</span> <span class="attribute">Repo</span>
-<span class="attribute">baseurl</span>=<span class="value">http:</span>//<span class="attribute">theforeman.org</span>/<span class="attribute">repo</span>
-<span class="attribute">gpgcheck</span>=</span><span class="number">0</span><span class="xml">
-enabled=</span><span class="number">1</span><span class="xml">
-EOF</span>
-</pre></figure></code></pre>
-<p>yum install foreman
-使用yum 安装后会产生/etc/init.d/foreman  配置文件也在/etc/foreman 目录 。其它的配置一样。</p>
-<p>我在安装时遇到过一些错误，但主要是ruby 版本  和mysql 依赖 建议都用yum 来安装 </p>
-<p>参考： 还是国外的文档给力。
-<a href="http://www.how2centos.com/installing-puppet-master-with-foreman-frontend-on-centos-5-5/">http://www.how2centos.com/installing-puppet-master-with-foreman-frontend-on-centos-5-5/</a>
-<a href="http://miao5.blogspot.com/2010/01/setup-puppetmaster-foreman.html">http://miao5.blogspot.com/2010/01/setup-puppetmaster-foreman.html</a>
-<a href="http://www.redmine.org/projects/redmine/wiki/RedmineInstall">http://www.redmine.org/projects/redmine/wiki/RedmineInstall</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2011-01-27T09:19:14.000Z"><a href="/2011/01/27/centos-yum-update-ruby/">1月 27 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/01/27/centos-yum-update-ruby/">centos yum 升级ruby 1.8.6 </a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>centos 64位：</p>
-<pre><code><figure class="highlight"><pre>$ sudo rpm -Uvh http://download<span class="preprocessor">.fedora</span><span class="preprocessor">.redhat</span><span class="preprocessor">.com</span>/pub/epel/<span class="number">5</span>/x86_64/epel-release-<span class="number">5</span>-<span class="number">4.</span>noarch<span class="preprocessor">.rpm</span>
-$ sudo rpm -Uvh http://download<span class="preprocessor">.elff</span><span class="preprocessor">.bravenet</span><span class="preprocessor">.com</span>/<span class="number">5</span>/x86_64/elff-release-<span class="number">5</span>-<span class="number">3.</span>noarch<span class="preprocessor">.rpm</span>
-$ sudo yum install ruby ruby-shadow ruby-ri ruby-rdoc gcc gcc-c++ ruby-devel -<span class="built_in">y</span>
-$ ruby -v
-ruby <span class="number">1.8</span><span class="number">.6</span> (<span class="number">2010</span>-<span class="number">02</span>-<span class="number">05</span> patchlevel <span class="number">399</span>) [x86_64-linux] `&lt;/pre&gt;
-
-centos <span class="number">32</span>位：
-&lt;pre&gt;`$ sudo rpm -Uvh http://download<span class="preprocessor">.fedora</span><span class="preprocessor">.redhat</span><span class="preprocessor">.com</span>/pub/epel/<span class="number">5</span>/i386/epel-release-<span class="number">5</span>-<span class="number">4.</span>noarch<span class="preprocessor">.rpm</span>
-$ sudo rpm -Uvh http://download<span class="preprocessor">.elff</span><span class="preprocessor">.bravenet</span><span class="preprocessor">.com</span>/<span class="number">5</span>/i386/elff-release-<span class="number">5</span>-<span class="number">3.</span>noarch<span class="preprocessor">.rpm</span>
-$ sudo yum install ruby ruby-shadow ruby-ri ruby-rdoc gcc gcc-c++ ruby-devel -<span class="built_in">y</span>
-$ ruby -v
-</pre></figure></code></pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2011-01-27T06:43:19.000Z"><a href="/2011/01/27/scribe-init/">1月 27 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/01/27/scribe-init/">scribe init 启动脚本</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h1>!/bin/sh</h1>
-<pre><code><figure class="highlight"><pre>#
-# Scribed     Startup script <span class="keyword">for</span> the scribe daemon
-#
-# chkconfig: - <span class="number">83</span> <span class="number">13</span>
-# description: Scribed.
-#
-# processname: scribed
-# config: /etc/scribe/scribed.conf
-# pidfile: /var/run/scribed.pid
-#
-
-# Source <span class="function"><span class="keyword">function</span> <span class="title">library</span>
-. /<span class="title">etc</span>/<span class="title">rc.d</span>/<span class="title">init.d</span>/<span class="title">functions</span>
-
-<span class="title">if</span> [ -<span class="title">f</span> /<span class="title">etc</span>/<span class="title">sysconfig</span>/<span class="title">scribed</span> ]; <span class="title">then</span>
-        . /<span class="title">etc</span>/<span class="title">sysconfig</span>/<span class="title">scribed</span>
-<span class="title">fi</span>
-
-<span class="title">if</span> [ -<span class="title">z</span> "$<span class="title">SCRIBED_CONF_PATH</span>" ]; <span class="title">then</span>
-        <span class="title">SCRIBED_CONF_PATH</span>="/<span class="title">etc</span>/<span class="title">scribed</span>/<span class="title">scribed.relay.conf</span>"
-<span class="title">fi</span>
-
-<span class="title">prog</span>="<span class="title">scribed</span>"
-<span class="title">lockfile</span>="/<span class="title">var</span>/<span class="title">lock</span>/<span class="title">subsys</span>/$<span class="title">prog</span>"
-<span class="title">scribed</span>="/<span class="title">usr</span>/<span class="title">sbin</span>/<span class="title">scribed</span>"
-<span class="title">scribe_ctrl</span>="/<span class="title">usr</span>/<span class="title">sbin</span>/<span class="title">scribe_ctrl</span>"
-<span class="title">RETVAL</span>=0
-
-<span class="title">start</span><span class="params">()</span></span> {
-        echo -n $<span class="string">"Starting $prog: "</span>
-        $scribed -c $SCRIBED_CONF_PATH &gt; /dev/null <span class="number">2</span>&gt;&amp;<span class="number">1</span> &amp;
-        RETVAL=$?
-        <span class="keyword">if</span> [ $RETVAL -eq <span class="number">0</span> ]; <span class="keyword">then</span>
-                success
-                touch $lockfile
-        fi
-        echo
-        <span class="keyword">return</span> $RETVAL
-}
-
-stop() {
-        echo -n $<span class="string">"Stopping $prog: "</span>
-        killproc $scribed
-        RETVAL=$?
-        echo
-        [ $RETVAL -eq <span class="number">0</span> ] &amp;&amp; rm -f $lockfile
-        <span class="keyword">return</span> $RETVAL
-}
-
-status() {
-        $scribe_ctrl status
-}
-
-case <span class="string">"$1"</span> <span class="keyword">in</span>
-        start)  
-                start
-                ;;
-        stop)   
-                stop
-                ;;
-        restart)
-                stop
-                start
-                ;;
-        status) 
-                status
-                ;;
-        *)      
-                echo $<span class="string">"Usage: $0 {start|stop|restart|status}"</span>
-                RETVAL=<span class="number">1</span>
-esac
-
-exit $RETVAL
-</pre></figure></code></pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2011-01-27T06:22:56.000Z"><a href="/2011/01/27/create-scribe-rpm-package/">1月 27 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/01/27/create-scribe-rpm-package/">centos 制作 scribe rpm package</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>scribe 简介：</p>
-<p>facebook 出的分布式日志系统</p>
-<p>官方：<a href="https://github.com/facebook/scribe"><a href="https://github.com/facebook/scribe">https://github.com/facebook/scribe</a></a></p>
-<p>原理图：下载源码包后，可以在examples/README里看到</p>
-<p>在线地址： <a href="https://github.com/facebook/scribe/blob/master/examples/README"><a href="https://github.com/facebook/scribe/blob/master/examples/README">https://github.com/facebook/scribe/blob/master/examples/README</a></a></p>
-<p><a href="http://bubbyroom.com/wp-content/uploads/2011/01/scribe.jpg"><img src="http://bubbyroom.com/wp-content/uploads/2011/01/scribe.jpg" alt="" title="scribe"></a></p>
-<p>先看下它的依赖吧。挺麻烦的。所以制作 RPM包安装与批量部署很有必要。</p>
-<p>创建自己的YUM源详见：<a href="http://bubbyroom.com/2011/01/create-yum-repo/"><a href="http://bubbyroom.com/2011/01/create-yum-repo/">http://bubbyroom.com/2011/01/create-yum-repo/</a></a></p>
-<div id="_mcePaste">
-
-<p>[libevent] Event Notification library</p>
-<p>[boost] Boost C++ library (version 1.36 or later)   <a href="http://www.boost.org/users/download/">http://www.boost.org/users/download/</a></p>
-<p>[thrift] Thrift framework (version 0.5.0 or later)  <a href="http://incubator.apache.org/thrift/download/">http://incubator.apache.org/thrift/download/</a></p>
-<p>[fb303] Facebook Bassline (included in thrift/contrib/fb303/) fb303 r697294 or later is required.  在thrift目录下面</p>
-<p>[hadoop] optional. version 0.19.1 or higher (<a href="http://hadoop.apache.org">http://hadoop.apache.org</a>)  可选！建议安装。本文未采用。</p>
-<p>[libevent] Event Notification library[boost] Boost C++ library (version 1.36 or later)   <a href="http://www.boost.org/users/download/[thrift">http://www.boost.org/users/download/[thrift</a>] Thrift framework (version 0.5.0 or later)  <a href="http://incubator.apache.org/thrift/download/[fb303">http://incubator.apache.org/thrift/download/[fb303</a>] Facebook Bassline (included in thrift/contrib/fb303/) fb303 r697294 or later is required.  在thrift目录下面[hadoop] optional. version 0.19.1 or higher (<a href="http://hadoop.apache.org">http://hadoop.apache.org</a>)</p>
-<p></div>
-安装相关的依赖：</p>
-<p>yum -y install automake libtool flex bison pkgconfig gcc-c++ boost-devel libevent-devel zlib-devel python-devel ruby-devel ruby mono-devel</p>
-<p>下载所需要的SPEC文件：/usr/src/redhat/SPEC</p>
-<p>wget <a href="http://silassewell.googlecode.com/svn/trunk/2009/05/05/scribe-for-el5/scribe/scribe.spec">http://silassewell.googlecode.com/svn/trunk/2009/05/05/scribe-for-el5/scribe/scribe.spec</a></p>
-<p>wget <a href="http://silassewell.googlecode.com/svn/trunk/2009/05/05/scribe-for-el5/fb303/fb303.spec">http://silassewell.googlecode.com/svn/trunk/2009/05/05/scribe-for-el5/fb303/fb303.spec</a></p>
-<p>wget <a href="http://silassewell.googlecode.com/svn/trunk/2009/05/05/scribe-for-el5/thrift/thrift.spec">http://silassewell.googlecode.com/svn/trunk/2009/05/05/scribe-for-el5/thrift/thrift.spec</a></p>
-<p>下载源文件：/usr/src/redhat/SOURCES</p>
-<p>wget <a href="http://silassewell.googlecode.com/svn/trunk/2009/05/05/scribe-for-el5/scribe/scribe.2.01.patch">http://silassewell.googlecode.com/svn/trunk/2009/05/05/scribe-for-el5/scribe/scribe.2.01.patch</a></p>
-<p>wget <a href="http://silassewell.googlecode.com/svn/trunk/2009/05/05/scribe-for-el5/scribe/scribed.init">http://silassewell.googlecode.com/svn/trunk/2009/05/05/scribe-for-el5/scribe/scribed.init</a></p>
-<p>wget <a href="http://silassewell.googlecode.com/svn/trunk/2009/05/05/scribe-for-el5/scribe/scribed.sysconfig">http://silassewell.googlecode.com/svn/trunk/2009/05/05/scribe-for-el5/scribe/scribed.sysconfig</a></p>
-<p>wget <a href="http://silassewell.googlecode.com/svn/trunk/2009/05/05/scribe-for-el5/thrift/thrift_protocol.ini">http://silassewell.googlecode.com/svn/trunk/2009/05/05/scribe-for-el5/thrift/thrift_protocol.ini</a></p>
-<p>wget <a href="https://github.com/downloads/facebook/scribe/scribe-2.2.tar.gz">https://github.com/downloads/facebook/scribe/scribe-2.2.tar.gz</a></p>
-<p>wget <a href="http://mirror.bjtu.edu.cn/apache//incubator/thrift/0.5.0-incubating/thrift-0.5.0.tar.gz">http://mirror.bjtu.edu.cn/apache//incubator/thrift/0.5.0-incubating/thrift-0.5.0.tar.gz</a></p>
-<p>fb303 在thrift 里的contrib/fb303下面。可以打成tar.gz包放到SOURCES里即可。</p>
-<p>制作 依赖包的RPM</p>
-<p>rpmbuild -ba name.spec</p>
-<p>文档参考：<a href="http://www.silassewell.com/blog/tag/fb303/"><a href="http://www.silassewell.com/blog/tag/fb303/">http://www.silassewell.com/blog/tag/fb303/</a></a></p>
-<p>也可以下载他编译好的RPM包。然后只编译scribe的最新包就行。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2011-01-27T03:28:04.000Z"><a href="/2011/01/27/create-yum-repo/">1月 27 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/01/27/create-yum-repo/">创建自己的yum源站</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>安装epel yum-downloadonly</p>
-<pre><code><figure class="highlight"><pre><span class="xml">rpm -Uvh http://mirrors.sohu.com/fedora-epel/</span><span class="number">5</span><span class="xml">Server/i386/epel-release-</span><span class="number">5</span><span class="xml">-</span><span class="number">4.</span><span class="xml">noarch.rpm
-ftp://zid-luxinst.uibk.ac.at/pub/dist/centos/</span><span class="number">5</span><span class="xml">/os/x86_64/CentOS/yum-downloadonly-</span><span class="number">1.1</span><span class="xml"></span><span class="number">.16</span><span class="xml">-</span><span class="number">14.</span><span class="xml">el5.centos</span><span class="number">.1</span><span class="xml">.noarch.rpm
-yum install yum-downloadonly nginx createrepo `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-创建仓库目录
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`mkdir -pv /data/mirrors/centos/</span><span class="number">5</span><span class="xml">/{os,updates}/i386`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-下载几个包
-
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`yum install git tcl-devel  -y --downloadonly --downloaddir=/data1/mirrors/centos/</span><span class="number">5</span><span class="xml">/updates/i386/RPMS/`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`yum install autoconf automake libtool gcc-c++ glibc-devel openssl-devel tcl-devel expat-devel sqlite-devel pcre-devel \
--y --downloadonly --downloaddir=/data1/mirrors/centos/</span><span class="number">5</span><span class="xml">/updates/i386/RPMS/`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-创建repo文件
-
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`createrepo /data/mirrors/centos/</span><span class="number">5</span><span class="xml">/updates/i386`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-client配置属于你自己的repo
-vim /etc/yum.repo.d/bubbyroom.repo
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`[base]name=CentOS-</span><span class="variable">$releasever</span><span class="xml"> -Base
-</span><span class="comment">#mirrorlist=http://mirrors.bubbyroom.com/centos/$releasever/os/$basearch/</span><span class="xml">
-baseurl=http://mirrors.bubbyroom.com/centos/</span><span class="variable">$releasever</span><span class="xml">/os/</span><span class="variable">$basearch</span><span class="xml">/
-enabled=</span><span class="number">1</span><span class="xml">
-gpgcheck=</span><span class="number">1</span><span class="xml">
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-</span><span class="number">5</span><span class="xml">
-</span><span class="comment">#released updates [updates]</span><span class="xml">
-name=CentOS-</span><span class="variable">$releasever</span><span class="xml"> - Updates
-</span><span class="comment">#mirrorlist=http://mirrors.bubbyroom.com/centos/$releasever/updates/$basearch/</span><span class="xml">
-baseurl=http://mirrors.bubbyroom.com/centos/</span><span class="variable">$releasever</span><span class="xml">/updates/</span><span class="variable">$basearch</span><span class="xml">/
-enabled=</span><span class="number">1</span><span class="xml">
-gpgcheck=</span><span class="number">1</span><span class="xml">
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-</span><span class="number">5</span><span class="xml"> </span>
-</pre></figure></code></pre>
-<p>yum clean all </p>
-<p>yum update</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2011-01-20T15:37:12.000Z"><a href="/2011/01/20/ganglia-metric-默认监控项翻译/">1月 20 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/01/20/ganglia-metric-默认监控项翻译/">ganglia metric 默认监控项翻译</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <table border="1" cellspacing="0" cellpadding="0">
-<tbody>
-<tr>
-<td width="111" valign="top">监控项</td>
-<td width="246" valign="top">说明</td>
-<td width="123" valign="top">监控值</td>
-</tr>
-<tr>
-<td width="111" valign="top">Load_one</td>
-<td width="246" valign="top">One minute load average
-
-每分钟的系统平均负载</td>
-<td width="123" valign="top">load_one=0.0</td>
-</tr>
-<tr>
-<td width="111" valign="top">Load_five</td>
-<td width="246" valign="top">Five minute load average
-
-每5分钟的系统平均负载</td>
-<td width="123" valign="top">load_five=0.0</td>
-</tr>
-<tr>
-<td width="111" valign="top">Load_fifteen</td>
-<td width="246" valign="top">Fifteen minute load average
-
-每15分钟的系统平均负载</td>
-<td width="123" valign="top">load_fifteen=0.0</td>
-</tr>
-<tr>
-<td width="111" valign="top">mem_total</td>
-<td width="246" valign="top">Total amount of memory displayed in KBs
-
-物理内存总量（KBs显示）</td>
-<td width="123" valign="top">mem_total=2075288.0</td>
-</tr>
-<tr>
-<td width="111" valign="top">mem_cached</td>
-<td width="246" valign="top">Amount of cached memory
-
-缓存内存大小</td>
-<td width="123" valign="top">mem_cached=470732.0</td>
-</tr>
-<tr>
-<td width="111" valign="top">mem_free</td>
-<td width="246" valign="top">Amount of available memory
-
-空闲内存大小</td>
-<td width="123" valign="top">mem_free=1128860.0</td>
-</tr>
-<tr>
-<td width="111" valign="top">mem_buffers</td>
-<td width="246" valign="top">Amount of buffered memory
-
-内核缓存的内存总量</td>
-<td width="123" valign="top">mem_buffers=353264.0</td>
-</tr>
-<tr>
-<td width="111" valign="top">swap_total</td>
-<td width="246" valign="top">Total amount of swap space displayed in   KBs
-
-交换分区总量（KBs显示）</td>
-<td width="123" valign="top">swap_total=8289532.0</td>
-</tr>
-<tr>
-<td width="111" valign="top">swap_free</td>
-<td width="246" valign="top">Amount of available swap memory
-
-空闲交换分区大小</td>
-<td width="123" valign="top">swap_free=8289532.0</td>
-</tr>
-<tr>
-<td width="111" valign="top">mem_shared</td>
-<td width="246" valign="top">Amount of shared memory
-
-共享内存大小</td>
-<td width="123" valign="top">mem_shared=0.0</td>
-</tr>
-<tr>
-<td width="111" valign="top">proc_run</td>
-<td width="246" valign="top">Total number of running processes
-
-运行的进程总数</td>
-<td width="123" valign="top">proc_run=0.0</td>
-</tr>
-<tr>
-<td width="111" valign="top">proc_total</td>
-<td width="246" valign="top">Total number of processes
-
-进程总数</td>
-<td width="123" valign="top">proc_total=65.0</td>
-</tr>
-<tr>
-<td width="111" valign="top">cpu_idle</td>
-<td width="246" valign="top">Percentage of time that the CPU or CPUs   were idle and the system did not
-have an outstanding disk I/O request
-
-空闲CPU百分比</td>
-<td width="123" valign="top">cpu_idle=99.6</td>
-</tr>
-<tr>
-<td width="111" valign="top">cpu_aidle</td>
-<td width="246" valign="top">Percent of time since boot idle CPU
-
-启动的空闲CPU百分比</td>
-<td width="123" valign="top">cpu_aidle=99.8</td>
-</tr>
-<tr>
-<td width="111" valign="top">cpu_user</td>
-<td width="246" valign="top">Percentage of CPU utilization that   occurred while executing at the user level
-
-用户空间占用CPU百分比</td>
-<td width="123" valign="top">cpu_user=0.2</td>
-</tr>
-<tr>
-<td width="111" valign="top">cpu_nice</td>
-<td width="246" valign="top">Percentage of CPU utilization that   occurred while executing at the user level with nice priority
-
-用户进程空间内改变过优先级的进程占用CPU百分比</td>
-<td width="123" valign="top">cpu_nice=0.0</td>
-</tr>
-<tr>
-<td width="111" valign="top">cpu_system</td>
-<td width="246" valign="top">Percentage of CPU utilization that   occurred while executing at the
-system level
-
-内核空间占用CPU百分比</td>
-<td width="123" valign="top">cpu_system=0.1</td>
-</tr>
-<tr>
-<td width="111" valign="top">cpu_num</td>
-<td width="246" valign="top">Total number of CPUs
-
-CPU线程总数</td>
-<td width="123" valign="top">cpu_num=2.0</td>
-</tr>
-<tr>
-<td width="111" valign="top">cpu_speed</td>
-<td width="246" valign="top">CPU Speed in terms of MHz
-
-CPU速度（MHz）</td>
-<td width="123" valign="top">cpu_speed=2993.0</td>
-</tr>
-<tr>
-<td width="111" valign="top">cpu_wio</td>
-<td width="246" valign="top">Percentage of time that the CPU or CPUs   were idle during which the
-system had an outstanding disk I/O request
-
-Cpu空闲时的最大I/O请求</td>
-<td width="123" valign="top">cpu_wio=0.2</td>
-</tr>
-<tr>
-<td width="111" valign="top">part_max_used</td>
-<td width="246" valign="top">Maximum percent used for all partitions</td>
-<td width="123" valign="top">part_max_used=21.2</td>
-</tr>
-<tr>
-<td width="111" valign="top">disk_total</td>
-<td width="246" valign="top">Total available disk space
-
-磁盘总大小</td>
-<td width="123" valign="top">disk_total=133.991</td>
-</tr>
-<tr>
-<td width="111" valign="top">disk_free</td>
-<td width="246" valign="top">Total free disk space
-
-剩余磁盘空间</td>
-<td width="123" valign="top">disk_free=124.707</td>
-</tr>
-<tr>
-<td width="111" valign="top">boottime</td>
-<td width="246" valign="top">The last time that the system was started
-
-系统启动时间</td>
-<td width="123" valign="top">boottime=1285905983.0</td>
-</tr>
-<tr>
-<td width="111" valign="top">pkts_in</td>
-<td width="246" valign="top">Packets in per second
-
-每秒进来的包</td>
-<td width="123" valign="top">pkts_in=10.5</td>
-</tr>
-<tr>
-<td width="111" valign="top">pkts_out</td>
-<td width="246" valign="top">Packets out per second
-
-每秒出去的包</td>
-<td width="123" valign="top">pkts_out=2.85</td>
-</tr>
-<tr>
-<td width="111" valign="top">bytes_in</td>
-<td width="246" valign="top">Number of bytes in per second
-
-每秒进来字节数</td>
-<td width="123" valign="top">bytes_in=769.35</td>
-</tr>
-<tr>
-<td width="111" valign="top">bytes_out</td>
-<td width="246" valign="top">Number of bytes out per second
-
-每秒出去字节数</td>
-<td width="123" valign="top">bytes_out=3674.02</td>
-</tr>
-<tr>
-<td width="111" valign="top">machine_type</td>
-<td width="246" valign="top">System architecture
-
-系统版本（X86或64）</td>
-<td width="123" valign="top">machine_type=x86</td>
-</tr>
-<tr>
-<td width="111" valign="top">os_name</td>
-<td width="246" valign="top">系统名字</td>
-<td width="123" valign="top">os_name=Linux</td>
-</tr>
-<tr>
-<td width="111" valign="top">os_release</td>
-<td width="246" valign="top">系统版本</td>
-<td width="123" valign="top">os_release=2.6.18-164.el5PAE</td>
-</tr>
-<tr>
-<td width="111" valign="top">gexec</td>
-<td width="246" valign="top">gexec available</td>
-<td width="123" valign="top">gexec=OFF</td>
-</tr>
-<tr>
-<td width="111" valign="top">disk_free_rootfs</td>
-<td width="246" valign="top">Disk space available on</td>
-<td width="123" valign="top">WARN: &#39; disk_free_rootfs &#39;</td>
-</tr>
-</tbody>
-</table>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2011-01-20T15:32:19.000Z"><a href="/2011/01/20/puppet-dashboard/">1月 20 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/01/20/puppet-dashboard/">puppet dashboard 配置</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>puppet dashboard 配置
-Puppet Dashboard可以为你的Puppet环境添加一个图形用户界面（GUI）。Puppet Dashboard可以显示主机上Puppet的运行结果，并且可以提供一个节点分类工具来配置你的主机。
-Dashboard是一种运行在Rails上的Ruby应用程序，它还不是可以添加到系统版本中的程序包，但是我们可以从Puppet Labs以RPM或者DEB包的形式获得该软件。我们也可以选择从资源进行安装。</p>
-<p>rpm -Uvh <a href="http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm">http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm</a></p>
-<p>yum install -y mysql mysql-devel mysql-server ruby ruby-devel ruby-irb ruby-mysql ruby-rdoc ruby-ri</p>
-<p>如果MYSQL 是源码包安装则：yum install -y ruby ruby-devel ruby-irb ruby-mysql ruby-rdoc ruby-ri</p>
-<p>安装rubygem 1.3.5 请不要安装1.3.6及更高版本。不支持。。哈哈</p>
-<pre><code><figure class="highlight"><pre><span class="xml">http://production.cf.rubygems.org/rubygems/rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">.tgz
-tar xfz rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">.tgz
-cd rubygems-</span><span class="number">1.3</span><span class="xml"></span><span class="number">.5</span><span class="xml">
-ruby setup.rb `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-使用gem安装rake
-gem install rake
-
-安装git 下载dashboard 包
-yum -y install git
-
-下载puppet-dashboard
-我把它放在/data/www/wwwroot/
-mkdir -p /data/www/wwwroot/
-cd /data/www/wwwroot/
-git clone git://github.com/puppetlabs/puppet-dashboard.git
-
-修改数据配置YML文件
-/data/www/wwwroot/puppet-dashboard/config/database.yml
-cp database.yml.example database.yml
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`production:
-database: root
-username: dashboard
-password: linuxtone
-encoding: utf8
-adapter: mysql`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-创建库和表：
-</span><span class="number">1</span><span class="xml">\. 使用rake 创建：
-回到   puppet-dashboard目录执行
-rake RAILS_ENV=production db:create
-
-</span><span class="number">2</span><span class="xml"> 手动创建
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`CREATE DATABASE dashboard CHARACTER SET utf8;
-CREATE USER 'dashboard'@'localhost' IDENTIFIED BY 'my_password';
-GRANT ALL PRIVILEGES ON dashboard.* TO 'dashboard'@'localhost';`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-创建表：rake RAILS_ENV=production db:migrate
-
-我在使用development的时候老是报错。如下：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# rake db:migrate db:test:prepare --trace
-(in /data/www/wwwroot/puppet-dashboard)
-** Invoke db:migrate (first_time)
-** Invoke environment (first_time)
-** Execute environment
-** Execute db:migrate
-rake aborted!
-Access denied for user 'root'@'localhost' (using password: NO) `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-因此我换成了production。大家可以仔细看官网说明。尽管很烂，但也能解决问题
-
-production 与 development 区别：
-启动时：
-production ：Start a production server on port </span><span class="number">3000</span><span class="xml">:
-./script/server -e production
-
-development：start a development server on port </span><span class="number">8080</span><span class="xml">, where the development environment is used by default:
-./script/server -p </span><span class="number">8080</span><span class="xml">
-
-运行：先查看位置：puppetmasterd --configprint libdir
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`cp ext/puppet/puppet_dashboard.rb  /var/lib/puppet/reports/
-chmod </span><span class="number">644</span><span class="xml"> /var/lib/puppet/reports/puppet_dashboard.rb
-</span><span class="comment">#more puppet_dashboard.rb</span><span class="xml">
-HOST = 'localhost'  #主机
-PORT = </span><span class="number">3000</span><span class="xml">    #启动端口 `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-导入：Import existing reports 详见官网
-rake RAILS_ENV=production reports:import REPORT_DIR=/path/to/your/reports
-本例：rake RAILS_ENV=production reports:import REPORT_DIR=/var/lib/puppet/reports/
-
-注：/var/lib/puppet/reports/ 为puppet.conf 里vardir 的定义目录
-
-配置puppetmaster
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`[master]
-reports = http, store
-reporturl = http://IP:</span><span class="number">3000</span><span class="xml">/reports
-modulepath = /etc/puppet/modules`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-puppetclient
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`server = puppetmaster.linuxtone.org
-listen = true
-report = true
-runinterval = </span><span class="number">10</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-</span><span class="comment"># more /etc/init.d/puppet-dashboard  注意修改脚本里的IP</span><span class="xml">
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`#!/bin/bash
-</span><span class="comment"># Description: Puppet Dashboard init.d script</span><span class="xml">
-
-</span><span class="comment"># Get function from functions library</span><span class="xml">
-. /etc/init.d/functions
-
-</span><span class="comment"># Start the service Puppet Dashboard</span><span class="xml">
-start() {
-echo -n "Starting Puppet Dashboard: "
-/usr/bin/ruby /data/www/wwwroot/puppet-dashboard/script/server -e production -b IP &amp;
-</span><span class="comment">### Create the lock file ###</span><span class="xml">
-touch /var/lock/subsys/puppetdb
-success $"Puppet Dashboard startup"
-echo
-}
-
-</span><span class="comment"># Restart the service Puppet Dashboard</span><span class="xml">
-stop() {
-echo -n "Stopping Puppet Dashboard: "
-kill -</span><span class="number">9</span><span class="xml"> `ps ax | grep "/usr/bin/ruby /data/www/wwwroot/puppet-dashboard/script/server" | grep -v grep | awk '{ print </span><span class="variable">$1</span><span class="xml"> }' ` 
-</span><span class="comment">### Now, delete the lock file ###</span><span class="xml">
-rm -f /var/lock/subsys/puppetdb
-success $"Puppet Dashboard shutdown"
-echo
-}
-
-</span><span class="comment">### main logic ###</span><span class="xml">
-case "</span><span class="variable">$1</span><span class="xml">" in
-start)
-start
-;;
-stop)
-stop
-;;
-status)
-status Puppet DB
-;;
-restart|reload|condrestart)
-stop
-start
-;;
-*)
-echo $"Usage: </span><span class="variable">$0</span><span class="xml"> {start|stop|restart|reload|status}"
-exit </span><span class="number">1</span><span class="xml">
-esac
-
-exit </span><span class="number">0</span><span class="xml"></span>
-</pre></figure></code></pre>
-<p>chmod 755 /etc/init.d/puppet-dashboard
-/etc/init.d/puppet-dashboard start</p>
-<p>参考
-<a href="http://docs.puppetlabs.com/guides/installing_dashboard.html">http://docs.puppetlabs.com/guides/installing_dashboard.html</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-
-  <nav id="pagination">
-  
-  
-    <a href="/categories/cdn/page/2/" class="alignright next">下一页</a>
-  
-  <div class="clearfix"></div>
-</nav>
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
@@ -1358,354 +256,15 @@ exit </span><span class="number">0</span><span class="xml"></span>
 
 
   
-<div class="widget tag">
-  <h3 class="title">标签</h3>
-  <ul class="entry">
-  
-    <li><a href="/tags/1032/">1032</a><small>1</small></li>
-  
-    <li><a href="/tags/1236/">1236</a><small>1</small></li>
-  
-    <li><a href="/tags/403/">403</a><small>1</small></li>
-  
-    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
-  
-    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
-  
-    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
-  
-    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
-  
-    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
-  
-    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
-  
-    <li><a href="/tags/acl/">acl</a><small>2</small></li>
-  
-    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
-  
-    <li><a href="/tags/apache/">apache</a><small>8</small></li>
-  
-    <li><a href="/tags/arp/">arp</a><small>1</small></li>
-  
-    <li><a href="/tags/awk/">awk</a><small>4</small></li>
-  
-    <li><a href="/tags/bash/">bash</a><small>2</small></li>
-  
-    <li><a href="/tags/best/">best</a><small>1</small></li>
-  
-    <li><a href="/tags/binding/">binding</a><small>1</small></li>
-  
-    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
-  
-    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
-  
-    <li><a href="/tags/browser/">browser</a><small>1</small></li>
-  
-    <li><a href="/tags/cache/">cache</a><small>1</small></li>
-  
-    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
-  
-    <li><a href="/tags/centos/">centos</a><small>8</small></li>
-  
-    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
-  
-    <li><a href="/tags/chown/">chown</a><small>1</small></li>
-  
-    <li><a href="/tags/commands/">commands</a><small>1</small></li>
-  
-    <li><a href="/tags/content/">content</a><small>1</small></li>
-  
-    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
-  
-    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
-  
-    <li><a href="/tags/creating/">creating</a><small>1</small></li>
-  
-    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
-  
-    <li><a href="/tags/dell/">dell</a><small>1</small></li>
-  
-    <li><a href="/tags/diff/">diff</a><small>1</small></li>
-  
-    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
-  
-    <li><a href="/tags/du/">du</a><small>1</small></li>
-  
-    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
-  
-    <li><a href="/tags/end/">end</a><small>1</small></li>
-  
-    <li><a href="/tags/epel/">epel</a><small>1</small></li>
-  
-    <li><a href="/tags/etag/">etag</a><small>1</small></li>
-  
-    <li><a href="/tags/expires/">expires</a><small>1</small></li>
-  
-    <li><a href="/tags/find/">find</a><small>1</small></li>
-  
-    <li><a href="/tags/for-1/">for</a><small>1</small></li>
-  
-    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
-  
-    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
-  
-    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
-  
-    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
-  
-    <li><a href="/tags/group/">group</a><small>1</small></li>
-  
-    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
-  
-    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
-  
-    <li><a href="/tags/howto/">howto</a><small>2</small></li>
-  
-    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
-  
-    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
-  
-    <li><a href="/tags/if/">if</a><small>2</small></li>
-  
-    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
-  
-    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
-  
-    <li><a href="/tags/init/">init</a><small>1</small></li>
-  
-    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
-  
-    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
-  
-    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
-  
-    <li><a href="/tags/jk/">jk</a><small>1</small></li>
-  
-    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
-  
-    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
-  
-    <li><a href="/tags/kick/">kick</a><small>1</small></li>
-  
-    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
-  
-    <li><a href="/tags/linux/">linux</a><small>18</small></li>
-  
-    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
-  
-    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
-  
-    <li><a href="/tags/master/">master</a><small>2</small></li>
-  
-    <li><a href="/tags/metric/">metric</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
-  
-    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
-  
-    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
-  
-    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
-  
-    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
-  
-    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
-  
-    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
-  
-    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
-  
-    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
-  
-    <li><a href="/tags/packet/">packet</a><small>1</small></li>
-  
-    <li><a href="/tags/pam/">pam</a><small>1</small></li>
-  
-    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
-  
-    <li><a href="/tags/perl/">perl</a><small>1</small></li>
-  
-    <li><a href="/tags/permission/">permission</a><small>1</small></li>
-  
-    <li><a href="/tags/php-1/">php</a><small>2</small></li>
-  
-    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
-  
-    <li><a href="/tags/pil/">pil</a><small>1</small></li>
-  
-    <li><a href="/tags/port/">port</a><small>1</small></li>
-  
-    <li><a href="/tags/practices/">practices</a><small>1</small></li>
-  
-    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
-  
-    <li><a href="/tags/ps/">ps</a><small>2</small></li>
-  
-    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
-  
-    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
-  
-    <li><a href="/tags/python-1/">python</a><small>3</small></li>
-  
-    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
-  
-    <li><a href="/tags/quick/">quick</a><small>1</small></li>
-  
-    <li><a href="/tags/r410/">r410</a><small>1</small></li>
-  
-    <li><a href="/tags/r710/">r710</a><small>1</small></li>
-  
-    <li><a href="/tags/raw/">raw</a><small>1</small></li>
-  
-    <li><a href="/tags/referer/">referer</a><small>1</small></li>
-  
-    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
-  
-    <li><a href="/tags/repo/">repo</a><small>1</small></li>
-  
-    <li><a href="/tags/resources/">resources</a><small>1</small></li>
-  
-    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
-  
-    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
-  
-    <li><a href="/tags/sar/">sar</a><small>1</small></li>
-  
-    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
-  
-    <li><a href="/tags/sed/">sed</a><small>4</small></li>
-  
-    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
-  
-    <li><a href="/tags/sending/">sending</a><small>1</small></li>
-  
-    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
-  
-    <li><a href="/tags/shell/">shell</a><small>2</small></li>
-  
-    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
-  
-    <li><a href="/tags/slave/">slave</a><small>2</small></li>
-  
-    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
-  
-    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
-  
-    <li><a href="/tags/spec/">spec</a><small>2</small></li>
-  
-    <li><a href="/tags/squid/">squid</a><small>1</small></li>
-  
-    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
-  
-    <li><a href="/tags/system/">system</a><small>1</small></li>
-  
-    <li><a href="/tags/tar/">tar</a><small>1</small></li>
-  
-    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
-  
-    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
-  
-    <li><a href="/tags/tools/">tools</a><small>1</small></li>
-  
-    <li><a href="/tags/top/">top</a><small>1</small></li>
-  
-    <li><a href="/tags/tree/">tree</a><small>1</small></li>
-  
-    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
-  
-    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
-  
-    <li><a href="/tags/user/">user</a><small>2</small></li>
-  
-    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
-  
-    <li><a href="/tags/vim/">vim</a><small>2</small></li>
-  
-    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
-  
-    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/while/">while</a><small>1</small></li>
-  
-    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
-  
-    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
-  
-    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
-  
-    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
-  
-    <li><a href="/tags/yum/">yum</a><small>10</small></li>
-  
-    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
-  
-    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
-  
-    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
-  
-    <li><a href="/tags/优化/">优化</a><small>1</small></li>
-  
-    <li><a href="/tags/内核/">内核</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
-  
-    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
-  
-    <li><a href="/tags/参考/">参考</a><small>1</small></li>
-  
-    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
-  
-    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
-  
-    <li><a href="/tags/对比/">对比</a><small>1</small></li>
-  
-    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
-  
-    <li><a href="/tags/日志/">日志</a><small>2</small></li>
-  
-    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
-  
-    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
-  
-    <li><a href="/tags/管理/">管理</a><small>1</small></li>
-  
-    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
-  
-    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
-  
-    <li><a href="/tags/老板/">老板</a><small>1</small></li>
-  
-    <li><a href="/tags/认证/">认证</a><small>1</small></li>
-  
-    <li><a href="/tags/详解/">详解</a><small>3</small></li>
-  
-    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
-  
-    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
-  
-    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
-  
-  </ul>
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Cache-control/" style="font-size: 16.75px;">Cache-control</a><a href="/tags/Cluster-bacst/" style="font-size: 12.00px;">Cluster-bacst</a><a href="/tags/Header-V3-DSA-signature/" style="font-size: 15.75px;">Header V3 DSA signature</a><a href="/tags/object-Object/" style="font-size: 14.75px;">[object Object]</a><a href="/tags/apache/" style="font-size: 19.50px;">apache</a><a href="/tags/awk/" style="font-size: 18.25px;">awk</a><a href="/tags/bash/" style="font-size: 17.00px;">bash</a><a href="/tags/browser/" style="font-size: 13.75px;">browser</a><a href="/tags/cache/" style="font-size: 14.00px;">cache</a><a href="/tags/cdn/" style="font-size: 16.25px;">cdn</a><a href="/tags/centos/" style="font-size: 19.25px;">centos</a><a href="/tags/cpan/" style="font-size: 12.75px;">cpan</a><a href="/tags/cpanm/" style="font-size: 12.25px;">cpanm</a><a href="/tags/etag/" style="font-size: 14.25px;">etag</a><a href="/tags/expires/" style="font-size: 13.00px;">expires</a><a href="/tags/foreman/" style="font-size: 15.25px;">foreman</a><a href="/tags/gzip/" style="font-size: 10.50px;">gzip</a><a href="/tags/libmemcached/" style="font-size: 15.00px;">libmemcached</a><a href="/tags/mod_cband/" style="font-size: 11.00px;">mod_cband</a><a href="/tags/mod_limitipconn/" style="font-size: 12.50px;">mod_limitipconn</a><a href="/tags/moudles/" style="font-size: 10.25px;">moudles</a><a href="/tags/mysql/" style="font-size: 18.75px;">mysql</a><a href="/tags/nginx/" style="font-size: 18.00px;">nginx</a><a href="/tags/php-1/" style="font-size: 16.50px;">php</a><a href="/tags/php-fpm/" style="font-size: 17.50px;">php-fpm</a><a href="/tags/puppet/" style="font-size: 19.00px;">puppet</a><a href="/tags/python26/" style="font-size: 15.50px;">python2.6</a><a href="/tags/referer/" style="font-size: 11.25px;">referer</a><a href="/tags/repo/" style="font-size: 16.00px;">repo</a><a href="/tags/ruby/" style="font-size: 14.50px;">ruby</a><a href="/tags/shell/" style="font-size: 17.25px;">shell</a><a href="/tags/shtml/" style="font-size: 11.50px;">shtml</a><a href="/tags/ssi/" style="font-size: 11.75px;">ssi</a><a href="/tags/tomcat/" style="font-size: 18.50px;">tomcat</a><a href="/tags/yum/" style="font-size: 19.75px;">yum</a><a href="/tags/单引号/" style="font-size: 13.25px;">单引号</a><a href="/tags/双引号/" style="font-size: 13.50px;">双引号</a><a href="/tags/环境变量/" style="font-size: 10.00px;">环境变量</a><a href="/tags/详解/" style="font-size: 17.75px;">详解</a><a href="/tags/过滤日志/" style="font-size: 10.75px;">过滤日志</a>
+  </div>
 </div>
 
 
   
-
 </aside>
     <div class="clearfix"></div>
   </div>

@@ -1,0 +1,843 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 16 页 | Liuyu blog</title>
+  <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="Puppet cdn AutoMate">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Liuyu blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Liuyu blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Liuyu blog</a></h1>
+  <h2><a href="/">Puppet in action</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T06:05:34.000Z"><a href="/2010/12/18/vsftpd-virtual-user/">12月 18 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/18/vsftpd-virtual-user/">vsftpd 安装与虚拟用户配置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>vsftpd 安装与虚拟用户配置</p>
+<p>测试环境：
+centos 5.X 64bit
+vsftpd 2.0</p>
+<p>安装：yum -y install vsftpd</p>
+<p>需求：
+虚拟三个用户，使用同一个家目录。权限如下。
+ftpadmin 读写删除
+ftpuser 读写
+ftp 读(下载)
+目录为：/data
+密码统一为：123456</p>
+<p>一、创建虚拟用户数据库：
+1、创建文件文件loginuser.txt
+格式如下：</p>
+<pre><code><figure class="highlight"><pre><span class="title">user_id</span>
+<span class="title">password</span>
+/home/loginuser.txt
+<span class="title">ftpadmin</span>
+<span class="number">123456</span>
+<span class="title">ftpuser</span>
+<span class="number">123456</span>
+<span class="title">ftp</span>
+<span class="number">123456</span>
+`&lt;/pre&gt;
+<span class="number">2</span>、生成数据库文件：
+
+<span class="title">yum</span> -y install db4-utils
+&lt;pre&gt;`
+<span class="title">db_load</span> -<span class="type">T</span> -t hash -f /home/loginuser.txt /etc/vsftpd/vsftpd_login.db
+<span class="title">chmod</span> <span class="number">600</span> /etc/vsftpd/vsftpd_login.db
+`&lt;/pre&gt;
+<span class="number">3</span>、配置pam文件
+# vi /etc/pam.d/vsftpd.vu
+&lt;pre&gt;`auth required /lib64/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login
+<span class="title">account</span> required /lib64/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login
+`&lt;/pre&gt;
+#<span class="number">32</span>位操作系统
+&lt;pre&gt;`auth required /lib/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login
+<span class="title">account</span> required /lib/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login
+`&lt;/pre&gt;
+二、为虚拟用户创建本地系统用户
+&lt;pre&gt;`useradd opendoc -d /<span class="typedef"><span class="keyword">data</span> -s /bin/false</span>
+<span class="title">chown</span> opendoc.opendoc /<span class="typedef"><span class="keyword">data</span></span>
+`&lt;/pre&gt;
+三、vsftpd.conf配置
+&lt;pre&gt;`anonymous_enable=<span class="type">NO</span>
+<span class="title">local_enable</span>=<span class="type">YES</span>
+#write_enable=<span class="type">NO</span>
+<span class="title">dirmessage_enable</span>=<span class="type">YES</span>
+<span class="title">xferlog_enable</span>=<span class="type">YES</span>
+<span class="title">xferlog_file</span>=/var/log/vsftpd.log
+<span class="title">connect_from_port_20</span>=<span class="type">YES</span>
+<span class="title">xferlog_std_format</span>=<span class="type">YES</span>
+<span class="title">listen</span>=<span class="type">YES</span>
+<span class="title">listen_port</span>=<span class="number">21</span>
+<span class="title">userlist_enable</span>=<span class="type">YES</span>
+<span class="title">chroot_local_user</span>=<span class="type">YES</span>
+<span class="title">tcp_wrappers</span>=<span class="type">YES</span>
+<span class="title">guest_enable</span>=<span class="type">YES</span>
+<span class="title">guest_username</span>=opendoc
+<span class="title">pam_service_name</span>=vsftpd.vu
+<span class="title">user_config_dir</span>=/etc/vsftpd/vsftpd_user_conf
+<span class="title">virtual_use_local_privs</span>=<span class="type">YES</span>
+<span class="title">pasv_min_port</span>=<span class="number">50000</span>
+<span class="title">pasv_max_port</span>=<span class="number">60000</span>
+<span class="title">pasv_enable</span>=yes
+<span class="title">max_clients</span>=<span class="number">200</span>
+<span class="title">max_per_ip</span>=<span class="number">4</span>
+<span class="title">idle_session_timeout</span>=<span class="number">600</span>
+<span class="title">ftpd_banner</span>=<span class="type">Welcome</span> to opendoc <span class="type">FTP</span> service.
+<span class="title">mkdir</span> /etc/vsftpd/vsftpd_user_conf
+`&lt;/pre&gt;
+# vi /etc/vsftpd/vsftpd_user_conf/ftpadmin 所有权限
+&lt;pre&gt;`write_enable=<span class="type">YES</span>
+<span class="title">anonymous_enable</span>=<span class="type">NO</span>
+<span class="title">anon_world_readable_only</span>=<span class="type">NO</span>
+<span class="title">anon_upload_enable</span>=<span class="type">YES</span>
+<span class="title">anon_mkdir_write_enable</span>=<span class="type">YES</span>
+<span class="title">anon_other_write_enable</span>=<span class="type">YES</span>
+<span class="title">local_umask</span>=<span class="number">022</span>
+<span class="title">download_enable</span>=<span class="type">Yes</span>
+<span class="title">local_root</span>=/<span class="typedef"><span class="keyword">data</span></span>
+`&lt;/pre&gt;
+# vi /etc/vsftpd/vsftpd_user_conf/ftpuser 上传权限
+&lt;pre&gt;`write_enable=<span class="type">YES</span>
+<span class="title">anon_world_readable_only</span>=<span class="type">NO</span>
+<span class="title">anon_upload_enable</span>=<span class="type">YES</span>
+<span class="title">anon_mkdir_write_enable</span>=<span class="type">YES</span>
+<span class="title">anon_other_write_enable</span>=<span class="type">YES</span>
+<span class="title">local_umask</span>=<span class="number">022</span>
+<span class="title">download_enable</span>=<span class="type">NO</span>
+<span class="title">local_root</span>=/<span class="typedef"><span class="keyword">data</span></span>
+`&lt;/pre&gt;
+# vi /etc/vsftpd/vsftpd_user_conf/ftp 只能下载
+&lt;pre&gt;`write_enable=<span class="type">NO</span>
+<span class="title">anon_world_readable_only</span>=<span class="type">NO</span>
+<span class="title">anon_upload_enable</span>=<span class="type">NO</span>
+<span class="title">anon_mkdir_write_enable</span>=<span class="type">NO</span>
+<span class="title">anon_other_write_enable</span>=<span class="type">NO</span>
+<span class="title">local_umask</span>=<span class="number">022</span>
+<span class="title">download_enable</span>=yes
+<span class="title">local_root</span>=/<span class="typedef"><span class="keyword">data</span></span>
+</pre></figure></code></pre>
+<h1>/etc/init.d/vsftpd start</h1>
+<p>Starting vsftpd for vsftpd: [ OK ]</p>
+<p>测试：</p>
+<h1>ftp -n localhost</h1>
+<p>Connected to ifidc.
+530 Please login with USER and PASS.
+530 Please login with USER and PASS.
+KERBEROS_V4 rejected as an authentication type
+220 Welcome to tfhudong FTP service
+ftp&gt; use ftpadmin
+331 Please specify the password.
+Password:
+230 Login successful.
+ftp&gt; quit
+221 Goodbye.</p>
+<h1>ftp -n localhost</h1>
+<p>Connected to ifidc.
+220 Welcome to tfhudong FTP service
+530 Please login with USER and PASS.
+530 Please login with USER and PASS.
+KERBEROS_V4 rejected as an authentication type
+ftp&gt; use ftpuser
+331 Please specify the password.
+Password:
+230 Login successful.
+ftp&gt; quit
+221 Goodbye.</p>
+<h1>ftp -n localhost</h1>
+<p>Connected to ifidc.
+220 Welcome to tfhudong FTP service
+530 Please login with USER and PASS.
+530 Please login with USER and PASS.
+KERBEROS_V4 rejected as an authentication type
+ftp&gt; use ftp
+331 Please specify the password.
+Password:
+230 Login successful.
+ftp&gt; quit
+221 Goodbye.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T05:59:13.000Z"><a href="/2010/12/18/ubuntu-install-smokeping/">12月 18 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/18/ubuntu-install-smokeping/">ubuntu install smokeping</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>aptitude install rrdtool apache2 fping echoping libapache2-mod-speedycgi libwww-perl libsocket6-perl libnet-telnet-perl libnet-dns-perl libnet-ldap-perl libio-socket-ssl-perl libauthen-radius-perl libcgi-perl librrds-perl librrdp-perl
+apt-get install smokeping
+<a href="http://［IP］/cgi-bin/smokeping.cgi">http://［IP］/cgi-bin/smokeping.cgi</a></p>
+<p>配置smokeping,添加监控主机。/etc/smokeping/config.d/ Targets
+ubuntu 的iptables 不同于linux
+iptables -F
+iptables -X</p>
+<p>自动会生效，就关闭了iptables</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T00:06:53.000Z"><a href="/2010/12/18/nginx-perl-fcgi-nagios/">12月 18 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/18/nginx-perl-fcgi-nagios/">Nginx perl fcgi 配置nagios</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Nginx8 + nagios3.2 +perl fcgi</p>
+<p>通常使用：nginx 代理+ apache CGI部分交给apache来处理
+本文取消apache 改为nginx自己处理</p>
+<p>Nginx nagios 安装略</p>
+<p>安装perl cgi模块</p>
+<pre><code><figure class="highlight"><pre>wget http://www<span class="preprocessor">.cpan</span><span class="preprocessor">.org</span>/modules/by-module/FCGI/FCGI-<span class="number">0.67</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
+tar -zxvf FCGI-<span class="number">0.67</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
+cd FCGI-<span class="number">0.67</span>
+perl Makefile<span class="preprocessor">.PL</span>
+make &amp;amp<span class="comment">;&amp;amp; make install</span>
+`&lt;/pre&gt;
+&lt;!--more--&gt;
+
+安装FCGI-ProcManager:
+&lt;pre&gt;`wget http://search<span class="preprocessor">.cpan</span><span class="preprocessor">.org</span>/CPAN/authors/id/G/GB/GBJK/FCGI-ProcManager-<span class="number">0.18</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
+tar -xzxf FCGI-ProcManager-<span class="number">0.18</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
+cd FCGI-ProcManager-<span class="number">0.18</span>
+perl Makefile<span class="preprocessor">.PL</span>
+make      make install
+`&lt;/pre&gt;
+下载nginx-fcgi脚本
+Wget http://www<span class="preprocessor">.nginx</span><span class="preprocessor">.eu</span>/nginx-fcgi/nginx-fcgi<span class="preprocessor">.txt</span>
+放置在：/etc/nginx-fcgi
+启动方法：
+/etc/nginx-fcgi –l /var/log/nginx/nginx-fcgi<span class="preprocessor">.log</span> -pid /var/run/nginx-fcgi<span class="preprocessor">.pid</span> -S /var/run/nginx-fcgi<span class="preprocessor">.sock</span>
+注意给 nginx-fcgi<span class="preprocessor">.sock</span> <span class="number">777</span>的权限
+
+**运行前使用cpan 安装 FCGI<span class="comment">;Getopt::Long;IO::All;Socket;**</span>
+
+配置文件参考：/usr/local/nginx/conf/vhosts/nagios<span class="preprocessor">.conf</span>
+&lt;pre&gt;`server
+{
+listen <span class="number">80</span><span class="comment">;</span>
+server_name IP<span class="comment">;</span>
+root /usr/local/nagios/share<span class="comment">;</span>
+index index<span class="preprocessor">.php</span><span class="comment">;</span>
+location ~ .*\.(php|php5)?$
+{
+fastcgi_pass <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9000</span><span class="comment">;</span>
+fastcgi_index index<span class="preprocessor">.php</span><span class="comment">;</span>
+include enable_php5<span class="preprocessor">.conf</span><span class="comment">;</span>
+auth_basic <span class="string">"Nagios Login pain"</span><span class="comment">;</span>
+auth_basic_user_file /usr/local/nagios/etc/htpasswd<span class="comment">;</span>
+}
+location ~ .*\<span class="preprocessor">.cgi</span>$ {
+root /usr/local/nagios/sbin<span class="comment">;</span>
+rewrite ^/nagios/cgi-bin/(.*)\<span class="preprocessor">.cgi</span> /$<span class="number">1.</span>cgi <span class="keyword">break</span><span class="comment">;</span>
+fastcgi_pass unix:/var/run/ng-fcgi<span class="preprocessor">.sock</span><span class="comment">;</span>
+fastcgi_index index<span class="preprocessor">.cgi</span><span class="comment">;</span>
+fastcgi_param SCRIPT_FILENAME /usr/local/nagios/sbin/$fastcgi_script_name<span class="comment">;</span>
+fastcgi_param HTTP_ACCEPT_LANGUAGE <span class="built_in">zh</span>-cn<span class="comment">;</span>
+include enable_php5<span class="preprocessor">.conf</span><span class="comment">;</span>
+auth_basic <span class="string">"Nagios Login pain"</span><span class="comment">;</span>
+auth_basic_user_file /usr/local/nagios/etc/htpasswd<span class="comment">;</span>
+}
+location /nagios/ {
+alias /usr/local/nagios/share/<span class="comment">;</span>
+}
+`&lt;/pre&gt;
+enable_php5<span class="preprocessor">.conf</span> 参考：
+&lt;pre&gt;`fastcgi_param GATEWAY_INTERFACE CGI/<span class="number">1.1</span><span class="comment">;</span>
+fastcgi_param SERVER_SOFTWARE nginx<span class="comment">;</span>
+fastcgi_param QUERY_STRING $query_string<span class="comment">;</span>
+fastcgi_param REQUEST_METHOD $request_method<span class="comment">;</span>
+fastcgi_param CONTENT_TYPE $content_type<span class="comment">;</span>
+fastcgi_param CONTENT_LENGTH $content_length<span class="comment">;</span>
+fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name<span class="comment">;</span>
+fastcgi_param SCRIPT_NAME $fastcgi_script_name<span class="comment">;</span>
+fastcgi_param REQUEST_URI $request_uri<span class="comment">;</span>
+fastcgi_param DOCUMENT_URI $document_uri<span class="comment">;</span>
+fastcgi_param DOCUMENT_ROOT $document_root<span class="comment">;</span>
+fastcgi_param SERVER_PROTOCOL $server_protocol<span class="comment">;</span>
+fastcgi_param REMOTE_ADDR $remote_addr<span class="comment">;</span>
+fastcgi_param REMOTE_PORT $remote_port<span class="comment">;</span>
+fastcgi_param SERVER_ADDR $server_addr<span class="comment">;</span>
+fastcgi_param SERVER_PORT $server_port<span class="comment">;</span>
+fastcgi_param SERVER_NAME $server_name<span class="comment">;</span>
+fastcgi_param HTTP_ACCEPT_ENCODING gzip,deflate<span class="comment">;</span>
+</pre></figure></code></pre>
+<p>参考：<a href="http://bbs.linuxtone.org/thread-4441-1-1.html">http://bbs.linuxtone.org/thread-4441-1-1.html</a>
+<a href="http://www.nginx.eu/nginx-fcgi.html">http://www.nginx.eu/nginx-fcgi.html</a>
+<a href="http://wiki.nginx.org/NginxSimpleCGI">http://wiki.nginx.org/NginxSimpleCGI</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T00:04:36.000Z"><a href="/2010/12/18/nginx-upgrad/">12月 18 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/18/nginx-upgrad/">Nginx 无缝升级 </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1>/usr/local/nginx/sbin/nginx -v</h1>
+<p>nginx version: nginx/0.7.61</p>
+<h1>/usr/local/nginx/sbin/nginx -V</h1>
+<p>nginx version: nginx/0.7.61
+built by gcc 4.1.2 20080704 (Red Hat 4.1.2-44)
+configure arguments: --user=www --group=www --prefix=/usr/local/nginx/ --with-http_stub_status_module --with-http_ssl_module --with-md5=/usr/lib --with-sha1=/usr/lib</p>
+<p>[root@nagios nginx-0.8.29]# ./configure --user=www --group=www --prefix=/usr/local/nginx/ --with-http_stub_status_module --with-http_ssl_module --with-md5=/usr/lib --with-sha1=/usr/lib
+[root@nagios nginx-0.8.29]# make
+[root@nagios nginx-0.8.29]# mv /usr/local/nginx/sbin/nginx /usr/local/nginx/sbin/nginx.0.7
+[root@nagios nginx-0.8.29]# cp objs/nginx /usr/local/nginx/sbin/
+[root@nagios nginx-0.8.29]# /usr/local/nginx/sbin/nginx -t
+the configuration file /usr/local/nginx//conf/nginx.conf syntax is ok
+configuration file /usr/local/nginx//conf/nginx.conf test is successful</p>
+<p>[root@nagios nginx-0.8.29]# kill -USR2 <code>cat /usr/local/nginx/nginx.pid</code>
+nginx.pid nginx.pid.oldbin</p>
+<p>[root@nagios nginx-0.8.29]# kill -QUIT <code>cat /usr/local/nginx/nginx.pid.oldbin</code>
+[root@nagios nginx-0.8.29]# /usr/local/nginx/sbin/nginx -v</p>
+<p>nginx version: nginx/0.8.29</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T23:56:54.000Z"><a href="/2010/12/18/apache-tomcat-cluster-bacst/">12月 18 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/18/apache-tomcat-cluster-bacst/">Apache Tomcat Cluster-bacst 配置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>关于Apache+Tomcat的Cluster的郁闷问题，终于得到解决</p>
+<p>此类话题已经很多，可以参考的文档也不少，我是参考这个blog的文档做的：</p>
+<p><a href="http://blogger.org.cn/blog/blog.asp?name=lhwork">http://blogger.org.cn/blog/blog.asp?name=lhwork</a></p>
+<p>1）环境和版本：</p>
+<p>Apache2.0.59+Tomcat5.5.15（两个），一开始用的是Tomcat5.0.28，一直有问题（在后面总结），就升级到5.5去做试验了，冤枉5.0.28兄弟了:)</p>
+<p>步骤小结为：</p>
+<p>1、安装（忽略）；</p>
+<p>2、配置Tomcat：</p>
+<p>1）第一个Tomcat：</p>
+<p>A.启用jvmRoute</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;!-- You should set jvmRoute to support load-balancing via AJP ie :--&gt;</p>
+<p>&lt;Engine name=&quot;Standalone&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;tomcat1&quot;&gt;</p>
+<p>&lt;!-- Define the top level container in our container hierarchy</p>
+<p>&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;--&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>B.启用原来禁用的Cluster设置</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;Cluster className=&quot;org.apache.catalina.cluster.tcp.SimpleTcpCluster&quot;</p>
+<p>managerClassName=&quot;org.apache.catalina.cluster.session.DeltaManager&quot;</p>
+<p>expireSessionsOnShutdown=&quot;false&quot;</p>
+<p>useDirtyFlag=&quot;true&quot;</p>
+<p>notifyListenersOnReplication=&quot;true&quot;&gt;</p>
+<p>&lt;Membership</p>
+<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
+<p>mcastBindAddress=&quot;127.0.0.1&quot;</p>
+<p>mcastAddr=&quot;224.1.2.3&quot;</p>
+<p>mcastPort=&quot;2525&quot;</p>
+<p>mcastFrequency=&quot;500&quot;</p>
+<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
+<p>&lt;Receiver</p>
+<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;</p>
+<p>tcpListenAddress=&quot;auto&quot;</p>
+<p>tcpListenPort=&quot;4001&quot;</p>
+<p>tcpSelectorTimeout=&quot;100&quot;</p>
+<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
+<p>&lt;Sender</p>
+<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationTransmitter&quot;</p>
+<p>replicationMode=&quot;pooled&quot;</p>
+<p>ackTimeout=&quot;15000&quot;/&gt;</p>
+<p>&lt;Valve className=&quot;org.apache.catalina.cluster.tcp.ReplicationValve&quot;</p>
+<p>filter=&quot;.<em>.gif;.</em>.js;.<em>.jpg;.</em>.png;.<em>.htm;.</em>.html;.<em>.css;.</em>.txt;&quot;/&gt;</p>
+<p>&lt;Deployer className=&quot;org.apache.catalina.cluster.deploy.FarmWarDeployer&quot;</p>
+<p>tempDir=&quot;/tmp/war-temp/&quot;</p>
+<p>deployDir=&quot;/tmp/war-deploy/&quot;</p>
+<p>watchDir=&quot;/tmp/war-listen/&quot;</p>
+<p>watchEnabled=&quot;false&quot;/&gt;</p>
+<p>&lt;ClusterListener className=&quot;org.apache.catalina.cluster.session.ClusterSessionListener&quot;/&gt;</p>
+<p>&lt;/Cluster&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>C.搞定</p>
+<p>2）配置第二个Tomcat（要注意端口冲突了）：</p>
+<p>A.变更端口</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;Server port=&quot;8005&quot; shutdown=&quot;SHUTDOWN&quot;&gt;</p>
+<p>＝》</p>
+<p>&lt;Server port=&quot;8004&quot; shutdown=&quot;SHUTDOWN&quot;&gt;</p>
+<p>B.变更端口</p>
+<p>&lt;Connector port=&quot;8009&quot;</p>
+<p>enableLookups=&quot;false&quot; redirectPort=&quot;8443&quot; protocol=&quot;AJP/1.3&quot; /&gt;</p>
+<p>＝》</p>
+<p>&lt;Connector port=&quot;9009&quot;</p>
+<p>enableLookups=&quot;false&quot; redirectPort=&quot;8443&quot; protocol=&quot;AJP/1.3&quot; /&gt;</p>
+<p>C.启用jvmRoute</p>
+<p>&lt;!-- You should set jvmRoute to support load-balancing via AJP ie :--&gt;</p>
+<p>&lt;Engine name=&quot;Standalone&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;tomcat2&quot;&gt;</p>
+<p>&lt;!-- Define the top level container in our container hierarchy</p>
+<p>&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;--&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>D.启用原来禁用的Cluster设置</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;Cluster className=&quot;org.apache.catalina.cluster.tcp.SimpleTcpCluster&quot;</p>
+<p>managerClassName=&quot;org.apache.catalina.cluster.session.DeltaManager&quot;</p>
+<p>expireSessionsOnShutdown=&quot;false&quot;</p>
+<p>useDirtyFlag=&quot;true&quot;</p>
+<p>notifyListenersOnReplication=&quot;true&quot;&gt;</p>
+<p>&lt;Membership</p>
+<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
+<p>mcastBindAddress=&quot;127.0.0.1&quot;</p>
+<p>mcastAddr=&quot;224.1.2.3&quot;</p>
+<p>mcastPort=&quot;2525&quot;</p>
+<p>mcastFrequency=&quot;500&quot;</p>
+<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
+<p>&lt;Receiver</p>
+<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;</p>
+<p>tcpListenAddress=&quot;auto&quot;</p>
+<p>tcpListenPort=&quot;4002&quot;</p>
+<p>tcpSelectorTimeout=&quot;100&quot;</p>
+<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
+<p>&lt;Sender</p>
+<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationTransmitter&quot;</p>
+<p>replicationMode=&quot;pooled&quot;</p>
+<p>ackTimeout=&quot;15000&quot;/&gt;</p>
+<p>&lt;Valve className=&quot;org.apache.catalina.cluster.tcp.ReplicationValve&quot;</p>
+<p>filter=&quot;.<em>.gif;.</em>.js;.<em>.jpg;.</em>.png;.<em>.htm;.</em>.html;.<em>.css;.</em>.txt;&quot;/&gt;</p>
+<p>&lt;Deployer className=&quot;org.apache.catalina.cluster.deploy.FarmWarDeployer&quot;</p>
+<p>tempDir=&quot;/tmp/war-temp/&quot;</p>
+<p>deployDir=&quot;/tmp/war-deploy/&quot;</p>
+<p>watchDir=&quot;/tmp/war-listen/&quot;</p>
+<p>watchEnabled=&quot;false&quot;/&gt;</p>
+<p>&lt;ClusterListener className=&quot;org.apache.catalina.cluster.session.ClusterSessionListener&quot;/&gt;</p>
+<p>&lt;/Cluster&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>E.搞定</p>
+<p>3、配置apache：</p>
+<p>1）修订conf/httpd.conf</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<h1>add by zhengxq</h1>
+<p>LoadModule jk2_module modules/mod_jk2.so</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>2）新增worders2.properties并放到conf下</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>[shm]</p>
+<p>info=Scoreboard. Requried for reconfiguration and status with multiprocess servers.</p>
+<p>file=anon</p>
+<h1>Defines a load balancer named lb. Use even if you only have one machine.</h1>
+<p>[lb:lb]</p>
+<p>worker=ajp13:tomcat1</p>
+<p>worker=ajp13:tomcat2</p>
+<h1>Example socket channel, override port and host.</h1>
+<p>[channel.socket:localhost:9009]</p>
+<p>port=9009</p>
+<p>host=127.0.0.1</p>
+<h1>define the worker</h1>
+<p>[ajp13:localhost:9009]</p>
+<p>channel=channel.socket:localhost:9009</p>
+<p>group=lb</p>
+<h1>Example socket channel, override port and host.</h1>
+<p>[channel.socket:localhost:8009]</p>
+<p>port=8009</p>
+<p>host=127.0.0.1</p>
+<h1>define the worker</h1>
+<p>[ajp13:localhost:8009]</p>
+<p>channel=channel.socket:localhost:8009</p>
+<p>group=lb</p>
+<h1>Map the Tomcat examples webapp to the Web server uri space</h1>
+<p>[uri:/clusterapp/*]</p>
+<p>group=lb</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>3）搞定</p>
+<p>3.测试程序，请参考上述参考文档，如下：</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;%@ page contentType=&quot;text/html; charset=GBK&quot; import=&quot;java.util.*&quot;%&gt;</p>
+<p>&lt;html&gt;&lt;head&gt;&lt;title&gt;Cluster App Test&lt;/title&gt;&lt;/head&gt;</p>
+<p>&lt;body&gt;</p>
+<p>Server Info: &lt;%out.print(request.getLocalAddr() + &quot; : &quot; + request.getLocalPort());%&gt;</p>
+<p>&lt;%</p>
+<p>out.println(&quot;&lt;br&gt; ID &quot; + session.getId());</p>
+<p>// 如果有新的 Session 属性设置</p>
+<p>String dataName = request.getParameter(&quot;dataName&quot;);</p>
+<p>if (dataName != null &amp;&amp; dataName.length() &gt; 0) {</p>
+<p>String dataValue = request.getParameter(&quot;dataValue&quot;);</p>
+<p>session.setAttribute(dataName, dataValue);</p>
+<p>}</p>
+<p>out.print(&quot;&lt;b&gt;Session 列表&lt;/b&gt;&quot;);</p>
+<p>Enumeration e = session.getAttributeNames();</p>
+<p>while (e.hasMoreElements()) {</p>
+<p>String name = (String)e.nextElement();</p>
+<p>String value = session.getAttribute(name).toString();</p>
+<p>out.println( name + &quot; = &quot; + value);</p>
+<p>}</p>
+<p>%&gt;</p>
+<p>&lt;form action=&quot;index.jsp&quot; method=&quot;POST&quot;&gt;</p>
+<p>名称:&lt;input type=text size=20 name=&quot;dataName&quot;&gt;</p>
+<p>&lt;br&gt;</p>
+<p>值:&lt;input type=text size=20 name=&quot;dataValue&quot;&gt;</p>
+<p>&lt;br&gt;</p>
+<p>&lt;input type=submit&gt;</p>
+<p>&lt;/form&gt;</p>
+<p>&lt;/body&gt;</p>
+<p>&lt;/html&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>所需要注意的是：</p>
+<p>1、测试应用的web.xml必须加上：</p>
+<p>2、我搞了很久，发现三个东西起来后，可以访问，但只能做到负载均衡，不能session复制，这点我重复配置了一次，就是不行，郁闷之下找了tomcat的邮件列表，这样做：</p>
+<p>1）测试广播是否正常</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>A. download this jar</p>
+<p><a href="http://cvs.apache.org/~fhanik/tomcat-replication.jar">http://cvs.apache.org/~fhanik/tomcat-replication.jar</a></p>
+<p>B. Open two terminals</p>
+<p>a) Terminal one run</p>
+<p>java -cp tomcat-replication.jar MCaster 239.255.10.10 2525 Terminal1</p>
+<p>b) Terminal two run</p>
+<p>java -cp tomcat-replication.jar MCaster 239.255.10.10 2525 Terminal2</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>发现结果如下：</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>C:\&gt;java -cp tomcat-replication.jar MCaster 224.1.2.3 2525 Terminal1</p>
+<p>Usage MCaster [address port message]</p>
+<p>BEGIN TO RECEIVE</p>
+<p>SENT:Terminal11</p>
+<p>SENT:Terminal12</p>
+<p>SENT:Terminal13</p>
+<p>SENT:Terminal14</p>
+<p>SENT:Terminal15</p>
+<p>SENT:Terminal16</p>
+<p>SENT:Terminal17</p>
+<p>SENT:Terminal18</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>表明广播有问题，气死了，难怪Tomcat总是在启动的时候提示：</p>
+<p>信息: Manager [/clusterapp]: skipping state transfer. No members active in cluster group.</p>
+<p>后来终于发现猫腻，必须注意在server.xml的</p>
+<p>为什么呢？很简单，因为我安装了VPN，这家伙会设置一个虚拟网卡，导致绑定失败（没地方责怪了，只好让它垫背）？！这是通过邮件列表里面所描述的多网卡绑定问题举一反三得到的判断。</p>
+<p>具体请参考：<a href="http://www.servlets.com/archive/servlet/ReadMsg?msgId=475067&amp;listName=tomcat-user">http://www.servlets.com/archive/servlet/ReadMsg?msgId=475067&amp;listName=tomcat-user</a></p>
+<p>三、tomcat集群配置，session 同步配置：</p>
+<p>1、tomca1 tomcat 2 在同一台机器</p>
+<p>Tomcat 1 （IP: 192.168.19.199）</p>
+<p>A、修改Engine节点信息：</p>
+<p>B、去掉 &lt;\Cluster&gt; 的注释符</p>
+<p>C、修改Cluster 节点信息</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;Membership</p>
+<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;                mcastBindAddress=&quot;192.168.19.199&quot;</p>
+<p>mcastAddr=&quot;224.0.0.1&quot;</p>
+<p>mcastPort=&quot;45564&quot;</p>
+<p>mcastFrequency=&quot;500&quot;</p>
+<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
+<p>&lt;Receiver</p>
+<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;                tcpListenAddress=&quot;192.168.19.199&quot;</p>
+<p>tcpListenPort=&quot;4001&quot;</p>
+<p>tcpSelectorTimeout=&quot;100&quot;</p>
+<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>Tomcat 2 （IP: 192.168.19.81）</p>
+<p>A、修改Engine节点信息：</p>
+<p>B、去掉 &lt;\Cluster&gt; 的注释符</p>
+<p>C、修改Cluster 节点信息</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;Membership</p>
+<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
+<p>mcastBindAddress=&quot;192.168.19.199&quot;</p>
+<p>mcastAddr=&quot;224.0.0.1&quot;</p>
+<p>mcastPort=&quot;45564&quot;</p>
+<p>mcastFrequency=&quot;500&quot;</p>
+<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
+<p>&lt;Receiver</p>
+<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;</p>
+<p>tcpListenAddress=&quot;192.168.19.199&quot;</p>
+<p>tcpListenPort=&quot;4002&quot;    一定要改</p>
+<p>tcpSelectorTimeout=&quot;100&quot;</p>
+<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>D、将8080 8009 8082三个节点的端口改为</p>
+<p>9080 9009 9082 避免 与tomcat1端口冲突</p>
+<p>注：这里的IP也可以不改</p>
+<p>2、tomca1 tomcat 2 在不同机器上</p>
+<p>Tomcat 1 （IP: 192.168.19.199）</p>
+<p>A、修改Engine节点信息：</p>
+<p>B、去掉 &lt;\Cluster&gt; 的注释符</p>
+<p>C、修改Cluster 节点信息</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;Membership</p>
+<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
+<p>mcastBindAddress=&quot;192.168.19.199&quot;</p>
+<p>mcastAddr=&quot;224.0.0.1&quot;</p>
+<p>mcastPort=&quot;45564&quot;</p>
+<p>mcastFrequency=&quot;500&quot;</p>
+<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
+<p>&lt;Receiver</p>
+<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;</p>
+<p>tcpListenAddress=&quot;192.168.19.199&quot;</p>
+<p>tcpListenPort=&quot;4001&quot;</p>
+<p>tcpSelectorTimeout=&quot;100&quot;</p>
+<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>Tomcat 2 （IP: 192.168.19.81）</p>
+<p>A、修改Engine节点信息：</p>
+<p>B、去掉 &lt;\Cluster&gt; 的注释符</p>
+<p>C、修改Cluster 节点信息</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>&lt;Membership</p>
+<p>className=&quot;org.apache.catalina.cluster.mcast.McastService&quot;</p>
+<p>mcastBindAddress=&quot;192.168.19.81&quot;</p>
+<p>mcastAddr=&quot;224.0.0.1&quot;</p>
+<p>mcastPort=&quot;45564&quot;     mcastFrequency=&quot;500&quot;</p>
+<p>mcastDropTime=&quot;3000&quot;/&gt;</p>
+<p>&lt;Receiver</p>
+<p>className=&quot;org.apache.catalina.cluster.tcp.ReplicationListener&quot;            tcpListenAddress=&quot;192.168.19.81&quot;</p>
+<p>tcpListenPort=&quot;4001&quot;</p>
+<p>tcpSelectorTimeout=&quot;100&quot;</p>
+<p>tcpThreadCount=&quot;6&quot;/&gt;</p>
+<p>&lt;/code&gt;&lt;/pre&gt;</p>
+<p>修改web应用里面WEB-INF目录下的web.xml文件，加入标签</p>
+<p>直接加在之前就可以了</p>
+<p>做tomcat集群必须需要这一步，否则用户的session就无法正常使用。</p>
+<p>源文档 &lt;<a href="http://www.opendoc.com.cn/webserver/Apache_Tomcat_Cluster.html&amp;gt">http://www.opendoc.com.cn/webserver/Apache_Tomcat_Cluster.html&amp;gt</a>;</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/15/" class="alignleft prev">上一页</a>
+  
+  
+    <a href="/page/17/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Cache-control/" style="font-size: 16.75px;">Cache-control</a><a href="/tags/Cluster-bacst/" style="font-size: 12.00px;">Cluster-bacst</a><a href="/tags/Header-V3-DSA-signature/" style="font-size: 15.75px;">Header V3 DSA signature</a><a href="/tags/object-Object/" style="font-size: 14.75px;">[object Object]</a><a href="/tags/apache/" style="font-size: 19.50px;">apache</a><a href="/tags/awk/" style="font-size: 18.25px;">awk</a><a href="/tags/bash/" style="font-size: 17.00px;">bash</a><a href="/tags/browser/" style="font-size: 13.75px;">browser</a><a href="/tags/cache/" style="font-size: 14.00px;">cache</a><a href="/tags/cdn/" style="font-size: 16.25px;">cdn</a><a href="/tags/centos/" style="font-size: 19.25px;">centos</a><a href="/tags/cpan/" style="font-size: 12.75px;">cpan</a><a href="/tags/cpanm/" style="font-size: 12.25px;">cpanm</a><a href="/tags/etag/" style="font-size: 14.25px;">etag</a><a href="/tags/expires/" style="font-size: 13.00px;">expires</a><a href="/tags/foreman/" style="font-size: 15.25px;">foreman</a><a href="/tags/gzip/" style="font-size: 10.50px;">gzip</a><a href="/tags/libmemcached/" style="font-size: 15.00px;">libmemcached</a><a href="/tags/mod_cband/" style="font-size: 11.00px;">mod_cband</a><a href="/tags/mod_limitipconn/" style="font-size: 12.50px;">mod_limitipconn</a><a href="/tags/moudles/" style="font-size: 10.25px;">moudles</a><a href="/tags/mysql/" style="font-size: 18.75px;">mysql</a><a href="/tags/nginx/" style="font-size: 18.00px;">nginx</a><a href="/tags/php-1/" style="font-size: 16.50px;">php</a><a href="/tags/php-fpm/" style="font-size: 17.50px;">php-fpm</a><a href="/tags/puppet/" style="font-size: 19.00px;">puppet</a><a href="/tags/python26/" style="font-size: 15.50px;">python2.6</a><a href="/tags/referer/" style="font-size: 11.25px;">referer</a><a href="/tags/repo/" style="font-size: 16.00px;">repo</a><a href="/tags/ruby/" style="font-size: 14.50px;">ruby</a><a href="/tags/shell/" style="font-size: 17.25px;">shell</a><a href="/tags/shtml/" style="font-size: 11.50px;">shtml</a><a href="/tags/ssi/" style="font-size: 11.75px;">ssi</a><a href="/tags/tomcat/" style="font-size: 18.50px;">tomcat</a><a href="/tags/yum/" style="font-size: 19.75px;">yum</a><a href="/tags/单引号/" style="font-size: 13.25px;">单引号</a><a href="/tags/双引号/" style="font-size: 13.50px;">双引号</a><a href="/tags/环境变量/" style="font-size: 10.00px;">环境变量</a><a href="/tags/详解/" style="font-size: 17.75px;">详解</a><a href="/tags/过滤日志/" style="font-size: 10.75px;">过滤日志</a>
+  </div>
+</div>
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

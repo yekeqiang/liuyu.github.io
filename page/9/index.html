@@ -3,21 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>第 9 页 | Puppet-in-action</title>
+  <title>第 9 页 | Liuyu blog</title>
   <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="Puppet cdn AutoMate">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-  <meta property="og:site_name" content="Puppet-in-action"/>
+  <meta property="og:site_name" content="Liuyu blog"/>
 
   
     <meta property="og:image" content="undefined"/>
   
 
   <link href="/favicon.png" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="Liuyu blog" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
@@ -27,8 +29,8 @@
 
 <body>
   <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">Puppet-in-action</a></h1>
-  <h2><a href="/">Puppet</a></h2>
+  <h1><a href="/">Liuyu blog</a></h1>
+  <h2><a href="/">Puppet in action</a></h2>
 </div>
 <nav id="main-nav" class="alignright">
   <ul>
@@ -36,6 +38,8 @@
       <li><a href="/">Home</a></li>
     
       <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -49,34 +53,36 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2010-12-17T23:53:12.000Z"><a href="/2010/12/18/tomcat-optimization-sending-end-packet/">12月 18 2010</a></time>
+        <time datetime="2010-12-20T13:40:17.000Z"><a href="/2010/12/20/wordpress-content/">12月 20 2010</a></time>
       
       
   
-    <h1 class="title"><a href="/2010/12/18/tomcat-optimization-sending-end-packet/">Tomcat 优化sending end packet</a></h1>
+    <h1 class="title"><a href="/2010/12/20/wordpress-content/">无法定位WordPress Content目录(wp-content) 解决方案</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>优化sending end packet</p>
-<p>性能调整：
-<a href="http://vod.sjtu.edu.cn/help/Article_Print.asp?ArticleID=1387">http://vod.sjtu.edu.cn/help/Article_Print.asp?ArticleID=1387</a></p>
-<p>症状:
-WARNING: Error sending end packet
-java.net.SocketException: Broken pipe
-资料:
-Broken pipe产生的原因通常是当管道读端没有在读，而管道的写端继续有线程在写，就会造成管道中断。（由于管道是单向通信的） SIGSEGV(Segment fault)意味着指针所对应的地址是无效地址，没有物理内存对应该地址。 以下是UNIX的信号解释： 11 / SIGSEGV: Unerlaubter Zugriff auf Hauptspeicher (Adressfehler). 12 / SIGUSER2: User-defined Signal 2 (POSIX). 把_JAVA_SR_SIGNUM改成12只是将信号至成user-defined，让它不报出来而已，不能解决问题。 </p>
-<p>建议采取的方式：
-1． 资源没有完全释放，用完后要至NULL 值（JAVA的GC没那么完善）
-2． 数据库连接顺序关闭！（RS，PS，CONN）
-3． 优化JAVA虚拟机 加入相应的内存参数！
-4． 不要在数据库中获取大段文本（即一个栏位的值不要太大）
-5． JAVA 不推荐 用String 获取大量信息。（容易造成内存泄露，建议用StringBuffer）
-6． 页面重复提交
-7． 尽量将METHOD移到JAVA中，在JSP中所有的方法都看做全局变量，编译执行本身就有很多问题。
-8． 尽量用较新较稳定版本的JDK，低版本的JVM本身也有很多BUG，比如1。5的垃圾回收比起1。2，1。3一定是非常明显的进步。
-9． LINUX系统本身没有这么稳定，有些问题无法避免的~~：）</p>
+        <p>方案： 打开htdocs目录下的wp-config.php文件，将下面的代码放在wp-config.php最后一行的&quot;?&gt;&quot;前面即可。注意，不要忘记上传到服务器上啊。</p>
+<p>Php代码</p>
+<pre><code><figure class="highlight"><pre><span class="comment">if(is_admin())</span> <span class="comment">{add_filter('filesystem_method'</span>, <span class="comment">create_function('$a'</span>, <span class="comment">'return</span> <span class="comment">"direct";'</span> <span class="comment">));define(</span> <span class="comment">'FS_CHMOD_DIR'</span>, <span class="comment">0751</span> <span class="comment">);}</span>  <span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">修改完毕后的wp</span>-<span class="comment">config</span>.<span class="comment">php文件是这样的:</span>
+
+<span class="comment">Php代码</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`/*</span> <span class="comment">设定完毕，请保存该文件。</span> <span class="comment">*/</span>
+<span class="comment">//</span>.<span class="string">.</span><span class="string">.</span><span class="string">.</span><span class="string">.</span><span class="string">.</span><span class="string">.</span><span class="comment">上面的都省略了</span>
+<span class="comment">/**</span> <span class="comment">WordPress目录的绝对路径。</span> <span class="comment">*/</span>
+<span class="comment">if</span> <span class="comment">(</span> <span class="comment">!defined('ABSPATH')</span> <span class="comment">)</span>
+    <span class="comment">define('ABSPATH'</span>, <span class="comment">dirname(__FILE__)</span> <span class="string">.</span> <span class="comment">'/');</span>  
+
+<span class="comment">/**</span> <span class="comment">设置WordPress变量和包含文件。</span> <span class="comment">*/</span>
+<span class="comment">require_once(ABSPATH</span> <span class="string">.</span> <span class="comment">'wp</span>-<span class="comment">settings</span>.<span class="comment">php');</span>  
+
+<span class="comment">//</span>-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">无法定位WordPress</span> <span class="comment">Content目录(wp</span>-<span class="comment">content)</span>  <span class="comment">解决方案</span>-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">begin</span>
+<span class="comment">if(is_admin())</span> <span class="comment">{add_filter('filesystem_method'</span>, <span class="comment">create_function('$a'</span>, <span class="comment">'return</span> <span class="comment">"direct";'</span> <span class="comment">));define(</span> <span class="comment">'FS_CHMOD_DIR'</span>, <span class="comment">0751</span> <span class="comment">);}</span>
+<span class="comment">//</span>-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">无法定位WordPress</span> <span class="comment">Content目录(wp</span>-<span class="comment">content)</span>  <span class="comment">解决方案</span>-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">end</span>
+<span class="comment">?&amp;gt;
+</pre></figure></code></pre>
 
       
     </div>
@@ -98,24 +104,547 @@ Broken pipe产生的原因通常是当管道读端没有在读，而管道的写
     <header>
       
         <div class="icon"></div>
-        <time datetime="2010-12-17T23:51:58.000Z"><a href="/2010/12/18/tomcat-jk-no-connection/">12月 18 2010</a></time>
+        <time datetime="2010-12-20T13:38:02.000Z"><a href="/2010/12/20/sendmail-not-send-mail/">12月 20 2010</a></time>
       
       
   
-    <h1 class="title"><a href="/2010/12/18/tomcat-jk-no-connection/">tomcat经常挂 JK无法连接</a></h1>
+    <h1 class="title"><a href="/2010/12/20/sendmail-not-send-mail/">sendmail无法发信，启动慢解决方案</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>解决tomcat死掉JK无法连接故障</p>
-<p>近日，发现网站jsp部分无法访问，或者访问速度极其缓慢。经过近二天的时间，问题得到了解决，现在把这解决步骤及思考方法详细的记录下来。其中也走了不少弯路。其结果也是让人无法琢磨！
-发现问题时处理思路：</p>
-<p>1、检查服务器是否正常连接。掉网、死机啥的。－－－&gt;SSH登录正常
-2、检查负载情况，load是否超高,vmstat 检查资源占用率 --－&gt;只有mysql占少量资源，起初以为是mysql导致（检查mysql 状态后发现并没有锁表及DDL语句堆积，执行sql语句速度也很快。因此判断出不是mysql导致）
-3、查看tcp连接状态。是不是并发太大被拖死了－－－&gt;其中ESTABLISHED大约有1000左右。TIME_WAIT CLOSE_WAIT 在40左右。看样子tomcat是被拖死了。并发这么大？
-4、重启了tomcat 访问正常了。先观察一段时间。
-5、查看分析日志，希望能从这里面找出一点蛛丝马迹来。</p>
+        <p>php无法发mail
+用命令行测试下：</p>
+<pre><code><figure class="highlight"><pre><span class="xml"></span><span class="comment">#!/bin/bash</span><span class="xml">
+/usr/sbin/sendmail -t <span class="tag">&lt;<span class="title">&lt;EOF
+From:</span> <span class="attribute">Mail</span> <span class="attribute">testing</span> &lt;<span class="attribute">mail.goapk.gmail.com</span>&gt;</span>
+To: liuyu105@gmail.com
+Subject: mail testing
+-----------
+This is the mail content 
+----------
+EOF`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+发现速度特别慢。查看日志：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tail /var/log/maillog
+Dec </span><span class="number">15</span><span class="xml"> </span><span class="number">23</span><span class="xml">:</span><span class="number">22</span><span class="xml">:</span><span class="number">03</span><span class="xml"> litian sendmail[</span><span class="number">10845</span><span class="xml">]: My unqualified host name (LVSMaster) unknown; sleeping for retry
+Dec </span><span class="number">15</span><span class="xml"> </span><span class="number">23</span><span class="xml">:</span><span class="number">23</span><span class="xml">:</span><span class="number">21</span><span class="xml"> litian sendmail[</span><span class="number">12068</span><span class="xml">]: My unqualified host name (LVSMaster) unknown; sleeping for retry`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+原因是DNS导致，修改hosts
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`</span><span class="number">192.168</span><span class="xml"></span><span class="number">.1</span><span class="xml"></span><span class="number">.6</span><span class="xml"> LVSMaster. LVSMaster`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+本机IP  主机名.  主机名
+
+重启sendmail 
+
+写个PHP测试：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`<span class="tag">&lt;<span class="title">html</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+
+<span class="pi">&lt;?php
+if (isset(</span><span class="variable">$_REQUEST</span><span class="xml">['email']))
+//if "email" is filled out, send email
+  {
+  //send email
+  </span><span class="variable">$email</span><span class="xml"> = </span><span class="variable">$_REQUEST</span><span class="xml">['email'] ; 
+  </span><span class="variable">$subject</span><span class="xml"> = </span><span class="variable">$_REQUEST</span><span class="xml">['subject'] ;
+  </span><span class="variable">$message</span><span class="xml"> = </span><span class="variable">$_REQUEST</span><span class="xml">['message'] ;
+  mail( "someone@example.com", "Subject: </span><span class="variable">$subject</span><span class="xml">",
+  </span><span class="variable">$message</span><span class="xml">, "From: </span><span class="variable">$email</span><span class="xml">" );
+  echo "Thank you for using our mail form";
+  }
+else
+//if "email" is not filled out, display the form
+  {
+  echo "<span class="tag">&lt;<span class="title">form</span> <span class="attribute">method</span>=<span class="value">'post'</span> <span class="attribute">action</span>=<span class="value">'mailform.php'</span>&gt;</span>
+  Email: <span class="tag">&lt;<span class="title">input</span> <span class="attribute">name</span>=<span class="value">'email'</span> <span class="attribute">type</span>=<span class="value">'text'</span> /&gt;</span>
+
+  Subject: <span class="tag">&lt;<span class="title">input</span> <span class="attribute">name</span>=<span class="value">'subject'</span> <span class="attribute">type</span>=<span class="value">'text'</span> /&gt;</span>
+
+  Message:
+
+  <span class="tag">&lt;<span class="title">textarea</span> <span class="attribute">name</span>=<span class="value">'message'</span> <span class="attribute">rows</span>=<span class="value">'</span><span class="number">15</span><span class="xml">' cols='</span><span class="number">40</span><span class="xml">'&gt;
+  <span class="tag">&lt;/<span class="title">textarea</span>&gt;</span>
+
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">'submit'</span> /&gt;</span>
+  <span class="tag">&lt;/<span class="title">form</span>&gt;</span>";
+  }
+?&gt;
+
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span> </span>
+</pre></figure></code></pre>
+<p>如果发送成功。就会返回OK</p>
+<p>参考：
+<a href="http://www.blogjava.net/tacy/archive/2007/12/11/166967.html">http://www.blogjava.net/tacy/archive/2007/12/11/166967.html</a>
+<a href="http://www.w3school.com.cn/php/php_mail.asp">http://www.w3school.com.cn/php/php_mail.asp</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-20T03:27:34.000Z"><a href="/2010/12/20/howto-install-puppet-on-centos5/">12月 20 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/20/howto-install-puppet-on-centos5/">Centos5 yum快速安装puppet 2.6</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Centos 5 使用yum源安装puppet 2.6</p>
+<p>一，配置yum源
+cd /etc/yum.repos.d/</p>
+<p>vim puppet.repo</p>
+<pre><code><figure class="highlight"><pre><span class="xml">[puppetlabs]
+name=Puppet Labs Packages
+baseurl=http://yum.puppetlabs.com/base/
+enabled=</span><span class="number">0</span><span class="xml">
+gpgcheck=</span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+vim epel.repo
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>[epel]
+name=Extra Packages for Enterprise Linux </span><span class="number">5</span><span class="xml"> -</span><span class="variable">$basearch</span><span class="xml">
+</span><span class="comment">#baseurl=http://download.fedoraproject.org/pub/epel/5/$basearch</span><span class="xml">
+mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=epel-</span><span class="number">5</span><span class="xml">&amp;amp;arch=</span><span class="variable">$basearch</span><span class="xml">
+failovermethod=priority
+enabled=</span><span class="number">0</span><span class="xml">
+gpgcheck=</span><span class="number">0</span><span class="xml">
+
+[epel-puppet]
+name=epel puppet
+baseurl=http://tmz.fedorapeople.org/repo/puppet/epel/</span><span class="number">5</span><span class="xml">/</span><span class="variable">$basearch</span><span class="xml">/
+enabled=</span><span class="number">0</span><span class="xml">
+gpgcheck=</span><span class="number">0</span><span class="xml"><span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+编码 问题会有一个乱码：mirrorlist=[http://mirrors.fedoraproject.org/mirrorlist?repo=epel-</span><span class="number">5</span><span class="xml">&amp;amp;arch=</span><span class="variable">$basearch</span><span class="xml">](http://mirrors.fedoraproject.org/mirrorlist?repo=epel-</span><span class="number">5</span><span class="xml">&amp;amp;arch=</span><span class="variable">$basearch</span><span class="xml">)
+
+vim ruby.repo
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`[ruby]
+name=ruby
+baseurl=http://repo.premiumhelp.eu/ruby/
+gpgcheck=</span><span class="number">0</span><span class="xml">
+enabled=</span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+puppet </span><span class="number">2.6</span><span class="xml"> 需要 ruby </span><span class="number">1.8</span><span class="xml"></span><span class="number">.6</span><span class="xml"> 去运行 puppet-dashboard
+升级ruby
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# yum --enablerepo="ruby" update ruby
+如果你没有安装ruby 请使用:
+</span><span class="comment">#yum -y install ruby</span><span class="xml">
+`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+安装 Puppet Server
+Server端：On your puppetmaster server:
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# yum --enablerepo=epel,epel-puppet install puppet-server`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+Client 端：On your puppet client
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# yum --enablerepo="epel,epel-puppet" install puppet `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+Server端配置site.pp
+vim /etc/puppet/site.pp
+node default {
+file { "/tmp/temp1.txt": content =&amp;gt; "hello,first puppet manifest"; }
+}
+
+Client端配置hostsname
+echo 'client.example.com' &amp;gt; /etc/hostname
+hostname -F /etc/hostname
+Client端运行：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`puppetd --server master.example.com --test`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+上面的命令让puppetd 从 master.example.com 去读取puppet配置文件. 第一次连接,双方会进行ssl证书的验证,这是一个新的客户端,在服务器端那里还没有被认证,因此需要在服务器端进行证书认证.
+在服务器端的机器上执行下面的命令来认证客户端的证书
+
+Server端：
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` puppetca -s client.example.com`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+然后再重新在客户端执行
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`puppetd --server master.example.com --test </span>
+</pre></figure></code></pre>
+<p>配置完成。
+参考：<a href="http://www.craigdunn.org/2010/08/part-1-installing-puppet-2-6-1-on-centos-with-yumrpm/">http://www.craigdunn.org/2010/08/part-1-installing-puppet-2-6-1-on-centos-with-yumrpm/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T15:26:04.000Z"><a href="/2010/12/19/squid-log-detailed/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/squid-log-detailed/">squid 日志详解</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>安装配置完squid，通过日志来看看squid的一些基本的运行状态</p>
+<p>1.access.log</p>
+<p>访问日志，位于squid/var/logs/access.log，常用的记录格式如下</p>
+<pre><code><figure class="highlight"><pre>remotehost rfc931 authuser [date] “method URL” status bytes [Result Codes]:[Hierarchy Codes] `&lt;/pre&gt;
+
+看一些具体的
+&lt;pre&gt;`cd /opt/squid/<span class="keyword">var</span>/logs
+head access.log
+
+<span class="number">221.222</span><span class="number">.213</span><span class="number">.64</span> - - [<span class="number">15</span>/Nov/<span class="number">2006</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">03</span> +<span class="number">0800</span>] “GET http:<span class="comment">//bbs.ci123.com/sample.jpg HTTP/1.1″ 200 240673 TCP_MEM_HIT:NONE</span>
+`&lt;/pre&gt;
+可以通过脚本查看一些统计信息，如各种反应状态所占的比例，通常较好的情况下HIT所占的比例（应该就是所谓的命中率）可以在<span class="number">70</span>%~<span class="number">80</span>%
+&lt;pre&gt;`
+cat access.log|gawk ‘{print $<span class="number">11</span>}’|sort|uniq -c|sort -nr
+cat access.log|grep “http:<span class="comment">//blog”|gawk ‘{print $11}’|sort|uniq -c|sort -nr</span>
+
+<span class="number">154389</span> TCP_MEM_HIT:NONE
+<span class="number">81330</span> TCP_IMS_HIT:NONE
+<span class="number">66991</span> TCP_HIT:NONE
+<span class="number">32413</span> TCP_MISS:FIRST_UP_PARENT
+<span class="number">19900</span> TCP_NEGATIVE_HIT:NONE
+<span class="number">1437</span> TCP_CLIENT_REFRESH_MISS:FIRST_UP_PARENT
+<span class="number">1368</span> TCP_REFRESH_HIT:FIRST_UP_PARENT
+<span class="number">245</span> TCP_MISS:ANY_PARENT
+<span class="number">200</span> TCP_SWAPFAIL_MISS:FIRST_UP_PARENT
+<span class="number">64</span> TCP_REFRESH_MISS:FIRST_UP_PARENT
+<span class="number">23</span> TCP_IMS_HIT:FIRST_UP_PARENT
+<span class="number">7</span> TCP_REFRESH_HIT:ANY_PARENT
+<span class="number">7</span> TCP_CLIENT_REFRESH_MISS:ANY_PARENT
+<span class="number">6</span> TCP_MISS:NONE
+<span class="number">2</span> TCP_SWAPFAIL_MISS:ANY_PARENT`&lt;/pre&gt;
+
+PS:官方文档中关于Result Codes的说明
+============================================================
+
+TCP_HIT
+
+A valid copy of the requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span>.</span>
+TCP_MISS
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">not</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span>.</span>
+TCP_REFRESH_HIT
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">cached</span> <span class="title">but</span> <span class="title">STALE</span>. <span class="title">The</span> <span class="title">IMS</span> <span class="title">query</span> <span class="title">for</span> <span class="title">the</span> <span class="title">object</span> <span class="title">resulted</span> <span class="title">in</span> “304 <span class="title">not</span> <span class="title">modified</span>”.</span>
+TCP_REF_FAIL_HIT
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">cached</span> <span class="title">but</span> <span class="title">STALE</span>. <span class="title">The</span> <span class="title">IMS</span> <span class="title">query</span> <span class="title">failed</span> <span class="title">and</span> <span class="title">the</span> <span class="title">stale</span> <span class="title">object</span> <span class="title">was</span> <span class="title">delivered</span>.</span>
+TCP_REFRESH_MISS
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">cached</span> <span class="title">but</span> <span class="title">STALE</span>. <span class="title">The</span> <span class="title">IMS</span> <span class="title">query</span> <span class="title">returned</span> <span class="title">the</span> <span class="title">new</span> <span class="title">content</span>.</span>
+TCP_CLIENT_REFRESH_MISS
+
+The client issued a “no-cache” pragma, or some analogous cache control command along <span class="keyword">with</span> the request. Thus, the cache
+
+has to refetch the <span class="keyword">object</span>.
+TCP_IMS_HIT
+
+The client issued an IMS request <span class="keyword">for</span> an <span class="class"><span class="keyword">object</span> <span class="title">which</span> <span class="title">was</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span> <span class="title">and</span> <span class="title">fresh</span>.</span>
+TCP_SWAPFAIL_MISS
+
+The <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">believed</span> <span class="title">to</span> <span class="title">be</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span>, <span class="title">but</span> <span class="title">could</span> <span class="title">not</span> <span class="title">be</span> <span class="title">accessed</span>.</span>
+TCP_NEGATIVE_HIT
+
+Request <span class="keyword">for</span> a negatively cached <span class="keyword">object</span>, e.g. “<span class="number">404</span> not found”, <span class="keyword">for</span> which the cache believes to know that it is
+
+inaccessible. Also refer to the explainations <span class="keyword">for</span> negative_ttl in your squid.conf file.
+TCP_MEM_HIT
+
+A valid copy of the requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span> <span class="title">and</span> <span class="title">it</span> <span class="title">was</span> <span class="title">in</span> <span class="title">memory</span>, <span class="title">thus</span> <span class="title">avoiding</span> <span class="title">disk</span> <span class="title">accesses</span>.</span>
+TCP_DENIED
+
+Access was denied <span class="keyword">for</span> <span class="keyword">this</span> request.
+TCP_OFFLINE_HIT
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">retrieved</span> <span class="title">from</span> <span class="title">the</span> <span class="title">cache</span> <span class="title">during</span> <span class="title">offline</span> <span class="title">mode</span>. <span class="title">The</span> <span class="title">offline</span> <span class="title">mode</span> <span class="title">never</span> <span class="title">validates</span> <span class="title">any</span> <span class="title">object</span>, <span class="title">see</span></span>
+
+offline_mode in squid.conf file.
+UDP_HIT
+
+A valid copy of the requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span>.</span>
+UDP_MISS
+
+The requested <span class="class"><span class="keyword">object</span> <span class="title">is</span> <span class="title">not</span> <span class="title">in</span> <span class="title">this</span> <span class="title">cache</span>.</span>
+UDP_DENIED
+
+Access was denied <span class="keyword">for</span> <span class="keyword">this</span> request.
+UDP_INVALID
+
+An invalid request was received.
+UDP_MISS_NOFETCH
+
+During “-Y” startup, or during frequent failures, a cache in hit only mode will <span class="keyword">return</span> either UDP_HIT or <span class="keyword">this</span> code.
+
+Neighbours will thus only fetch hits.
+NONE
+
+Seen <span class="keyword">with</span> errors and cachemgr requests.
+
+The following codes are no longer available in Squid-<span class="number">2</span>:
+
+ERR_*
+
+Errors are now contained in the status code.
+TCP_CLIENT_REFRESH
+
+See: TCP_CLIENT_REFRESH_MISS.
+TCP_SWAPFAIL
+
+See: TCP_SWAPFAIL_MISS.
+TCP_IMS_MISS
+
+Deleted, TCP_IMS_HIT used instead.
+UDP_HIT_OBJ
+
+Hit objects are no longer available.
+UDP_RELOADING
+
+See: UDP_MISS_NOFETCH.
+
+后面找到了中文版，补充全一些：
+access.log结果编码
+
+相应于HTTP请求，下列标签可能出现在access.log文件的第四个域。
+
+TCP_HIT
+Squid发现请求资源的貌似新鲜的拷贝，并将其立即发送到客户端。
+
+TCP_MISS
+Squid没有请求资源的cache拷贝。
+
+TCP_REFRESH_HIT
+Squid发现请求资源的貌似陈旧的拷贝，并发送确认请求到原始服务器。原始服务器返回<span class="number">304</span>（未修改）响应，指示squid的拷贝仍旧是新鲜的。
+
+TCP_REF_FAIL_HIT
+Squid发现请求资源的貌似陈旧的拷贝，并发送确认请求到原始服务器。然而，原始服务器响应失败，或者返回的响应Squid不能理解。在此情形下，squid发送现有cache拷贝（很可能是陈旧的）到客户端。
+
+TCP_REFRESH_MISS
+Squid发现请求资源的貌似陈旧的拷贝，并发送确认请求到原始服务器。原始服务器响应新的内容，指示这个cache拷贝确实是陈旧的。
+
+TCP_CLIENT_REFRESH_MISS
+Squid发现了请求资源的拷贝，但客户端的请求包含了Cache-Control: no-cache指令。Squid转发客户端的请求到原始服务器，强迫cache确认。
+
+TCP_IMS_HIT
+客户端发送确认请求，Squid发现更近来的、貌似新鲜的请求资源的拷贝。Squid发送更新的内容到客户端，而不联系原始服务器。
+
+TCP_SWAPFAIL_MISS
+Squid发现请求资源的有效拷贝，但从磁盘装载它失败。这时squid发送请求到原始服务器，就如同这是个cache丢失一样。
+
+TCP_NEGATIVE_HIT
+在对原始服务器的请求导致HTTP错误时，Squid也会cache这个响应。在短时间内对这些资源的重复请求，导致了否命中。negative_ttl指令控制这些错误被cache的时间数量。请注意这些错误只在内存cache，不会写往磁盘。下列HTTP状态码可能导致否定cache（也遵循于其他约束）： <span class="number">204</span>, <span class="number">305</span>, <span class="number">400</span>, <span class="number">403</span>, <span class="number">404</span>, <span class="number">405</span>, <span class="number">414</span>, <span class="number">500</span>, <span class="number">501</span>, <span class="number">502</span>, <span class="number">503</span>, <span class="number">504</span>。
+
+TCP_MEM_HIT
+Squid在内存cache里发现请求资源的有效拷贝，并将其立即发送到客户端。注意这点并非精确的呈现了所有从内存服务的响应。例如，某些cache在内存里，但要求确认的响应，会以TCP_REFRESH_HIT, TCP_REFRESH_MISS等形式记录。
+
+TCP_DENIED
+因为http_access或http_reply_access规则，客户端的请求被拒绝了。注意被http_access拒绝的请求在第<span class="number">9</span>域的值是NONE/-，然而被http_reply_access拒绝的请求，在相应地方有一个有效值。
+
+TCP_OFFLINE_HIT
+当offline_mode激活时，Squid对任何cache响应返回cache命中，而不用考虑它的新鲜程度。
+
+TCP_REDIRECT
+重定向程序告诉Squid产生一个HTTP重定向到新的URI（见<span class="number">11.1</span>节）。正常的，Squid不会记录这些重定向。假如要这样做，必须在编译squid前，手工定义LOG_TCP_REDIRECTS预处理指令。
+
+NONE
+无分类的结果用于特定错误，例如无效主机名。
+
+相应于ICP查询，下列标签可能出现在access.log文件的第四域。
+
+UDP_HIT
+Squid在cache里发现请求资源的貌似新鲜的拷贝。
+
+UDP_MISS
+Squid没有在cache里发现请求资源的貌似新鲜的拷贝。假如同一目标通过HTTP请求，就可能是个cache丢失。请对比UDP_MISS_NOFETCH。
+
+UDP_MISS_NOFETCH
+跟UDP_MISS类似，不同的是这里也指示了Squid不愿去处理相应的HTTP请求。假如使用了-Y命令行选项，Squid在启动并编译其内存索引时，会返回这个标签而不是UDP_MISS。
+
+UDP_DENIED
+因为icp_access规则，ICP查询被拒绝。假如超过<span class="number">95</span>%的到某客户端的ICP响应是UDP_DENIED，并且客户端数据库激活了（见附录A），Squid在<span class="number">1</span>小时内，停止发送任何ICP响应到该客户端。若这点发生，你也可在cache.log里见到一个警告。
+
+UDP_INVALID
+Squid接受到无效查询（例如截断的消息、无效协议版本、URI里的空格等）。Squid发送UDP_INVALID响应到客户端。
+
+<span class="number">13.2</span><span class="number">.2</span> HTTP响应状态码
+
+Table <span class="number">13</span>-<span class="number">1</span>列出了数字HTTP响应CODE和理由短句。注意Squid和其他HTTP客户端仅仅关注这些数字值。理由短句是纯解释性的，不会影响响应的意义。对每个状态码，也提供了一个到RFC <span class="number">2616</span>的具体节的索引。注意状态码<span class="number">0</span>和<span class="number">600</span>是squid使用的非标准的值，不会在RFC里提到。
+Table <span class="number">13</span>-<span class="number">1</span>\. HTTP response status codes
+
+Code    Reason phrase    RFC <span class="number">2616</span> section
+<span class="number">0</span>    No Response Received (Squid-specific)    N/A
+<span class="number">1</span>xx    Informational    <span class="number">10.1</span>
+<span class="number">100</span>    Continue    <span class="number">10.1</span><span class="number">.1</span>
+<span class="number">101</span>    Switching Protocols    <span class="number">10.1</span><span class="number">.2</span>
+<span class="number">2</span>xx    Successful    <span class="number">10.2</span>
+<span class="number">200</span>    OK    <span class="number">10.2</span><span class="number">.1</span>
+<span class="number">201</span>    Created    <span class="number">10.2</span><span class="number">.2</span>
+<span class="number">202</span>    Accepted    <span class="number">10.2</span><span class="number">.3</span>
+<span class="number">203</span>    Non-Authoritative Information    <span class="number">10.2</span><span class="number">.4</span>
+<span class="number">204</span>    No Content    <span class="number">10.2</span><span class="number">.5</span>
+<span class="number">205</span>    Reset Content    <span class="number">10.2</span><span class="number">.6</span>
+<span class="number">206</span>    Partial Content    <span class="number">10.2</span><span class="number">.7</span>
+<span class="number">3</span>xx    Redirection    <span class="number">10.3</span>
+<span class="number">300</span>    Multiple Choices    <span class="number">10.3</span><span class="number">.1</span>
+<span class="number">301</span>    Moved Permanently    <span class="number">10.3</span><span class="number">.2</span>
+<span class="number">302</span>    Found    <span class="number">10.3</span><span class="number">.3</span>
+<span class="number">303</span>    See Other    <span class="number">10.3</span><span class="number">.4</span>
+<span class="number">304</span>    Not Modified    <span class="number">10.3</span><span class="number">.5</span>
+<span class="number">305</span>    Use Proxy    <span class="number">10.3</span><span class="number">.6</span>
+<span class="number">306</span>    (Unused)    <span class="number">10.3</span><span class="number">.7</span>
+<span class="number">307</span>    Temporary Redirect    <span class="number">10.3</span><span class="number">.8</span>
+<span class="number">4</span>xx    Client Error    <span class="number">10.4</span>
+<span class="number">400</span>    Bad Request    <span class="number">10.4</span><span class="number">.1</span>
+<span class="number">401</span>    Unauthorized    <span class="number">10.4</span><span class="number">.2</span>
+<span class="number">402</span>    Payment Required    <span class="number">10.4</span><span class="number">.3</span>
+<span class="number">403</span>    Forbidden    <span class="number">10.4</span><span class="number">.4</span>
+<span class="number">404</span>    Not Found    <span class="number">10.4</span><span class="number">.5</span>
+<span class="number">405</span>    Method Not Allowed    <span class="number">10.4</span><span class="number">.6</span>
+<span class="number">406</span>    Not Acceptable    <span class="number">10.4</span><span class="number">.7</span>
+<span class="number">407</span>    Proxy Authentication Required    <span class="number">10.4</span><span class="number">.8</span>
+<span class="number">408</span>    Request Timeout    <span class="number">10.4</span><span class="number">.9</span>
+<span class="number">409</span>    Conflict    <span class="number">10.4</span><span class="number">.10</span>
+<span class="number">410</span>    Gone    <span class="number">10.4</span><span class="number">.11</span>
+<span class="number">411</span>    Length Required    <span class="number">10.4</span><span class="number">.12</span>
+<span class="number">412</span>    Precondition Failed    <span class="number">10.4</span><span class="number">.13</span>
+<span class="number">413</span>    Request Entity Too Large    <span class="number">10.4</span><span class="number">.14</span>
+<span class="number">414</span>    Request-URI Too Long    <span class="number">10.4</span><span class="number">.15</span>
+<span class="number">415</span>    Unsupported Media Type    <span class="number">10.4</span><span class="number">.16</span>
+<span class="number">416</span>    Requested Range Not Satisfiable    <span class="number">10.4</span><span class="number">.17</span>
+<span class="number">417</span>    Expectation Failed    <span class="number">10.4</span><span class="number">.18</span>
+<span class="number">5</span>xx    Server Error    <span class="number">10.5</span>
+<span class="number">500</span>    Internal Server Error    <span class="number">10.5</span><span class="number">.1</span>
+<span class="number">501</span>    Not Implemented    <span class="number">10.5</span><span class="number">.2</span>
+<span class="number">502</span>    Bad Gateway    <span class="number">10.5</span><span class="number">.3</span>
+<span class="number">503</span>    Service Unavailable    <span class="number">10.5</span><span class="number">.4</span>
+<span class="number">504</span>    Gateway Timeout    <span class="number">10.5</span><span class="number">.5</span>
+<span class="number">505</span>    HTTP Version Not Supported    <span class="number">10.5</span><span class="number">.6</span>
+<span class="number">6</span>xx    Proxy Error    N/A
+<span class="number">600</span>    Unparseable Response Headers (Squid-specific)    N/A
+假如Squid从原始服务器没有接受到任何响应，你可在access.log里看到状态码<span class="number">0</span>。假如Squid接受到的响应没有包含HTTP头部，就会出现状态码<span class="number">600</span>。在少数情况下，某些原始服务器仅发送响应body，而忽略了任何头部。
+
+<span class="number">13.2</span><span class="number">.3</span> access.log对端编码
+
+下列编码可能出现在access.log的第<span class="number">9</span>域。请参考<span class="number">10.10</span>节关于Squid如何对cache丢失情况，选择有效的下一跳。
+
+NONE
+这指明Squid对本次请求，不会与任何其他服务器（邻居或原始服务器）通信。它通常与cache命中、拒绝请求、cache管理请求、错误、和所有的ICP查询这些类型联合出现。
+
+DIRECT
+Squid直接转发请求到原始服务器。该域的第<span class="number">2</span>半部分显示原始服务器的IP地址，或主机名–假如禁止了log_ip_on_direct。
+
+SIBLING_HIT
+在姐妹cache返回ICP或HTCP命中后，Squid发送请求到姐妹cache。
+
+PARENT_HIT
+在父cache返回ICP或HTCP命中后，Squid发送请求到父cache。
+
+DEFAULT_PARENT
+Squid选择该父cache，因为其在squid.conf的cache_peer行里被标志为<span class="keyword">default</span>。
+
+FIRST_UP_PARENT
+Squid转发请求到该父cache，因为它是位于已知活跃列表里的第一个父cache。
+
+FIRST_PARENT_MISS
+Squid转发请求到该父cache，它第一个响应ICP/HTCP丢失消息。换句话说，对这个特殊的ICP/HTCP查询，在这个特殊时刻，被选中的父cache有最佳的往返时间（RTT）。注意标准RTT可能被人工矫正过，取决于cache_peer指令的weight选项。
+
+CLOSEST_PARENT_MISS
+Squid选择该父cache，因为它报告到原始服务器的RTT最低。这点仅在<span class="number">2</span>个cache都激活了netdb，并且原始服务器（或在同一子网内的其他server）返回ICMP ping消息。
+
+CLOSEST_PARENT
+这点类似CLOSEST_PARENT_MISS，除了RTT计算不是来自ICP/HTCP响应消息外。代替的，它们来自Squid保留的更老的计算方式，例如netdb交换功能。
+
+CLOSEST_DIRECT
+Squid基于netdb算法，转发请求到原始服务器。这点在满足下述任何条件时发生：
+
+<span class="number">1</span>）在Squid和原始服务器之间的RTT小于配置的minimum_direct_rtt值。
+<span class="number">2</span>）在Squid和原始服务器之间的标准路由跳数少于配置的minimum_direct_hops值。
+<span class="number">3</span>）在ICP/HTCP响应里返回的RTT值，指示Squid离原始服务器近于任何其他邻居。
+ROUNDROBIN_PARENT
+Squid转发请求到该父cache，因为设置了round-robin选项，并且它有最低的使用计数器。
+
+CD_PARENT_HIT
+Squid基于cache摘要算法（见<span class="number">10.7</span>节）转发请求到该父cache。
+
+CD_SIBLING_HIT
+Squid基于cache摘要算法转发请求到该姐妹cache。
+
+CARP
+Squid选择该父cache，基于cache数组路由协议算法（见<span class="number">10.9</span>节）。
+
+ANY_PARENT
+作为最后的手段，Squid选择该父cache，因为没有其他方法能选择可行的下一跳。
+
+注意大部分上述编码可能以TIMEOUT_开头，这表明在等待ICP/HTCP响应时发生超时。例如：
+
+<span class="number">1066038165.382</span>    <span class="number">345</span> <span class="number">193.233</span><span class="number">.46</span><span class="number">.21</span> TCP_MISS/<span class="number">200</span> <span class="number">2836</span>          GET http:<span class="comment">//www.caida.org/home/../images/home.jpg          TIMEOUT_CLOSEST_DIRECT/213.219.122.19 image/jpeg</span>
+可使用icp_query_timeout指令来调整超时。
+
+事例：
+&lt;pre&gt;` cat access.log|gawk ‘{print $<span class="number">11</span>}’|sort|uniq -c|sort -nr
+  <span class="number">15508</span> TCP_NEGATIVE_HIT:NONE 在对原始服务器的请求导致HTTP错误时，Squid也会cache这个响应。在短时间内对这些资源的重复请求，导致了否命中。
+   <span class="number">8212</span> TCP_IMS_HIT:NONE  客户端发送确认请求，Squid发现更近来的、貌似新鲜的请求资源的拷贝。Squid发送更新的内容到客户端，而不联系原始服务器。（这指明Squid对本次请求，不会与任何其他服务器（邻居或原始服务器）通信。）
+   <span class="number">3771</span> TCP_HIT:NONE Squid发现请求资源的貌似新鲜的拷贝，并将其立即发送到客户端。
+   <span class="number">3468</span> TCP_MISS:DIRECT Squid没有请求资源的cache拷贝。（Squid直接转发请求到原始服务器）
+   <span class="number">2379</span> TCP_MEM_HIT:NONE  从内存的响应
+   <span class="number">1876</span> TCP_DENIED:NONE 因为http_access或http_reply_access规则，客户端的请求被拒绝了   全是错误地址链接
+   <span class="number">1732</span> TCP_REFRESH_HIT:DIRECT Squid发现请求资源的貌似陈旧的拷贝，并发送确认请求到原始服务器。原始服务器返回<span class="number">304</span>（未修改）响应，指示squid的拷贝仍旧是新鲜的。（Squid直接转发请求到原始服务器）
+    <span class="number">708</span> TCP_CLIENT_REFRESH_MISS:DIRECT Squid发现了请求资源的拷贝，但客户端的请求包含了Cache-Control: no-cache指令。Squid转发客户端的请求到原始服务器，强迫cache确认。 （Squid直接转发请求到原始服务器）
+      <span class="number">7</span> TCP_MISS:NONE Squid没有请求资源的cache拷贝。（这指明Squid对本次请求，不会与任何其他服务器（邻居或原始服务器）通信）
+</pre></figure></code></pre>
+<p> 原文地址 h<a href="http://callaly.net/blog/archives/category/%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF/ttp://">http://callaly.net/blog/archives/category/%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF/ttp://</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T09:57:32.000Z"><a href="/2010/12/19/windows7-winsxs/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/windows7-winsxs/">给Windows7减肥如何将winsxs放到其他硬盘分区下</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>不知道大家注意过没有，在Vista和Windows 7系统盘的Windows目录下，有一个名为winscs的文件夹，对于整个Windows目录来说，这个文件夹就占用了其一半多的体积（近3GB）不但如此，随着系统使用时间的不断延长，winscs文件夹的体积还会变得更大，我的现在已经4G多了，这真是一块“赘肉”呀！想想看吧！对于系统盘空间本来就不很富裕的朋友来说，这快“赘肉”难免会拖慢系统的运行速度。如果仅仅是因为这个原因，就对硬盘重新分区以让系统盘的空间变得更大，接着重装系统，这也实在是太麻烦了！其实，我们可以采取一个更简单的方法，将winscs这一块“赘肉”扔到其他硬盘分区下，为系统盘腾出更大的未用空间从而让系统跑得更快。下面，笔者就以 Windows 7为例子，给大家介绍一下具体的操作步骤。</p>
 
       
     </div>
@@ -123,667 +652,8 @@ Broken pipe产生的原因通常是当管道读端没有在读，而管道的写
       
         
           <div class="alignleft">
-            <a href="/2010/12/18/tomcat-jk-no-connection/#more" class="more-link">Read More</a>
+            <a href="/2010/12/19/windows7-winsxs/#more" class="more-link">Read More</a>
           </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-17T23:44:30.000Z"><a href="/2010/12/18/php-fpm-explanation/">12月 18 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/18/php-fpm-explanation/">php-fpm详解</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>php-fpm详解
-原文链接：<a href="http://php-fpm.anight.org/">http://php-fpm.anight.org/</a>
-wiki：<a href="http://www.php-fpm.com/">http://www.php-fpm.com/</a>
-翻译：<a href="http://syre.blogbus.com/logs/20092011.html">http://syre.blogbus.com/logs/20092011.html</a></p>
-<p>什么是 FastCGI
-FastCGI 是一个可伸缩、高速的在web server和脚本语言间通迅的接口。关于FastCGI技术的更多信息可以在官方网 站和Wikipedia看到。
-FastCGI 被许多脚本语言所支持，包括 php，如果用 --enable-fastcgi 选项编译的话。
-多数流行的web server都支持 FastCGI。包括Apache（mod_fastcgi和mod_fcgid），Zeus，nginx和lighttpd。</p>
-<p>FastCGI 的主要优点是把动态语言和 web server 分离开来。这种技术允许 web server 和动态语言运行在不同的主机上。这可以改进可扩展性和安全性而没有大的效率损失。
-php-fpm 可以和任何支持外部 FastCGI 技术的 web server 一起使用。</p>
-<p>php-fpm是做啥用的
-很不幸，官方网站 php.net 上的 php 在将 FastCGI SAPI 用于生产环境方面有许多已知的问题。
-下面是关于启用 FastCGI SAPI 时的问题和 php-fpm 是如何解决他们的对比列表。</p>
-<p>描述
-php自带的
-spawn-fcgi + spawn-php.sh + daemontools
-php-fpm
-php守护进程化： pid file, log file, setsid(), setuid(), setgid(), chroot()
-(-)
-(+)
-(+)
-进程管理。可以用 &quot;graceful&quot; 来停止并启动 php worker 进程而不会丢失请求。能够平滑地升级配置和二进制程序而不丢失任何请求。
-php4 (-), php5 (只有 graceful)
-(-)
-(+)
-严格限制来源请求的 web server 的 ip 地址
-php4 (-) php5 (+) (从 5.2.2 开始)
-(-)
-(+)
-根据负载动态调整进程数
-(-)
-(-)
-Todo
-用不同的 uid/gid/chroot/environment 和不同的 php.ini 选项启动 worder 进程。你不需要 safe mode 了！
-(-)
-(-)
-(+)
-记录 worker 进程 stdout 和 stderr 日志
-(-)
-(-)
-(+)
-如果使用优化器，在共享内存意外破坏的情况下紧急重启所有的进程
-(-)
-(-)
-(+)
-如果 set_time_limit() 失败，确保进程会结束
-(-)
-(-)
-(+)</p>
-<p>特色功能 Error header、优化的上传支持、fastcgi_finish_request()
-特色功能
-所有这些特性都是“不打断”的方式实现的。也就是说，如果你不使用它们，它们的存在不会影响php的功能性——他们都是“透明”的。
-Error header</p>
-<p>范围：php.ini 选项</p>
-<p>分类：便利性
-默认情况下，如果被访问的php脚本包含语法错误，用户会收到一个空的“200 ok”页。这是不方便的。Error header 这个 php.ini 选项允许在这种情况下产生一个 HTTP 错误码，比如“HTTP/1.0 550 Server Made Big Boo”，从而中断web server请求并显示一个正确的错误页。
-如果要实现这样的功能，需要在 php.ini 中添加一条 fastcgi.error_header = &quot;HTTP/1.0 550 Server Made Big Boo&quot;
-在 php-5.2.4 中添加了类似，但不相同的功能：如果被访问的php脚本包含语法错误，并且 display_errors = off，会立刻返回“HTTP/1.0 500 Internal Server Error”。
-如果你需要设定一个 503 错误，或者想要使这个行为独立于 display_errors 的设置，那么可以使用fastcgi.error_header。如果你在 php-5.2.5 或以上版本上启用 php-fpm，那么 fastcgi.error_header的优先级更高。
-优化的上传支持</p>
-<p>实质：web server 支持
-类型：优化</p>
-<p>这个特性正如名字那样，可以加速对大 POST 请求的处理速度，包括文件上传。优化是通过将请求体已写入一个临时文件，然后 fastcgi 协议传递文件名而不是请求体到来实现的。目前就我所知，只有 nginx0.5.9 以上才支持这个功能。显然，这种模式只在 php 和 web server 在一台机器上的时候才能用。
-nginx 样例配置：
-location ~ .php$ { 
-    fastcgi_pass_request_body off; 
-    client_body_in_file_only clean; 
-    fastcgi_param  REQUEST_BODY_FILE   $request_body_file; 
-    ... 
-    fastcgi_pass ...; 
-} </p>
-<p>在php中不需要配置任何东西。如果php收到了参数REQUEST_BODY_FILE，就读取其中的请求体，如果没有，就自行从fastcgi 协议中读取请求体。
-结合这个特性，可以考虑对临时文件使用内存文件系统，例如tmpfs(linux)：
-client_body_temp_path /dev/shm/client_body_temp;
-fastcgi_finish_request()</p>
-<p>范围：php 函数
-类型：优化
-这个特性可以提高一些 php 请求的处理速度。如果有些处理可以在页面生成完后进行，就可以使用这种优化。比如，在 memcached 中保存 session 就可以在页面交给 web server 后进行。fastcgi_finisth_request() ，这一特性可以结束响应输出，web server 可以立即开始交给等不及的客户端，而此刻，php 可以在请求的上下文环境中处理许多事情。比如保存session，转换上传的视频，处理统计等等。
-fastcgi_finisth_request() 会触发 shutdown 函数运行。
-request_slowlog_timeout</p>
-<p>范围: php-fpm.conf 选项
-分类: 方便
-这个选项能让你跟踪执行缓慢的脚本并把他们连同调用栈一起记录再日志文件中。例如如下设置：
-5s
-logs/slow.log
-记录的 slow.log 可能是这个样子：</p>
-<pre><code><figure class="highlight"><pre>Sep <span class="number">21</span> <span class="number">16</span>:<span class="number">22</span>:<span class="number">19.399162</span> pid <span class="number">29715</span> (pool <span class="keyword">default</span>)
-script_filename =  /local/www/stable/www/catalogue<span class="variable">.php</span>
-[<span class="number">0x00007fff23618120</span>] mysql_query()  /srv/stable/common/Database/<span class="built_in">class</span><span class="variable">.MySQLRequest</span><span class="variable">.php</span>:<span class="number">20</span>
-[<span class="number">0x00007fff23618560</span>]  getResult() /srv/stable/common/Database/<span class="built_in">class</span><span class="variable">.Facade</span><span class="variable">.php</span>:<span class="number">106</span>
-[<span class="number">0x00007fff23618aa0</span>] query()  /srv/stable/common/mysite<span class="variable">.com</span>/ORM/<span class="built_in">class</span><span class="variable">.UsersMapper</span><span class="variable">.php</span>:<span class="number">99</span>
-[<span class="number">0x00007fff23618d60</span>] resolveByID()  /srv/stable/common/mysite<span class="variable">.com</span>/ORM/<span class="built_in">class</span><span class="variable">.User</span><span class="variable">.php</span>:<span class="number">629</span>
-[<span class="number">0x00007fff236193b0</span>]  getData() /srv/stable/common/<span class="built_in">class</span><span class="variable">.DataEntity</span><span class="variable">.php</span>:<span class="number">90</span>
-[<span class="number">0x00007fff236195d0</span>]  load() /srv/stable/common/mysite<span class="variable">.com</span>/ORM/<span class="built_in">class</span><span class="variable">.User</span><span class="variable">.php</span>:<span class="number">587</span>
-[<span class="number">0x00007fff23619a00</span>] getIsHidden()  /srv/stable/common/mysite<span class="variable">.com</span>/<span class="built_in">class</span><span class="variable">.User</span><span class="variable">.php</span>:<span class="number">42</span>
-[<span class="number">0x00007fff2361a470</span>]  getName() /local/www/stable/www/catalogue<span class="variable">.php</span>:<span class="number">41</span>
-</pre></figure></code></pre>
-<p>同时，在 error.log 中保存了如下记录：
-Sep 21 16:22:19.399031 [WARNING] fpm_request_check_timed_out(), line 135:  child 29715, script &#39;/local/www/stable/www/catalogue.php&#39; (pool default)  executing too slow (5.018002 sec), logging
-正如你再例子中看到的，脚本运行了 5 秒以上，并很可能是由于 mysql 响应慢造成的（top backtrace）。</p>
-<p>FAQ
-Q：php-fpm 可以和 ZendOptimize 一起用吗？
-A：完全可以。</p>
-<p>Q：php-fpm 可以和 ZendPlatform、xcache、eAccelerator、APC 等的优化器一起用吗？
-A：是的。php-fpm 的架构和任何一种用于高速 opcode 缓存的共享内存都适用。唯一的限制是：所有的 worker 进程只能适用一个缓存，即使它们用不同的 uid/gid 运行</p>
-<p>Q：为什么我要给 php 打补丁呢？spawn-fcgi 不需要这样！
-A：php-fpm 的创建是为了增强方便管理。没有打过补丁的 php 不能做到：
-平滑重启 php 而不丢失请求，包括升级 php 二进制文件 以及/或者 扩展。
-用不同的 uid / gid / chroot 环境运行 worker 进程
-所有的设置只有一个配置文件
-根据负载动态请求 （TODO）
-对 php 请求实时统计性能 （TODO）</p>
-<p>Q：为什么要用 root 运行 php-fpm 呢？这安全吗？
-A：用 root 启动 php-fpm 只有在你打算用不同 uid/gid 的 php 来处理请求时才有意义。比如，在共享主机上的不同站点。因为只有在 master 进程用 root 运行的时候，才可以建立不同 uid/gid 的子进程。这是相当安全的。master 进程自己从来不会去处理请求。
-在任何情况下，php- fpm 都不会用 root 身份来处理请求。</p>
-<p>Q：php-fpm 可以加速 php 脚本处理速度吗？
-A：不，它不会影响处理速度。不过，如果你使用一些特殊特性，对于一些特定的请求还是可以有性能提升的。</p>
-<p>Q：如果我把我的网站从 mod_php 迁移到 php-fpm ，我会得到性能提升吗？
-A：通常，当有服务器上有大量空闲内存可用时，能从迁移到 php-fpm 中得到的性能提升可能不大。但是如果内存并不充裕，性能提升还是很可观的，在某些情况下可以达到 300-500%。这可能是由于 nginx + php-fpm 一般会比 Apache + mod_php 使用更少的内存。而且 VFS 缓存会由于更多的空余内存而更有效地工作。</p>
-<p>Q：php- fpm 将来会被官方的 php 包含吗？
-A：我希望如此。目前，php-fpm 代码的协议是 GPL 。所以现在 php-fpm 的代码与 php 协议（类似 bsd）并不匹配。这是临时性措施。这样的选择是为了简化开发过程。一旦代码的功能完备，比如自适应生成子进程和其他一些东西，协议会改为一个相匹配的。 之后，php-fpm 会正式发布给 php 开发团队，并被建议包含。
-邮件列表
-如果你有问题的话，请不要犹豫在邮件组里写邮件。
-English: highload-php-en Russian: highload-php-ru</p>
-<p>文档
-php-fpm 已经在 Linux、MacOSX、Solaris 和 FreeBSD 上测试通过。
-确信 libxml2（在某些系统上叫做libxml2-devel）已经安装。</p>
-<p>下载最小的 php 和 php-fpm
-$ bzip2 -cd php-5.2.5.tar.bz2 | tar xf -
-$ gzip -cd php-5.2.5-fpm-0.5.7.diff.gz | patch -d php-5.2.5 -p1
-$ cd php-5.2.5
-$ ./configure --enable-fastcgi --enable-fpm
-$ make all install
-编辑
-$prefix/etc/php-fpm.conf
-运行
-$prefix/bin/php-cgi --fpm
-仔细检查
-$prefix/logs/php-fpm.log
-运行 phpinfo() 检查你的网站是否还正常运行
-master 进程的 pid 被存放在
-$prefix/logs/php-fpm.pid
-master进程可以理解以下信号：
-SIGINT, SIGTERM
-立刻终止
-SIGQUIT
-平滑终止
-SIGUSR1
-重新打开日志文件
-SIGUSR2
-平滑重载所有worker进程并重新载入配置和二进制</p>
-<p>关于
-嗨，我的名字叫 Andrei Nigmatulin， 我是 php-fpm 的作者。
-从 2004 年开始，我就在等有什么人让 PHP FastCGI 能满足产品环境，但我等不下去了。
-php-fpm 是在数个项目种使用 PHP 的 FastCGI SAPI 中的知识、经验和想法的产物。
-php-fpm 可以在 GPL 协议下用在公共用途。和 php-fpm 绑定的修改版的 libevent 是在 BSD 协议下发布的。
-我需要得到您的反馈——新的想法和建议——来改进和优化 php FastCGI SAPI。 如果您有什么想法、意见、补充和建议，我会很高兴，很原意听取，也许还会实现他们。给给我发邮件吧。（地址在本页的末尾）。</p>
-<p>如果你想支持 php-fpm 的开发，可以作一些捐赠： Paypal Yandex.Money
-15/05/2007 - 第一次提交到 php-fpm.
-andrei dot nigmatulin at gmail dot com</p>
-<p>译注：
-php-fpm还带有一个更方便的脚本，在$prefix/sbin/php-fpm。可以用php-fpm start|graceful|restart|stop来维护。稍编辑一下就可以让它使用配置文件。
-后记：
-最开始，php-fpm 只有俄文文档，弄的我很郁闷，于是我先用 google 翻译先弄成英文，然后再人工翻成中文。这当中会难免会在我自己的英文水平引起的错误之外，再多些错误出来。后来终于有了一个英文的 wiki，并邀请我提供中文翻译。同时，距上一次翻译（2008年5月）以后，原来的文档也已经有了更新。于是我就根据英文 wiki ，重新翻译了一遍。</p>
-<p>源文档 <a href="http://www.opendoc.com.cn/webserver/php-fpm%E8%AF%A6%E8%A7%A3.html">http://www.opendoc.com.cn/webserver/php-fpm%E8%AF%A6%E8%A7%A3.html</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-17T23:41:40.000Z"><a href="/2010/12/18/centos-yum-nginx-php-fpm-mysql/">12月 18 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/18/centos-yum-nginx-php-fpm-mysql/">Centos Yum Nginx Php-fpm Mysql</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>今天发现了个好东西
-<a href="http://centos.alt.ru/pub/repository/centos/5/i386/">http://centos.alt.ru/pub/repository/centos/5/i386/</a>
-<a href="http://centos.alt.ru/pub/repository/centos/5/x86_64/">http://centos.alt.ru/pub/repository/centos/5/x86_64/</a>
-现在，我们可以快速全自动搞定 CentOS + Nginx + PHP-FPM + MySQL 的安装了</p>
-<p>先新建一个 repo</p>
-<h1>vi /etc/yum.repos.d/alt.ru.repo</h1>
-<pre><code><figure class="highlight"><pre><span class="title">[CentALT]</span>
-<span class="setting">name=<span class="value">CentALT Packages for Enterprise Linux <span class="number">5</span> - $basearch</span></span>
-<span class="setting">baseurl=<span class="value">http://centos.alt.ru/repository/centos/<span class="number">5</span>/$basearch/</span></span>
-<span class="setting">enabled=<span class="value"><span class="number">1</span></span></span>
-<span class="setting">gpgcheck=<span class="value"><span class="number">0</span></span></span>
-<span class="setting">protect=<span class="value"><span class="number">1</span></span></span>
-</pre></figure></code></pre>
-<p>启用 EPEL repo
-i386
-rpm -ihv <a href="http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm">http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm</a>
-x86_64
-rpm -ihv <a href="http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-3.noarch.rpm">http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-3.noarch.rpm</a>
-好了，一键安装</p>
-<h1>yum install nginx php-fpm mysql mysql-server</h1>
-<p>爽吧！</p>
-<p>更完整的安装
-yum -y update
-yum -y mysql mysql-server
-mysqladmin -u root password root
-yum -y install nginx php-fpm php-cli php-pdo php-mysql php-mcrypt php-mbstring php-gd php-tidy php-xml php-xmlrpc php-pear php-pecl-memcache php-eaccelerator</p>
-<h1>APC 和 eAccelerator 有冲突，2选1</h1>
-<p>yum -y install php-pecl-apc</p>
-<p>看下我的完整安装，只要一句
-yum -y install nginx mysql mysql-server php-fpm php-cli php-pdo php-mysql php-mcrypt php-mbstring php-gd php-tidy php-xml php-xmlrpc php-pear php-pecl-memcache php-eaccelerator</p>
-<p>引用：<a href="http://www.21andy.com/blog/20100219/1703.html">http://www.21andy.com/blog/20100219/1703.html</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-17T23:38:06.000Z"><a href="/2010/12/18/eaccelerator-config-explanation/">12月 18 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/18/eaccelerator-config-explanation/">eAccelerator 配置参数详解</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>eaccelerator.shm_size=&quot;32&quot;
-eAccelerator 可以使用的共享内存的数量 (以兆为单位) . &quot;0&quot; 是指操作系统的默认值. 默认值是 &quot;0&quot;.可根据服务器的实际情况来调整，16，32，64，128都是可以的。</p>
-<p>eaccelerator.cache_dir=&quot;/home/php/tmp&quot;
-这个目录是给磁盘缓存使用. eAccelerator 在这里储存预先编译好的代码, 进程数据, 内容以及用户的自定义内容. 同样的数据也能被储存在共享内存中 (这样可以提高访问速度). 默认的设置是 &quot;/tmp/eaccelerator&quot;.</p>
-<p>eaccelerator.enable=&quot;1&quot;
-开启或关闭 eAccelerator。&quot;1&quot; 为开启，&quot;0&quot; 为关闭。默认值为 &quot;1&quot;。</p>
-<p>eaccelerator.optimizer=&quot;1&quot;
-启或关闭内部优化器，可以提升代码执行速度。&quot;1&quot; 为开启，&quot;0&quot; 为关闭。默认值为 &quot;1&quot;。</p>
-<p>eaccelerator.check_mtime=&quot;1&quot;
-打开或者关闭 PHP 的文件修改检查. &quot;1&quot; 是指打开, &quot;0&quot; 是指关闭. 如果您在修改以后重新编译 PHP 的文件,那么您应当设置为 &quot;1&quot;. 默认值是 &quot;1&quot;.</p>
-<p>eaccelerator.debug=&quot;0&quot;
-开启或关闭调试日志记录。&quot;1&quot; 为开启，&quot;0&quot; 为关闭。默认值为 &quot;0&quot;。会将缓存命中得记录写入日志。</p>
-<p>eaccelerator.filter=&quot;&quot;
-判断哪些 PHP 文件必须缓存。您可以指定缓存和不缓存的文件类型（如 &quot;<em>.php </em>.phtml&quot;等）
-如果参数以 &quot;!&quot; 开头，则匹配这些参数的文件被忽略缓存。默认值为 &quot;&quot;，即，所有 PHP 文件都将被缓存。</p>
-<p>eaccelerator.shm_max=&quot;0&quot;
-当使用 &quot; eaccelerator_put() &quot; 函数时禁止其向共享内存中存储过大的文件。该参数指定允许存储的最大值，单位：字节 (10240, 10K, 1M)。&quot;0&quot; 为不限制。默认值为 &quot;0&quot;。
-eaccelerator.shm_ttl=&quot;0&quot;
-当 eAccelerator 获取新脚本的共享内存大小失败时，它将从共享内存中删除所有在最后 &quot;shm_ttl&quot; 秒内没有存取的脚本缓存。默认值为 &quot;0&quot;，即：不从共享内春中删除任何缓存文件。
-eaccelerator.shm_prune_period=&quot;0&quot;
-当 eAccelerator 获取新脚本的共享内存大小失败时，他将试图从共享内存中删除早于&quot;shm_prune_period&quot; 秒的缓存脚本。默认值为 &quot;0&quot;，即：不从共享内春中删除任何缓存文件。</p>
-<p>eaccelerator.shm_only=&quot;0&quot;
-允许或禁止将已编译脚本缓存在磁盘上。该选项对 session 数据和内容缓存无效。默认值为 &quot;0&quot;，即：使用磁盘和共享内存进行缓存。</p>
-<p>eaccelerator.compress=&quot;1&quot;
-允许或禁止压缩内容缓存。默认值为 &quot;1&quot;，即：允许压缩。</p>
-<p>eaccelerator.compress_level=&quot;9&quot;
-指定内容缓存的压缩等级。默认值为 &quot;9&quot;，为最高等级。</p>
-<p>eaccelerator.keys = &quot;disk_only&quot;
-eaccelerator.session = &quot;disk_only&quot;
-eaccelerator.content = &quot;disk_only&quot;
-设置内容缓存的存放的地方，可以设置为：
-shm_and_disk 在共享缓存和硬盘(默认值)
-shm 默认存在共享内存，如果共享内存已满或大小超过 &quot;eaccelerator.shm_max&quot; 的值，就存到硬盘
-shm_only 只存放在共享内存
-disk_only 只存放在硬盘
-none 不缓存数据</p>
-<p>eaccelerator.allowed_admin_path = &quot;/var/www/html/21andy.com/eaccelerator&quot;
-这是控制面板的地址
-安装包里有个control.php，你把它复制到网站的任意目录，可以用它查看和管理，这个必须指定，否则查看缓存内容的时候会出错
-最后，来看一下我的 eAccelerator 设置</p>
-<pre><code><figure class="highlight"><pre>; eaccelerator 
-[eaccelerator] 
-<span class="title">zend_extension</span>=<span class="string">"/usr/local/php/lib/php/extensions/no-debug-non-zts-20060613/eaccelerator.so"</span> 
-<span class="title">eaccelerator</span>.shm_size=<span class="string">"128"</span> 
-<span class="title">eaccelerator</span>.cache_dir=<span class="string">"/tmp/eaccelerator"</span> 
-<span class="title">eaccelerator</span>.enable=<span class="string">"1"</span> 
-<span class="title">eaccelerator</span>.optimizer=<span class="string">"1"</span> 
-<span class="title">eaccelerator</span>.check_mtime=<span class="string">"1"</span> 
-<span class="title">eaccelerator</span>.debug=<span class="string">"0"</span> 
-<span class="title">eaccelerator</span>.filter=<span class="string">""</span> 
-<span class="title">eaccelerator</span>.shm_max=<span class="string">"0"</span> 
-<span class="title">eaccelerator</span>.shm_ttl=<span class="string">"3600"</span> 
-<span class="title">eaccelerator</span>.shm_prune_period=<span class="string">"3600"</span> 
-<span class="title">eaccelerator</span>.shm_only=<span class="string">"0"</span> 
-<span class="title">eaccelerator</span>.compress=<span class="string">"1"</span> 
-<span class="title">eaccelerator</span>.compress_level=<span class="string">"9"</span> 
-<span class="title">eaccelerator</span>.keys = <span class="string">"disk_only"</span> 
-<span class="title">eaccelerator</span>.sessions = <span class="string">"disk_only"</span> 
-<span class="title">eaccelerator</span>.content = <span class="string">"disk_only"</span> 
-<span class="title">eaccelerator</span>.allowed_admin_path = <span class="string">"/var/www/html/21andy.com/eaccelerator"</span> 
-</pre></figure></code></pre>
-<p>另外，再说下 eAccelerator 的安装</p>
-<h1>wget <a href="http://bart.eaccelerator.net/source/0.9.6/eaccelerator-0.9.6.tar.bz2">http://bart.eaccelerator.net/source/0.9.6/eaccelerator-0.9.6.tar.bz2</a></h1>
-<h1>tar -jxvf eaccelerator-0.9.6.tar.bz2</h1>
-<h1>cd eaccelerator-0.9.6</h1>
-<h1>/usr/local/php/bin/phpize</h1>
-<h1>./configure --enable-eaccelerator=shared --with-php-config=/usr/local/php/bin/php-config</h1>
-<h1>make &amp;&amp; make install</h1>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-17T10:59:04.000Z"><a href="/2010/12/17/apache-ssi-shtml-config/">12月 17 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/17/apache-ssi-shtml-config/">Apache ssi shtml配置</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>什么是shtml呢？
-使用SSI(Server Side Include)的html文件扩展名，SSI（Server Side Include)，通常称为&quot;服务器端嵌入&quot;或者叫&quot;服务器端包含&quot;，是一种类似于ASP的基于服务器的网页制作技术。默认扩展名是 .stm、.shtm 和 .shtml。
-什么是SSI？
-SSI是英文Server Side Includes的缩写，翻译成中文就是服务器端包含的意思。从技术角度上说，SSI就是在HTML文件中，可以通过注释行调用的命令或指针。SSI具有 强大的功能，只要使用一条简单的SSI命令就可以实现整个网站的内容更新，时间和日期的动态显示，以及执行shell和CGI脚本程序等复杂的功能。 网站维护常常碰到的一个问题是，网站的结构已经固定，却为了更新一点内容而不得不重做一大批网页。SSI提供了一种简单、有效的方法来解决这一问题，它将 一个网站的基本结构放在几个简单的HTML文件中（模板），以后我们要做的只是将文本传到服务器，让程序按照模板自动生成网页，从而使管理大型网站变得容 易。
-实现方法
-建立头文件
-head.html</p>
-<p>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;</p>
-<p>&quot;<a href="http://www.w3.org/TR/html4/loose.dtd"><a href="http://www.w3.org/TR/html4/loose.dtd">http://www.w3.org/TR/html4/loose.dtd</a></a>&quot;&gt;</p>
-<p>&lt;html&gt;</p>
-<p>&lt;head&gt;</p>
-<p>&lt;title&gt;Untitled Document&lt;/title&gt;</p>
-<p>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=gb2312&quot;&gt;</p>
-<p>&lt;/head&gt;&lt;body&gt;</p>
-<p>&lt;div style=&quot;background-color:#00CC66;boder:1px groove orange &quot;&gt;这是头&lt;/div&gt;</p>
-<p>建立尾文件：
-foot.html</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>这是尾</p>
-<p>&lt;/body&gt;&lt;/html&gt;</p>
-<p>连接头和尾</p>
-<p>&lt;!--#include file=&quot;head.html&quot;--&gt;</p>
-<p>&lt;hr&gt;</p>
-<p>&lt;b&gt;头尾文件内容都显示。表示SSI工作正常。shtml显示正常&lt;/b&gt;</p>
-<p>&lt;hr&gt;</p>
-<p>&lt;!--#include file=&quot;foot.html&quot;--&gt;</p>
-<p>linuxtone.shtml配置文件很简单。</p>
-<p>apache配置如下：
-修改如下几处</p>
-<pre><code><figure class="highlight"><pre><span class="comment">AddType</span> <span class="comment">text/html</span> <span class="string">.</span><span class="comment">shtml</span>
-<span class="comment">AddOutputFilter</span> <span class="comment">INCLUDES</span> <span class="string">.</span><span class="comment">shtml</span>
-<span class="comment">Options</span> <span class="comment">Indexes</span> <span class="comment">FollowSymLinks</span> <span class="comment">includes</span>
-<span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
-<span class="comment">includes</span> <span class="comment">#为追加</span> <span class="comment">你要是感觉麻烦可以用以下命令替换。</span>
-&lt;<span class="comment">pre</span>&gt;<span class="comment">`sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'s##AddType</span> <span class="comment">text/html</span> <span class="string">.</span><span class="comment">shtml#AddType</span> <span class="comment">text/html</span> <span class="string">.</span><span class="comment">shtml#'</span> <span class="comment">/usr/local/apachefile/httpd</span>.<span class="comment">conf</span>
-<span class="comment">sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'s##AddOutputFilter</span> <span class="comment">INCLUDES</span> <span class="string">.</span><span class="comment">shtml#AddOutputFilter</span> <span class="comment">INCLUDES</span> <span class="string">.</span><span class="comment">shtml#'</span>  <span class="comment">/usr/local/apachefile/httpd</span>.<span class="comment">conf</span>
-<span class="comment">sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'s#Options</span> <span class="comment">Indexes</span> <span class="comment">FollowSymLinks#Options</span> <span class="comment">Indexes</span> <span class="comment">FollowSymLinks</span> <span class="comment">includes</span> <span class="comment">#'</span>  <span class="comment">/usr/local/apachefile/httpd</span>.<span class="comment">conf
-</pre></figure></code></pre>
-<p>shtml 的压缩方法不同于js css php
-方法如下：
-AddOutputFilter INCLUDES;DEFLATE shtml</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-17T10:55:42.000Z"><a href="/2010/12/17/cache-control-translation/">12月 17 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/17/cache-control-translation/">Cache-control详解</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>“Cache-control”常见的取值有private、no-cache、max-age、must-revalidate等
-网页的缓存是由HTTP消息头中的“Cache-control”来控制的，常见的取值有private、no-cache、max-age、must-revalidate等，默认为private。其作用根据不同的重新浏览方式分为以下几种情况：</p>
-<p>（1） 打开新窗口
-如果指定cache-control的值为private、no-cache、must-revalidate，那么打开新窗口访问时都会重新访问服务器。而如果指定了max-age值，那么在此值内的时间里就不会重新访问服务器，例如：
-Cache-control: max-age=5
-表示当访问此网页后的5秒内再次访问不会去服务器</p>
-<p>（2） 在地址栏回车
-如果值为private或must-revalidate（和网上说的不一样），则只有第一次访问时会访问服务器，以后就不再访问。如果值为no-cache，那么每次都会访问。如果值为max-age，则在过期之前不会重复访问。</p>
-<p>（3） 按后退按扭
-如果值为private、must-revalidate、max-age，则不会重访问，而如果为no-cache，则每次都重复访问</p>
-<p>（4） 按刷新按扭
-无论为何值，都会重复访问
-当指定Cache-control值为“no-cache”时，访问此页面不会在Internet临时文章夹留下页面备份。
-另外，通过指定“Expires”值也会影响到缓存。例如，指定Expires值为一个早已过去的时间，那么访问此网时若重复在地址栏按回车，那么每次都会重复访问：
-Expires: Fri, 31 Dec 1999 16:00:00 GMT</p>
-<p>在ASP中，可以通过Response对象的Expires、ExpiresAbsolute属性控制Expires值；通过Response对象的CacheControl属性控制Cache-control的值，例如：
-Response.ExpiresAbsolute = #2000-1-1# &#39; 指定绝对的过期时间，这个时间用的是服务器当地时间，会被自动转换为GMT时间
-Response.Expires = 20 &#39; 指定相对的过期时间，以分钟为单位，表示从当前时间起过多少分钟过期。
-Response.CacheControl = &quot;no-cache&quot;
-Expires值是可以通过在Internet临时文件夹中查看临时文件的属性看到的</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-17T10:54:26.000Z"><a href="/2010/12/17/apache-并发数限制mod_limitipconn/">12月 17 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/17/apache-并发数限制mod_limitipconn/">Apache 并发数限制mod_limitipconn</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>一、对于mod_limitipconn，其实该模块不仅提供客户端并发联接数的控制能力，从安全角度来说还可以起到对抗固定来源IP地址发起的 DOS攻击，包括来源固定的大量访问请求型攻击（大量GET或POST请求型的攻击），当同一来源IP地址的联接数超过限定的值后，会弹回对方的访问请 求，给对方一个“503服务临时无效”的响应。当Apache服务器受到大量的访问请求型攻击的时候，由于大量的Apache进程及PHP和MYSQL运 行消耗，会导致服务器资源迅速耗尽，网站打开缓慢或瘫痪。如果是此种类型的攻击，使用mod_limitipconn模块则可以有效地提升服务器的抗攻击 能力，因为大量的请求被弹回，节省了服务器运行PHP及MYSQL的性能消耗。当然只要请求进了80端口，不管是接受还是弹回请求，Aapche都有运行 成本，所以此方法只能是减轻而无法解决，毕竟应用层的处理效率是比较低的。</p>
-<p>二、对于网站访问量比较大、使用了mod_limitipconn模块且限制同一客户端并发联接数低于3的情况下，如果用Apache默认的配置参数，极 可能经常出现“服务临时无效”的提示。因为Apache默认是设置“KeepAlive on”，且“KeepAliveTimeout 180”，所以一旦建立联接，那么在3分钟内这个联接是不会被释放的。所以如果网站不同页面点击频率比较高或图片资源比较多的话，会经常出现服务临时无效 的提示。那么有两种方式去解决，一是加大并发联接数的量，比如设置为普通站点10个并发联接数，图片站点则20个。另一种方式就是如果你不想加大这个值的 话，可以设置KeepAlive为off，然后缩短Timeout时间，这样联接会很快被释放出来。具体情况根据需要去调整测试，以得到一个最适合自己站 点情况的值。</p>
-<p>三、如果要同时限制并发联接数与带宽的话，就用bw_mod+mod_limitipconn，因为虽然bw_mod也可以控制并发联接数，但他是针对某 个目录或整个网站的并发联接数，是用来控制服务器端的总联接数，比如设置MaxConnection all 1000，那么这个网站所能接受的最大并发联接数为1000，而并不是限制每一客户端的并发联接数，而mod_limitipconn则是针对同一来源 IP的客户端的并发联接数，所以这两者的联接数限制是有所区别的。
-四、个人感觉用了bw_mod及mod_limitipconn模块后，网站访问速度有所下降，能凭直观地感觉出来，并且CPU的负载有所上升。特别是在 网站访问量比较大的情况下，这两个模块会消耗一定的主机性能，所以轻重权衡这个得大家自己根据情况来采用了。另外bw_mod里有个参数是用来设置控制精 度与频率的，默认是1000毫秒，如果你想提高带宽控制精度就改小这个数值，但会消耗更多的CPU资源，反之亦然，降低精度可提升性能。</p>
-<p><a href="http://dominia.org/djao/limitipconn.html">http://dominia.org/djao/limitipconn.html</a></p>
-<p>tar xzvf mod_limitipconn-0.04.tar.gz
-cd mod_limitipconn-0.04
-make
-make install</p>
-<p>You can also copy the source file over to the Apache source tree and rebuild your httpd statically. The highlighted text below illustrates how to enable the proxy client detection feature; it can be omitted if you don&#39;t want this feature.</p>
-<p>tar xzvf apache_1.3.27.tar.gz
-tar xzvf mod_limitipconn-0.04.tar.gz
-cd apache_1.3.27
-patch -p1 &lt; ../mod_limitipconn-0.04/apachesrc.diff
-cp ../mod_limitipconn-0.04/mod_limitipconn.c src/modules/extra/
-./configure --activate-module=src/modules/extra/mod_limitipconn.c --with-forward
-make
-make install</p>
-<p>EXP：</p>
-<pre><code><figure class="highlight"><pre>ExtendedStatus <span class="keyword">On</span>
-
-# Only needed <span class="keyword">if</span> the module <span class="keyword">is</span> compiled as a DSO
-LoadModule limitipconn_module lib/apache/mod_limitipconn.so
-AddModule mod_limitipconn.c
-
-    MaxConnPerIP <span class="number">3</span>
-    # exempting images from the connection limit <span class="keyword">is</span> often a good
-    # idea <span class="keyword">if</span> your web page has lots <span class="keyword">of</span> inline images, since these
-    # pages often <span class="keyword">generate</span> a flurry <span class="keyword">of</span> concurrent image requests
-    NoIPLimit image<span class="comment">/*
-
-    MaxConnPerIP 1
-    # In this case, all MIME types other than audio/mpeg and video*
-    # are exempt from the limit check
-    OnlyIPLimit audio/mpeg video
-</pre></figure></code></pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-17T10:52:52.000Z"><a href="/2010/12/17/apache-mod_cband/">12月 17 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/17/apache-mod_cband/">Apache 带宽限制mod_cband </a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>CBandLimit 100M
-    CBandSpeed 1024 10 30
-    CBandRemoteSpeed 10kb/s 3 2
-    CBandPeriod 4W
-    SetHandler cband-status
-    SetHandler cband-status-me</p>
-<p>解释：
-CBandLimit 100M</p>
-<h1>总带宽</h1>
-<h1>Maximal 1024kbps speed for this virtualhost</h1>
-<h1>Maximal 10 requests per second for this virtualhost</h1>
-<h1>Maximal 30 open connections for this virtualhost</h1>
-<p>CBandSpeed 1024 10 30
-限制此虚拟主机最高访问速度1024kbps
-限制此虚拟主机每秒最高接受请求数10个
-限制此虚拟主机最高并发连接30个</p>
-<h1>Maximal 10kB/s speed, 3 requests/s and 2 open connections for any remote client</h1>
-<p>CBandRemoteSpeed 10kb/s 3 2
-限制来自远端访问速度10kB每秒，3个请求每秒，2个连接。</p>
-<h1>a period of time after which the scoreboard will be cleared (4 weeks)</h1>
-<p>CBandPeriod 4W
-设定多久对所记录的全局访问带宽进行重设（清零）。
-4W=4 weeks 4周（一个月）</p>
-<h1>Then you can access the status page with a URL like:<a href="http://server_name/cband-status">http://server_name/cband-status</a></h1>
-<p>SetHandler cband-status
-开启了mod_cband的实时监测功能，可以通过<a href="http://server_name/cband-status进行直观的观测。（全局监测）">http://server_name/cband-status进行直观的观测。（全局监测）</a></p>
-<h1>Then you can access the status page with a URL like:<a href="http://server_name/cband-status-me">http://server_name/cband-status-me</a></h1>
-<p>SetHandler cband-status-me</p>
-<p>开启了mod_cband的实时监测功能，可以通过<a href="http://server_name/cband-status-me进行直观的观测。（单一监测）">http://server_name/cband-status-me进行直观的观测。（单一监测）</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-17T10:51:14.000Z"><a href="/2010/12/17/apache-exclude-log/">12月 17 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/17/apache-exclude-log/">Apache过滤日志</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>.过滤掉无需记录的日志</p>
-<h1>在httpd.conf 的</h1>
-<p>LogFormat &quot;%{X-Forwarded-For}i %l %u %t \&quot;%r\&quot; %&gt;s %b \&quot;%{Referer}i\&quot; \&quot;%{User-Agent}i\&quot;&quot; combined
-后面加入如下:</p>
-<pre><code><figure class="highlight"><pre><span class="comment"># filter the localhost visit</span>
-<span class="keyword">SetEnvIf</span> Remote_Addr <span class="string">"127\.0\.0\.1"</span> dontlog
-<span class="comment"># filter some special directories</span>
-<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"^ZendPlatform.*$"</span> dontlog
-<span class="keyword">SetEnvIf</span> Request_URI \.healthcheck\.html$ dontlog
-<span class="keyword">SetEnvIf</span> Remote_Addr <span class="string">"::1"</span> dontlog
-<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.getPing.php$"</span> dontlog
-<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"^/error\.html$"</span> dontlog
-<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.gif$"</span> dontlog
-<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.jpg$"</span> dontlog
-<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.css$"</span> dontlog
-`<span class="tag">&lt;/pre&gt;</span>
-其它根据自己的需要做一些调整。
-另一种日志不记录图片的方法：
-<span class="tag">&lt;pre&gt;</span>`<span class="keyword">SetEnv</span> dontlog 1
-<span class="keyword">CustomLog</span> logs/access_log combined env=!dontlog
-</pre></figure></code></pre>
-
-      
-    </div>
-    <footer>
-      
         
         
       
@@ -862,354 +732,15 @@ CBandLimit 100M</p>
 
 
   
-<div class="widget tag">
-  <h3 class="title">标签</h3>
-  <ul class="entry">
-  
-    <li><a href="/tags/1032/">1032</a><small>1</small></li>
-  
-    <li><a href="/tags/1236/">1236</a><small>1</small></li>
-  
-    <li><a href="/tags/403/">403</a><small>1</small></li>
-  
-    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
-  
-    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
-  
-    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
-  
-    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
-  
-    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
-  
-    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
-  
-    <li><a href="/tags/acl/">acl</a><small>2</small></li>
-  
-    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
-  
-    <li><a href="/tags/apache/">apache</a><small>8</small></li>
-  
-    <li><a href="/tags/arp/">arp</a><small>1</small></li>
-  
-    <li><a href="/tags/awk/">awk</a><small>4</small></li>
-  
-    <li><a href="/tags/bash/">bash</a><small>2</small></li>
-  
-    <li><a href="/tags/best/">best</a><small>1</small></li>
-  
-    <li><a href="/tags/binding/">binding</a><small>1</small></li>
-  
-    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
-  
-    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
-  
-    <li><a href="/tags/browser/">browser</a><small>1</small></li>
-  
-    <li><a href="/tags/cache/">cache</a><small>1</small></li>
-  
-    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
-  
-    <li><a href="/tags/centos/">centos</a><small>8</small></li>
-  
-    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
-  
-    <li><a href="/tags/chown/">chown</a><small>1</small></li>
-  
-    <li><a href="/tags/commands/">commands</a><small>1</small></li>
-  
-    <li><a href="/tags/content/">content</a><small>1</small></li>
-  
-    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
-  
-    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
-  
-    <li><a href="/tags/creating/">creating</a><small>1</small></li>
-  
-    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
-  
-    <li><a href="/tags/dell/">dell</a><small>1</small></li>
-  
-    <li><a href="/tags/diff/">diff</a><small>1</small></li>
-  
-    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
-  
-    <li><a href="/tags/du/">du</a><small>1</small></li>
-  
-    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
-  
-    <li><a href="/tags/end/">end</a><small>1</small></li>
-  
-    <li><a href="/tags/epel/">epel</a><small>1</small></li>
-  
-    <li><a href="/tags/etag/">etag</a><small>1</small></li>
-  
-    <li><a href="/tags/expires/">expires</a><small>1</small></li>
-  
-    <li><a href="/tags/find/">find</a><small>1</small></li>
-  
-    <li><a href="/tags/for-1/">for</a><small>1</small></li>
-  
-    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
-  
-    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
-  
-    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
-  
-    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
-  
-    <li><a href="/tags/group/">group</a><small>1</small></li>
-  
-    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
-  
-    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
-  
-    <li><a href="/tags/howto/">howto</a><small>2</small></li>
-  
-    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
-  
-    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
-  
-    <li><a href="/tags/if/">if</a><small>2</small></li>
-  
-    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
-  
-    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
-  
-    <li><a href="/tags/init/">init</a><small>1</small></li>
-  
-    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
-  
-    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
-  
-    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
-  
-    <li><a href="/tags/jk/">jk</a><small>1</small></li>
-  
-    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
-  
-    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
-  
-    <li><a href="/tags/kick/">kick</a><small>1</small></li>
-  
-    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
-  
-    <li><a href="/tags/linux/">linux</a><small>18</small></li>
-  
-    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
-  
-    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
-  
-    <li><a href="/tags/master/">master</a><small>2</small></li>
-  
-    <li><a href="/tags/metric/">metric</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
-  
-    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
-  
-    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
-  
-    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
-  
-    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
-  
-    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
-  
-    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
-  
-    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
-  
-    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
-  
-    <li><a href="/tags/packet/">packet</a><small>1</small></li>
-  
-    <li><a href="/tags/pam/">pam</a><small>1</small></li>
-  
-    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
-  
-    <li><a href="/tags/perl/">perl</a><small>1</small></li>
-  
-    <li><a href="/tags/permission/">permission</a><small>1</small></li>
-  
-    <li><a href="/tags/php-1/">php</a><small>2</small></li>
-  
-    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
-  
-    <li><a href="/tags/pil/">pil</a><small>1</small></li>
-  
-    <li><a href="/tags/port/">port</a><small>1</small></li>
-  
-    <li><a href="/tags/practices/">practices</a><small>1</small></li>
-  
-    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
-  
-    <li><a href="/tags/ps/">ps</a><small>2</small></li>
-  
-    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
-  
-    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
-  
-    <li><a href="/tags/python-1/">python</a><small>3</small></li>
-  
-    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
-  
-    <li><a href="/tags/quick/">quick</a><small>1</small></li>
-  
-    <li><a href="/tags/r410/">r410</a><small>1</small></li>
-  
-    <li><a href="/tags/r710/">r710</a><small>1</small></li>
-  
-    <li><a href="/tags/raw/">raw</a><small>1</small></li>
-  
-    <li><a href="/tags/referer/">referer</a><small>1</small></li>
-  
-    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
-  
-    <li><a href="/tags/repo/">repo</a><small>1</small></li>
-  
-    <li><a href="/tags/resources/">resources</a><small>1</small></li>
-  
-    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
-  
-    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
-  
-    <li><a href="/tags/sar/">sar</a><small>1</small></li>
-  
-    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
-  
-    <li><a href="/tags/sed/">sed</a><small>4</small></li>
-  
-    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
-  
-    <li><a href="/tags/sending/">sending</a><small>1</small></li>
-  
-    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
-  
-    <li><a href="/tags/shell/">shell</a><small>2</small></li>
-  
-    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
-  
-    <li><a href="/tags/slave/">slave</a><small>2</small></li>
-  
-    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
-  
-    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
-  
-    <li><a href="/tags/spec/">spec</a><small>2</small></li>
-  
-    <li><a href="/tags/squid/">squid</a><small>1</small></li>
-  
-    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
-  
-    <li><a href="/tags/system/">system</a><small>1</small></li>
-  
-    <li><a href="/tags/tar/">tar</a><small>1</small></li>
-  
-    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
-  
-    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
-  
-    <li><a href="/tags/tools/">tools</a><small>1</small></li>
-  
-    <li><a href="/tags/top/">top</a><small>1</small></li>
-  
-    <li><a href="/tags/tree/">tree</a><small>1</small></li>
-  
-    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
-  
-    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
-  
-    <li><a href="/tags/user/">user</a><small>2</small></li>
-  
-    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
-  
-    <li><a href="/tags/vim/">vim</a><small>2</small></li>
-  
-    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
-  
-    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/while/">while</a><small>1</small></li>
-  
-    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
-  
-    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
-  
-    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
-  
-    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
-  
-    <li><a href="/tags/yum/">yum</a><small>10</small></li>
-  
-    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
-  
-    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
-  
-    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
-  
-    <li><a href="/tags/优化/">优化</a><small>1</small></li>
-  
-    <li><a href="/tags/内核/">内核</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
-  
-    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
-  
-    <li><a href="/tags/参考/">参考</a><small>1</small></li>
-  
-    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
-  
-    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
-  
-    <li><a href="/tags/对比/">对比</a><small>1</small></li>
-  
-    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
-  
-    <li><a href="/tags/日志/">日志</a><small>2</small></li>
-  
-    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
-  
-    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
-  
-    <li><a href="/tags/管理/">管理</a><small>1</small></li>
-  
-    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
-  
-    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
-  
-    <li><a href="/tags/老板/">老板</a><small>1</small></li>
-  
-    <li><a href="/tags/认证/">认证</a><small>1</small></li>
-  
-    <li><a href="/tags/详解/">详解</a><small>3</small></li>
-  
-    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
-  
-    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
-  
-    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
-  
-  </ul>
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Cache-control/" style="font-size: 16.75px;">Cache-control</a><a href="/tags/Cluster-bacst/" style="font-size: 12.00px;">Cluster-bacst</a><a href="/tags/Header-V3-DSA-signature/" style="font-size: 15.75px;">Header V3 DSA signature</a><a href="/tags/object-Object/" style="font-size: 14.75px;">[object Object]</a><a href="/tags/apache/" style="font-size: 19.50px;">apache</a><a href="/tags/awk/" style="font-size: 18.25px;">awk</a><a href="/tags/bash/" style="font-size: 17.00px;">bash</a><a href="/tags/browser/" style="font-size: 13.75px;">browser</a><a href="/tags/cache/" style="font-size: 14.00px;">cache</a><a href="/tags/cdn/" style="font-size: 16.25px;">cdn</a><a href="/tags/centos/" style="font-size: 19.25px;">centos</a><a href="/tags/cpan/" style="font-size: 12.75px;">cpan</a><a href="/tags/cpanm/" style="font-size: 12.25px;">cpanm</a><a href="/tags/etag/" style="font-size: 14.25px;">etag</a><a href="/tags/expires/" style="font-size: 13.00px;">expires</a><a href="/tags/foreman/" style="font-size: 15.25px;">foreman</a><a href="/tags/gzip/" style="font-size: 10.50px;">gzip</a><a href="/tags/libmemcached/" style="font-size: 15.00px;">libmemcached</a><a href="/tags/mod_cband/" style="font-size: 11.00px;">mod_cband</a><a href="/tags/mod_limitipconn/" style="font-size: 12.50px;">mod_limitipconn</a><a href="/tags/moudles/" style="font-size: 10.25px;">moudles</a><a href="/tags/mysql/" style="font-size: 18.75px;">mysql</a><a href="/tags/nginx/" style="font-size: 18.00px;">nginx</a><a href="/tags/php-1/" style="font-size: 16.50px;">php</a><a href="/tags/php-fpm/" style="font-size: 17.50px;">php-fpm</a><a href="/tags/puppet/" style="font-size: 19.00px;">puppet</a><a href="/tags/python26/" style="font-size: 15.50px;">python2.6</a><a href="/tags/referer/" style="font-size: 11.25px;">referer</a><a href="/tags/repo/" style="font-size: 16.00px;">repo</a><a href="/tags/ruby/" style="font-size: 14.50px;">ruby</a><a href="/tags/shell/" style="font-size: 17.25px;">shell</a><a href="/tags/shtml/" style="font-size: 11.50px;">shtml</a><a href="/tags/ssi/" style="font-size: 11.75px;">ssi</a><a href="/tags/tomcat/" style="font-size: 18.50px;">tomcat</a><a href="/tags/yum/" style="font-size: 19.75px;">yum</a><a href="/tags/单引号/" style="font-size: 13.25px;">单引号</a><a href="/tags/双引号/" style="font-size: 13.50px;">双引号</a><a href="/tags/环境变量/" style="font-size: 10.00px;">环境变量</a><a href="/tags/详解/" style="font-size: 17.75px;">详解</a><a href="/tags/过滤日志/" style="font-size: 10.75px;">过滤日志</a>
+  </div>
 </div>
 
 
   
-
 </aside>
     <div class="clearfix"></div>
   </div>

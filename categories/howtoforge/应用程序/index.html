@@ -3,21 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>应用程序 | Puppet-in-action</title>
+  <title>应用程序 | Liuyu blog</title>
   <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="Puppet cdn AutoMate">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-  <meta property="og:site_name" content="Puppet-in-action"/>
+  <meta property="og:site_name" content="Liuyu blog"/>
 
   
     <meta property="og:image" content="undefined"/>
   
 
   <link href="/favicon.png" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="Liuyu blog" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
@@ -27,8 +29,8 @@
 
 <body>
   <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">Puppet-in-action</a></h1>
-  <h2><a href="/">Puppet</a></h2>
+  <h1><a href="/">Liuyu blog</a></h1>
+  <h2><a href="/">Puppet in action</a></h2>
 </div>
 <nav id="main-nav" class="alignright">
   <ul>
@@ -36,6 +38,8 @@
       <li><a href="/">Home</a></li>
     
       <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -46,188 +50,33 @@
 <h2 class="archive-title category">应用程序</h2>
 
 
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-18T00:06:53.000Z"><a href="/2010/12/18/nginx-perl-fcgi-nagios/">12月 18 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/18/nginx-perl-fcgi-nagios/">Nginx perl fcgi 配置nagios</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>Nginx8 + nagios3.2 +perl fcgi</p>
-<p>通常使用：nginx 代理+ apache CGI部分交给apache来处理
-本文取消apache 改为nginx自己处理</p>
-<p>Nginx nagios 安装略</p>
-<p>安装perl cgi模块</p>
-<pre><code><figure class="highlight"><pre>wget http://www<span class="preprocessor">.cpan</span><span class="preprocessor">.org</span>/modules/by-module/FCGI/FCGI-<span class="number">0.67</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
-tar -zxvf FCGI-<span class="number">0.67</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
-cd FCGI-<span class="number">0.67</span>
-perl Makefile<span class="preprocessor">.PL</span>
-make &amp;amp<span class="comment">;&amp;amp; make install</span>
-`&lt;/pre&gt;
-&lt;!--more--&gt;
-
-安装FCGI-ProcManager:
-&lt;pre&gt;`wget http://search<span class="preprocessor">.cpan</span><span class="preprocessor">.org</span>/CPAN/authors/id/G/GB/GBJK/FCGI-ProcManager-<span class="number">0.18</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
-tar -xzxf FCGI-ProcManager-<span class="number">0.18</span><span class="preprocessor">.tar</span><span class="preprocessor">.gz</span>
-cd FCGI-ProcManager-<span class="number">0.18</span>
-perl Makefile<span class="preprocessor">.PL</span>
-make      make install
-`&lt;/pre&gt;
-下载nginx-fcgi脚本
-Wget http://www<span class="preprocessor">.nginx</span><span class="preprocessor">.eu</span>/nginx-fcgi/nginx-fcgi<span class="preprocessor">.txt</span>
-放置在：/etc/nginx-fcgi
-启动方法：
-/etc/nginx-fcgi –l /var/log/nginx/nginx-fcgi<span class="preprocessor">.log</span> -pid /var/run/nginx-fcgi<span class="preprocessor">.pid</span> -S /var/run/nginx-fcgi<span class="preprocessor">.sock</span>
-注意给 nginx-fcgi<span class="preprocessor">.sock</span> <span class="number">777</span>的权限
-
-**运行前使用cpan 安装 FCGI<span class="comment">;Getopt::Long;IO::All;Socket;**</span>
-
-配置文件参考：/usr/local/nginx/conf/vhosts/nagios<span class="preprocessor">.conf</span>
-&lt;pre&gt;`server
-{
-listen <span class="number">80</span><span class="comment">;</span>
-server_name IP<span class="comment">;</span>
-root /usr/local/nagios/share<span class="comment">;</span>
-index index<span class="preprocessor">.php</span><span class="comment">;</span>
-location ~ .*\.(php|php5)?$
-{
-fastcgi_pass <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9000</span><span class="comment">;</span>
-fastcgi_index index<span class="preprocessor">.php</span><span class="comment">;</span>
-include enable_php5<span class="preprocessor">.conf</span><span class="comment">;</span>
-auth_basic <span class="string">"Nagios Login pain"</span><span class="comment">;</span>
-auth_basic_user_file /usr/local/nagios/etc/htpasswd<span class="comment">;</span>
-}
-location ~ .*\<span class="preprocessor">.cgi</span>$ {
-root /usr/local/nagios/sbin<span class="comment">;</span>
-rewrite ^/nagios/cgi-bin/(.*)\<span class="preprocessor">.cgi</span> /$<span class="number">1.</span>cgi <span class="keyword">break</span><span class="comment">;</span>
-fastcgi_pass unix:/var/run/ng-fcgi<span class="preprocessor">.sock</span><span class="comment">;</span>
-fastcgi_index index<span class="preprocessor">.cgi</span><span class="comment">;</span>
-fastcgi_param SCRIPT_FILENAME /usr/local/nagios/sbin/$fastcgi_script_name<span class="comment">;</span>
-fastcgi_param HTTP_ACCEPT_LANGUAGE <span class="built_in">zh</span>-cn<span class="comment">;</span>
-include enable_php5<span class="preprocessor">.conf</span><span class="comment">;</span>
-auth_basic <span class="string">"Nagios Login pain"</span><span class="comment">;</span>
-auth_basic_user_file /usr/local/nagios/etc/htpasswd<span class="comment">;</span>
-}
-location /nagios/ {
-alias /usr/local/nagios/share/<span class="comment">;</span>
-}
-`&lt;/pre&gt;
-enable_php5<span class="preprocessor">.conf</span> 参考：
-&lt;pre&gt;`fastcgi_param GATEWAY_INTERFACE CGI/<span class="number">1.1</span><span class="comment">;</span>
-fastcgi_param SERVER_SOFTWARE nginx<span class="comment">;</span>
-fastcgi_param QUERY_STRING $query_string<span class="comment">;</span>
-fastcgi_param REQUEST_METHOD $request_method<span class="comment">;</span>
-fastcgi_param CONTENT_TYPE $content_type<span class="comment">;</span>
-fastcgi_param CONTENT_LENGTH $content_length<span class="comment">;</span>
-fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name<span class="comment">;</span>
-fastcgi_param SCRIPT_NAME $fastcgi_script_name<span class="comment">;</span>
-fastcgi_param REQUEST_URI $request_uri<span class="comment">;</span>
-fastcgi_param DOCUMENT_URI $document_uri<span class="comment">;</span>
-fastcgi_param DOCUMENT_ROOT $document_root<span class="comment">;</span>
-fastcgi_param SERVER_PROTOCOL $server_protocol<span class="comment">;</span>
-fastcgi_param REMOTE_ADDR $remote_addr<span class="comment">;</span>
-fastcgi_param REMOTE_PORT $remote_port<span class="comment">;</span>
-fastcgi_param SERVER_ADDR $server_addr<span class="comment">;</span>
-fastcgi_param SERVER_PORT $server_port<span class="comment">;</span>
-fastcgi_param SERVER_NAME $server_name<span class="comment">;</span>
-fastcgi_param HTTP_ACCEPT_ENCODING gzip,deflate<span class="comment">;</span>
-</pre></figure></code></pre>
-<p>参考：<a href="http://bbs.linuxtone.org/thread-4441-1-1.html">http://bbs.linuxtone.org/thread-4441-1-1.html</a>
-<a href="http://www.nginx.eu/nginx-fcgi.html">http://www.nginx.eu/nginx-fcgi.html</a>
-<a href="http://wiki.nginx.org/NginxSimpleCGI">http://wiki.nginx.org/NginxSimpleCGI</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+  <div class="archive">
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-18T00:06:53.000Z"><a href="/2010/12/18/nginx-perl-fcgi-nagios/">12月 18 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/18/nginx-perl-fcgi-nagios/">Nginx perl fcgi 配置nagios</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-17T23:41:40.000Z"><a href="/2010/12/18/centos-yum-nginx-php-fpm-mysql/">12月 18 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/18/centos-yum-nginx-php-fpm-mysql/">Centos Yum Nginx Php-fpm Mysql</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
   </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-17T23:41:40.000Z"><a href="/2010/12/18/centos-yum-nginx-php-fpm-mysql/">12月 18 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/18/centos-yum-nginx-php-fpm-mysql/">Centos Yum Nginx Php-fpm Mysql</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>今天发现了个好东西
-<a href="http://centos.alt.ru/pub/repository/centos/5/i386/">http://centos.alt.ru/pub/repository/centos/5/i386/</a>
-<a href="http://centos.alt.ru/pub/repository/centos/5/x86_64/">http://centos.alt.ru/pub/repository/centos/5/x86_64/</a>
-现在，我们可以快速全自动搞定 CentOS + Nginx + PHP-FPM + MySQL 的安装了</p>
-<p>先新建一个 repo</p>
-<h1>vi /etc/yum.repos.d/alt.ru.repo</h1>
-<pre><code><figure class="highlight"><pre><span class="title">[CentALT]</span>
-<span class="setting">name=<span class="value">CentALT Packages for Enterprise Linux <span class="number">5</span> - $basearch</span></span>
-<span class="setting">baseurl=<span class="value">http://centos.alt.ru/repository/centos/<span class="number">5</span>/$basearch/</span></span>
-<span class="setting">enabled=<span class="value"><span class="number">1</span></span></span>
-<span class="setting">gpgcheck=<span class="value"><span class="number">0</span></span></span>
-<span class="setting">protect=<span class="value"><span class="number">1</span></span></span>
-</pre></figure></code></pre>
-<p>启用 EPEL repo
-i386
-rpm -ihv <a href="http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm">http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm</a>
-x86_64
-rpm -ihv <a href="http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-3.noarch.rpm">http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-3.noarch.rpm</a>
-好了，一键安装</p>
-<h1>yum install nginx php-fpm mysql mysql-server</h1>
-<p>爽吧！</p>
-<p>更完整的安装
-yum -y update
-yum -y mysql mysql-server
-mysqladmin -u root password root
-yum -y install nginx php-fpm php-cli php-pdo php-mysql php-mcrypt php-mbstring php-gd php-tidy php-xml php-xmlrpc php-pear php-pecl-memcache php-eaccelerator</p>
-<h1>APC 和 eAccelerator 有冲突，2选1</h1>
-<p>yum -y install php-pecl-apc</p>
-<p>看下我的完整安装，只要一句
-yum -y install nginx mysql mysql-server php-fpm php-cli php-pdo php-mysql php-mcrypt php-mbstring php-gd php-tidy php-xml php-xmlrpc php-pear php-pecl-memcache php-eaccelerator</p>
-<p>引用：<a href="http://www.21andy.com/blog/20100219/1703.html">http://www.21andy.com/blog/20100219/1703.html</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-
-  <nav id="pagination">
-  
-  
-  <div class="clearfix"></div>
-</nav>
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
@@ -287,354 +136,15 @@ yum -y install nginx mysql mysql-server php-fpm php-cli php-pdo php-mysql php-mc
 
 
   
-<div class="widget tag">
-  <h3 class="title">标签</h3>
-  <ul class="entry">
-  
-    <li><a href="/tags/1032/">1032</a><small>1</small></li>
-  
-    <li><a href="/tags/1236/">1236</a><small>1</small></li>
-  
-    <li><a href="/tags/403/">403</a><small>1</small></li>
-  
-    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
-  
-    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
-  
-    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
-  
-    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
-  
-    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
-  
-    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
-  
-    <li><a href="/tags/acl/">acl</a><small>2</small></li>
-  
-    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
-  
-    <li><a href="/tags/apache/">apache</a><small>8</small></li>
-  
-    <li><a href="/tags/arp/">arp</a><small>1</small></li>
-  
-    <li><a href="/tags/awk/">awk</a><small>4</small></li>
-  
-    <li><a href="/tags/bash/">bash</a><small>2</small></li>
-  
-    <li><a href="/tags/best/">best</a><small>1</small></li>
-  
-    <li><a href="/tags/binding/">binding</a><small>1</small></li>
-  
-    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
-  
-    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
-  
-    <li><a href="/tags/browser/">browser</a><small>1</small></li>
-  
-    <li><a href="/tags/cache/">cache</a><small>1</small></li>
-  
-    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
-  
-    <li><a href="/tags/centos/">centos</a><small>8</small></li>
-  
-    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
-  
-    <li><a href="/tags/chown/">chown</a><small>1</small></li>
-  
-    <li><a href="/tags/commands/">commands</a><small>1</small></li>
-  
-    <li><a href="/tags/content/">content</a><small>1</small></li>
-  
-    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
-  
-    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
-  
-    <li><a href="/tags/creating/">creating</a><small>1</small></li>
-  
-    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
-  
-    <li><a href="/tags/dell/">dell</a><small>1</small></li>
-  
-    <li><a href="/tags/diff/">diff</a><small>1</small></li>
-  
-    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
-  
-    <li><a href="/tags/du/">du</a><small>1</small></li>
-  
-    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
-  
-    <li><a href="/tags/end/">end</a><small>1</small></li>
-  
-    <li><a href="/tags/epel/">epel</a><small>1</small></li>
-  
-    <li><a href="/tags/etag/">etag</a><small>1</small></li>
-  
-    <li><a href="/tags/expires/">expires</a><small>1</small></li>
-  
-    <li><a href="/tags/find/">find</a><small>1</small></li>
-  
-    <li><a href="/tags/for-1/">for</a><small>1</small></li>
-  
-    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
-  
-    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
-  
-    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
-  
-    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
-  
-    <li><a href="/tags/group/">group</a><small>1</small></li>
-  
-    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
-  
-    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
-  
-    <li><a href="/tags/howto/">howto</a><small>2</small></li>
-  
-    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
-  
-    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
-  
-    <li><a href="/tags/if/">if</a><small>2</small></li>
-  
-    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
-  
-    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
-  
-    <li><a href="/tags/init/">init</a><small>1</small></li>
-  
-    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
-  
-    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
-  
-    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
-  
-    <li><a href="/tags/jk/">jk</a><small>1</small></li>
-  
-    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
-  
-    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
-  
-    <li><a href="/tags/kick/">kick</a><small>1</small></li>
-  
-    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
-  
-    <li><a href="/tags/linux/">linux</a><small>18</small></li>
-  
-    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
-  
-    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
-  
-    <li><a href="/tags/master/">master</a><small>2</small></li>
-  
-    <li><a href="/tags/metric/">metric</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
-  
-    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
-  
-    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
-  
-    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
-  
-    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
-  
-    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
-  
-    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
-  
-    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
-  
-    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
-  
-    <li><a href="/tags/packet/">packet</a><small>1</small></li>
-  
-    <li><a href="/tags/pam/">pam</a><small>1</small></li>
-  
-    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
-  
-    <li><a href="/tags/perl/">perl</a><small>1</small></li>
-  
-    <li><a href="/tags/permission/">permission</a><small>1</small></li>
-  
-    <li><a href="/tags/php-1/">php</a><small>2</small></li>
-  
-    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
-  
-    <li><a href="/tags/pil/">pil</a><small>1</small></li>
-  
-    <li><a href="/tags/port/">port</a><small>1</small></li>
-  
-    <li><a href="/tags/practices/">practices</a><small>1</small></li>
-  
-    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
-  
-    <li><a href="/tags/ps/">ps</a><small>2</small></li>
-  
-    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
-  
-    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
-  
-    <li><a href="/tags/python-1/">python</a><small>3</small></li>
-  
-    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
-  
-    <li><a href="/tags/quick/">quick</a><small>1</small></li>
-  
-    <li><a href="/tags/r410/">r410</a><small>1</small></li>
-  
-    <li><a href="/tags/r710/">r710</a><small>1</small></li>
-  
-    <li><a href="/tags/raw/">raw</a><small>1</small></li>
-  
-    <li><a href="/tags/referer/">referer</a><small>1</small></li>
-  
-    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
-  
-    <li><a href="/tags/repo/">repo</a><small>1</small></li>
-  
-    <li><a href="/tags/resources/">resources</a><small>1</small></li>
-  
-    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
-  
-    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
-  
-    <li><a href="/tags/sar/">sar</a><small>1</small></li>
-  
-    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
-  
-    <li><a href="/tags/sed/">sed</a><small>4</small></li>
-  
-    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
-  
-    <li><a href="/tags/sending/">sending</a><small>1</small></li>
-  
-    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
-  
-    <li><a href="/tags/shell/">shell</a><small>2</small></li>
-  
-    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
-  
-    <li><a href="/tags/slave/">slave</a><small>2</small></li>
-  
-    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
-  
-    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
-  
-    <li><a href="/tags/spec/">spec</a><small>2</small></li>
-  
-    <li><a href="/tags/squid/">squid</a><small>1</small></li>
-  
-    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
-  
-    <li><a href="/tags/system/">system</a><small>1</small></li>
-  
-    <li><a href="/tags/tar/">tar</a><small>1</small></li>
-  
-    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
-  
-    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
-  
-    <li><a href="/tags/tools/">tools</a><small>1</small></li>
-  
-    <li><a href="/tags/top/">top</a><small>1</small></li>
-  
-    <li><a href="/tags/tree/">tree</a><small>1</small></li>
-  
-    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
-  
-    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
-  
-    <li><a href="/tags/user/">user</a><small>2</small></li>
-  
-    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
-  
-    <li><a href="/tags/vim/">vim</a><small>2</small></li>
-  
-    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
-  
-    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/while/">while</a><small>1</small></li>
-  
-    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
-  
-    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
-  
-    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
-  
-    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
-  
-    <li><a href="/tags/yum/">yum</a><small>10</small></li>
-  
-    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
-  
-    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
-  
-    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
-  
-    <li><a href="/tags/优化/">优化</a><small>1</small></li>
-  
-    <li><a href="/tags/内核/">内核</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
-  
-    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
-  
-    <li><a href="/tags/参考/">参考</a><small>1</small></li>
-  
-    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
-  
-    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
-  
-    <li><a href="/tags/对比/">对比</a><small>1</small></li>
-  
-    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
-  
-    <li><a href="/tags/日志/">日志</a><small>2</small></li>
-  
-    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
-  
-    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
-  
-    <li><a href="/tags/管理/">管理</a><small>1</small></li>
-  
-    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
-  
-    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
-  
-    <li><a href="/tags/老板/">老板</a><small>1</small></li>
-  
-    <li><a href="/tags/认证/">认证</a><small>1</small></li>
-  
-    <li><a href="/tags/详解/">详解</a><small>3</small></li>
-  
-    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
-  
-    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
-  
-    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
-  
-  </ul>
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Cache-control/" style="font-size: 16.75px;">Cache-control</a><a href="/tags/Cluster-bacst/" style="font-size: 12.00px;">Cluster-bacst</a><a href="/tags/Header-V3-DSA-signature/" style="font-size: 15.75px;">Header V3 DSA signature</a><a href="/tags/object-Object/" style="font-size: 14.75px;">[object Object]</a><a href="/tags/apache/" style="font-size: 19.50px;">apache</a><a href="/tags/awk/" style="font-size: 18.25px;">awk</a><a href="/tags/bash/" style="font-size: 17.00px;">bash</a><a href="/tags/browser/" style="font-size: 13.75px;">browser</a><a href="/tags/cache/" style="font-size: 14.00px;">cache</a><a href="/tags/cdn/" style="font-size: 16.25px;">cdn</a><a href="/tags/centos/" style="font-size: 19.25px;">centos</a><a href="/tags/cpan/" style="font-size: 12.75px;">cpan</a><a href="/tags/cpanm/" style="font-size: 12.25px;">cpanm</a><a href="/tags/etag/" style="font-size: 14.25px;">etag</a><a href="/tags/expires/" style="font-size: 13.00px;">expires</a><a href="/tags/foreman/" style="font-size: 15.25px;">foreman</a><a href="/tags/gzip/" style="font-size: 10.50px;">gzip</a><a href="/tags/libmemcached/" style="font-size: 15.00px;">libmemcached</a><a href="/tags/mod_cband/" style="font-size: 11.00px;">mod_cband</a><a href="/tags/mod_limitipconn/" style="font-size: 12.50px;">mod_limitipconn</a><a href="/tags/moudles/" style="font-size: 10.25px;">moudles</a><a href="/tags/mysql/" style="font-size: 18.75px;">mysql</a><a href="/tags/nginx/" style="font-size: 18.00px;">nginx</a><a href="/tags/php-1/" style="font-size: 16.50px;">php</a><a href="/tags/php-fpm/" style="font-size: 17.50px;">php-fpm</a><a href="/tags/puppet/" style="font-size: 19.00px;">puppet</a><a href="/tags/python26/" style="font-size: 15.50px;">python2.6</a><a href="/tags/referer/" style="font-size: 11.25px;">referer</a><a href="/tags/repo/" style="font-size: 16.00px;">repo</a><a href="/tags/ruby/" style="font-size: 14.50px;">ruby</a><a href="/tags/shell/" style="font-size: 17.25px;">shell</a><a href="/tags/shtml/" style="font-size: 11.50px;">shtml</a><a href="/tags/ssi/" style="font-size: 11.75px;">ssi</a><a href="/tags/tomcat/" style="font-size: 18.50px;">tomcat</a><a href="/tags/yum/" style="font-size: 19.75px;">yum</a><a href="/tags/单引号/" style="font-size: 13.25px;">单引号</a><a href="/tags/双引号/" style="font-size: 13.50px;">双引号</a><a href="/tags/环境变量/" style="font-size: 10.00px;">环境变量</a><a href="/tags/详解/" style="font-size: 17.75px;">详解</a><a href="/tags/过滤日志/" style="font-size: 10.75px;">过滤日志</a>
+  </div>
 </div>
 
 
   
-
 </aside>
     <div class="clearfix"></div>
   </div>

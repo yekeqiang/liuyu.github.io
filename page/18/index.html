@@ -1,0 +1,453 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 18 页 | Liuyu blog</title>
+  <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="Puppet cdn AutoMate">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Liuyu blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Liuyu blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Liuyu blog</a></h1>
+  <h2><a href="/">Puppet in action</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T10:59:04.000Z"><a href="/2010/12/17/apache-ssi-shtml-config/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/apache-ssi-shtml-config/">Apache ssi shtml配置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>什么是shtml呢？
+使用SSI(Server Side Include)的html文件扩展名，SSI（Server Side Include)，通常称为&quot;服务器端嵌入&quot;或者叫&quot;服务器端包含&quot;，是一种类似于ASP的基于服务器的网页制作技术。默认扩展名是 .stm、.shtm 和 .shtml。
+什么是SSI？
+SSI是英文Server Side Includes的缩写，翻译成中文就是服务器端包含的意思。从技术角度上说，SSI就是在HTML文件中，可以通过注释行调用的命令或指针。SSI具有 强大的功能，只要使用一条简单的SSI命令就可以实现整个网站的内容更新，时间和日期的动态显示，以及执行shell和CGI脚本程序等复杂的功能。 网站维护常常碰到的一个问题是，网站的结构已经固定，却为了更新一点内容而不得不重做一大批网页。SSI提供了一种简单、有效的方法来解决这一问题，它将 一个网站的基本结构放在几个简单的HTML文件中（模板），以后我们要做的只是将文本传到服务器，让程序按照模板自动生成网页，从而使管理大型网站变得容 易。
+实现方法
+建立头文件
+head.html</p>
+<p>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;</p>
+<p>&quot;<a href="http://www.w3.org/TR/html4/loose.dtd"><a href="http://www.w3.org/TR/html4/loose.dtd">http://www.w3.org/TR/html4/loose.dtd</a></a>&quot;&gt;</p>
+<p>&lt;html&gt;</p>
+<p>&lt;head&gt;</p>
+<p>&lt;title&gt;Untitled Document&lt;/title&gt;</p>
+<p>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=gb2312&quot;&gt;</p>
+<p>&lt;/head&gt;&lt;body&gt;</p>
+<p>&lt;div style=&quot;background-color:#00CC66;boder:1px groove orange &quot;&gt;这是头&lt;/div&gt;</p>
+<p>建立尾文件：
+foot.html</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>这是尾</p>
+<p>&lt;/body&gt;&lt;/html&gt;</p>
+<p>连接头和尾</p>
+<p>&lt;!--#include file=&quot;head.html&quot;--&gt;</p>
+<p>&lt;hr&gt;</p>
+<p>&lt;b&gt;头尾文件内容都显示。表示SSI工作正常。shtml显示正常&lt;/b&gt;</p>
+<p>&lt;hr&gt;</p>
+<p>&lt;!--#include file=&quot;foot.html&quot;--&gt;</p>
+<p>linuxtone.shtml配置文件很简单。</p>
+<p>apache配置如下：
+修改如下几处</p>
+<pre><code><figure class="highlight"><pre><span class="comment">AddType</span> <span class="comment">text/html</span> <span class="string">.</span><span class="comment">shtml</span>
+<span class="comment">AddOutputFilter</span> <span class="comment">INCLUDES</span> <span class="string">.</span><span class="comment">shtml</span>
+<span class="comment">Options</span> <span class="comment">Indexes</span> <span class="comment">FollowSymLinks</span> <span class="comment">includes</span>
+<span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">includes</span> <span class="comment">#为追加</span> <span class="comment">你要是感觉麻烦可以用以下命令替换。</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'s##AddType</span> <span class="comment">text/html</span> <span class="string">.</span><span class="comment">shtml#AddType</span> <span class="comment">text/html</span> <span class="string">.</span><span class="comment">shtml#'</span> <span class="comment">/usr/local/apachefile/httpd</span>.<span class="comment">conf</span>
+<span class="comment">sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'s##AddOutputFilter</span> <span class="comment">INCLUDES</span> <span class="string">.</span><span class="comment">shtml#AddOutputFilter</span> <span class="comment">INCLUDES</span> <span class="string">.</span><span class="comment">shtml#'</span>  <span class="comment">/usr/local/apachefile/httpd</span>.<span class="comment">conf</span>
+<span class="comment">sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'s#Options</span> <span class="comment">Indexes</span> <span class="comment">FollowSymLinks#Options</span> <span class="comment">Indexes</span> <span class="comment">FollowSymLinks</span> <span class="comment">includes</span> <span class="comment">#'</span>  <span class="comment">/usr/local/apachefile/httpd</span>.<span class="comment">conf
+</pre></figure></code></pre>
+<p>shtml 的压缩方法不同于js css php
+方法如下：
+AddOutputFilter INCLUDES;DEFLATE shtml</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T10:55:42.000Z"><a href="/2010/12/17/cache-control-translation/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/cache-control-translation/">Cache-control详解</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>“Cache-control”常见的取值有private、no-cache、max-age、must-revalidate等
+网页的缓存是由HTTP消息头中的“Cache-control”来控制的，常见的取值有private、no-cache、max-age、must-revalidate等，默认为private。其作用根据不同的重新浏览方式分为以下几种情况：</p>
+<p>（1） 打开新窗口
+如果指定cache-control的值为private、no-cache、must-revalidate，那么打开新窗口访问时都会重新访问服务器。而如果指定了max-age值，那么在此值内的时间里就不会重新访问服务器，例如：
+Cache-control: max-age=5
+表示当访问此网页后的5秒内再次访问不会去服务器</p>
+<p>（2） 在地址栏回车
+如果值为private或must-revalidate（和网上说的不一样），则只有第一次访问时会访问服务器，以后就不再访问。如果值为no-cache，那么每次都会访问。如果值为max-age，则在过期之前不会重复访问。</p>
+<p>（3） 按后退按扭
+如果值为private、must-revalidate、max-age，则不会重访问，而如果为no-cache，则每次都重复访问</p>
+<p>（4） 按刷新按扭
+无论为何值，都会重复访问
+当指定Cache-control值为“no-cache”时，访问此页面不会在Internet临时文章夹留下页面备份。
+另外，通过指定“Expires”值也会影响到缓存。例如，指定Expires值为一个早已过去的时间，那么访问此网时若重复在地址栏按回车，那么每次都会重复访问：
+Expires: Fri, 31 Dec 1999 16:00:00 GMT</p>
+<p>在ASP中，可以通过Response对象的Expires、ExpiresAbsolute属性控制Expires值；通过Response对象的CacheControl属性控制Cache-control的值，例如：
+Response.ExpiresAbsolute = #2000-1-1# &#39; 指定绝对的过期时间，这个时间用的是服务器当地时间，会被自动转换为GMT时间
+Response.Expires = 20 &#39; 指定相对的过期时间，以分钟为单位，表示从当前时间起过多少分钟过期。
+Response.CacheControl = &quot;no-cache&quot;
+Expires值是可以通过在Internet临时文件夹中查看临时文件的属性看到的</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T10:54:26.000Z"><a href="/2010/12/17/apache-并发数限制mod_limitipconn/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/apache-并发数限制mod_limitipconn/">Apache 并发数限制mod_limitipconn</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>一、对于mod_limitipconn，其实该模块不仅提供客户端并发联接数的控制能力，从安全角度来说还可以起到对抗固定来源IP地址发起的 DOS攻击，包括来源固定的大量访问请求型攻击（大量GET或POST请求型的攻击），当同一来源IP地址的联接数超过限定的值后，会弹回对方的访问请 求，给对方一个“503服务临时无效”的响应。当Apache服务器受到大量的访问请求型攻击的时候，由于大量的Apache进程及PHP和MYSQL运 行消耗，会导致服务器资源迅速耗尽，网站打开缓慢或瘫痪。如果是此种类型的攻击，使用mod_limitipconn模块则可以有效地提升服务器的抗攻击 能力，因为大量的请求被弹回，节省了服务器运行PHP及MYSQL的性能消耗。当然只要请求进了80端口，不管是接受还是弹回请求，Aapche都有运行 成本，所以此方法只能是减轻而无法解决，毕竟应用层的处理效率是比较低的。</p>
+<p>二、对于网站访问量比较大、使用了mod_limitipconn模块且限制同一客户端并发联接数低于3的情况下，如果用Apache默认的配置参数，极 可能经常出现“服务临时无效”的提示。因为Apache默认是设置“KeepAlive on”，且“KeepAliveTimeout 180”，所以一旦建立联接，那么在3分钟内这个联接是不会被释放的。所以如果网站不同页面点击频率比较高或图片资源比较多的话，会经常出现服务临时无效 的提示。那么有两种方式去解决，一是加大并发联接数的量，比如设置为普通站点10个并发联接数，图片站点则20个。另一种方式就是如果你不想加大这个值的 话，可以设置KeepAlive为off，然后缩短Timeout时间，这样联接会很快被释放出来。具体情况根据需要去调整测试，以得到一个最适合自己站 点情况的值。</p>
+<p>三、如果要同时限制并发联接数与带宽的话，就用bw_mod+mod_limitipconn，因为虽然bw_mod也可以控制并发联接数，但他是针对某 个目录或整个网站的并发联接数，是用来控制服务器端的总联接数，比如设置MaxConnection all 1000，那么这个网站所能接受的最大并发联接数为1000，而并不是限制每一客户端的并发联接数，而mod_limitipconn则是针对同一来源 IP的客户端的并发联接数，所以这两者的联接数限制是有所区别的。
+四、个人感觉用了bw_mod及mod_limitipconn模块后，网站访问速度有所下降，能凭直观地感觉出来，并且CPU的负载有所上升。特别是在 网站访问量比较大的情况下，这两个模块会消耗一定的主机性能，所以轻重权衡这个得大家自己根据情况来采用了。另外bw_mod里有个参数是用来设置控制精 度与频率的，默认是1000毫秒，如果你想提高带宽控制精度就改小这个数值，但会消耗更多的CPU资源，反之亦然，降低精度可提升性能。</p>
+<p><a href="http://dominia.org/djao/limitipconn.html">http://dominia.org/djao/limitipconn.html</a></p>
+<p>tar xzvf mod_limitipconn-0.04.tar.gz
+cd mod_limitipconn-0.04
+make
+make install</p>
+<p>You can also copy the source file over to the Apache source tree and rebuild your httpd statically. The highlighted text below illustrates how to enable the proxy client detection feature; it can be omitted if you don&#39;t want this feature.</p>
+<p>tar xzvf apache_1.3.27.tar.gz
+tar xzvf mod_limitipconn-0.04.tar.gz
+cd apache_1.3.27
+patch -p1 &lt; ../mod_limitipconn-0.04/apachesrc.diff
+cp ../mod_limitipconn-0.04/mod_limitipconn.c src/modules/extra/
+./configure --activate-module=src/modules/extra/mod_limitipconn.c --with-forward
+make
+make install</p>
+<p>EXP：</p>
+<pre><code><figure class="highlight"><pre>ExtendedStatus <span class="keyword">On</span>
+
+# Only needed <span class="keyword">if</span> the module <span class="keyword">is</span> compiled as a DSO
+LoadModule limitipconn_module lib/apache/mod_limitipconn.so
+AddModule mod_limitipconn.c
+
+    MaxConnPerIP <span class="number">3</span>
+    # exempting images from the connection limit <span class="keyword">is</span> often a good
+    # idea <span class="keyword">if</span> your web page has lots <span class="keyword">of</span> inline images, since these
+    # pages often <span class="keyword">generate</span> a flurry <span class="keyword">of</span> concurrent image requests
+    NoIPLimit image<span class="comment">/*
+
+    MaxConnPerIP 1
+    # In this case, all MIME types other than audio/mpeg and video*
+    # are exempt from the limit check
+    OnlyIPLimit audio/mpeg video
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T10:52:52.000Z"><a href="/2010/12/17/apache-mod_cband/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/apache-mod_cband/">Apache 带宽限制mod_cband </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>CBandLimit 100M
+    CBandSpeed 1024 10 30
+    CBandRemoteSpeed 10kb/s 3 2
+    CBandPeriod 4W
+    SetHandler cband-status
+    SetHandler cband-status-me</p>
+<p>解释：
+CBandLimit 100M</p>
+<h1>总带宽</h1>
+<h1>Maximal 1024kbps speed for this virtualhost</h1>
+<h1>Maximal 10 requests per second for this virtualhost</h1>
+<h1>Maximal 30 open connections for this virtualhost</h1>
+<p>CBandSpeed 1024 10 30
+限制此虚拟主机最高访问速度1024kbps
+限制此虚拟主机每秒最高接受请求数10个
+限制此虚拟主机最高并发连接30个</p>
+<h1>Maximal 10kB/s speed, 3 requests/s and 2 open connections for any remote client</h1>
+<p>CBandRemoteSpeed 10kb/s 3 2
+限制来自远端访问速度10kB每秒，3个请求每秒，2个连接。</p>
+<h1>a period of time after which the scoreboard will be cleared (4 weeks)</h1>
+<p>CBandPeriod 4W
+设定多久对所记录的全局访问带宽进行重设（清零）。
+4W=4 weeks 4周（一个月）</p>
+<h1>Then you can access the status page with a URL like:<a href="http://server_name/cband-status">http://server_name/cband-status</a></h1>
+<p>SetHandler cband-status
+开启了mod_cband的实时监测功能，可以通过<a href="http://server_name/cband-status进行直观的观测。（全局监测）">http://server_name/cband-status进行直观的观测。（全局监测）</a></p>
+<h1>Then you can access the status page with a URL like:<a href="http://server_name/cband-status-me">http://server_name/cband-status-me</a></h1>
+<p>SetHandler cband-status-me</p>
+<p>开启了mod_cband的实时监测功能，可以通过<a href="http://server_name/cband-status-me进行直观的观测。（单一监测）">http://server_name/cband-status-me进行直观的观测。（单一监测）</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T10:51:14.000Z"><a href="/2010/12/17/apache-exclude-log/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/apache-exclude-log/">Apache过滤日志</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>.过滤掉无需记录的日志</p>
+<h1>在httpd.conf 的</h1>
+<p>LogFormat &quot;%{X-Forwarded-For}i %l %u %t \&quot;%r\&quot; %&gt;s %b \&quot;%{Referer}i\&quot; \&quot;%{User-Agent}i\&quot;&quot; combined
+后面加入如下:</p>
+<pre><code><figure class="highlight"><pre><span class="comment"># filter the localhost visit</span>
+<span class="keyword">SetEnvIf</span> Remote_Addr <span class="string">"127\.0\.0\.1"</span> dontlog
+<span class="comment"># filter some special directories</span>
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"^ZendPlatform.*$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI \.healthcheck\.html$ dontlog
+<span class="keyword">SetEnvIf</span> Remote_Addr <span class="string">"::1"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.getPing.php$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"^/error\.html$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.gif$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.jpg$"</span> dontlog
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"\.css$"</span> dontlog
+`<span class="tag">&lt;/pre&gt;</span>
+其它根据自己的需要做一些调整。
+另一种日志不记录图片的方法：
+<span class="tag">&lt;pre&gt;</span>`<span class="keyword">SetEnv</span> dontlog 1
+<span class="keyword">CustomLog</span> logs/access_log combined env=!dontlog
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/17/" class="alignleft prev">上一页</a>
+  
+  
+    <a href="/page/19/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Cache-control/" style="font-size: 16.75px;">Cache-control</a><a href="/tags/Cluster-bacst/" style="font-size: 12.00px;">Cluster-bacst</a><a href="/tags/Header-V3-DSA-signature/" style="font-size: 15.75px;">Header V3 DSA signature</a><a href="/tags/object-Object/" style="font-size: 14.75px;">[object Object]</a><a href="/tags/apache/" style="font-size: 19.50px;">apache</a><a href="/tags/awk/" style="font-size: 18.25px;">awk</a><a href="/tags/bash/" style="font-size: 17.00px;">bash</a><a href="/tags/browser/" style="font-size: 13.75px;">browser</a><a href="/tags/cache/" style="font-size: 14.00px;">cache</a><a href="/tags/cdn/" style="font-size: 16.25px;">cdn</a><a href="/tags/centos/" style="font-size: 19.25px;">centos</a><a href="/tags/cpan/" style="font-size: 12.75px;">cpan</a><a href="/tags/cpanm/" style="font-size: 12.25px;">cpanm</a><a href="/tags/etag/" style="font-size: 14.25px;">etag</a><a href="/tags/expires/" style="font-size: 13.00px;">expires</a><a href="/tags/foreman/" style="font-size: 15.25px;">foreman</a><a href="/tags/gzip/" style="font-size: 10.50px;">gzip</a><a href="/tags/libmemcached/" style="font-size: 15.00px;">libmemcached</a><a href="/tags/mod_cband/" style="font-size: 11.00px;">mod_cband</a><a href="/tags/mod_limitipconn/" style="font-size: 12.50px;">mod_limitipconn</a><a href="/tags/moudles/" style="font-size: 10.25px;">moudles</a><a href="/tags/mysql/" style="font-size: 18.75px;">mysql</a><a href="/tags/nginx/" style="font-size: 18.00px;">nginx</a><a href="/tags/php-1/" style="font-size: 16.50px;">php</a><a href="/tags/php-fpm/" style="font-size: 17.50px;">php-fpm</a><a href="/tags/puppet/" style="font-size: 19.00px;">puppet</a><a href="/tags/python26/" style="font-size: 15.50px;">python2.6</a><a href="/tags/referer/" style="font-size: 11.25px;">referer</a><a href="/tags/repo/" style="font-size: 16.00px;">repo</a><a href="/tags/ruby/" style="font-size: 14.50px;">ruby</a><a href="/tags/shell/" style="font-size: 17.25px;">shell</a><a href="/tags/shtml/" style="font-size: 11.50px;">shtml</a><a href="/tags/ssi/" style="font-size: 11.75px;">ssi</a><a href="/tags/tomcat/" style="font-size: 18.50px;">tomcat</a><a href="/tags/yum/" style="font-size: 19.75px;">yum</a><a href="/tags/单引号/" style="font-size: 13.25px;">单引号</a><a href="/tags/双引号/" style="font-size: 13.50px;">双引号</a><a href="/tags/环境变量/" style="font-size: 10.00px;">环境变量</a><a href="/tags/详解/" style="font-size: 17.75px;">详解</a><a href="/tags/过滤日志/" style="font-size: 10.75px;">过滤日志</a>
+  </div>
+</div>
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

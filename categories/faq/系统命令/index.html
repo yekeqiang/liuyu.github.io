@@ -3,21 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>系统命令 | Puppet-in-action</title>
+  <title>系统命令 | Liuyu blog</title>
   <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="Puppet cdn AutoMate">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-  <meta property="og:site_name" content="Puppet-in-action"/>
+  <meta property="og:site_name" content="Liuyu blog"/>
 
   
     <meta property="og:image" content="undefined"/>
   
 
   <link href="/favicon.png" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="Liuyu blog" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
@@ -27,8 +29,8 @@
 
 <body>
   <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">Puppet-in-action</a></h1>
-  <h2><a href="/">Puppet</a></h2>
+  <h1><a href="/">Liuyu blog</a></h1>
+  <h2><a href="/">Puppet in action</a></h2>
 </div>
 <nav id="main-nav" class="alignright">
   <ul>
@@ -36,6 +38,8 @@
       <li><a href="/">Home</a></li>
     
       <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -46,356 +50,33 @@
 <h2 class="archive-title category">系统命令</h2>
 
 
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2011-03-10T06:27:37.000Z"><a href="/2011/03/10/bash-quotation-marks/">3月 10 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/03/10/bash-quotation-marks/">Bash 单引号 双引号 反引号</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>bash脚本中，有三种引号</p>
-<p><pre>1. 单引号 &#39;
-2. 双引号 &quot;
-3. 反引号 `</p>
-<p>单引号
-        两个单引号包围起来的字符串就是普通的字符串，它将保留原始的字面意思.
-双引号
-        两个双引号包围起来的字符串，部分特殊字符将起到它们的作用.
-        这些特殊字符有: 美元符$, 反斜杠\, 反引号,  感叹号!.
-反引号
-        两个反引号包围起来的字符串，将作为命令来运行，
-        执行的输出结果作为该反引号的内容，称为命令替换，
-        它有另一种更好的写法: $(command)</pre>
-我们来看几个例子，更直接的了解这三种引号的特性.
-1. 美元符$在单、双引号中的表现: 在双引号中的$, 将发生变量引用, 而在单引号中的$, 将保留它的字面意思</p>
-<p><table border="0" cellspacing="0" cellpadding="0"></p>
-<p><tbody></p>
-<p><tr></p>
-<p><td>12</p>
-<p>34</td></p>
-<p><td><code>igi@gentoo ~ $ ``echo</code> <code>&#39;$HOME&#39;``$HOME</code></p>
-<p><code>igi@gentoo ~ $ ``echo</code> <code>&quot;$HOME&quot;``/home/igi</code></td>
-</tr>
-</tbody>
-</table>
-注: HOME为内部变量</p>
-<p>2. 反斜杠\ 在单、双引号中的表现: 在双引号中的\, 将转义它后面的字符，使其具有特殊意义或者失去原来的特殊意义, 在单引号中的\, 将保留它的字面意思</p>
-<p><table border="0" cellspacing="0" cellpadding="0"></p>
-<p><tbody></p>
-<p><tr></p>
-<p><td></td></p>
-<p><td><code>igi@gentoo ~ $ ``echo</code> <code>&#39;\$HOME&#39;``\</code></p>
-<p><code>$HOME</code></p>
-<p><code>igi@gentoo ~ $ ``echo</code> <code>&quot;\$HOME&quot;</code></p>
-<p>/home/igi</td>
-</tr>
-</tbody>
-</table>
-注: 双引号中的\，后面跟着$, 这里发生了转义，使得$失去特殊意义, 变成普通字符.</p>
-<p>3. 反引号与其他两种引号的不同: 反引号包围起来的字符串将被运行，取其结果</p>
-<p><table border="0" cellspacing="0" cellpadding="0"></p>
-<p><tbody></p>
-<p><tr></p>
-<p><td></td></p>
-<p><td><code>igi@gentoo ~ $ ``echo</code> <code>&#39;date&#39;</code></p>
-<p><code>date</code></p>
-<p><code>igi@gentoo ~ $ ``echo</code> <code>&quot;date&quot;</code></p>
-<p><code>date</code></p>
-<p><code>igi@gentoo ~ $ ``echo</code> <code>date</code></p>
-<p><code>Fri Dec 3 18:34:09 CST 2010</code></td>
-</tr>
-</tbody>
-</table>
-注: 在反引号中的date被当成命令执行，包含的正是命令的输出信息</p>
-<p>了解了他们的不同，我们来聊一聊常见的问题</p>
-<p>1. 把反引号` 写 成单引号’</p>
-<p>不得不说，它们长得确实很像，个别书的印刷字体区别度不高或者印刷质量不过关, 导致了很多新手认错，常把反引号`写成单引号’。如果你不知道反引号在哪，请看看Esc键下面的那个按键, 那个就是反引号。当然也不排除有些人看书不注意，这也是常有的事。只要我们明白了反引号与单引号作用的区别，什么时候要用单引号，什么时候要用反引号就一清二楚了。当你需要一个字符串时，使用单引号； 而当你需要捕捉命令的输出时，请用反引号。</p>
-<p>2. 总是忘了加双引号
-双引号不总是多余的，被它包围的数据变得很安全，不至于被bash切开对待。</p>
-<p><table border="0" cellspacing="0" cellpadding="0"></p>
-<p><tbody></p>
-<p><tr></p>
-<p><td></td></p>
-<p><td><code>igi@gentoo ~ $ ``seq</code> <code>3</code></p>
-<p><code>1</code></p>
-<p><code>2</code></p>
-<p><code>3</code></p>
-<p><code>igi@gentoo ~ $ ``echo</code> <code>``seq` `3</code></p>
-<p><code>1 2 3</code></p>
-<p><code>igi@gentoo ~ $ ``echo</code> <code>&quot;</code>seq 3<code>&quot;</code></p>
-<p><code>1``2``3</code></td>
-</tr>
-</tbody>
-</table>
-注: seq输出的是包含换行的信息，但echo <code>seq 3</code> 却丢失了换行符，因为bash在解析时认为<code>seq 3</code>的输出结果是3个独立的字符，解析后与echo 1 2 3相同(这个过程，bash做了很多工作，有兴趣的可以了解下bash解析顺序); 而echo “<code>seq 3</code>”时，bash把<code>seq 3</code>的输出结果当成一个整体对待(因为它被双引号包围),所以输出的结果不会被bash拆分对待，换行符得以保留。所以，当你需要保留变量或者命令替换的完整信息, 特别是换行符时，请记得给它们戴上双引号作保险，时刻加个双引号是个好习惯（为什么不是单引号呢？前面解释了，单引号里面没有魔法，变量也变不了了，命令替换也替换不了了)。再次提醒: “$var”, “<code>command</code>”, 都比$var, <code>command</code>安全得多，很多情况下，前面的才是你要的结果，除非你知道你在做什么，否则不要轻易省略双引号。</p>
-<p>3. 引号嵌套总是混乱的
-引号中包含其他引号，只要能理解单引号和双引号中字符的表现，就不难掌握</p>
-<p><table border="0" cellspacing="0" cellpadding="0"></p>
-<p><tbody></p>
-<p><tr></p>
-<p><td></td></p>
-<p><td><code>igi@gentoo ~ $ ``echo</code> <code>&quot;abc\&quot;abc&quot;</code></p>
-<p><code>abc&quot;abc</code></p>
-<p><code>igi@gentoo ~ $ ``echo</code> <code>&quot;abc\&#39;abc&quot;</code></p>
-<p><code>abc&#39;abc</code></p>
-<p><code>igi@gentoo ~ $ ``echo</code> <code>&quot;abc\</code>abc&quot;`</p>
-<p><code>abc</code>abc`</td>
-</tr>
-</tbody>
-</table>
-如你所见，双引号中加入其他引号很容易，你只需要用反斜杠\转义你要添加的引号(双引号中加单引号可以不用转义)。 那么单引号中是否如此简单？</p>
-<p><table border="0" cellspacing="0" cellpadding="0"></p>
-<p><tbody></p>
-<p><tr></p>
-<p><td></td></p>
-<p><td><code>igi@gentoo ~ $ ``echo</code> <code>&#39;abc&quot;abc&#39;</code></p>
-<p><code>abc&quot;abc</code></p>
-<p><code>igi@gentoo ~ $ ``echo</code> <code>&#39;abc</code>abc&#39;`</p>
-<p><code>abc</code>abc`</td>
-</tr>
-</tbody>
-</table>
-到这里，确实很简单，单引号中都是普通字符，所以完全不需要转义，如果加了反斜杠\, 那么反斜杠依然是它自己，直接打印出来。</p>
-<p><table border="0" cellspacing="0" cellpadding="0"></p>
-<p><tbody></p>
-<p><tr></p>
-<p><td>12</td></p>
-<p><td><code>igi@gentoo ~ $ ``echo</code> `&#39;abc\&quot;``<span style="font-family: monospace;">abc</span></p>
-<p><code>&#39;``abc\&quot;\</code>abc`</td>
-</tr>
-</tbody>
-</table>
-问题来了，单引号中如何包含单引号？这个时候，反斜杠\也是无用的, 如果直接写单引号，那么bash会认为引号还没结束。好吧，如果你不幸碰到这样的问题，还是有办法解决的</p>
-<p><table border="0" cellspacing="0" cellpadding="0"></p>
-<p><tbody></p>
-<p><tr></p>
-<p><td></td></p>
-<p><td><code>igi@gentoo ~ $ ``echo</code> <code>$``&#39;abc\&#39;abc&#39;</code></p>
-<p><code>abc&#39;abc</code></p>
-<p><code>igi@gentoo ~ $ ``echo</code> <code>-e ``&#39;abc\x27abc&#39;</code></p>
-<p><code>abc&#39;abc</code></p>
-<p><code>igi@gentoo ~ $ ``echo</code> <code>&#39;abc&#39;``\``&#39;&#39;``abc&#39;</code></p>
-<p><code>abc&#39;abc</code></td>
-</tr>
-</tbody>
-</table>
-第一种方法是bash特有的，$’string’ 之间到反斜杠都将转义字符，第二种方法，通过单引号的ASCII码来打印单引号，而第三种方法，则是通过截断命令，在中间插入单引号来实现。一般用第一种方法是最优雅的。</p>
-<p>最后: 希望能更多的人喜欢Bash，使用Bash。</p>
-<p>转自：<a href="http://www.igigo.net/archives/128"><a href="http://www.igigo.net/archives/128">http://www.igigo.net/archives/128</a></a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+  <div class="archive">
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2011-03-10T06:27:37.000Z"><a href="/2011/03/10/bash-quotation-marks/">3月 10 2011</a></time>
+            
+              <h1 class="title"><a href="/2011/03/10/bash-quotation-marks/">Bash 单引号 双引号 反引号</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-19T09:15:13.000Z"><a href="/2010/12/19/shell-interview-questions/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/shell-interview-questions/">shell 面试题汇集</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
   </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-19T09:15:13.000Z"><a href="/2010/12/19/shell-interview-questions/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/shell-interview-questions/">shell 面试题汇集</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>利用top取某个进程的CPU的脚本:</p>
-<pre><code><figure class="highlight"><pre><span class="xml"></span><span class="comment">#/bin/sh</span><span class="xml">
-Max_CPU=</span><span class="number">0</span><span class="xml">
-Avg_CPU=</span><span class="number">0</span><span class="xml">
-Total_Time=</span><span class="number">1</span><span class="xml">
- Process=</span><span class="variable">$1</span><span class="xml">
- Interval=</span><span class="variable">$2</span><span class="xml">
- # check the parameters
- if [ $# -ne </span><span class="number">2</span><span class="xml"> ]; then
-    echo "Usage: </span><span class="variable">$0</span><span class="xml"> ProcessName Interval"
-    exit
- fi
- LogFile="Per.txt"
- echo "`date`" &gt; </span><span class="variable">$LogFile</span><span class="xml">
- while sleep </span><span class="variable">$Interval</span><span class="xml">
- do
-    top -d </span><span class="number">1</span><span class="xml"> -n </span><span class="number">1</span><span class="xml">|grep </span><span class="variable">$Process</span><span class="xml">|grep -v grep|awk '{print </span><span class="variable">$9</span><span class="xml">"\t"</span><span class="variable">$10}</span><span class="xml">' &gt;&gt; </span><span class="variable">$LogFile</span><span class="xml">
- done`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-判断是否是设备文件
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`#/bin/bash
- echo -e "The program will Judge a file is or not a device file.\n\n"
- read -p "Input a filename:" filename
- if [ -b </span><span class="variable">$filename</span><span class="xml"> -o -c </span><span class="variable">$filename</span><span class="xml"> ]; then
-         echo "</span><span class="variable">$filename</span><span class="xml"> is a device file"
-         exit </span><span class="number">0</span><span class="xml">
- else
-         echo "</span><span class="variable">$filename</span><span class="xml"> is not a device file"
-         exit </span><span class="number">1</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
- firead –p：用于在读数据时输出提示信息
-
-注意！ [ 之间是有空格的：if ! [ -f </span><span class="variable">$filename</span><span class="xml"> ] ; then。一般用if [ ! * ]
-
-添加用户：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` #/bin/bash
- groupadd -f class1
- for i in {</span><span class="number">9909.</span><span class="xml"></span><span class="number">.9911</span><span class="xml">}
- do
-         xx=`echo </span><span class="variable">$i</span><span class="xml"> | sed 's/</span><span class="number">99</span><span class="xml">//g'`
-         useradd -g class1 std</span><span class="variable">${xx}</span><span class="xml">
-         echo std</span><span class="variable">${xx}</span><span class="xml"> | passwd std</span><span class="variable">${xx}</span><span class="xml"> --stdin
-         echo -e "user std</span><span class="variable">${xx}</span><span class="xml"> passwd is std</span><span class="variable">${xx}</span><span class="xml">"&gt;&gt;/root/newuser.txt
- done
- exit </span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-        注意等号的前后不要有空格：xx=`echo </span><span class="variable">$i</span><span class="xml"> | sed 's/</span><span class="number">99</span><span class="xml">//g'`
-        变量如果前后有字符，要是大括号
-
-统计IP访问：
-要求分析apache访问日志，找出访问页面数量在前</span><span class="number">100</span><span class="xml">位的IP数。日志大小在</span><span class="number">78</span><span class="xml">M左右。以下是apache的访问日志节选
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` </span><span class="number">202.101</span><span class="xml"></span><span class="number">.129</span><span class="xml"></span><span class="number">.218</span><span class="xml"> - - [</span><span class="number">26</span><span class="xml">/Mar/</span><span class="number">2006</span><span class="xml">:</span><span class="number">23</span><span class="xml">:</span><span class="number">59</span><span class="xml">:</span><span class="number">55</span><span class="xml"> +</span><span class="number">0800</span><span class="xml">] "GET /online/stat_inst.php?pid=d065 HTTP/</span><span class="number">1.1</span><span class="xml">" </span><span class="number">302</span><span class="xml"> </span><span class="number">20</span><span class="xml">-"-" "-" "Mozilla/</span><span class="number">4.0</span><span class="xml"> (compatible; MSIE </span><span class="number">6.0</span><span class="xml">; Windows NT </span><span class="number">5.1</span><span class="xml">)"`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# awk '{print </span><span class="variable">$1}</span><span class="xml">' log      |sort |uniq -c|sort -r |head -n10
-      </span><span class="number">5</span><span class="xml"> </span><span class="number">221.224</span><span class="xml"></span><span class="number">.78</span><span class="xml"></span><span class="number">.15</span><span class="xml">
-      </span><span class="number">3</span><span class="xml"> </span><span class="number">221.233</span><span class="xml"></span><span class="number">.19</span><span class="xml"></span><span class="number">.137</span><span class="xml">
-       </span><span class="number">1</span><span class="xml"> </span><span class="number">58.63</span><span class="xml"></span><span class="number">.148</span><span class="xml"></span><span class="number">.135</span><span class="xml">
-       </span><span class="number">1</span><span class="xml"> </span><span class="number">222.90</span><span class="xml"></span><span class="number">.66</span><span class="xml"></span><span class="number">.142</span><span class="xml">
-       </span><span class="number">1</span><span class="xml"> </span><span class="number">222.218</span><span class="xml"></span><span class="number">.90</span><span class="xml"></span><span class="number">.239</span><span class="xml">
-       </span><span class="number">1</span><span class="xml"> </span><span class="number">222.182</span><span class="xml"></span><span class="number">.95</span><span class="xml"></span><span class="number">.155</span><span class="xml">
-       </span><span class="number">1</span><span class="xml"> </span><span class="number">221.7</span><span class="xml"></span><span class="number">.249</span><span class="xml"></span><span class="number">.206</span><span class="xml">
-       </span><span class="number">1</span><span class="xml"> </span><span class="number">221.237</span><span class="xml"></span><span class="number">.232</span><span class="xml"></span><span class="number">.191</span><span class="xml">
-       </span><span class="number">1</span><span class="xml"> </span><span class="number">221.235</span><span class="xml"></span><span class="number">.61</span><span class="xml"></span><span class="number">.109</span><span class="xml">
-       </span><span class="number">1</span><span class="xml"> </span><span class="number">219.129</span><span class="xml"></span><span class="number">.183</span><span class="xml"></span><span class="number">.122</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-这个地方有个疑问，为什么在使用uniq之前要sort。
-
-求</span><span class="number">2</span><span class="xml">个数之和
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` #/bin/bash
- typeset first second
- read -p "Input the first number:" first
- read -p "Input the second number:" second
- result=$[</span><span class="variable">$first</span><span class="xml">+</span><span class="variable">$second</span><span class="xml">]
- echo "result is : </span><span class="variable">$result</span><span class="xml">"
- exit </span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
- 文本分析
-取出password中shell出现的次数
-第一种方法结果:
-    <span class="tag">&lt;<span class="title">pre</span>&gt;</span>`   </span><span class="number">4</span><span class="xml"> /bin/bash
-       </span><span class="number">1</span><span class="xml"> /bin/sync
-       </span><span class="number">1</span><span class="xml"> /sbin/halt
-      </span><span class="number">31</span><span class="xml"> /sbin/nologin
-       </span><span class="number">1</span><span class="xml"> /sbin/shutdown`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-第二种方法结果:
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` /bin/sync       </span><span class="number">1</span><span class="xml">
- /bin/bash       </span><span class="number">1</span><span class="xml">
- /sbin/nologin   </span><span class="number">30</span><span class="xml">
- /sbin/halt      </span><span class="number">1</span><span class="xml">
- /sbin/shutdown  </span><span class="number">1</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-答案：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`cat /etc/passwd|awk -F: '{if (</span><span class="variable">$7</span><span class="xml">!="") print </span><span class="variable">$7}</span><span class="xml">'|sort|uniq –c
- cat /etc/passwd|awk -F: '{if (</span><span class="variable">$7</span><span class="xml">!="") print </span><span class="variable">$7}</span><span class="xml">'|sort|uniq -c | awk '{print </span><span class="variable">$2</span><span class="xml">,</span><span class="variable">$1}</span><span class="xml">'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-文件整理
-employee文件中记录了工号和姓名
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` employee.txt:
- </span><span class="number">100</span><span class="xml"> Jason Smith 
- </span><span class="number">200</span><span class="xml"> John Doe 
- </span><span class="number">300</span><span class="xml"> Sanjay Gupta 
- </span><span class="number">400</span><span class="xml"> Ashok Sharma 
- bonus文件中记录工号和工资
- bonus.txt:
- </span><span class="number">100</span><span class="xml"> </span><span class="variable">$5</span><span class="xml">,</span><span class="number">000</span><span class="xml"> 
- </span><span class="number">200</span><span class="xml"> </span><span class="variable">$500</span><span class="xml"> 
- </span><span class="number">300</span><span class="xml"> </span><span class="variable">$3</span><span class="xml">,</span><span class="number">000</span><span class="xml"> 
- </span><span class="number">400</span><span class="xml"> </span><span class="variable">$1</span><span class="xml">,</span><span class="number">250</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-要求把两个文件合并并输出如下
- 处理结果
- <span class="tag">&lt;<span class="title">pre</span>&gt;</span>`</span><span class="number">400</span><span class="xml"> ashok sharma </span><span class="variable">$1</span><span class="xml">,</span><span class="number">250</span><span class="xml">
- </span><span class="number">100</span><span class="xml"> jason smith  </span><span class="variable">$5</span><span class="xml">,</span><span class="number">000</span><span class="xml">
- </span><span class="number">200</span><span class="xml"> john doe  </span><span class="variable">$500</span><span class="xml">
- </span><span class="number">300</span><span class="xml"> sanjay gupta  </span><span class="variable">$3</span><span class="xml">,</span><span class="number">000</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-答案：join employee bonus | sort -k </span><span class="number">2</span><span class="xml">
- 打印本机的交换分区大小
-处理结果:
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` Swap:</span><span class="number">1024</span><span class="xml">M
-free -m | sed -n '/Swap/p' | awk '{ print </span><span class="variable">$2}</span><span class="xml">'
- free -m | sed -n 's/Swap:\ *\([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]*\).*/\</span><span class="number">1</span><span class="xml">/p'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-输出本机创建</span><span class="number">20000</span><span class="xml">个目录所用的时间
-处理结果:
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` real    </span><span class="number">0</span><span class="xml">m3</span><span class="number">.367</span><span class="xml">s
- user    </span><span class="number">0</span><span class="xml">m0</span><span class="number">.066</span><span class="xml">s
- sys     </span><span class="number">0</span><span class="xml">m1</span><span class="number">.925</span><span class="xml">s`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-答案：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` # time for i in {</span><span class="number">1.</span><span class="xml"></span><span class="number">.2000</span><span class="xml">} ; do mkdir /root/neil</span><span class="variable">$i</span><span class="xml">; done
-  real    </span><span class="number">0</span><span class="xml">m6</span><span class="number">.200</span><span class="xml">s
- user    </span><span class="number">0</span><span class="xml">m1</span><span class="number">.128</span><span class="xml">s
- sys     </span><span class="number">0</span><span class="xml">m4</span><span class="number">.710</span><span class="xml">s`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-打印当前sshd的端口和进程id
- 处理结果:
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` sshd Port&amp;&amp;pid: </span><span class="number">22</span><span class="xml"> </span><span class="number">5412</span><span class="xml">
- 答案：netstat -anp | grep sshd | sed -n 's/.*:::\([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]*\)\ .* \ \([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]*\)\/sshd/\</span><span class="number">1</span><span class="xml"> \</span><span class="number">2</span><span class="xml">/p'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-打印root可以使用可执行文件数
- 处理结果:
- <span class="tag">&lt;<span class="title">pre</span>&gt;</span>`root's bins: </span><span class="number">2306</span><span class="xml">
- echo "root's bins: $(find ./ -type f | xargs ls -l | sed '/-..x/p' | wc -l)"
- root's bins: </span><span class="number">3664</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-编译当前目录下的所有.c文件：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` for file in *.c; do echo </span><span class="variable">$file</span><span class="xml"> ; gcc -o $(basename </span><span class="variable">$file</span><span class="xml"> .c) </span><span class="variable">$file</span><span class="xml">  ; sleep </span><span class="number">2</span><span class="xml">;  done &gt; compile </span><span class="number">2</span><span class="xml">&gt;&amp;</span><span class="number">1</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-将一目录下所有的文件的扩展名改为bak
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` for i in *.*;do mv </span><span class="variable">$i</span><span class="xml"> </span><span class="variable">${i</span><span class="xml">%%.*}.bak;done </span>
-</pre></figure></code></pre>
-<p>转自：oychw.cublog.cn</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-
-  <nav id="pagination">
-  
-  
-  <div class="clearfix"></div>
-</nav>
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
@@ -455,354 +136,15 @@ free -m | sed -n '/Swap/p' | awk '{ print </span><span class="variable">$2}</spa
 
 
   
-<div class="widget tag">
-  <h3 class="title">标签</h3>
-  <ul class="entry">
-  
-    <li><a href="/tags/1032/">1032</a><small>1</small></li>
-  
-    <li><a href="/tags/1236/">1236</a><small>1</small></li>
-  
-    <li><a href="/tags/403/">403</a><small>1</small></li>
-  
-    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
-  
-    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
-  
-    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
-  
-    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
-  
-    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
-  
-    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
-  
-    <li><a href="/tags/acl/">acl</a><small>2</small></li>
-  
-    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
-  
-    <li><a href="/tags/apache/">apache</a><small>8</small></li>
-  
-    <li><a href="/tags/arp/">arp</a><small>1</small></li>
-  
-    <li><a href="/tags/awk/">awk</a><small>4</small></li>
-  
-    <li><a href="/tags/bash/">bash</a><small>2</small></li>
-  
-    <li><a href="/tags/best/">best</a><small>1</small></li>
-  
-    <li><a href="/tags/binding/">binding</a><small>1</small></li>
-  
-    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
-  
-    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
-  
-    <li><a href="/tags/browser/">browser</a><small>1</small></li>
-  
-    <li><a href="/tags/cache/">cache</a><small>1</small></li>
-  
-    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
-  
-    <li><a href="/tags/centos/">centos</a><small>8</small></li>
-  
-    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
-  
-    <li><a href="/tags/chown/">chown</a><small>1</small></li>
-  
-    <li><a href="/tags/commands/">commands</a><small>1</small></li>
-  
-    <li><a href="/tags/content/">content</a><small>1</small></li>
-  
-    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
-  
-    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
-  
-    <li><a href="/tags/creating/">creating</a><small>1</small></li>
-  
-    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
-  
-    <li><a href="/tags/dell/">dell</a><small>1</small></li>
-  
-    <li><a href="/tags/diff/">diff</a><small>1</small></li>
-  
-    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
-  
-    <li><a href="/tags/du/">du</a><small>1</small></li>
-  
-    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
-  
-    <li><a href="/tags/end/">end</a><small>1</small></li>
-  
-    <li><a href="/tags/epel/">epel</a><small>1</small></li>
-  
-    <li><a href="/tags/etag/">etag</a><small>1</small></li>
-  
-    <li><a href="/tags/expires/">expires</a><small>1</small></li>
-  
-    <li><a href="/tags/find/">find</a><small>1</small></li>
-  
-    <li><a href="/tags/for-1/">for</a><small>1</small></li>
-  
-    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
-  
-    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
-  
-    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
-  
-    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
-  
-    <li><a href="/tags/group/">group</a><small>1</small></li>
-  
-    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
-  
-    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
-  
-    <li><a href="/tags/howto/">howto</a><small>2</small></li>
-  
-    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
-  
-    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
-  
-    <li><a href="/tags/if/">if</a><small>2</small></li>
-  
-    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
-  
-    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
-  
-    <li><a href="/tags/init/">init</a><small>1</small></li>
-  
-    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
-  
-    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
-  
-    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
-  
-    <li><a href="/tags/jk/">jk</a><small>1</small></li>
-  
-    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
-  
-    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
-  
-    <li><a href="/tags/kick/">kick</a><small>1</small></li>
-  
-    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
-  
-    <li><a href="/tags/linux/">linux</a><small>18</small></li>
-  
-    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
-  
-    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
-  
-    <li><a href="/tags/master/">master</a><small>2</small></li>
-  
-    <li><a href="/tags/metric/">metric</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
-  
-    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
-  
-    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
-  
-    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
-  
-    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
-  
-    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
-  
-    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
-  
-    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
-  
-    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
-  
-    <li><a href="/tags/packet/">packet</a><small>1</small></li>
-  
-    <li><a href="/tags/pam/">pam</a><small>1</small></li>
-  
-    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
-  
-    <li><a href="/tags/perl/">perl</a><small>1</small></li>
-  
-    <li><a href="/tags/permission/">permission</a><small>1</small></li>
-  
-    <li><a href="/tags/php-1/">php</a><small>2</small></li>
-  
-    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
-  
-    <li><a href="/tags/pil/">pil</a><small>1</small></li>
-  
-    <li><a href="/tags/port/">port</a><small>1</small></li>
-  
-    <li><a href="/tags/practices/">practices</a><small>1</small></li>
-  
-    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
-  
-    <li><a href="/tags/ps/">ps</a><small>2</small></li>
-  
-    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
-  
-    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
-  
-    <li><a href="/tags/python-1/">python</a><small>3</small></li>
-  
-    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
-  
-    <li><a href="/tags/quick/">quick</a><small>1</small></li>
-  
-    <li><a href="/tags/r410/">r410</a><small>1</small></li>
-  
-    <li><a href="/tags/r710/">r710</a><small>1</small></li>
-  
-    <li><a href="/tags/raw/">raw</a><small>1</small></li>
-  
-    <li><a href="/tags/referer/">referer</a><small>1</small></li>
-  
-    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
-  
-    <li><a href="/tags/repo/">repo</a><small>1</small></li>
-  
-    <li><a href="/tags/resources/">resources</a><small>1</small></li>
-  
-    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
-  
-    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
-  
-    <li><a href="/tags/sar/">sar</a><small>1</small></li>
-  
-    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
-  
-    <li><a href="/tags/sed/">sed</a><small>4</small></li>
-  
-    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
-  
-    <li><a href="/tags/sending/">sending</a><small>1</small></li>
-  
-    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
-  
-    <li><a href="/tags/shell/">shell</a><small>2</small></li>
-  
-    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
-  
-    <li><a href="/tags/slave/">slave</a><small>2</small></li>
-  
-    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
-  
-    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
-  
-    <li><a href="/tags/spec/">spec</a><small>2</small></li>
-  
-    <li><a href="/tags/squid/">squid</a><small>1</small></li>
-  
-    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
-  
-    <li><a href="/tags/system/">system</a><small>1</small></li>
-  
-    <li><a href="/tags/tar/">tar</a><small>1</small></li>
-  
-    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
-  
-    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
-  
-    <li><a href="/tags/tools/">tools</a><small>1</small></li>
-  
-    <li><a href="/tags/top/">top</a><small>1</small></li>
-  
-    <li><a href="/tags/tree/">tree</a><small>1</small></li>
-  
-    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
-  
-    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
-  
-    <li><a href="/tags/user/">user</a><small>2</small></li>
-  
-    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
-  
-    <li><a href="/tags/vim/">vim</a><small>2</small></li>
-  
-    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
-  
-    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/while/">while</a><small>1</small></li>
-  
-    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
-  
-    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
-  
-    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
-  
-    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
-  
-    <li><a href="/tags/yum/">yum</a><small>10</small></li>
-  
-    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
-  
-    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
-  
-    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
-  
-    <li><a href="/tags/优化/">优化</a><small>1</small></li>
-  
-    <li><a href="/tags/内核/">内核</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
-  
-    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
-  
-    <li><a href="/tags/参考/">参考</a><small>1</small></li>
-  
-    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
-  
-    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
-  
-    <li><a href="/tags/对比/">对比</a><small>1</small></li>
-  
-    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
-  
-    <li><a href="/tags/日志/">日志</a><small>2</small></li>
-  
-    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
-  
-    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
-  
-    <li><a href="/tags/管理/">管理</a><small>1</small></li>
-  
-    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
-  
-    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
-  
-    <li><a href="/tags/老板/">老板</a><small>1</small></li>
-  
-    <li><a href="/tags/认证/">认证</a><small>1</small></li>
-  
-    <li><a href="/tags/详解/">详解</a><small>3</small></li>
-  
-    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
-  
-    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
-  
-    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
-  
-  </ul>
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Cache-control/" style="font-size: 16.75px;">Cache-control</a><a href="/tags/Cluster-bacst/" style="font-size: 12.00px;">Cluster-bacst</a><a href="/tags/Header-V3-DSA-signature/" style="font-size: 15.75px;">Header V3 DSA signature</a><a href="/tags/object-Object/" style="font-size: 14.75px;">[object Object]</a><a href="/tags/apache/" style="font-size: 19.50px;">apache</a><a href="/tags/awk/" style="font-size: 18.25px;">awk</a><a href="/tags/bash/" style="font-size: 17.00px;">bash</a><a href="/tags/browser/" style="font-size: 13.75px;">browser</a><a href="/tags/cache/" style="font-size: 14.00px;">cache</a><a href="/tags/cdn/" style="font-size: 16.25px;">cdn</a><a href="/tags/centos/" style="font-size: 19.25px;">centos</a><a href="/tags/cpan/" style="font-size: 12.75px;">cpan</a><a href="/tags/cpanm/" style="font-size: 12.25px;">cpanm</a><a href="/tags/etag/" style="font-size: 14.25px;">etag</a><a href="/tags/expires/" style="font-size: 13.00px;">expires</a><a href="/tags/foreman/" style="font-size: 15.25px;">foreman</a><a href="/tags/gzip/" style="font-size: 10.50px;">gzip</a><a href="/tags/libmemcached/" style="font-size: 15.00px;">libmemcached</a><a href="/tags/mod_cband/" style="font-size: 11.00px;">mod_cband</a><a href="/tags/mod_limitipconn/" style="font-size: 12.50px;">mod_limitipconn</a><a href="/tags/moudles/" style="font-size: 10.25px;">moudles</a><a href="/tags/mysql/" style="font-size: 18.75px;">mysql</a><a href="/tags/nginx/" style="font-size: 18.00px;">nginx</a><a href="/tags/php-1/" style="font-size: 16.50px;">php</a><a href="/tags/php-fpm/" style="font-size: 17.50px;">php-fpm</a><a href="/tags/puppet/" style="font-size: 19.00px;">puppet</a><a href="/tags/python26/" style="font-size: 15.50px;">python2.6</a><a href="/tags/referer/" style="font-size: 11.25px;">referer</a><a href="/tags/repo/" style="font-size: 16.00px;">repo</a><a href="/tags/ruby/" style="font-size: 14.50px;">ruby</a><a href="/tags/shell/" style="font-size: 17.25px;">shell</a><a href="/tags/shtml/" style="font-size: 11.50px;">shtml</a><a href="/tags/ssi/" style="font-size: 11.75px;">ssi</a><a href="/tags/tomcat/" style="font-size: 18.50px;">tomcat</a><a href="/tags/yum/" style="font-size: 19.75px;">yum</a><a href="/tags/单引号/" style="font-size: 13.25px;">单引号</a><a href="/tags/双引号/" style="font-size: 13.50px;">双引号</a><a href="/tags/环境变量/" style="font-size: 10.00px;">环境变量</a><a href="/tags/详解/" style="font-size: 17.75px;">详解</a><a href="/tags/过滤日志/" style="font-size: 10.75px;">过滤日志</a>
+  </div>
 </div>
 
 
   
-
 </aside>
     <div class="clearfix"></div>
   </div>

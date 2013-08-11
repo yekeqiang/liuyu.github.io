@@ -3,21 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>linux | Puppet-in-action</title>
+  <title>linux | Liuyu blog</title>
   <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="Puppet cdn AutoMate">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-  <meta property="og:site_name" content="Puppet-in-action"/>
+  <meta property="og:site_name" content="Liuyu blog"/>
 
   
     <meta property="og:image" content="undefined"/>
   
 
   <link href="/favicon.png" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="Liuyu blog" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
@@ -27,8 +29,8 @@
 
 <body>
   <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">Puppet-in-action</a></h1>
-  <h2><a href="/">Puppet</a></h2>
+  <h1><a href="/">Liuyu blog</a></h1>
+  <h2><a href="/">Puppet in action</a></h2>
 </div>
 <nav id="main-nav" class="alignright">
   <ul>
@@ -36,6 +38,8 @@
       <li><a href="/">Home</a></li>
     
       <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -46,1198 +50,225 @@
 <h2 class="archive-title tag">linux</h2>
 
 
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-19T09:11:33.000Z"><a href="/2010/12/19/linux-if-use/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/linux-if-use/">linux if 命令使用</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>linux if命令
-无论什么编程语言都离不开条件判断。SHELL也不例外。</p>
-<pre><code><figure class="highlight"><pre><span class="keyword">if</span> list <span class="keyword">then</span>
-<span class="keyword">do</span> something here
-<span class="keyword">elif</span> list <span class="keyword">then</span>
-<span class="keyword">do</span> another thing here
-<span class="keyword">else</span>
-<span class="keyword">do</span> something <span class="keyword">else</span> here
-<span class="keyword">fi</span>`&lt;/pre&gt;
-
-EX1:
-&lt;pre&gt;`<span class="shebang">#!/bin/sh</span>
-SYSTEM=`uname -s` <span class="comment">#获取操作系统类型，我本地是linux</span>
-<span class="keyword">if</span> <span class="test_condition">[ <span class="variable">$SYSTEM</span> = <span class="string">"Linux"</span> ]</span> ; <span class="keyword">then</span> <span class="comment">#如果是linux的话打印linux字符串</span>
-<span class="keyword">echo</span> <span class="string">"Linux"</span>
-<span class="keyword">elif</span> <span class="test_condition">[ <span class="variable">$SYSTEM</span> = <span class="string">"FreeBSD"</span> ]</span> ; <span class="keyword">then</span>
-<span class="keyword">echo</span> <span class="string">"FreeBSD"</span>
-<span class="keyword">elif</span> <span class="test_condition">[ <span class="variable">$SYSTEM</span> = <span class="string">"Solaris"</span> ]</span> ; <span class="keyword">then</span>
-<span class="keyword">echo</span> <span class="string">"Solaris"</span>
-<span class="keyword">else</span>
-<span class="keyword">echo</span> <span class="string">"What?"</span>
-<span class="keyword">fi</span> <span class="comment">#ifend`&lt;/pre&gt;</span>
-
-基本上和其他脚本语言一样。没有太大区别。不过值得注意的是。[]里面的条件判断。
-1 字符串判断
-&lt;pre&gt;`str1 = str2　　　　　　当两个串有相同内容、长度时为真
-str1 != str2　　　　　 当串str1和str2不等时为真
--n str1　　　　　　　 当串的长度大于0时为真(串非空)
--z str1　　　　　　　 当串的长度为0时为真(空串)
-str1 当串str1为非空时为真`&lt;/pre&gt;
-
-2 数字的判断
-&lt;pre&gt;`int1 -eq int2　　　　两数相等为真
-int1 -ne int2　　　　两数不等为真
-int1 -gt int2　　　　int1大于int2为真
-int1 -ge int2　　　　int1大于等于int2为真
-int1 -lt int2　　　　int1小于int2为真
-int1 -le int2　　　　int1小于等于int2为真`&lt;/pre&gt;
-
-3 文件的判断
-&lt;pre&gt;`-r file　　　　　用户可读为真
--w file　　　　　用户可写为真
--x file　　　　　用户可执行为真
--f file　　　　　文件为正规文件为真
--d file　　　　　文件为目录为真
--c file　　　　　文件为字符特殊文件为真
--b file　　　　　文件为块特殊文件为真
--s file　　　　　文件大小非0时为真
--t file　　　　　当文件描述符(默认为1)指定的设备为终端时为真`&lt;/pre&gt;
-
-3 复杂逻辑判断
-&lt;pre&gt;`-a 　 　　　　　 与
--o　　　　　　　 或
-!　　　　　　　　非
-</pre></figure></code></pre>
-<p>结尾
-语法虽然简单，但是在SHELL里使用的时候，他的功能变得强大了。</p>
-<p>原文地址 <a href="http://hi.baidu.com/hlxcx/blog/item/6a37bc0624e0f37c020881d9.html">http://hi.baidu.com/hlxcx/blog/item/6a37bc0624e0f37c020881d9.html</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+  <div class="archive">
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-19T09:11:33.000Z"><a href="/2010/12/19/linux-if-use/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-if-use/">linux if 命令使用</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-19T08:57:14.000Z"><a href="/2010/12/19/linux-lsof-detailed/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-lsof-detailed/">linux lsof 命令详解</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-19T08:54:35.000Z"><a href="/2010/12/19/linux-top-detailed/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-top-detailed/">linux top 命令详解</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-19T08:52:33.000Z"><a href="/2010/12/19/linux-ps-detailed/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-ps-detailed/">linux ps 命令详解 </a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-19T08:49:04.000Z"><a href="/2010/12/19/linux-diff-命令详解/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-diff-命令详解/">linux diff 命令详解 </a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-19T08:18:37.000Z"><a href="/2010/12/19/linux-acl/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-acl/">linux acl 访问控制列表</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-19T08:16:45.000Z"><a href="/2010/12/19/linux-binding-hardware-interrupt/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-binding-hardware-interrupt/">Linux 绑定制定硬件中断到不同 CPU</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-19T08:11:47.000Z"><a href="/2010/12/19/howto-use-dstat-monitoring-linux-system-resources/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/howto-use-dstat-monitoring-linux-system-resources/">Howto Use Dstat Monitoring Linux System Resources</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-19T08:07:32.000Z"><a href="/2010/12/19/linux-smartctl/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-smartctl/">linux smartctl 磁盘健康监测程序</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-19T08:04:01.000Z"><a href="/2010/12/19/linux-user-group-detailed/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-user-group-detailed/">linux 用户user及用户组group 详解</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-18T23:40:06.000Z"><a href="/2010/12/19/prockcore-what-is/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/prockcore-what-is/">/proc/kcore是什么文件?</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-18T23:30:14.000Z"><a href="/2010/12/19/vim-editor-save-file-without-root-permission/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/vim-editor-save-file-without-root-permission/">vi编辑文件保存时没有root权限</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-18T23:16:30.000Z"><a href="/2010/12/19/linux-tools/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-tools/">Linux一些工具整理</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-18T23:15:12.000Z"><a href="/2010/12/19/tcpdump-exclude-port/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/tcpdump-exclude-port/">tcpdump过滤某个端口</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-18T23:10:49.000Z"><a href="/2010/12/19/linux-find-commands/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-find-commands/">linux find查找命令大全</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-18T22:59:00.000Z"><a href="/2010/12/19/linux-word-order/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-word-order/">Linux一句话命令</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-18T22:50:14.000Z"><a href="/2010/12/19/linux-allcommands-1/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-allcommands-1/">linux系统管理技巧(一)</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-18T22:47:22.000Z"><a href="/2010/12/19/linux-system-user-commands/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-system-user-commands/">linux系统管理员常用命令集合</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
   </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-19T08:57:14.000Z"><a href="/2010/12/19/linux-lsof-detailed/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/linux-lsof-detailed/">linux lsof 命令详解</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>lsof简介
-lsof（list open files）是一个列出当前系统打开文件的工具。在linux环境下，任何事物都以文件的形式存在，通过文件不仅仅可以访问常规数据，还可以访问网络连接 和硬件。所以如传输控制协议 (TCP) 和用户数据报协议 (UDP) 套接字等，系统在后台都为该应用程序分配了一个文件描述符，无论这个文件的本质如何，该文件描述符为应用程序与基础操作系统之间的交互提供了通用接口。因 为应用程序打开文件的描述符列表提供了大量关于这个应用程序本身的信息，因此通过lsof工具能够查看这个列表对系统监测以及排错将是很有帮助的。</p>
-<p>lsof使用
-lsof输出信息含义
-在终端下输入lsof即可显示系统打开的文件，因为 lsof 需要访问核心内存和各种文件，所以必须以 root 用户的身份运行它才能够充分地发挥其功能。
-[code]COMMAND PID USER FD TYPE DEVICE SIZE NODE NAME
-init 1 root cwd DIR 3,3 1024 2 /
-init 1 root rtd DIR 3,3 1024 2 /
-init 1 root txt REG 3,3 38432 1763452 /sbin/init
-init 1 root mem REG 3,3 106114 1091620 /lib/libdl-2.6.so
-init 1 root mem REG 3,3 7560696 1091614 /lib/libc-2.6.so
-init 1 root mem REG 3,3 79460 1091669 /lib/libselinux.so.1
-init 1 root mem REG 3,3 223280 1091668 /lib/libsepol.so.1
-init 1 root mem REG 3,3 564136 1091607 /lib/ld-2.6.so
-init 1 root 10u FIFO 0,15 1309 /dev/initctl[/code]</p>
-<p>每行显示一个打开的文件，若不指定条件默认将显示所有进程打开的所有文件。lsof输出各列信息的意义如下：</p>
-<p>COMMAND：进程的名称
-PID：进程标识符
-USER：进程所有者
-FD：文件描述符，应用程序通过文件描述符识别该文件。如cwd、txt等
-TYPE：文件类型，如DIR、REG等
-DEVICE：指定磁盘的名称
-SIZE：文件的大小
-NODE：索引节点（文件在磁盘上的标识）
-NAME：打开文件的确切名称</p>
-<p>其中FD 列中的文件描述符cwd 值表示应用程序的当前工作目录，这是该应用程序启动的目录，除非它本身对这个目录进行更改。
-txt 类型的文件是程序代码，如应用程序二进制文件本身或共享库，如上列表中显示的 /sbin/init 程序。其次数值表示应用
-程序的文件描述符，这是打开该文件时返回的一个整数。如上的最后一行文件/dev/initctl，其文件描述符为 10。u 表示该
-文件被打开并处于读取/写入模式，而不是只读 ® 或只写 (w) 模式。同时还有大写 的W 表示该应用程序具有对整个文件的写
-锁。该文件描述符用于确保每次只能打开一个应用程序实例。初始打开每个应用程序时，都具有三个文件描述符，从 0 到 2，
-分别表示标准输入、输出和错误流。所以大多数应用程序所打开的文件的 FD 都是从 3 开始。</p>
-<p>与 FD 列相比，Type 列则比较直观。文件和目录分别称为 REG 和 DIR。而CHR 和 BLK，分别表示字符和块设备；
-或者 UNIX、FIFO 和 IPv4，分别表示 UNIX 域套接字、先进先出 (FIFO) 队列和网际协议 (IP) 套接字。
-<strong>
-lsof常用参数</strong>
-lsof 常见的用法是查找应用程序打开的文件的名称和数目。可用于查找出某个特定应用程序将日志数据记录到何处，或者正在跟踪某个问题。
-例如，linux限制了进程能够打开文件的数目。通常这个数值很大，所以不会产生问题，并且在需要时，应用程序可以请求更大的值（直到某
-个上限）。如果你怀疑应用程序耗尽了文件描述符，那么可以使用 lsof 统计打开的文件数目，以进行验证。lsof语法格式是：
-lsof ［options］ filename</p>
-<p><strong>常用的参数列表：</strong>
-lsof filename 显示打开指定文件的所有进程
-lsof -a 表示两个参数都必须满足时才显示结果
-lsof -c string 显示COMMAND列中包含指定字符的进程所有打开的文件
-lsof -u username 显示所属user进程打开的文件
-lsof -g gid 显示归属gid的进程情况
-lsof +d /DIR/ 显示目录下被进程打开的文件
-lsof +D /DIR/ 同上，但是会搜索目录下的所有目录，时间相对较长
-lsof -d FD 显示指定文件描述符的进程
-lsof -n 不将IP转换为hostname，缺省是不加上-n参数
-lsof -i 用以显示符合条件的进程情况
-lsof -i[46] [protocol][@hostname|hostaddr][:service|port]</p>
-<p>46 --&gt; IPv4 or IPv6
-protocol --&gt; TCP or UDP
-hostname --&gt; Internet host name
-hostaddr --&gt; IPv4地址
-service --&gt; /etc/service中的 service name (可以不只一个)
-port --&gt; 端口号 (可以不只一个)</p>
-<p>例如： 查看22端口现在运行的情况
-[code]# lsof -i :22
-COMMAND PID USER FD TYPE DEVICE SIZE NODE NAME
-sshd 1409 root 3u IPv6 5678 TCP *:ssh (LISTEN)]/code]</p>
-<p>查进程：
-[code]# lsof -a -p pid[/code]</p>
-<p>查看所属root用户进程所打开的文件类型为txt的文件:
-[code]# lsof -a -u root -d txt
-COMMAND PID USER FD TYPE DEVICE SIZE NODE NAME
-init 1 root txt REG 3,3 38432 1763452 /sbin/init
-mingetty 1632 root txt REG 3,3 14366 1763337 /sbin/mingetty
-mingetty 1633 root txt REG 3,3 14366 1763337 /sbin/mingetty
-mingetty 1634 root txt REG 3,3 14366 1763337 /sbin/mingetty
-mingetty 1635 root txt REG 3,3 14366 1763337 /sbin/mingetty
-mingetty 1636 root txt REG 3,3 14366 1763337 /sbin/mingetty
-mingetty 1637 root txt REG 3,3 14366 1763337 /sbin/mingetty
-kdm 1638 root txt REG 3,3 132548 1428194 /usr/bin/kdm
-X 1670 root txt REG 3,3 1716396 1428336 /usr/bin/Xorg
-kdm 1671 root txt REG 3,3 132548 1428194 /usr/bin/kdm
-startkde 2427 root txt REG 3,3 645408 1544195 /bin/bash
-... ...
-[/code]
-lsof使用实例
-一、查找谁在使用文件系统
-在卸载文件系统时，如果该文件系统中有任何打开的文件，操作通常将会失败。那么通过lsof可以找出那些进程在使用当前要卸载的文件系统，如下：
-[code]# lsof /GTES11/
-COMMAND PID USER FD TYPE DEVICE SIZE NODE NAME
-bash 4208 root cwd DIR 3,1 4096 2 /GTES11/
-vim 4230 root cwd DIR 3,1 4096 2 /GTES11/[/code]</p>
-<p>在这个示例中，用户root正在其/GTES11目录中进行一些操作。一个 bash是实例正在运行，并且它当前的目录为/GTES11，另一个则显示的是vim正在编辑/GTES11下的文件。要成功地卸载/GTES11，应该 在通知用户以确保情况正常之后，中止这些进程。 这个示例说明了应用程序的当前工作目录非常重要，因为它仍保持着文件资源，并且可以防止文件系统被卸载。这就是为什么大部分守护进程（后台进程）将它们的 目录更改为根目录、或服务特定的目录（如 sendmail 示例中的 /var/spool/mqueue）的原因，以避免该守护进程阻止卸载不相关的文件系统。</p>
-<p>二、恢复删除的文件
-当Linux计算机受到入侵时，常见的情况是日志文件被删除，以掩盖攻击者的踪迹。管理错误也可能导致意外删除重要的文件，比如在清理旧日志时，意外地删除了数据库的活动事务日志。有时可以通过lsof来恢复这些文件。
-当进程打开了某个文件时，只要该进程保持打开该文件，即使将其删除，它依然存在于磁盘中。这意味着，进程并不知道文件已经被删除，它仍然可以向打开该文件时提供给它的文件描述符进行读取和写入。除了该进程之外，这个文件是不可见的，因为已经删除了其相应的目录索引节点。
-在/proc 目录下，其中包含了反映内核和进程树的各种文件。/proc目录挂载的是在内存中所映射的一块区域，所以这些文件和目录并不存在于磁盘中，因此当我们对这 些文件进行读取和写入时，实际上是在从内存中获取相关信息。大多数与 lsof 相关的信息都存储于以进程的 PID 命名的目录中，即 /proc/1234 中包含的是 PID 为 1234 的进程的信息。每个进程目录中存在着各种文件，它们可以使得应用程序简单地了解进程的内存空间、文件描述符列表、指向磁盘上的文件的符号链接和其他系统信 息。lsof 程序使用该信息和其他关于内核内部状态的信息来产生其输出。所以lsof 可以显示进程的文件描述符和相关的文件名等信息。也就是我们通过访问进程的文件描述符可以找到该文件的相关信息。
-当系统中的某个文件被意外 地删除了，只要这个时候系统中还有进程正在访问该文件，那么我们就可以通过lsof从/proc目录下恢复该文件的内容。 假如由于误操作将/var/log/messages文件删除掉了，那么这时要将/var/log/messages文件恢复的方法如下：</p>
-<p>首先使用lsof来查看当前是否有进程打开/var/logmessages文件，如下：
-[code]# lsof |grep /var/log/messages
-syslogd 1283 root 2w REG 3,3 5381017 1773647 /var/log/messages (deleted)[/code]
-从上面的信息可以看到 PID 1283（syslogd）打开文件的文件描述符为 2。同时还可以看到/var/log/messages已经标记被删除了。因此我们可以在 /proc/1283/fd/2 （fd下的每个以数字命名的</p>
-<p>文件表示进程对应的文件描述符）中查看相应的信息，如下：
-[code]# head -n 10 /proc/1283/fd/2
-Aug 4 13:50:15 holmes86 syslogd 1.4.1: restart.
-Aug 4 13:50:15 holmes86 kernel: klogd 1.4.1, log source = /proc/kmsg started.
-Aug 4 13:50:15 holmes86 kernel: Linux version 2.6.22.1-8 (root@everestbuilder.linux-ren.org) (gcc version 4.2.0) #1 SMP Wed Jul 18 11:18:32 EDT 2007
-Aug 4 13:50:15 holmes86 kernel: BIOS-provided physical RAM map:
-Aug 4 13:50:15 holmes86 kernel: BIOS-e820: 0000000000000000 - 000000000009f000 (usable)
-Aug 4 13:50:15 holmes86 kernel: BIOS-e820: 000000000009f000 - 00000000000a0000 (reserved)
-Aug 4 13:50:15 holmes86 kernel: BIOS-e820: 0000000000100000 - 000000001f7d3800 (usable)
-Aug 4 13:50:15 holmes86 kernel: BIOS-e820: 000000001f7d3800 - 0000000020000000 (reserved)
-Aug 4 13:50:15 holmes86 kernel: BIOS-e820: 00000000e0000000 - 00000000f0007000 (reserved)
-Aug 4 13:50:15 holmes86 kernel: BIOS-e820: 00000000f0008000 - 00000000f000c000 (reserved)[/code]</p>
-<p>从上面的信息可以看出，查看 /proc/8663/fd/15 就可以得到所要恢复的数据。如果可以通过文件描述符查看相应的数据，那么就可以使用 I/O 重定向将其复制到文件中，如:
-[code]cat /proc/1283/fd/2 &gt; /var/log/messages[/code]
-对于许多应用程序，尤其是日志文件和数据库，这种恢复删除文件的方法非常有用。</p>
-<p>原文：<a href="http://blog.csdn.net/guoguo1980/archive/2008/04/24/2324454.aspx">http://blog.csdn.net/guoguo1980/archive/2008/04/24/2324454.aspx</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-19T08:54:35.000Z"><a href="/2010/12/19/linux-top-detailed/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/linux-top-detailed/">linux top 命令详解</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>linux下top命令参数解释</p>
-<p>top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于Windows的任务管理器。下面详细介绍它的使用方法。</p>
-<pre><code><figure class="highlight"><pre>top - 01:06:48 up 1:22, 1 user, <span class="operator"><span class="keyword">load</span> average: <span class="number">0.06</span>, <span class="number">0.60</span>, <span class="number">0.48</span>
-Tasks: <span class="number">29</span> total, <span class="number">1</span> running, <span class="number">28</span> sleeping, <span class="number">0</span> stopped, <span class="number">0</span> zombie
-Cpu(s): <span class="number">0.3</span>% us, <span class="number">1.0</span>% sy, <span class="number">0.0</span>% ni, <span class="number">98.7</span>% id, <span class="number">0.0</span>% wa, <span class="number">0.0</span>% hi, <span class="number">0.0</span>% si
-Mem: <span class="number">191272</span>k total, <span class="number">173656</span>k used, <span class="number">17616</span>k free, <span class="number">22052</span>k buffers
-Swap: <span class="number">192772</span>k total, <span class="number">0</span>k used, <span class="number">192772</span>k free, <span class="number">123988</span>k cached
-PID <span class="keyword">USER</span> PR NI VIRT RES SHR S %CPU %MEM <span class="keyword">TIME</span>+ COMMAND
-<span class="number">1379</span> root <span class="number">16</span> <span class="number">0</span> <span class="number">7976</span> <span class="number">2456</span> <span class="number">1980</span> S <span class="number">0.7</span> <span class="number">1.3</span> <span class="number">0</span>:<span class="number">11.03</span> sshd
-<span class="number">14704</span> root <span class="number">16</span> <span class="number">0</span> <span class="number">2128</span> <span class="number">980</span> <span class="number">796</span> R <span class="number">0.7</span> <span class="number">0.5</span> <span class="number">0</span>:<span class="number">02.72</span> top
-<span class="number">1</span> root <span class="number">16</span> <span class="number">0</span> <span class="number">1992</span> <span class="number">632</span> <span class="number">544</span> S <span class="number">0.0</span> <span class="number">0.3</span> <span class="number">0</span>:<span class="number">00.90</span> init
-<span class="number">2</span> root <span class="number">34</span> <span class="number">19</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> S <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">0</span>:<span class="number">00.00</span> ksoftirqd/<span class="number">0</span>
-<span class="number">3</span> root RT <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> S <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">0</span>:<span class="number">00.00</span> watchdog/<span class="number">0</span>
-</pre></figure></code></pre>
-<p>统计信息区
-前五行是系统整体的统计信息。第一行是任务队列信息，同 uptime 命令的执行结果。其内容如下：</p>
-<p>01:06:48 当前时间
-up 1:22 系统运行时间，格式为时:分
-1 user 当前登录用户数
-load average: 0.06, 0.60, 0.48 系统负载，即任务队列的平均长度。
-三个数值分别为 1分钟、5分钟、15分钟前到现在的平均值。</p>
-<p>第二、三行为进程和CPU的信息。当有多个CPU时，这些内容可能会超过两行。内容如下：
-Tasks: 29 total 进程总数
-1 running 正在运行的进程数
-28 sleeping 睡眠的进程数
-0 stopped 停止的进程数
-0 zombie 僵尸进程数</p>
-<p>Cpu(s): 0.3% us 用户空间占用CPU百分比
-1.0% sy 内核空间占用CPU百分比
-0.0% ni 用户进程空间内改变过优先级的进程占用CPU百分比
-98.7% id 空闲CPU百分比
-0.0% wa 等待输入输出的CPU时间百分比
-0.0% hi 
-0.0% si </p>
-<p>最后两行为内存信息。内容如下：
-Mem: 191272k total 物理内存总量
-173656k used 使用的物理内存总量
-17616k free 空闲内存总量
-22052k buffers 用作内核缓存的内存量
-Swap: 192772k total 交换区总量
-0k used 使用的交换区总量
-192772k free 空闲交换区总量
-123988k cached 缓冲的交换区总量。</p>
-<p>内存中的内容被换出到交换区，而后又被换入到内存，但使用过的交换区尚未被覆盖，
-该数值即为这些内容已存在于内存中的交换区的大小。
-相应的内存再次被换出时可不必再对交换区写入。</p>
-<p>进程信息区
-统计信息区域的下方显示了各个进程的详细信息。首先来认识一下各列的含义。
-序号 列名 含义
-a PID 进程id
-b PPID 父进程id
-c RUSER Real user name
-d UID 进程所有者的用户id
-e USER 进程所有者的用户名
-f GROUP 进程所有者的组名
-g TTY 启动进程的终端名。不是从终端启动的进程则显示为 ?
-h PR 优先级
-i NI nice值。负值表示高优先级，正值表示低优先级
-j P 最后使用的CPU，仅在多CPU环境下有意义
-k %CPU 上次更新到现在的CPU时间占用百分比
-l TIME 进程使用的CPU时间总计，单位秒
-m TIME+ 进程使用的CPU时间总计，单位1/100秒
-n %MEM 进程使用的物理内存百分比
-o VIRT 进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES
-p SWAP 进程使用的虚拟内存中，被换出的大小，单位kb。
-q RES 进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA
-r CODE 可执行代码占用的物理内存大小，单位kb
-s DATA 可执行代码以外的部分(数据段+栈)占用的物理内存大小，单位kb
-t SHR 共享内存大小，单位kb
-u nFLT 页面错误次数
-v nDRT 最后一次写入到现在，被修改过的页面数。
-w S 进程状态。
-D=不可中断的睡眠状态
-R=运行
-S=睡眠
-T=跟踪/停止
-Z=僵尸进程
-x COMMAND 命令名/命令行
-y WCHAN 若该进程在睡眠，则显示睡眠中的系统函数名
-z Flags 任务标志，参考 sched.h</p>
-<p>默认情况下仅显示比较重要的 PID、USER、PR、NI、VIRT、RES、SHR、S、%CPU、%MEM、TIME+、COMMAND 列。可以通过下面的快捷键来更改显示内容。</p>
-<p>更改显示内容
-通过 f 键可以选择显示的内容。按 f 键之后会显示列的列表，按 a-z 即可显示或隐藏对应的列，最后按回车键确定。
-按 o 键可以改变列的显示顺序。按小写的 a-z 可以将相应的列向右移动，而大写的 A-Z 可以将相应的列向左移动。最后按回车键确定。
-按大写的 F 或 O 键，然后按 a-z 可以将进程按照相应的列进行排序。而大写的 R 键可以将当前的排序倒转。</p>
-<p>命令使用
-1． 工具（命令）名称
-top</p>
-<p>2．工具（命令）作用
-显示系统当前的进程和其他状况； top是一个动态显示过程,即可以通过用户按键来不断刷新当前状态.如果在前台执行该命令,它将独占前台,直到用户终止该程序为止. 比较准确的说,top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间 对任务进行排序；而且该命令的很多特性都可以通过交互式命令或者在个人定制文件中进行设定.</p>
-<p>3．环境设置
-在Linux下使用。</p>
-<p>4．使用方法
-4．1使用格式
-top [-] [d] [p] [q] [c] [C] [S] [s] [n]</p>
-<p>4．2参数说明
-d 指定每两次屏幕信息刷新之间的时间间隔。当然用户可以使用s交互命令来改变之。
-p 通过指定监控进程ID来仅仅监控某个进程的状态。
-q该选项将使top没有任何延迟的进行刷新。如果调用程序有超级用户权限，那么top将以尽可能高的优先级运行。
-S 指定累计模式
-s 使top命令在安全模式中运行。这将去除交互命令所带来的潜在危险。
-i 使top不显示任何闲置或者僵死进程。
-c 显示整个命令行而不只是显示命令名</p>
-<p>4.3其他
-下面介绍在top命令执行过程中可以使用的一些交互命令。从使用角度来看，熟练的掌握这些命令比掌握选项还重要一些。这些命令都是单字母的，如果在命令行选项中使用了s选项，则可能其中一些命令会被屏蔽掉。
-Ctrl+L 擦除并且重写屏幕。
-h或者? 显示帮助画面，给出一些简短的命令总结说明。
-k 终止一个进程。系统将提示用户输入需要终止的进程PID，以及需要发送给该进程什么样的信号。一般的终止进程可以使用15信号；如果不能正常结束那就使用信号9强制结束该进程。默认值是信号15。在安全模式中此命令被屏蔽。
-i 忽略闲置和僵死进程。这是一个开关式命令。
-q 退出程序。
-r 重新安排一个进程的优先级别。系统提示用户输入需要改变的进程PID以及需要设置的进程优先级值。输入一个正值将使优先级降低，反之则可以使该进程拥有更高的优先权。默认值是10。
-S 切换到累计模式。
-s 改变两次刷新之间的延迟时间。系统将提示用户输入新的时间，单位为s。如果有小数，就换算成m s。输入0值则系统将不断刷新，默认值是5 s。需要注意的是如果设置太小的时间，很可能会引起不断刷新，从而根本来不及看清显示的情况，而且系统负载也会大大增加。
-f或者F 从当前显示中添加或者删除项目。
-o或者O 改变显示项目的顺序。
-l 切换显示平均负载和启动时间信息。
-m 切换显示内存信息。
-t 切换显示进程和CPU状态信息。
-c 切换显示命令名称和完整命令行。
-M 根据驻留内存大小进行排序。
-P 根据CPU使用百分比大小进行排序。
-T 根据时间/累计时间进行排序。
-W 将当前设置写入~/.toprc文件中。这是写top配置文件的推荐方法。</p>
-<p>原文：<a href="http://blog.csdn.net/guoguo1980/archive/2008/04/19/2307254.aspx">http://blog.csdn.net/guoguo1980/archive/2008/04/19/2307254.aspx</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-19T08:52:33.000Z"><a href="/2010/12/19/linux-ps-detailed/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/linux-ps-detailed/">linux ps 命令详解 </a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>linux ps(process status) 命令详解
-功能说明：报告程序状况。</p>
-<p><strong>语　　法</strong>：ps [-aAcdefHjlmNVwy][acefghLnrsSTuvxX][-C &lt;指令名称&gt;][-g &lt;群组名称&gt;][-G &lt;群组识别码&gt;][-p &lt;程序识别码&gt;][p &lt;程序识别码&gt;][-s &lt;阶段作业&gt;][-t &lt;终端机编号&gt;][t &lt;终端机编号&gt;][-u &lt;用户识别码&gt;][-U &lt;用户识别码&gt;][U &lt;用户名称&gt;][-&lt;程序识别码&gt;][--cols &lt;每列字符数&gt;][--columns &lt;每列字符数&gt;][--cumulative][--deselect][--forest][--headers][--help] [--info][--lines &lt;显示列数&gt;][--no-headers][--group &lt;群组名称&gt;][-Group &lt;群组识别码&gt;][--pid &lt;程序识别码&gt;][--rows &lt;显示列数&gt;][--sid &lt;阶段作业&gt;][--tty &lt;终端机编号&gt;][--user &lt;用户名称&gt;][--User &lt;用户识别码&gt;][--version][--width &lt;每列字符数&gt;]
-补充说明：ps是用来报告程序执行状况的指令，您可以搭配kill指令随时中断，删除不必要的程序。
-<strong>
-参　　数：</strong>
--a 　显示所有终端机下执行的程序，除了阶段作业领导者之外。
-a 　显示现行终端机下的所有程序，包括其他用户的程序。
--A 　显示所有程序。
--c 　显示CLS和PRI栏位。
-c 　列出程序时，显示每个程序真正的指令名称，而不包含路径，参数或常驻服务的标示。
--C&lt;指令名称&gt; 指定执行指令的名称，并列出该指令的程序的状况。
--d 　显示所有程序，但不包括阶段作业领导者的程序。
--e 　此参数的效果和指定&quot;A&quot;参数相同。
-e 　列出程序时，显示每个程序所使用的环境变量。
--f 　显示UID,PPIP,C与STIME栏位。
-f 　用ASCII字符显示树状结构，表达程序间的相互关系。
--g&lt;群组名称&gt; 此参数的效果和指定&quot;-G&quot;参数相同，当亦能使用阶段作业领导者的名称来指定。
-g 　显示现行终端机下的所有程序，包括群组领导者的程序。
--G&lt;群组识别码&gt; 列出属于该群组的程序的状况，也可使用群组名称来指定。
-h 　不显示标题列。
--H 　显示树状结构，表示程序间的相互关系。
--j或j 　采用工作控制的格式显示程序状况。
--l或l 　采用详细的格式来显示程序状况。
-L 　列出栏位的相关信息。
--m或m 　显示所有的执行绪。
-n 　以数字来表示USER和WCHAN栏位。
--N 　显示所有的程序，除了执行ps指令终端机下的程序之外。
--p&lt;程序识别码&gt; 指定程序识别码，并列出该程序的状况。
-p&lt;程序识别码&gt; 此参数的效果和指定&quot;-p&quot;参数相同，只在列表格式方面稍有差异。
-r 　只列出现行终端机正在执行中的程序。
--s&lt;阶段作业&gt; 指定阶段作业的程序识别码，并列出隶属该阶段作业的程序的状况。
-s 　采用程序信号的格式显示程序状况。
-S 　列出程序时，包括已中断的子程序资料。
--t&lt;终端机编号&gt; 指定终端机编号，并列出属于该终端机的程序的状况。
-t&lt;终端机编号&gt; 此参数的效果和指定&quot;-t&quot;参数相同，只在列表格式方面稍有差异。
--T 　显示现行终端机下的所有程序。
--u&lt;用户识别码&gt; 此参数的效果和指定&quot;-U&quot;参数相同。
-u 　以用户为主的格式来显示程序状况。
--U&lt;用户识别码&gt; 列出属于该用户的程序的状况，也可使用用户名称来指定。
-U&lt;用户名称&gt; 列出属于该用户的程序的状况。
-v 　采用虚拟内存的格式显示程序状况。
--V或V 　显示版本信息。
--w或w 　采用宽阔的格式来显示程序状况。
-x 　显示所有程序，不以终端机来区分。
-X 　采用旧式的Linux i386登陆格式显示程序状况。
--y 　配合参数&quot;-l&quot;使用时，不显示F(flag)栏位，并以RSS栏位取代ADDR栏位　。
--&lt;程序识别码&gt; 此参数的效果和指定&quot;p&quot;参数相同。
---cols&lt;每列字符数&gt; 设置每列的最大字符数。
---columns&lt;每列字符数&gt; 此参数的效果和指定&quot;--cols&quot;参数相同。
---cumulative 　此参数的效果和指定&quot;S&quot;参数相同。
---deselect 　此参数的效果和指定&quot;-N&quot;参数相同。
---forest 　此参数的效果和指定&quot;f&quot;参数相同。
---headers 　重复显示标题列。
---help 　在线帮助。
---info 　显示排错信息。
---lines&lt;显示列数&gt; 设置显示画面的列数。
---no-headers 　此参数的效果和指定&quot;h&quot;参数相同，只在列表格式方面稍有差异。
---group&lt;群组名称&gt; 此参数的效果和指定&quot;-G&quot;参数相同。
---Group&lt;群组识别码&gt; 此参数的效果和指定&quot;-G&quot;参数相同。
---pid&lt;程序识别码&gt; 此参数的效果和指定&quot;-p&quot;参数相同。
---rows&lt;显示列数&gt; 此参数的效果和指定&quot;--lines&quot;参数相同。
---sid&lt;阶段作业&gt; 此参数的效果和指定&quot;-s&quot;参数相同。
---tty&lt;终端机编号&gt; 此参数的效果和指定&quot;-t&quot;参数相同。
---user&lt;用户名称&gt; 此参数的效果和指定&quot;-U&quot;参数相同。
---User&lt;用户识别码&gt; 此参数的效果和指定&quot;-U&quot;参数相同。
---version 　此参数的效果和指定&quot;-V&quot;参数相同。
---widty&lt;每列字符数&gt; 此参数的效果和指定&quot;-cols&quot;参数相同。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-19T08:49:04.000Z"><a href="/2010/12/19/linux-diff-命令详解/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/linux-diff-命令详解/">linux diff 命令详解 </a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>linux diff(differential) 命令详解
-功能说明：比较文件的差异。</p>
-<p>语　　法：diff [-abBcdefHilnNpPqrstTuvwy][-&lt;行数&gt;][-C &lt;行数&gt;][-D &lt;巨集名称&gt;][-I &lt;字符或字符串&gt;][-S &lt;文件&gt;][-W &lt;宽度&gt;][-x &lt;文件或目录&gt;][-X &lt;文件&gt;][--help][--left-column][--suppress-common-line][文件或目录1][文件或目录 2]
-补充说明：diff以逐行的方式，比较文本文件的异同处。所是指定要比较目录，则diff会比较目录中相同文件名的文件，但不会比较其中子目录。</p>
-<p>参　　数：
--&lt;行数&gt; 指定要显示多少行的文本。此参数必须与-c或-u参数一并使用。
--a或--text 　diff预设只会逐行比较文本文件。
--b或--ignore-space-change 　不检查空格字符的不同。
--B或--ignore-blank-lines 　不检查空白行。
--c 　显示全部内文，并标出不同之处。
--C&lt;行数&gt;或--context&lt;行数&gt; 与执行&quot;-c-&lt;行数&gt;&quot;指令相同。
--d或--minimal 　使用不同的演算法，以较小的单位来做比较。
--D&lt;巨集名称&gt;或ifdef&lt;巨集名称&gt; 此参数的输出格式可用于前置处理器巨集。
--e或--ed 　此参数的输出格式可用于ed的script文件。
--f或-forward-ed 　输出的格式类似ed的script文件，但按照原来文件的顺序来显示不同处。
--H或--speed-large-files 　比较大文件时，可加快速度。
--l&lt;字符或字符串&gt;或--ignore-matching-lines&lt;字符或字符串&gt; 若两个文件在某几行有所不同，而这几行同时都包含了选项中指定的字符或字符串，则不显示这两个文件的差异。
--i或--ignore-case 　不检查大小写的不同。
--l或--paginate 　将结果交由pr程序来分页。
--n或--rcs 　将比较结果以RCS的格式来显示。
--N或--new-file 　在比较目录时，若文件A仅出现在某个目录中，预设会显示：
-Only in目录：文件A若使用-N参数，则diff会将文件A与一个空白的文件比较。
--p 　若比较的文件为C语言的程序码文件时，显示差异所在的函数名称。
--P或--unidirectional-new-file 　与-N类似，但只有当第二个目录包含了一个第一个目录所没有的文件时，才会将这个文件与空白的文件做比较。
--q或--brief 　仅显示有无差异，不显示详细的信息。
--r或--recursive 　比较子目录中的文件。
--s或--report-identical-files 　若没有发现任何差异，仍然显示信息。
--S&lt;文件&gt;或--starting-file&lt;文件&gt; 在比较目录时，从指定的文件开始比较。
--t或--expand-tabs 　在输出时，将tab字符展开。
--T或--initial-tab 　在每行前面加上tab字符以便对齐。
--u,-U&lt;列数&gt;或--unified=&lt;列数&gt; 以合并的方式来显示文件内容的不同。
--v或--version 　显示版本信息。
--w或--ignore-all-space 　忽略全部的空格字符。
--W&lt;宽度&gt;或--width&lt;宽度&gt; 在使用-y参数时，指定栏宽。
--x&lt;文件名或目录&gt;或--exclude&lt;文件名或目录&gt; 不比较选项中所指定的文件或目录。
--X&lt;文件&gt;或--exclude-from&lt;文件&gt; 您可以将文件或目录类型存成文本文件，然后在=&lt;文件&gt;中指定此文本文件。
--y或--side-by-side 　以并列的方式显示文件的异同之处。
---help 　显示帮助。
---left-column 　在使用-y参数时，若两个文件某一行内容相同，则仅在左侧的栏位显示该行内容。
---suppress-common-lines 　在使用-y参数时，仅显示不同之处</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-19T08:18:37.000Z"><a href="/2010/12/19/linux-acl/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/linux-acl/">linux acl 访问控制列表</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>要想使用ACL功能，首先需要正确编译2.6内核，并确保有下列选项：</p>
-<pre><code><figure class="highlight"><pre>CONFIG_EXT2_FS_POSIX_ACL=yCONFIG_EXT3_FS_POSIX_ACL=yCONFIG_FS_POSIX_ACL=y`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-用新内核启动后，还要求在挂载分区的时候添加必要的参数“acl”。
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`mount -t ext3 -o rw,acl /dev/hda8 /your_mount_point
-或在 /etc/fstab 中加入下列行，实现自动mount分区并且带有“acl”参数。
-/dev/hda8
-ext3 /your_mount_point defaults,acl 1 1`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-正确挂载文件系统后，就可以使用ACL的命令来修改文件的ACL属性了。修改ACL属性的命令有setfacl、getfacl 和chacl，其中chacl是一个SGI IRIX兼容命令，主要适用于那些对SGI IRIX以及XFS文件系统比较熟悉的用户。本文只介绍setfacl和getfacl命令，具体用法如下面的例子：
-
-1.使文件1.txt可以被用户test读写
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`setfacl -m u:test:rw 1.txt`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-2.使文件1.txt可以被qmail组的组员读，但不能写
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`setfacl -m g:qmail:r 1.txt`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-3.把某一文件的ACL属性copy给另一文件，比如把文件1.txt的ACL属性copy给2.txt：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`getfacl 1.txt | setfacl -set-file=- 2.txt`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-4.同时为文件设置不同用户或组的权限
-比如对文件2.txt设定testmail用户可读写，qmail组组员可读可执行，nofiles 组组员可执行:
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`setfacl -m u:testmail:rw,g:qmail:rx,g:nofiles:x 2.txt
-</pre></figure></code></pre>
-<p>查看man page可获得setfact和getfacl命令更详细的用法。
-在系统管理员的工作中，遇到的最大的困难往往不是高难度的内核问题，也不是配置Apache服务器之类的问题，而是控制文件访问权限的问题。主管领导常常 会提出非常特别的要求，权限配置经常具体到人，这在配置文件服务器Samba时非常难于实现，使用2.6内核中的ACL（访问控制列表）新功能，问题就会 迎刃而解。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-19T08:16:45.000Z"><a href="/2010/12/19/linux-binding-hardware-interrupt/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/linux-binding-hardware-interrupt/">Linux 绑定制定硬件中断到不同 CPU</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>硬件中断发生频繁，是件很消耗 CPU 资源的事情，在多核 CPU 条件下如果有办法把大量硬件中断分配给不同的 CPU (core) 处理显然能很好的平衡性能。现在的服务器上动不动就是多 CPU 多核、多网卡、多硬盘，如果能让网卡中断独占1个 CPU (core)、磁盘 IO 中断独占1个 CPU 的话将会大大减轻单一 CPU 的负担、提高整体处理效率。VPSee 前天收到一位网友的邮件提到了 SMP IRQ Affinity，引发了今天的话题：D，以下操作在 SUN FIre X2100 M2 服务器＋ 64位版本 CentOS 5.5 + Linux 2.6.18-194.3.1.el5 上执行。</p>
-<p>什么是中断
-      中文教材上对 “中断” 的定义太生硬了，简单的说就是，每个硬件设备（如：硬盘、网卡等）都需要和 CPU 有某种形式的通信以便 CPU 及时知道发生了什么事情，这样 CPU 可能就会放下手中的事情去处理应急事件，硬件设备主动打扰 CPU 的现象就可称为硬件中断，就像你正在工作的时候受到 QQ 干扰一样，一次 QQ 摇头就可以被称为中断。</p>
-<pre><code><figure class="highlight"><pre>  中断是一种比较好的 CPU 和硬件沟通的方式，还有一种方式叫做轮询（polling），就是让 CPU 定时对硬件状态进行查询然后做相应处理，就好像你每隔<span class="number">5</span>分钟去检查一下 QQ 看看有没有人找你一样，这种方式是不是很浪费你（CPU）的时间？所以中断是硬件主动的方式，比轮询（CPU 主动）更有效一些。
-
-  好了，这里又有了一个问题，每个硬件设备都中断，那么如何区分不同硬件呢？不同设备同时中断如何知道哪个中断是来自硬盘、哪个来自网卡呢？这 个很容易，不是每个 QQ 号码都不相同吗？同样的，系统上的每个硬件设备都会被分配一个 IRQ 号，通过这个唯一的 IRQ 号就能区别张三和李四了。
-
-  在计算机里，中断是一种电信号，由硬件产生，并直接送到中断控制器（如 <span class="number">8259</span>A）上，然后再由中断控制器向 CPU 发送信号，CPU 检测到该信号后，就中断当前的工作转而去处理中断。然后，处理器会通知操作系统已经产生中断，这样操作系统就会对这个中断进行适当的处理。现在来看一下中 断控制器，常见的中断控制器有两种：可编程中断控制器 <span class="number">8259</span>A 和高级可编程中断控制器（APIC），中断控制器应该在大学的硬件接口和计算机体系结构的相关课程中都学过。传统的 <span class="number">8259</span>A 只适合单 CPU 的情况，现在都是多 CPU 多核的 SMP 体系，所以为了充分利用 SMP 体系结构、把中断传递给系统上的每个 CPU 以便更好实现并行和提高性能，Intel 引入了高级可编程中断控制器（APIC）。
-
-  光有高级可编程中断控制器的硬件支持还不够，Linux 内核还必须能利用到这些硬件特质，所以只有 kernel <span class="number">2.4</span> 以后的版本才支持把不同的硬件中断请求（IRQs）分配到特定的 CPU 上，这个绑定技术被称为 SMP IRQ <span class="transposed_variable">Affinity.</span> 更多介绍请参看 Linux 内核源代码自带的文档：linux-<span class="number">2.6</span><span class="number">.31</span><span class="number">.8</span>/Documentation/IRQ-<span class="transposed_variable">affinity.</span>txt
-</pre></figure></code></pre>
-<p>如何使用
-     先看看系统上的中断是怎么分配在 CPU 上的，很显然 CPU0 上处理的中断多一些：</p>
-<pre><code><figure class="highlight"><pre><span class="xml"></span><span class="comment"># cat /proc/interrupts</span><span class="xml">
-           CPU0       CPU1
-  </span><span class="number">0</span><span class="xml">:  </span><span class="number">918926335</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  timer
-  </span><span class="number">1</span><span class="xml">:          </span><span class="number">2</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
-  </span><span class="number">8</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  rtc
-  </span><span class="number">9</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  acpi
-</span><span class="number">12</span><span class="xml">:          </span><span class="number">4</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
-</span><span class="number">14</span><span class="xml">:    </span><span class="number">8248017</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  ide0
-</span><span class="number">50</span><span class="xml">:        </span><span class="number">194</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ohci_hcd:usb2
-</span><span class="number">58</span><span class="xml">:      </span><span class="number">31673</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  sata_nv
-</span><span class="number">90</span><span class="xml">:    </span><span class="number">1070374</span><span class="xml">          </span><span class="number">0</span><span class="xml">         PCI-MSI  eth0
-</span><span class="number">233</span><span class="xml">:         </span><span class="number">10</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ehci_hcd:usb1
-NMI:       </span><span class="number">5077</span><span class="xml">       </span><span class="number">2032</span><span class="xml">
-LOC:  </span><span class="number">918809969</span><span class="xml">  </span><span class="number">918809894</span><span class="xml">
-ERR:          </span><span class="number">0</span><span class="xml">
-MIS:          </span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-     为了不让 CPU0 很累怎么把部分中断转移到 CPU1 上呢？或者说如何把 eth0 网卡的中断转到 CPU1 上呢？先查看一下 IRQ </span><span class="number">90</span><span class="xml"> 中断的 smp affinity，看看当前中断是怎么分配在不同 CPU 上的（ffffffff 意味着分配在所有可用 CPU 上）：
-
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# cat /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity
-</span><span class="number">7</span><span class="xml">fffffff,ffffffff,ffffffff,ffffffff,ffffffff,ffffffff,ffffffff,ffffffff`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-在进一步动手之前我们需要先停掉 IRQ 自动调节的服务进程，这样才能手动绑定 IRQ 到不同 CPU，否则自己手动绑定做的更改将会被自动调节进程给覆盖掉。如果想修改 IRQ </span><span class="number">90</span><span class="xml"> 的中断处理，绑定到第</span><span class="number">2</span><span class="xml">个 CPU（CPU1）：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# /etc/init.d/irqbalance stop`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-</span><span class="comment"># echo "2" &gt; /proc/irq/90/smp_affinity</span><span class="xml">
-      （上面的 echo “</span><span class="number">2</span><span class="xml">″ 是怎么来的？为什么是 ”</span><span class="number">2</span><span class="xml">“？）
-
-这 其实是个二进制数字，代表 </span><span class="number">00000010</span><span class="xml">，</span><span class="number">00000001</span><span class="xml"> 代表 CPU0 的话，</span><span class="number">00000010</span><span class="xml"> 就代表 CPU0， “echo </span><span class="number">2</span><span class="xml"> &gt; /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity” 的意思就是说把 </span><span class="number">90</span><span class="xml"> 中断绑定到 </span><span class="number">00000010</span><span class="xml">（CPU1）上。所以各个 CPU 用二进制和十六进制表示就是：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`               Binary       Hex
-   [separator] CPU </span><span class="number">0</span><span class="xml">    </span><span class="number">00000001</span><span class="xml">         </span><span class="number">1</span><span class="xml">
-    CPU </span><span class="number">1</span><span class="xml">    </span><span class="number">00000010</span><span class="xml">         </span><span class="number">2</span><span class="xml">
-    CPU </span><span class="number">2</span><span class="xml">    </span><span class="number">00000100</span><span class="xml">         </span><span class="number">4</span><span class="xml">
-    CPU </span><span class="number">3</span><span class="xml">    </span><span class="number">00001000</span><span class="xml">         </span><span class="number">8</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-如果我想把 IRQ 绑定到 CPU2 上就是 </span><span class="number">00000100</span><span class="xml">＝</span><span class="number">4</span><span class="xml">：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# echo "</span><span class="number">4</span><span class="xml">" &gt; /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-如果我想把 IRQ 同时平衡到 CPU0 和 CPU2 上就是 </span><span class="number">00000001</span><span class="xml">＋</span><span class="number">00000100</span><span class="xml">＝</span><span class="number">00000101</span><span class="xml">＝</span><span class="number">5</span><span class="xml">
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# echo "</span><span class="number">5</span><span class="xml">" &gt; /proc/irq/</span><span class="number">90</span><span class="xml">/smp_affinity`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-需要注意的是，在手动绑定 IRQ 到 CPU 之前需要先停掉 irqbalance 这个服务，irqbalance 是个服务进程、是用来自动绑定和平衡 IRQ 的：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` /etc/init.d/irqbalance stop`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-过段时间在看 /proc/interrupts，是不是 </span><span class="number">90</span><span class="xml">:eth0 在 CPU1 上的中断增加了（</span><span class="number">145</span><span class="xml">）、在 CPU0 上的中断没变？不断打印 /proc/interrupts 就会发现 eth0 在 CPU0 上的中断数始终保持不变，而在 CPU1 上的中断数是持续增加的，这正是我们想要的结果：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# cat /proc/interrupts
-           CPU0       CPU1
-  </span><span class="number">0</span><span class="xml">:  </span><span class="number">922506515</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  timer
-  </span><span class="number">1</span><span class="xml">:          </span><span class="number">2</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
-  </span><span class="number">8</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  rtc
-  </span><span class="number">9</span><span class="xml">:          </span><span class="number">0</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  acpi
-</span><span class="number">12</span><span class="xml">:          </span><span class="number">4</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  i8042
-</span><span class="number">14</span><span class="xml">:    </span><span class="number">8280147</span><span class="xml">          </span><span class="number">0</span><span class="xml">    IO-APIC-edge  ide0
-</span><span class="number">50</span><span class="xml">:        </span><span class="number">194</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ohci_hcd:usb2
-</span><span class="number">58</span><span class="xml">:      </span><span class="number">31907</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  sata_nv
-</span><span class="number">90</span><span class="xml">:    </span><span class="number">1073399</span><span class="xml">        </span><span class="number">145</span><span class="xml">         PCI-MSI  eth0
-</span><span class="number">233</span><span class="xml">:         </span><span class="number">10</span><span class="xml">          </span><span class="number">0</span><span class="xml">   IO-APIC-level  ehci_hcd:usb1
-NMI:       </span><span class="number">5093</span><span class="xml">       </span><span class="number">2043</span><span class="xml">
-LOC:  </span><span class="number">922389696</span><span class="xml">  </span><span class="number">922389621</span><span class="xml">
-ERR:          </span><span class="number">0</span><span class="xml">
-MIS:          </span><span class="number">0</span><span class="xml"> </span>
-</pre></figure></code></pre>
-<p>有什么用
-      在网络非常 heavy 的情况下，对于文件服务器、高流量 Web 服务器这样的应用来说，把不同的网卡 IRQ 均衡绑定到不同的 CPU 上将会减轻某个 CPU 的负担，提高多个 CPU 整体处理中断的能力；对于数据库服务器这样的应用来说，把磁盘控制器绑到一个 CPU、把网卡绑定到另一个 CPU 将会提高数据库的响应时间、优化性能。合理的根据自己的生产环境和应用的特点来平衡 IRQ 中断有助于提高系统的整体吞吐能力和性能。
-      VPSee 经常收到网友来信问到如何优化 Linux、优化 VPS、这个问题不太好回答，要记住的是性能优化是一个过程而不是结果，不是看了些文档改了改参数就叫优化了，后面还需要大量的测试、监测以及持续的观察和改进。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-19T08:11:47.000Z"><a href="/2010/12/19/howto-use-dstat-monitoring-linux-system-resources/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/howto-use-dstat-monitoring-linux-system-resources/">Howto Use Dstat Monitoring Linux System Resources</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>官方网站：<a href="http://dag.wieers.com/rpm/packages/dstat/">http://dag.wieers.com/rpm/packages/dstat/</a></p>
-<p>Dstat的安装：</p>
-<pre><code><figure class="highlight"><pre><span class="comment">wget</span> <span class="comment">http://dag</span>.<span class="comment">wieers</span>.<span class="comment">com/rpm/packag</span> <span class="string">.</span><span class="string">.</span><span class="string">.</span> <span class="comment">1</span>.<span class="comment">rh7</span>.<span class="comment">rf</span>.<span class="comment">noarch</span>.<span class="comment">rpm</span>
-<span class="comment">rpm</span> <span class="literal">-</span><span class="comment">ivh</span> <span class="comment">dstat</span>-<span class="comment">0</span>.<span class="comment">6</span>.<span class="comment">7</span>-<span class="comment">1</span>.<span class="comment">rh7</span>.<span class="comment">rf</span>.<span class="comment">noarch</span>.<span class="comment">rpm</span>
-<span class="comment">wget</span>  <span class="comment">http://dag</span>.<span class="comment">wieers</span>.<span class="comment">com/home</span>-<span class="comment">made/dstat/dstat</span>-<span class="comment">0</span>.<span class="comment">7</span>.<span class="comment">2</span>.<span class="comment">tar</span>.<span class="comment">bz2</span> <span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
-<span class="comment">Dstat的使用：</span>
-<span class="comment">安装完成后，执行</span> <span class="comment">dstat</span> <span class="comment">命令，默认情况它会收集</span>-<span class="comment">cpu</span>-<span class="comment">、</span>-<span class="comment">disk</span>-<span class="comment">、</span>-<span class="comment">net</span>-<span class="comment">、－paging</span>-<span class="comment">、</span>-<span class="comment">system</span>-<span class="comment">的数据，一秒钟收集一次。</span>
-<span class="comment">默认输入</span> <span class="comment">dstat</span> <span class="comment">等于输入了dstat</span> <span class="literal">-</span><span class="comment">cdngy</span> <span class="comment">1或dstat</span> <span class="literal">-</span><span class="comment">a</span> <span class="comment">1；</span>
-<span class="comment">推荐使用</span> <span class="comment">date</span> <span class="comment">&amp;amp;&amp;amp;</span> <span class="comment">dstat</span> <span class="literal">-</span><span class="comment">tclmdny</span> <span class="comment">60</span> <span class="comment">一分钟监视一次（注意调节显示的宽度，或去掉</span>-<span class="comment">t选项）。</span>
-
-<span class="title">[</span><span class="comment">!</span>[<span class="title">]</span><span class="comment">(http://bubbyroom</span>.<span class="comment">com/wp</span>-<span class="comment">content/uploads/2010/12/dstat</span>.<span class="comment">png</span> <span class="comment">"dstat")</span>]<span class="comment">(http://bubbyroom</span>.<span class="comment">com/wp</span>-<span class="comment">content/uploads/2010/12/dstat</span>.<span class="comment">png)</span>
-
-<span class="comment">于SysStat相比，Dstat拥有一个彩色的界面，在手动观察性能状况时，数据比较显眼容易观察；</span>
-<span class="comment">而且Dstat支持即时刷新，譬如：输入</span> <span class="comment">dstat</span> <span class="comment">3，即每三秒收集一次，但最新的数据都会每秒刷新显示。</span>
-<span class="comment">和SysStat相同的是，Dstat也可以收集指定的性能资源。譬如</span> <span class="comment">dstat</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">即显示CPU的使用情况。</span>
-<span class="comment">Dstat</span> <span class="comment">options:</span>
-&lt;<span class="comment">pre</span>&gt;<span class="comment">`</span>-<span class="comment">c</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">cpu</span> <span class="comment">显示CPU情况</span>
-<span class="literal">-</span><span class="comment">C</span> <span class="comment">0</span>,<span class="comment">3</span>,<span class="comment">total</span> <span class="comment">include</span> <span class="comment">cpu0</span>, <span class="comment">cpu3</span> <span class="comment">and</span> <span class="comment">total</span>
-<span class="literal">-</span><span class="comment">d</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">disk</span> <span class="comment">显示磁盘情况</span>
-<span class="literal">-</span><span class="comment">D</span> <span class="comment">total</span>,<span class="comment">hda</span> <span class="comment">include</span> <span class="comment">hda</span> <span class="comment">and</span> <span class="comment">total</span>
-<span class="literal">-</span><span class="comment">g</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">page</span> <span class="comment">enable</span> <span class="comment">page</span> <span class="comment">stats</span>
-<span class="literal">-</span><span class="comment">i</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">int</span> <span class="comment">enable</span> <span class="comment">interrupt</span> <span class="comment">stats</span>
-<span class="literal">-</span><span class="comment">I</span> <span class="comment">5</span>,<span class="comment">eth2</span> <span class="comment">include</span> <span class="comment">int5</span> <span class="comment">and</span> <span class="comment">interrupt</span> <span class="comment">used</span> <span class="comment">by</span> <span class="comment">eth2</span>
-<span class="literal">-</span><span class="comment">l</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">load</span> <span class="comment">enable</span> <span class="comment">load</span> <span class="comment">stats</span>
-<span class="literal">-</span><span class="comment">m</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">mem</span> <span class="comment">显示内存情况</span>
-<span class="literal">-</span><span class="comment">n</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">net</span> <span class="comment">显示网络情况</span>
-<span class="literal">-</span><span class="comment">N</span> <span class="comment">eth1</span>,<span class="comment">total</span> <span class="comment">可以指定网络接口</span>
-<span class="literal">-</span><span class="comment">p</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">proc</span> <span class="comment">enable</span> <span class="comment">process</span> <span class="comment">stats</span>
-<span class="literal">-</span><span class="comment">s</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">swap</span> <span class="comment">显示swap情况</span>
-<span class="literal">-</span><span class="comment">S</span> <span class="comment">swap1</span>,<span class="comment">total</span> <span class="comment">可以指定多个swap</span>
-<span class="literal">-</span><span class="comment">t</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">time</span> <span class="comment">enable</span> <span class="comment">time</span> <span class="comment">counter</span>
-<span class="literal">-</span><span class="comment">y</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">sys</span> <span class="comment">enable</span> <span class="comment">system</span> <span class="comment">stats</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">ipc</span> <span class="comment">报告IPC消息队列和信号量的使用情况</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">lock</span> <span class="comment">enable</span> <span class="comment">lock</span> <span class="comment">stats</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">raw</span> <span class="comment">enable</span> <span class="comment">raw</span> <span class="comment">stats</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">tcp</span> <span class="comment">enable</span> <span class="comment">tcp</span> <span class="comment">stats</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">udp</span> <span class="comment">enable</span> <span class="comment">udp</span> <span class="comment">stats</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">unix</span> <span class="comment">enable</span> <span class="comment">unix</span> <span class="comment">stats</span>
-<span class="literal">-</span><span class="comment">M</span> <span class="comment">stat1</span>,<span class="comment">stat2</span> <span class="comment">enable</span> <span class="comment">external</span> <span class="comment">stats</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">mods</span> <span class="comment">stat1</span>,<span class="comment">stat2</span>
-<span class="literal">-</span><span class="comment">a</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">all</span> <span class="comment">使用</span>-<span class="comment">cdngy</span> <span class="comment">缺省的就是这样显示</span>
-<span class="literal">-</span><span class="comment">f</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">full</span> <span class="comment">使用</span> <span class="literal">-</span><span class="comment">C</span>, <span class="literal">-</span><span class="comment">D</span>, <span class="literal">-</span><span class="comment">I</span>, <span class="literal">-</span><span class="comment">N</span> <span class="comment">and</span> <span class="literal">-</span><span class="comment">S</span> <span class="comment">显示</span>
-<span class="literal">-</span><span class="comment">v</span>, <span class="literal">-</span><span class="literal">-</span><span class="comment">vmstat</span> <span class="comment">使用</span>-<span class="comment">pmgdsc</span> <span class="literal">-</span><span class="comment">D</span> <span class="comment">显示</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">integer</span> <span class="comment">show</span> <span class="comment">integer</span> <span class="comment">values</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">nocolor</span> <span class="comment">disable</span> <span class="comment">colors</span> <span class="comment">(implies</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">noupdate)</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">noheaders</span> <span class="comment">只显示一次表头以后就不显示了</span>,<span class="comment">使用重定向写入文件时很有用</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">noupdate</span> <span class="comment">disable</span> <span class="comment">intermediate</span> <span class="comment">updates</span>
-<span class="literal">-</span><span class="literal">-</span><span class="comment">output</span> <span class="comment">file</span> <span class="comment">写入到CVS文件中`</span>&lt;<span class="comment">/pre</span>&gt;
-<span class="comment">上个运行结果：</span>
-&lt;<span class="comment">pre</span>&gt;<span class="comment">`#</span> <span class="comment">dstat</span>
-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">total</span>-<span class="comment">cpu</span>-<span class="comment">usage</span>-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span> <span class="literal">-</span><span class="comment">dsk/total</span>- <span class="literal">-</span><span class="comment">net/total</span>- <span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">paging</span>-<span class="literal">-</span> <span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">system</span>-<span class="literal">-</span>
-<span class="comment">usr</span> <span class="comment">sys</span> <span class="comment">idl</span> <span class="comment">wai</span> <span class="comment">hiq</span> <span class="comment">siq|_read</span> <span class="comment">_writ|_recv</span> <span class="comment">_send|__in_</span> <span class="comment">_out_|_int_</span> <span class="comment">_csw_</span>
-<span class="comment">13</span> <span class="comment">49</span> <span class="comment">29</span> <span class="comment">8</span> <span class="comment">1</span> <span class="comment">1|</span> <span class="comment">424k</span> <span class="comment">23k|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">275</span> <span class="comment">200</span>
-<span class="comment">0</span> <span class="comment">1</span> <span class="comment">95</span> <span class="comment">3</span> <span class="comment">0</span> <span class="comment">1|8192B</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">297B</span> <span class="comment">70B|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">241</span> <span class="comment">33</span>
-<span class="comment">0</span> <span class="comment">1</span> <span class="comment">99</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">0|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">92B</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">243</span> <span class="comment">14</span>
-<span class="comment">0</span> <span class="comment">1</span> <span class="comment">99</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">0|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">395B</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">0</span> <span class="comment">0</span> <span class="comment">|</span> <span class="comment">244</span> <span class="comment">20`</span>&lt;<span class="comment">/pre</span>&gt;
-<span class="comment">很简单，一看就明白了，</span>
-<span class="comment">要说明的是如果当usr和sys的数值大于80时说明cpu的负载过重，这个软件和vmstat很像</span>,
-<span class="comment">不过和vmstat相比好像少了io部份的显示dstat只能显示磁盘的吞吐量而不是显示负载情况，</span>
-<span class="comment">dstat和几乎所有监控软件一样，只能对整个系统进行监控而不能对某一个进程或某一个程序进行深入分析。</span>
-<span class="comment">如果你知道如何设置，请通知我。</span>
-<span class="comment">我常使用的参数是</span>
-<span class="comment">dstat</span> <span class="literal">-</span><span class="comment">cdlmnpsy</span>
-<span class="comment">在1024×768的屏幕上正好全部显示出来，最好是将上面的命令设置成别名</span>
-<span class="comment">alias</span> <span class="comment">dstat='dstat</span> <span class="literal">-</span><span class="comment">cdlmnpsy'</span>
-
-<span class="comment">常用命令</span>
-&lt;<span class="comment">pre</span>&gt;<span class="comment">`dstat</span> <span class="literal">-</span><span class="comment">cndymlp</span> <span class="literal">-</span><span class="comment">N</span> <span class="comment">total</span> <span class="literal">-</span><span class="comment">D</span> <span class="comment">total</span> <span class="comment">525</span> <span class="comment">统计CPU</span>,<span class="comment">IO</span> <span class="string">,</span><span class="comment">network</span>,<span class="comment">system</span> <span class="comment">load</span>
-<span class="comment">dstat</span> <span class="literal">-</span><span class="comment">cdnsil</span> <span class="literal">-</span><span class="comment">D</span> <span class="comment">hda</span> <span class="literal">-</span><span class="comment">N</span> <span class="comment">eth1</span> <span class="comment">统计网卡1的信息</span>
-<span class="comment">dstat</span> <span class="comment">–vmstat</span> <span class="comment">内存使用情况
-</pre></figure></code></pre>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-19T08:07:32.000Z"><a href="/2010/12/19/linux-smartctl/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/linux-smartctl/">linux smartctl 磁盘健康监测程序</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>什么是S.M.A.R.T.
-SMART是一种磁盘自我分析检测技术，早在90年代末就基本得到了普及
-每一块硬盘（包括IDE、SCSI）在运行的时候，都会将自身的若干参数记录下来
-这些参数包括型号、容量、温度、密度、扇区、寻道时间、传输、误码率等
-硬盘运行了几千小时后，很多内在的物理参数都会发生变化
-某一参数超过报警阈值，则说明硬盘接近损坏
-此时硬盘依然在工作，如果用户不理睬这个报警继续使用
-那么硬盘将变得非常不可靠，随时可能故障</p>
-<p>启用SMART
-SMART是和主板BIOS上相应功能配合的
-要使用SMART，必须先进入到主板BIOS设置里边启动相关设置</p>
-<p>一般从Pentium2级别起的主板，都支持SMART
-BIOS启动以后，就是操作系统级别的事情了
-很遗憾，Windows没有内置SMART相关工具（需要安装第三方工具软件）
-好在Linux上很早就有了SMART支持了
-如果把Linux装在VMware等虚拟机上，在系统启动时候可以看到有个服务启动报错：smartd
-这个服务器就是smart的daemon进程（因为vmware虚拟机的硬盘不支持SMART，所以报错）</p>
-<p>首先通过dmesg工具，确认一下硬盘的设备符号
-例如一个IDE硬盘连接到Primary IDE 总线上的Slave位置，硬盘设备符号是/dev/hdb
-hdb中的h代表IDE，如果显示为sdb，则代表SATA和SCSI
-最后一个字幕b代表Primary总线，第二块硬盘即Slave位置
-确认硬盘是否打开了SMART支持
-smartctl -i /dev/hdb</p>
-<p>例如看到如下返回结果</p>
-<pre><code><figure class="highlight"><pre>[root@3.6.0Biz-46 ~]# smartctl -i /dev/hdb
-smartctl version 5.33 [i386-redhat-linux-gnu] Copyright (C) 2002-4 Bruce Allen
-Home page is http://smartmontools.sourceforge.net/
-=== <span class="operator"><span class="keyword">START</span> <span class="keyword">OF</span> INFORMATION <span class="keyword">SECTION</span> ===
-Device Model: ST380011A
-Serial <span class="keyword">Number</span>: <span class="number">3</span>JVAPRGH
-Firmware Version: <span class="number">3.04</span>
-<span class="keyword">User</span> Capacity: <span class="number">80</span>,<span class="number">026</span>,<span class="number">361</span>,<span class="number">856</span> bytes
-Device <span class="keyword">is</span>: <span class="keyword">In</span> smartctl database [<span class="keyword">for</span> details use: -P <span class="keyword">show</span>]
-ATA Version <span class="keyword">is</span>: <span class="number">6</span>
-ATA Standard <span class="keyword">is</span>: ATA/ATAPI-<span class="number">6</span> T13 <span class="number">1410</span>D revision <span class="number">2</span>
-<span class="keyword">Local</span> <span class="keyword">Time</span> <span class="keyword">is</span>: Tue Apr <span class="number">3</span> <span class="number">15</span>:<span class="number">39</span>:<span class="number">52</span> <span class="number">2007</span> CST
-SMART support <span class="keyword">is</span>: Available - device has SMART capability.
-SMART support <span class="keyword">is</span>: Disabled
-SMART Disabled. Use <span class="keyword">option</span> -s <span class="keyword">with</span> argument <span class="string">'on'</span> <span class="keyword">to</span> enable it.
-<span class="string">`&lt;/pre&gt;
-
-我们可以看到SMART support is: Disabled表示SMART未启用
-
-执行如下命令，启动SMART：
-&lt;pre&gt;`</span>smartctl --smart=<span class="keyword">on</span> --offlineauto=<span class="keyword">on</span> --saveauto=<span class="keyword">on</span> /dev/hdb<span class="string">`&lt;/pre&gt;
-
-例如看到如下返回结果
-&lt;pre&gt;`</span>[root@<span class="number">3.6</span><span class="number">.0</span>Biz-<span class="number">46</span> ~]# smartctl --smart=<span class="keyword">on</span> --offlineauto=<span class="keyword">on</span> --saveauto=<span class="keyword">on</span> /dev/hdb
-smartctl version <span class="number">5.33</span> [i386-redhat-linux-gnu] Copyright (C) <span class="number">2002</span>-<span class="number">4</span> Bruce Allen
-Home page <span class="keyword">is</span> http://smartmontools.sourceforge.net/
-=== <span class="keyword">START</span> <span class="keyword">OF</span> ENABLE/DISABLE COMMANDS <span class="keyword">SECTION</span> ===
-SMART Enabled.
-SMART Attribute Autosave Enabled.
-SMART Automatic Offline Testing Enabled every four hours.<span class="string">`&lt;/pre&gt;
-
-现在硬盘的SMART功能已经被打开
-执行如下命令查看硬盘的健康状况：
-&lt;pre&gt;`</span>smartctl -H /dev/hda<span class="string">`&lt;/pre&gt;
-
-例如可以看到如下结果：
-&lt;pre&gt;`</span>[root@<span class="number">3.6</span><span class="number">.0</span>Biz-<span class="number">46</span> ~]# smartctl -H /dev/hdb
-smartctl version <span class="number">5.33</span> [i386-redhat-linux-gnu] Copyright (C) <span class="number">2002</span>-<span class="number">4</span> Bruce Allen
-Home page <span class="keyword">is</span> http://smartmontools.sourceforge.net/
-=== <span class="keyword">START</span> <span class="keyword">OF</span> <span class="keyword">READ</span> SMART DATA <span class="keyword">SECTION</span> ===
-SMART overall-health self-assessment test result: PASSED<span class="string">`&lt;/pre&gt;
-
-请注意result后边的结果：PASSED，这表示硬盘健康状态良好
-如果这里显示Failure，那么最好立刻给服务器更换硬盘
-SMART只能报告磁盘已经不再健康，但是报警后还能继续运行多久是不确定的
-通常，SMART报警参数是有预留的，磁盘报警后，不会当场坏掉，一般能坚持一段时间
-有的硬盘SMART报警后还继续跑了好几年，有的硬盘SMART报错后几天就坏了
-但是一旦出现报警，侥幸心里是万万不能的……
-执行如下命令可以看到详细的参数：
-&lt;pre&gt;`</span>smartctl -A /dev/hdb<span class="string">`&lt;/pre&gt;
-
-例如可以看到如下结果：
-&lt;pre&gt;`</span>[root@<span class="number">3.6</span><span class="number">.0</span>Biz-<span class="number">46</span> ~]# smartctl -A /dev/hdb
-smartctl version <span class="number">5.33</span> [i386-redhat-linux-gnu] Copyright (C) <span class="number">2002</span>-<span class="number">4</span> Bruce Allen
-Home page <span class="keyword">is</span> http://smartmontools.sourceforge.net/
-=== <span class="keyword">START</span> <span class="keyword">OF</span> <span class="keyword">READ</span> SMART DATA <span class="keyword">SECTION</span> ===
-SMART Attributes Data Structure revision <span class="keyword">number</span>: <span class="number">10</span>
-Vendor Specific SMART Attributes <span class="keyword">with</span> Thresholds:
-ID# ATTRIBUTE_NAME FLAG <span class="keyword">VALUE</span> WORST THRESH TYPE UPDATED WHEN_FAILED RAW_VALUE
-<span class="number">1</span> Raw_Read_Error_Rate <span class="number">0x000f</span> <span class="number">053</span> <span class="number">051</span> <span class="number">006</span> Pre-fail Always - <span class="number">11338710</span>
-<span class="number">3</span> Spin_Up_Time <span class="number">0x0003</span> <span class="number">098</span> <span class="number">097</span> <span class="number">000</span> Pre-fail Always - <span class="number">0</span>
-<span class="number">4</span> Start_Stop_Count <span class="number">0x0032</span> <span class="number">100</span> <span class="number">100</span> <span class="number">020</span> Old_age Always - <span class="number">17</span>
-<span class="number">5</span> Reallocated_Sector_Ct <span class="number">0x0033</span> <span class="number">100</span> <span class="number">100</span> <span class="number">036</span> Pre-fail Always - <span class="number">0</span>
-<span class="number">7</span> Seek_Error_Rate <span class="number">0x000f</span> <span class="number">087</span> <span class="number">060</span> <span class="number">030</span> Pre-fail Always - <span class="number">610059516</span>
-<span class="number">9</span> Power_On_Hours <span class="number">0x0032</span> <span class="number">087</span> <span class="number">087</span> <span class="number">000</span> Old_age Always - <span class="number">11974</span>
-<span class="number">10</span> Spin_Retry_Count <span class="number">0x0013</span> <span class="number">100</span> <span class="number">100</span> <span class="number">097</span> Pre-fail Always - <span class="number">0</span>
-<span class="number">12</span> Power_Cycle_Count <span class="number">0x0032</span> <span class="number">100</span> <span class="number">100</span> <span class="number">020</span> Old_age Always - <span class="number">110</span>
-<span class="number">194</span> Temperature_Celsius <span class="number">0x0022</span> <span class="number">045</span> <span class="number">052</span> <span class="number">000</span> Old_age Always - <span class="number">45</span>
-<span class="number">195</span> Hardware_ECC_Recovered <span class="number">0x001a</span> <span class="number">053</span> <span class="number">051</span> <span class="number">000</span> Old_age Always - <span class="number">11338710</span>
-<span class="number">197</span> Current_Pending_Sector <span class="number">0x0012</span> <span class="number">100</span> <span class="number">100</span> <span class="number">000</span> Old_age Always - <span class="number">0</span>
-<span class="number">198</span> Offline_Uncorrectable <span class="number">0x0010</span> <span class="number">100</span> <span class="number">100</span> <span class="number">000</span> Old_age Offline - <span class="number">0</span>
-<span class="number">199</span> UDMA_CRC_Error_Count <span class="number">0x003e</span> <span class="number">200</span> <span class="number">200</span> <span class="number">000</span> Old_age Always - <span class="number">0</span>
-<span class="number">200</span> Multi_Zone_Error_Rate <span class="number">0x0000</span> <span class="number">100</span> <span class="number">253</span> <span class="number">000</span> Old_age Offline - <span class="number">0</span>
-<span class="number">202</span> TA_Increase_Count <span class="number">0x0032</span> <span class="number">100</span> <span class="number">253</span> <span class="number">000</span> Old_age Always - <span class="number">0</span>
-<span class="string">`&lt;/pre&gt;
-上边列出的参数表中可供进行技术分析和参考，使用下边的命令可以输出完整结果：
-&lt;pre&gt;`</span>smartctl -a /dev/hdb<span class="string">`&lt;/pre&gt;
-
-定期登录到服务器上运行smartctl是比较麻烦的，linux提供了系统进程smartd
-
-编辑配置文件：
-vi /etc/smartd.conf
-这个配置文件中大部分可能是注释掉的说明，只需要和当前硬盘相关的一行写入正确即可：
-/dev/hdb -H -m test@test123123.com
-上边的配置表示smartd以静默状态工作，当SMART中报告PASSED的时候不理睬
-一旦出现Failure，立刻用邮件通知用户指定的邮箱
-
-修改配置后重启服务：
-/etc/init.d/smartd
-即可完成对SMART的全部配置。
-
-linux下硬盘检测工具: smartmontools
-Smartmontools for SCSI硬盘: http://smartmontools.sourceforge.net/smartmontools_scsi.html
-
-简单用法：
-&lt;pre&gt;`</span><span class="number">1</span>、smartctl -a 检查该设备是否已经打开SMART技术。
-<span class="number">2</span>、smartctl -s <span class="keyword">on</span> 如果没有打开SMART技术，使用该命令打开SMART技术。
-<span class="number">3</span>、smartctl -t short 后台检测硬盘，消耗时间短；
-smartctl -t long 后台检测硬盘，消耗时间长；
-smartctl -C -t short 前台检测硬盘，消耗时间短；
-smartctl -C -t long 前台检测硬盘，消耗时间长。
-其实就是利用硬盘SMART的自检程序。
-<span class="number">4</span>、smartctl -X 中断后台检测硬盘。
-<span class="number">5</span>、smartctl -l selftest 显示硬盘检测日志。
-<span class="number">6</span>、smartctl -l error 显示硬盘错误汇总。
-</pre></figure></code></pre>
-<p>其它：<a href="http://www.cyberciti.biz/tips/monitoring-hard-disk-health-with-smartd-under-linux-or-unix-operating-systems.html">http://www.cyberciti.biz/tips/monitoring-hard-disk-health-with-smartd-under-linux-or-unix-operating-systems.html</a>
-<a href="http://www.linuxjournal.com/article/6983">http://www.linuxjournal.com/article/6983</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-19T08:04:01.000Z"><a href="/2010/12/19/linux-user-group-detailed/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/linux-user-group-detailed/">linux 用户user及用户组group 详解</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>一、user相关配置文件</p>
-<pre><code><figure class="highlight"><pre><span class="xml">/etc/passwd
-root:x:</span><span class="number">0</span><span class="xml">:</span><span class="number">0</span><span class="xml">:root:/root:/bin/bash`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-用户名：UID:GID:finger：家目录：shell
-注：UID： </span><span class="number">0</span><span class="xml">即管理员 </span><span class="number">1</span><span class="xml">-</span><span class="number">499</span><span class="xml">系统使用 </span><span class="number">500</span><span class="xml">-</span><span class="number">65535</span><span class="xml">+ 一般用户
-
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`/etc/shadow
-root:</span><span class="variable">$1</span><span class="xml"></span><span class="variable">$jHNFgOBV</span><span class="xml"></span><span class="variable">$br7SAZsvGRyFmySJ9UlUI.:14720:0:99999:7:::</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-用户：加密密码：更改密码日期：不可更改密码天数：需变更日期：过期天数：警告期限：宽限时间：失效日期
-注：日期按</span><span class="number">1970</span><span class="xml">年</span><span class="number">1</span><span class="xml">月</span><span class="number">1</span><span class="xml">日作为起初日期。
-
-二、用户组相关配置
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`/etc/group
-/etc/gshadow`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-三、管理用户（user）的工具或命令
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`useradd adduser 注：添加用户 
-passwd 注：为用户设置密码
-usermod 注：修改用户命令，可以通过usermod 来修改登录名、用户的家目录等等；
-pwconv 注：同步用户从/etc/passwd 到/etc/shadow
-pwck 注：pwck是校验用户配置文件/etc/passwd 和/etc/shadow 文件内容是否合法或完整；
-pwunconv 注：是pwcov 的立逆向操作，是从/etc/shadow和 /etc/passwd 创建/etc/passwd ，然后会删除 /etc/shadow 文件；
-finger 注：查看用户信息工具
-id 注：查看用户的UID、GID及所归属的用户组
-chfn 注：更改用户信息工具
-su 注：用户切换工具
-sudo 注：sudo 是通过另一个用户来执行命令（execute a command as another user），su 是用来切换用户，然后通过切换到的用户来完成相应的任务，但sudo 能后面直接执行命令，比如sudo 不需要root 密码就可以执行root 赋与的执行只有root才能执行相应的命令；但得通过visudo 来编辑/etc/sudoers来实现；
-visudo 注：visodo 是编辑 /etc/sudoers 的命令；也可以不用这个命令，直接用vi 来编辑 /etc/sudoers 的效果是一样的；
-sudoedit 注：和sudo 功能差不多；`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-四、管理用户组（group）的工具或命令
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`groupadd 注：添加用户组；
-groupdel 注：删除用户组；
-groupmod 注：修改用户组信息
-groups 注：显示用户所属的用户组
-grpck
-grpconv 注：通过/etc/group和/etc/gshadow 的文件内容来同步或创建/etc/gshadow ，如果/etc/gshadow 不存在则创建；
-grpunconv 注：通过/etc/group 和/etc/gshadow 文件内容来同步或创建/etc/group ，然后删除gshadow文件；`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="number">1</span><span class="xml">、useradd 命令详解
-功能说明：建立用户帐号。
-语　　法：useradd [-mMnr][-c <span class="tag">&lt;<span class="title">备注</span>&gt;</span>][-d <span class="tag">&lt;<span class="title">登入目录</span>&gt;</span>][-e <span class="tag">&lt;<span class="title">有效期限</span>&gt;</span>][-f <span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span>][-g <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-G <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-s ][-u ][用户帐号] 或 useradd -D [-b][-e <span class="tag">&lt;<span class="title">有效期限</span>&gt;</span>][-f <span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span>][-g <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-G <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-s ]
-
-补充说明：useradd可用来建立用户帐号。帐号建好之后，再用passwd设定帐号的密码．而可用userdel删除帐号。使用useradd指令所建立的帐号，实际上是保存在/etc/passwd文本文件中。
-参　　数：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-c<span class="tag">&lt;<span class="title">备注</span>&gt;</span> 加上备注文字。备注文字会保存在passwd的备注栏位中。
--d<span class="tag">&lt;<span class="title">登入目录</span>&gt;</span> 指定用户登入时的启始目录。
--D 　变更预设值．
--e<span class="tag">&lt;<span class="title">有效期限</span>&gt;</span> 指定帐号的有效期限。
--f<span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span> 指定在密码过期后多少天即关闭该帐号。
--g<span class="tag">&lt;<span class="title">群组</span>&gt;</span> 指定用户所属的群组。
--G<span class="tag">&lt;<span class="title">群组</span>&gt;</span> 指定用户所属的附加群组。
--m 　自动建立用户的登入目录。
--M 　不要自动建立用户的登入目录。
--n 　取消建立以用户名称为名的群组．
--r 　建立系统帐号。
--s　 　指定用户登入后所使用的shell。
--u 　指定用户ID。`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="number">2</span><span class="xml">、usermod
-功能说明：修改用户帐号。
-语　　法：usermod [-LU][-c <span class="tag">&lt;<span class="title">备注</span>&gt;</span>][-d <span class="tag">&lt;<span class="title">登入目录</span>&gt;</span>][-e <span class="tag">&lt;<span class="title">有效期限</span>&gt;</span>][-f <span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span>][-g <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-G <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-l <span class="tag">&lt;<span class="title">帐号名称</span>&gt;</span>][-s ][-u ][用户帐号]
-补充说明：usermod可用来修改用户帐号的各项设定。
-参　　数：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-c<span class="tag">&lt;<span class="title">备注</span>&gt;</span> 修改用户帐号的备注文字。
--d登入目录&gt; 修改用户登入时的目录。
--e<span class="tag">&lt;<span class="title">有效期限</span>&gt;</span> 修改帐号的有效期限。
--f<span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span> 修改在密码过期后多少天即关闭该帐号。
--g<span class="tag">&lt;<span class="title">群组</span>&gt;</span> 修改用户所属的群组。
--G<span class="tag">&lt;<span class="title">群组</span>&gt;</span> 修改用户所属的附加群组。
--l<span class="tag">&lt;<span class="title">帐号名称</span>&gt;</span> 修改用户帐号名称。
--L 　锁定用户密码，使密码无效。
--s 　修改用户登入后所使用的shell。
--u 　修改用户ID。
--U 　解除密码锁定。`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="number">3</span><span class="xml">、pwconv pwunconv
-功能说明：开启用户的投影密码。
-语　　法：pwconv
-补充说明：Linux系统里的用户和群组密码，分别存放在名称为passwd和group的文件中，　这两个文件位于/etc目录下。因系统运作所需，任 何人都得以读取它们，造成安全上的破绽。投影密码将文件内的密码改存在/etc目录下的shadow和gshadow文件内，只允许系统管理者读取，同时 把原密码置换为"x"字符，有效的强化了系统的安全性。
-功能说明：关闭用户的投影密码。
-语　　法：pwunconv
-补充说明：执行pwunconv指令可以关闭用户投影密码，它会把密码从shadow文件内，重回存到passwd文件里。
-
-</span><span class="number">4</span><span class="xml">、 pwck
-功能：检查用户密码文件的完整性（/etc/passwd以及/etc/shadow文件）。
-用法：pwck [-q] [-s] [passwd [ shadow ]]
-pwck [-q] [-r] [passwd shadow]
-参数：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-q：只显示错误信息，警告不显示
--s：按id排序
--r：只读方式检查`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="number">5</span><span class="xml">、grpck命令
-功能：检查用户组及密码文件的完整性（etc/group以及/etc/gshadow文件）
-用法： grpck [-r] [group [ shadow ]]
-grpck [-s] [group [ shadow ]]
-参数：与pwck一样
-
-</span><span class="number">6</span><span class="xml">、finger
-功能说明：查找并显示用户信息。
-语　　法：finger [-lmsp][帐号名称...]
-补充说明：finger指令会去查找，并显示指定帐号的用户相关信息，包括本地与远端主机的用户皆可，帐号名称没有大小写的差别。单独执行finger指 令，它会显示本地主机现在所有的用户的登陆信息，包括帐号名称，真实姓名，登入终端机，闲置时间，登入时间以及地址和电话。
-参　　数：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-l 　列出该用户的帐号名称，真实姓名，用户专属目录，登入所用的Shell，登入时间，转信地址，电子邮件状态，还有计划文件和方案文件内容。
--m 　排除查找用户的真实姓名。
--s 　列出该用户的帐号名称，真实姓名，登入终端机，闲置时间，登入时间以及地址和电话。
--p 　列出该用户的帐号名称，真实姓名，用户专属目录，登入所用的Shell，登入时间，转信地址，电子邮件状态，但不显示该用户的计划文件和方案文件内容。`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="number">7</span><span class="xml">、su
-</span><span class="number">1.</span><span class="xml">作用
-u的作用是变更为其它使用者的身份，超级用户除外，需要键入该使用者的密码。
-
-</span><span class="number">2.</span><span class="xml">格式
-u [选项]... [-] [USER [ARG]...]
-
-</span><span class="number">3.</span><span class="xml">主要参数
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-f ， --fast：不必读启动文件（如 csh.cshrc 等），仅用于csh或tcsh两种Shell。
--l ， --login：加了这个参数之后，就好像是重新登陆为该使用者一样，大部分环境变量（例如HOME、SHELL和USER等）都是以该使用者（USER）为主，并且工作目录也会改变。如果没有指定USER，缺省情况是root。
--m， -p ，--preserve-environment：执行su时不改变环境变数。
--c command：变更账号为USER的使用者，并执行指令（command）后再变回原来使用者。
-USER：欲变更的使用者账号，ARG传入新的Shell参数`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="number">8</span><span class="xml">、sudo
-功能说明：以其他身份来执行指令。
-语　　法：sudo [-bhHpV][-s ][-u <span class="tag">&lt;<span class="title">用户</span>&gt;</span>][指令] 或 sudo [-klv]
-补充说明：sudo 可让用户以其他的身份来执行指定的指令，预设的身份为root。在/etc/sudoers中设置了可执行sudo指令的用户。若其未经授权的用户企图使 用sudo，则会发出警告的邮件给管理员。用户使用sudo时，必须先输入密码，之后有</span><span class="number">5</span><span class="xml">分钟的有效期限，超过期限则必须重新输入密码。
-参　　数：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-b 　在后台执行指令。
--h 　显示帮助。
--H 　将HOME环境变量设为新身份的HOME环境变量。
--k 　结束密码的有效期限，也就是下次再执行sudo时便需要输入密码。
--l 　列出目前用户可执行与无法执行的指令。
--p 　改变询问密码的提示符号。
--s 　执行指定的shell。
--u<span class="tag">&lt;<span class="title">用户</span>&gt;</span> 以指定的用户作为新的身份。若不加上此参数，则预设以root作为新的身份。
--v 　延长密码有效期限</span><span class="number">5</span><span class="xml">分钟。
--V 　显示版本信息。`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="number">9</span><span class="xml">、groupadd
-名称 groupadd - 建 立 新 群 组
-语法
-groupadd [-g gid [-o]] [-r] [-f] group
-参数：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-g gid group's
-ID值。除非使用-o参数不然该值必须是唯一，不可相同。数值不可为负。预设为最小不得小于</span><span class="number">500</span><span class="xml">而逐次增加。</span><span class="number">0</span><span class="xml">~</span><span class="number">499</span><span class="xml">传统上是保留给系统帐号使用。
--r
-此参数是用来建立系统帐号。的UID会比定义在系统档上/etc/login.defs.的UID_MIN来的小。注意useradd此用法所建立的帐号 不会建立使用者目录，也不会在乎纪录在/etc/login.defs.的定义值。如果你想要有使用者目录须额外指定-m参数来建立系统帐号。这是 REDHAT额外增设的选项。它会自动帮你选定一个小于</span><span class="number">499</span><span class="xml">的gif不需要再加上-g参数。这是REDHAT额外增设的选项。
--f
-Thisisforceflag.新增一个已经存在的群组帐号，系统会出现错误讯息然后结束groupadd。如果是这样的情况，不会新增这个群组(如果 是这个情况下，系统不会再新增一次)也可同时加上-g选项当你加上一个gid，此时gid就不用是唯一值，可不加-o参数，建好群组后会显结果 (addingagroupasneither-gor-ooptionswerespecified).
-这是REDHAT额外增设的选项`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="number">10</span><span class="xml">、groupmod
-功能说明：更改群组识别码或名称。
-语　　法：groupmod [-g <span class="tag">&lt;<span class="title">群组识别码</span>&gt;</span> <span class="tag">&lt;<span class="title">-o</span>&gt;</span>][-n <span class="tag">&lt;<span class="title">新群组名称</span>&gt;</span>][群组名称]
-补充说明：需要更改群组的识别码或名称时，可用groupmod指令来完成这项工作。
-参　　数：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-g <span class="tag">&lt;<span class="title">群组识别码</span>&gt;</span> 设置欲使用的群组识别码。
--o 　重复使用群组识别码。
--n <span class="tag">&lt;<span class="title">新群组名称</span>&gt;</span> 设置欲使用的群组名称。</span>
-</pre></figure></code></pre>
-<p>参考：
-鸟哥一书
-互联网
-<a href="http://www.linuxsir.org/main/?q=node/91">http://www.linuxsir.org/main/?q=node/91</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-
-  <nav id="pagination">
-  
-  
-    <a href="/tags/linux/page/2/" class="alignright next">下一页</a>
-  
-  <div class="clearfix"></div>
-</nav>
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
@@ -1297,354 +328,15 @@ Thisisforceflag.新增一个已经存在的群组帐号，系统会出现错误�
 
 
   
-<div class="widget tag">
-  <h3 class="title">标签</h3>
-  <ul class="entry">
-  
-    <li><a href="/tags/1032/">1032</a><small>1</small></li>
-  
-    <li><a href="/tags/1236/">1236</a><small>1</small></li>
-  
-    <li><a href="/tags/403/">403</a><small>1</small></li>
-  
-    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
-  
-    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
-  
-    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
-  
-    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
-  
-    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
-  
-    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
-  
-    <li><a href="/tags/acl/">acl</a><small>2</small></li>
-  
-    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
-  
-    <li><a href="/tags/apache/">apache</a><small>8</small></li>
-  
-    <li><a href="/tags/arp/">arp</a><small>1</small></li>
-  
-    <li><a href="/tags/awk/">awk</a><small>4</small></li>
-  
-    <li><a href="/tags/bash/">bash</a><small>2</small></li>
-  
-    <li><a href="/tags/best/">best</a><small>1</small></li>
-  
-    <li><a href="/tags/binding/">binding</a><small>1</small></li>
-  
-    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
-  
-    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
-  
-    <li><a href="/tags/browser/">browser</a><small>1</small></li>
-  
-    <li><a href="/tags/cache/">cache</a><small>1</small></li>
-  
-    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
-  
-    <li><a href="/tags/centos/">centos</a><small>8</small></li>
-  
-    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
-  
-    <li><a href="/tags/chown/">chown</a><small>1</small></li>
-  
-    <li><a href="/tags/commands/">commands</a><small>1</small></li>
-  
-    <li><a href="/tags/content/">content</a><small>1</small></li>
-  
-    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
-  
-    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
-  
-    <li><a href="/tags/creating/">creating</a><small>1</small></li>
-  
-    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
-  
-    <li><a href="/tags/dell/">dell</a><small>1</small></li>
-  
-    <li><a href="/tags/diff/">diff</a><small>1</small></li>
-  
-    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
-  
-    <li><a href="/tags/du/">du</a><small>1</small></li>
-  
-    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
-  
-    <li><a href="/tags/end/">end</a><small>1</small></li>
-  
-    <li><a href="/tags/epel/">epel</a><small>1</small></li>
-  
-    <li><a href="/tags/etag/">etag</a><small>1</small></li>
-  
-    <li><a href="/tags/expires/">expires</a><small>1</small></li>
-  
-    <li><a href="/tags/find/">find</a><small>1</small></li>
-  
-    <li><a href="/tags/for-1/">for</a><small>1</small></li>
-  
-    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
-  
-    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
-  
-    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
-  
-    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
-  
-    <li><a href="/tags/group/">group</a><small>1</small></li>
-  
-    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
-  
-    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
-  
-    <li><a href="/tags/howto/">howto</a><small>2</small></li>
-  
-    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
-  
-    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
-  
-    <li><a href="/tags/if/">if</a><small>2</small></li>
-  
-    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
-  
-    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
-  
-    <li><a href="/tags/init/">init</a><small>1</small></li>
-  
-    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
-  
-    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
-  
-    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
-  
-    <li><a href="/tags/jk/">jk</a><small>1</small></li>
-  
-    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
-  
-    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
-  
-    <li><a href="/tags/kick/">kick</a><small>1</small></li>
-  
-    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
-  
-    <li><a href="/tags/linux/">linux</a><small>18</small></li>
-  
-    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
-  
-    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
-  
-    <li><a href="/tags/master/">master</a><small>2</small></li>
-  
-    <li><a href="/tags/metric/">metric</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
-  
-    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
-  
-    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
-  
-    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
-  
-    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
-  
-    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
-  
-    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
-  
-    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
-  
-    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
-  
-    <li><a href="/tags/packet/">packet</a><small>1</small></li>
-  
-    <li><a href="/tags/pam/">pam</a><small>1</small></li>
-  
-    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
-  
-    <li><a href="/tags/perl/">perl</a><small>1</small></li>
-  
-    <li><a href="/tags/permission/">permission</a><small>1</small></li>
-  
-    <li><a href="/tags/php-1/">php</a><small>2</small></li>
-  
-    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
-  
-    <li><a href="/tags/pil/">pil</a><small>1</small></li>
-  
-    <li><a href="/tags/port/">port</a><small>1</small></li>
-  
-    <li><a href="/tags/practices/">practices</a><small>1</small></li>
-  
-    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
-  
-    <li><a href="/tags/ps/">ps</a><small>2</small></li>
-  
-    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
-  
-    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
-  
-    <li><a href="/tags/python-1/">python</a><small>3</small></li>
-  
-    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
-  
-    <li><a href="/tags/quick/">quick</a><small>1</small></li>
-  
-    <li><a href="/tags/r410/">r410</a><small>1</small></li>
-  
-    <li><a href="/tags/r710/">r710</a><small>1</small></li>
-  
-    <li><a href="/tags/raw/">raw</a><small>1</small></li>
-  
-    <li><a href="/tags/referer/">referer</a><small>1</small></li>
-  
-    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
-  
-    <li><a href="/tags/repo/">repo</a><small>1</small></li>
-  
-    <li><a href="/tags/resources/">resources</a><small>1</small></li>
-  
-    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
-  
-    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
-  
-    <li><a href="/tags/sar/">sar</a><small>1</small></li>
-  
-    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
-  
-    <li><a href="/tags/sed/">sed</a><small>4</small></li>
-  
-    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
-  
-    <li><a href="/tags/sending/">sending</a><small>1</small></li>
-  
-    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
-  
-    <li><a href="/tags/shell/">shell</a><small>2</small></li>
-  
-    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
-  
-    <li><a href="/tags/slave/">slave</a><small>2</small></li>
-  
-    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
-  
-    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
-  
-    <li><a href="/tags/spec/">spec</a><small>2</small></li>
-  
-    <li><a href="/tags/squid/">squid</a><small>1</small></li>
-  
-    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
-  
-    <li><a href="/tags/system/">system</a><small>1</small></li>
-  
-    <li><a href="/tags/tar/">tar</a><small>1</small></li>
-  
-    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
-  
-    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
-  
-    <li><a href="/tags/tools/">tools</a><small>1</small></li>
-  
-    <li><a href="/tags/top/">top</a><small>1</small></li>
-  
-    <li><a href="/tags/tree/">tree</a><small>1</small></li>
-  
-    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
-  
-    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
-  
-    <li><a href="/tags/user/">user</a><small>2</small></li>
-  
-    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
-  
-    <li><a href="/tags/vim/">vim</a><small>2</small></li>
-  
-    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
-  
-    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/while/">while</a><small>1</small></li>
-  
-    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
-  
-    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
-  
-    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
-  
-    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
-  
-    <li><a href="/tags/yum/">yum</a><small>10</small></li>
-  
-    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
-  
-    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
-  
-    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
-  
-    <li><a href="/tags/优化/">优化</a><small>1</small></li>
-  
-    <li><a href="/tags/内核/">内核</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
-  
-    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
-  
-    <li><a href="/tags/参考/">参考</a><small>1</small></li>
-  
-    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
-  
-    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
-  
-    <li><a href="/tags/对比/">对比</a><small>1</small></li>
-  
-    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
-  
-    <li><a href="/tags/日志/">日志</a><small>2</small></li>
-  
-    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
-  
-    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
-  
-    <li><a href="/tags/管理/">管理</a><small>1</small></li>
-  
-    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
-  
-    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
-  
-    <li><a href="/tags/老板/">老板</a><small>1</small></li>
-  
-    <li><a href="/tags/认证/">认证</a><small>1</small></li>
-  
-    <li><a href="/tags/详解/">详解</a><small>3</small></li>
-  
-    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
-  
-    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
-  
-    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
-  
-  </ul>
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Cache-control/" style="font-size: 16.75px;">Cache-control</a><a href="/tags/Cluster-bacst/" style="font-size: 12.00px;">Cluster-bacst</a><a href="/tags/Header-V3-DSA-signature/" style="font-size: 15.75px;">Header V3 DSA signature</a><a href="/tags/object-Object/" style="font-size: 14.75px;">[object Object]</a><a href="/tags/apache/" style="font-size: 19.50px;">apache</a><a href="/tags/awk/" style="font-size: 18.25px;">awk</a><a href="/tags/bash/" style="font-size: 17.00px;">bash</a><a href="/tags/browser/" style="font-size: 13.75px;">browser</a><a href="/tags/cache/" style="font-size: 14.00px;">cache</a><a href="/tags/cdn/" style="font-size: 16.25px;">cdn</a><a href="/tags/centos/" style="font-size: 19.25px;">centos</a><a href="/tags/cpan/" style="font-size: 12.75px;">cpan</a><a href="/tags/cpanm/" style="font-size: 12.25px;">cpanm</a><a href="/tags/etag/" style="font-size: 14.25px;">etag</a><a href="/tags/expires/" style="font-size: 13.00px;">expires</a><a href="/tags/foreman/" style="font-size: 15.25px;">foreman</a><a href="/tags/gzip/" style="font-size: 10.50px;">gzip</a><a href="/tags/libmemcached/" style="font-size: 15.00px;">libmemcached</a><a href="/tags/mod_cband/" style="font-size: 11.00px;">mod_cband</a><a href="/tags/mod_limitipconn/" style="font-size: 12.50px;">mod_limitipconn</a><a href="/tags/moudles/" style="font-size: 10.25px;">moudles</a><a href="/tags/mysql/" style="font-size: 18.75px;">mysql</a><a href="/tags/nginx/" style="font-size: 18.00px;">nginx</a><a href="/tags/php-1/" style="font-size: 16.50px;">php</a><a href="/tags/php-fpm/" style="font-size: 17.50px;">php-fpm</a><a href="/tags/puppet/" style="font-size: 19.00px;">puppet</a><a href="/tags/python26/" style="font-size: 15.50px;">python2.6</a><a href="/tags/referer/" style="font-size: 11.25px;">referer</a><a href="/tags/repo/" style="font-size: 16.00px;">repo</a><a href="/tags/ruby/" style="font-size: 14.50px;">ruby</a><a href="/tags/shell/" style="font-size: 17.25px;">shell</a><a href="/tags/shtml/" style="font-size: 11.50px;">shtml</a><a href="/tags/ssi/" style="font-size: 11.75px;">ssi</a><a href="/tags/tomcat/" style="font-size: 18.50px;">tomcat</a><a href="/tags/yum/" style="font-size: 19.75px;">yum</a><a href="/tags/单引号/" style="font-size: 13.25px;">单引号</a><a href="/tags/双引号/" style="font-size: 13.50px;">双引号</a><a href="/tags/环境变量/" style="font-size: 10.00px;">环境变量</a><a href="/tags/详解/" style="font-size: 17.75px;">详解</a><a href="/tags/过滤日志/" style="font-size: 10.75px;">过滤日志</a>
+  </div>
 </div>
 
 
   
-
 </aside>
     <div class="clearfix"></div>
   </div>

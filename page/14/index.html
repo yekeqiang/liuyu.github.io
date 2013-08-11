@@ -1,0 +1,444 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 14 页 | Liuyu blog</title>
+  <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="Puppet cdn AutoMate">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Liuyu blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Liuyu blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Liuyu blog</a></h1>
+  <h2><a href="/">Puppet in action</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:32:25.000Z"><a href="/2010/12/19/rhel-use-centos-yum/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/rhel-use-centos-yum/">rhel howto use centos yum ?</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>rhel服务器可以使用yum更新，但需要先卸载原先的yum，并且安装新的yum，然后可以更新。</p>
+<p>1 卸载原先的yum
+rpm -aq|grep yum|xargs rpm -e --nodeps
+如果有卸载不了的，试试 --nodeps
+如果是定义的安装包，试试 --allmatches</p>
+<p>2 下载新的yum，并且安装</p>
+<pre><code><figure class="highlight"><pre>wget http://centos<span class="preprocessor">.ustc</span><span class="preprocessor">.edu</span><span class="preprocessor">.cn</span>/centos/<span class="number">5.3</span>/os/i386/CentOS/yum-<span class="number">3.2</span><span class="number">.19</span>-<span class="number">18.</span>el5<span class="preprocessor">.centos</span><span class="preprocessor">.noarch</span><span class="preprocessor">.rpm</span>
+wget http://centos<span class="preprocessor">.ustc</span><span class="preprocessor">.edu</span><span class="preprocessor">.cn</span>/centos/<span class="number">5.3</span>/os/i386/CentOS/yum-metadata-parser-<span class="number">1.1</span><span class="number">.2</span>-<span class="number">2.</span>el5<span class="preprocessor">.i</span>386<span class="preprocessor">.rpm</span>
+wget http://mirror<span class="preprocessor">.centos</span><span class="preprocessor">.org</span>/centos-<span class="number">5</span>/<span class="number">5.3</span>/os/i386/CentOS/yum-fastestmirror-<span class="number">1.1</span><span class="number">.16</span>-<span class="number">13.</span>el5<span class="preprocessor">.centos</span><span class="preprocessor">.noarch</span><span class="preprocessor">.rpm</span>
+rpm -ivh yum-*`&lt;/pre&gt;
+
+<span class="number">4</span> 更改yum源
+&lt;pre&gt;`cd /etc/yum<span class="preprocessor">.repos</span><span class="preprocessor">.d</span>/
+wget http://docs<span class="preprocessor">.linuxtone</span><span class="preprocessor">.org</span>/soft/lemp/CentOS-Base<span class="preprocessor">.repo</span>`&lt;/pre&gt;
+
+注：别的 centos源要把repo文件里的 $releasever 换成版本号，比如换成<span class="number">5</span>
+引用
+&lt;pre&gt;`baseurl=http://centos<span class="preprocessor">.ustc</span><span class="preprocessor">.edu</span><span class="preprocessor">.cn</span>/centos/$releasever/os/$basearch/
+变成：
+baseurl=http://centos<span class="preprocessor">.ustc</span><span class="preprocessor">.edu</span><span class="preprocessor">.cn</span>/centos/<span class="number">5</span>/os/$basearch/
+</pre></figure></code></pre>
+<p>5 全部更新
+yum -y update</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:30:14.000Z"><a href="/2010/12/19/vim-editor-save-file-without-root-permission/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/vim-editor-save-file-without-root-permission/">vi编辑文件保存时没有root权限</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>使用普通用户编辑nginx.conf 等配置文件：</p>
+<p><a href="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-1.jpg"><img src="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-1.jpg" alt="" title="vim-not-root-1"></a></p>
+<p>保存的时候会提示：没有Root Permission
+可以用如下方法解决：
+保存时加上：
+:w !sudo tee %</p>
+<p><a href="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-2.jpg"><img src="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-2.jpg" alt="" title="vim-not-root-2"></a></p>
+<p>我这里有一个问题。没有配置sudo权限。
+用sudo时提示&quot;xxx is not in the sudoers file. This incident will be reported.其中XXX是你的用户名，也就是你的用户名没有权限使用sudo,我们只要修改一下/etc/sudoers文件就行了。下面是修改方 法：
+1）进入超级用户模式。也就是输入&quot;su -&quot;,系统会让你输入超级用户密码，输入密码后就进入了超级用户模式。（当然，你也可以直接用root用）
+2）添加文件的写权限。也就是输入命令&quot;chmod u+w /etc/sudoers&quot;。
+3）编辑/etc/sudoers文件。也就是输入命令&quot;vim /etc/sudoers&quot;,输入&quot;i&quot;进入编辑模式，找到这一 行：&quot;root ALL=(ALL) ALL&quot;在起下面添加&quot;xxx ALL=(ALL) ALL&quot;(这里的xxx是你的用户名)，然后保存（就是先按一 下Esc键，然后输入&quot;:wq&quot;）退出。
+4）撤销文件的写权限。也就是输入命令&quot;chmod u-w /etc/sudoers&quot;。
+再次保存：</p>
+<p><a href="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-3.jpg"><img src="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-3.jpg" alt="" title="vim-not-root-3"></a></p>
+<p>查看是否成功：
+$ grep sudo nginx.conf</p>
+<h1>test :w !sudo tee %</h1>
+<p>参考：<a href="http://www.cyberciti.biz/faq/vim-vi-text-editor-save-file-without-root-permission/">http://www.cyberciti.biz/faq/vim-vi-text-editor-save-file-without-root-permission/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:16:30.000Z"><a href="/2010/12/19/linux-tools/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-tools/">Linux一些工具整理</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>替代rsync bbcp <a href="http://www.slac.stanford.edu/~abh/bbcp/">http://www.slac.stanford.edu/~abh/bbcp/</a>
+同步：<a href="http://code.google.com/p/sersync/">http://code.google.com/p/sersync/</a>
+图片处理：imagemagick <a href="http://www.imagemagick.org/script/index.php">http://www.imagemagick.org/script/index.php</a>
+替代品(速度快15%): GraphicsMagick <a href="http://www.graphicsmagick.org/">http://www.graphicsmagick.org/</a></p>
+<p>系统管理工具：ipmitool 远程开关机并监控温度等状态
+内存检测工具：kmemcheck <a href="http://www.ibm.com/developerworks/cn/linux/l-cn-kmemcheck/index.html?ca=drs-cn-1119">http://www.ibm.com/developerworks/cn/linux/l-cn-kmemcheck/index.html?ca=drs-cn-1119</a>
+检测漏洞和后门：Rootkit Hunter和Chkrootkit
+性能测试工具：sysbench <a href="http://www.ningoo.net/html/2009/performance_test_tool_sysbench.html">http://www.ningoo.net/html/2009/performance_test_tool_sysbench.html</a>
+网络备份工具: bacula
+测试硬盘性能：iozone</p>
+<p>linux分区修复软件: Testdisk <a href="http://www.php-oa.com/2009/02/13/testdisk.html">http://www.php-oa.com/2009/02/13/testdisk.html</a>
+用Google App Engine做个人代理服务器：<a href="http://blog.chinaunix.net/u/249/showart.php?id=2212119">http://blog.chinaunix.net/u/249/showart.php?id=2212119</a></p>
+<p>INNODB备份：xtrabackup
+MySQL 优化工具 MySQLTuner <a href="http://github.com/rackerhacker/MySQLTuner-perl">http://github.com/rackerhacker/MySQLTuner-perl</a>
+MySQL 监控工具 mytop <a href="http://jeremy.zawodny.com/mysql/mytop/">http://jeremy.zawodny.com/mysql/mytop/</a></p>
+<p>服务器统一配置管理：Cfengine
+社交网络平台上创建的免费的企业级协作套件：CubeTree （简介、活动、微博、WIKI、BLOG、共享、搜索）</p>
+<p>自动化处理：
+opscode <a href="http://www.opscode.com/">http://www.opscode.com/</a>
+puppet <a href="http://reductivelabs.com/products/puppet/">http://reductivelabs.com/products/puppet/</a>
+punc</p>
+<p>集群文件系统：GlusterFS
+Eucalyptus系统 Eucalyptus是一套开源系统，可构建企业内部的私有云及混合云，把电脑、网络和存储等数据中心资源纳入一朵可由IT部门控制并定制的云</p>
+<p>流量：
+speedometer查看流量
+wget <a href="http://excess.org/speedometer/speedometer.py">http://excess.org/speedometer/speedometer.py</a>
+yum install python-urwid
+chmod 755 speedometer
+./speedometer.py -rx eth0 -c -tx eth0</p>
+<p>流量统计： piwik <a href="http://piwik.org/demo/">http://piwik.org/demo/</a>
+Crash 工具分析 Linux dump 文件 <a href="http://www.ibm.com/developerworks/cn/linux/l-cn-dumpanalyse/index.html?ca=drs-cn-0329">http://www.ibm.com/developerworks/cn/linux/l-cn-dumpanalyse/index.html?ca=drs-cn-0329</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:15:12.000Z"><a href="/2010/12/19/tcpdump-exclude-port/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/tcpdump-exclude-port/">tcpdump过滤某个端口</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>TcpDump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供 and、or、not等逻辑语句来帮助你去掉无用的信息。tcpdump就是一种免费的网络分析工具</p>
+<p>一般我们使用Tcpdump时都是使用：</p>
+<pre><code><figure class="highlight"><pre><span class="xml">tcpdump -i ethx `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+这样可以查看网卡ethx上的所有数据包传送过程，但你会发现相当的多。你都看不过来。因此我们需要过滤。
+
+下面这条命令就是查看</span><span class="number">80</span><span class="xml">端口的访问量，进行排序，取前</span><span class="number">20</span><span class="xml">位
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tcpdump -i eth0 -tnn dst port </span><span class="number">80</span><span class="xml"> -c </span><span class="number">1000</span><span class="xml"> | awk -F"." '{print </span><span class="variable">$1</span><span class="xml">"."</span><span class="variable">$2</span><span class="xml">"."</span><span class="variable">$3</span><span class="xml">"."</span><span class="variable">$4}</span><span class="xml">' | sort | uniq -c | sort -nr |head -</span><span class="number">20</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+但也可以使用过滤某个端口的方法进行查看
+如：过滤掉</span><span class="number">22</span><span class="xml">端口
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tcpdump -i eth1  -s </span><span class="number">1500</span><span class="xml"> port not </span><span class="number">22</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+过滤</span><span class="number">22</span><span class="xml">和</span><span class="number">53</span><span class="xml">
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tcpdump -i eth1  -s </span><span class="number">1500</span><span class="xml"> port not </span><span class="number">22</span><span class="xml"> and port not </span><span class="number">53</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+
+过滤</span><span class="number">22</span><span class="xml">并指定来源ip
+<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tcpdump -i eth1 port not </span><span class="number">22</span><span class="xml"> and host </span><span class="number">1.2</span><span class="xml"></span><span class="number">.3</span><span class="xml"></span><span class="number">.4</span><span class="xml"> </span>
+</pre></figure></code></pre>
+<p>参考：
+<a href="http://www.cyberciti.biz/faq/linux-monitor-all-network-traffic-except-ssh-port-22/">http://www.cyberciti.biz/faq/linux-monitor-all-network-traffic-except-ssh-port-22/</a>
+<a href="http://www.opendoc.com.cn/linuxtools/system_command.html">http://www.opendoc.com.cn/linuxtools/system_command.html</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:10:49.000Z"><a href="/2010/12/19/linux-find-commands/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-find-commands/">linux find查找命令大全</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>linux 查找文加命令，相信对初学者很有用，下面是一部分常用的linux查找命令。</p>
+<p>grep命令：
+grep -i pattern files ：不区分大小写地搜索。默认情况区分大小写，
+grep -l pattern files ：只列出匹配的文件名，
+grep -L pattern files ：列出不匹配的文件名，
+grep -w pattern files ：只匹配整个单词，而不是字符串的一部分（如匹配‘magic’，而不是‘magical’），
+grep -C number pattern files ：匹配的上下文分别显示[number]行，
+grep pattern1 | pattern2 files ：显示匹配 pattern1 或 pattern2 的行，
+grep pattern1 files | grep pattern2 ：显示既匹配 pattern1 又匹配 pattern2 的行。
+example:grep -i martin@martin-desktop:~$ grep ShopAction -i notes/sql/<em> #note: </em> 不要忘记</p>
+<p>find命令:
+find 目录 -name 关键字</p>
+<pre><code><figure class="highlight"><pre><span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">amin</span> <span class="literal">-</span><span class="comment">10</span> <span class="comment">#</span> <span class="comment">查找在系统中最后10分钟访问的文件</span>
+<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">atime</span> <span class="literal">-</span><span class="comment">2</span> <span class="comment">#</span> <span class="comment">查找在系统中最后48小时访问的文件</span>
+<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">empty</span> <span class="comment">#</span> <span class="comment">查找在系统中为空的文件或者文件夹</span>
+<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">group</span> <span class="comment">cat</span> <span class="comment">#</span> <span class="comment">查找在系统中属于</span> <span class="comment">groupcat的文件</span>
+<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">mmin</span> <span class="literal">-</span><span class="comment">5</span> <span class="comment">#</span> <span class="comment">查找在系统中最后5分钟里修改过的文件</span>
+<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">mtime</span> <span class="literal">-</span><span class="comment">1</span> <span class="comment">#查找在系统中最后24小时里修改过的文件</span>
+<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">nouser</span> <span class="comment">#查找在系统中属于作废用户的文件</span>
+<span class="comment">find</span> <span class="comment">/</span> <span class="literal">-</span><span class="comment">user</span> <span class="comment">fred</span> <span class="comment">#查找在系统中属于FRED这个用户的文件</span>
+<span class="comment">find</span> <span class="string">.</span> <span class="literal">-</span><span class="comment">maxdepth</span> <span class="comment">2</span> <span class="literal">-</span><span class="comment">name</span> <span class="comment">fred
+</pre></figure></code></pre>
+<p>-maxdepth选项的作用就是限制find命令在目录中按照递减方式查找文件的时候搜索文件超过某个级别或者搜索过多的目录，这样导致查找速度变慢，查找花费的时间过多。例如，我们要在当前(.)目录技巧子目录中查找一个名叫fred的文件，我们可以使用如下命令</p>
+<p>find / -name “php.ini” -ls
+系统查找到php.ini文件后立即在屏幕上显示php.ini文件信息。</p>
+<p>find 常用参数
+-exec command;查找并执行命令
+-fprint file;打印文件完整文件名
+-fprint0 file;打印文件完整文件名包括空的文件
+-fprintf file format;打印文件格式
+-ok command;给用户命令执行操作，根据用户的Y 确认输入执行
+-printf format;打印文件格式
+-ls;打印同种文件格式的文件.</p>
+<p>locate 命令
+locate命令其实是“find -name”的另一种写法，但是要比后者快得多，原因在于它不搜索具体目录，而是搜索一个数据库（/var/lib/locatedb），这个数据库中含 有本地所有文件信息。Linux系统自动创建这个数据库，并且每天自动更新一次，所以使用locate命令查不到最新变动过的文件。为了避免这种情况，可 以在使用locate之前，先使用updatedb命令，手动更新数据库。</p>
+<p>locate命令的使用实例：
+$ locate /etc/sh
+搜索etc目录下所有以sh开头的文件。
+$ locate ~/m
+搜索用户主目录下，所有以m开头的文件。
+$ locate -i ~/m
+搜索用户主目录下，所有以m开头的文件，并且忽略大小写。</p>
+<p>原创文章，转载请注明： 转载自Martin
+<a href="http://www.blags.org/linux-find-command-daquan/">http://www.blags.org/linux-find-command-daquan/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/13/" class="alignleft prev">上一页</a>
+  
+  
+    <a href="/page/15/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>1</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Cache-control/" style="font-size: 16.75px;">Cache-control</a><a href="/tags/Cluster-bacst/" style="font-size: 12.00px;">Cluster-bacst</a><a href="/tags/Header-V3-DSA-signature/" style="font-size: 15.75px;">Header V3 DSA signature</a><a href="/tags/object-Object/" style="font-size: 14.75px;">[object Object]</a><a href="/tags/apache/" style="font-size: 19.50px;">apache</a><a href="/tags/awk/" style="font-size: 18.25px;">awk</a><a href="/tags/bash/" style="font-size: 17.00px;">bash</a><a href="/tags/browser/" style="font-size: 13.75px;">browser</a><a href="/tags/cache/" style="font-size: 14.00px;">cache</a><a href="/tags/cdn/" style="font-size: 16.25px;">cdn</a><a href="/tags/centos/" style="font-size: 19.25px;">centos</a><a href="/tags/cpan/" style="font-size: 12.75px;">cpan</a><a href="/tags/cpanm/" style="font-size: 12.25px;">cpanm</a><a href="/tags/etag/" style="font-size: 14.25px;">etag</a><a href="/tags/expires/" style="font-size: 13.00px;">expires</a><a href="/tags/foreman/" style="font-size: 15.25px;">foreman</a><a href="/tags/gzip/" style="font-size: 10.50px;">gzip</a><a href="/tags/libmemcached/" style="font-size: 15.00px;">libmemcached</a><a href="/tags/mod_cband/" style="font-size: 11.00px;">mod_cband</a><a href="/tags/mod_limitipconn/" style="font-size: 12.50px;">mod_limitipconn</a><a href="/tags/moudles/" style="font-size: 10.25px;">moudles</a><a href="/tags/mysql/" style="font-size: 18.75px;">mysql</a><a href="/tags/nginx/" style="font-size: 18.00px;">nginx</a><a href="/tags/php-1/" style="font-size: 16.50px;">php</a><a href="/tags/php-fpm/" style="font-size: 17.50px;">php-fpm</a><a href="/tags/puppet/" style="font-size: 19.00px;">puppet</a><a href="/tags/python26/" style="font-size: 15.50px;">python2.6</a><a href="/tags/referer/" style="font-size: 11.25px;">referer</a><a href="/tags/repo/" style="font-size: 16.00px;">repo</a><a href="/tags/ruby/" style="font-size: 14.50px;">ruby</a><a href="/tags/shell/" style="font-size: 17.25px;">shell</a><a href="/tags/shtml/" style="font-size: 11.50px;">shtml</a><a href="/tags/ssi/" style="font-size: 11.75px;">ssi</a><a href="/tags/tomcat/" style="font-size: 18.50px;">tomcat</a><a href="/tags/yum/" style="font-size: 19.75px;">yum</a><a href="/tags/单引号/" style="font-size: 13.25px;">单引号</a><a href="/tags/双引号/" style="font-size: 13.50px;">双引号</a><a href="/tags/环境变量/" style="font-size: 10.00px;">环境变量</a><a href="/tags/详解/" style="font-size: 17.75px;">详解</a><a href="/tags/过滤日志/" style="font-size: 10.75px;">过滤日志</a>
+  </div>
+</div>
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

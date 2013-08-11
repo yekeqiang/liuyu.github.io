@@ -3,21 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>user | Puppet-in-action</title>
+  <title>user | Liuyu blog</title>
   <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="Puppet cdn AutoMate">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-  <meta property="og:site_name" content="Puppet-in-action"/>
+  <meta property="og:site_name" content="Liuyu blog"/>
 
   
     <meta property="og:image" content="undefined"/>
   
 
   <link href="/favicon.png" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Puppet-in-action" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="Liuyu blog" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
@@ -27,8 +29,8 @@
 
 <body>
   <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">Puppet-in-action</a></h1>
-  <h2><a href="/">Puppet</a></h2>
+  <h1><a href="/">Liuyu blog</a></h1>
+  <h2><a href="/">Puppet in action</a></h2>
 </div>
 <nav id="main-nav" class="alignright">
   <ul>
@@ -36,6 +38,8 @@
       <li><a href="/">Home</a></li>
     
       <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -46,291 +50,33 @@
 <h2 class="archive-title tag">user</h2>
 
 
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2011-01-29T05:31:01.000Z"><a href="/2011/01/29/lvs-nginx-proxy-nginx-user-ip/">1月 29 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/01/29/lvs-nginx-proxy-nginx-user-ip/">lvs  nginx-proxy nginx 取用户真实IP</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>架构如下：</p>
-<p>lvs 转发请求至nginx  nginx代理域名至源nginx</p>
-<p>正常的配置源nginx是取不到用户的真实IP需要增加模块来解决</p>
-<p>配置过程如下：</p>
-<p>增加一个模块：</p>
-<p><a href="http://wiki.nginx.org/NginxChsHttpRealIpModule"><a href="http://wiki.nginx.org/NginxChsHttpRealIpModule">http://wiki.nginx.org/NginxChsHttpRealIpModule</a></a></p>
-<p>需要在编译nginx时增加：</p>
-<pre><code><figure class="highlight"><pre>./configure --user=daemon --group=daemon --prefix=/usr/local/nginx/ --with-http_stub_status_module --with-http_ssl_module --with-http_sub_module --with-md5=/usr/lib --with-sha1=/usr/lib --with-http_gzip_static_module --with-http_realip_module`&lt;/pre&gt;
-
-然后配置nginx-proxy的配置文件：
-&lt;pre&gt;`server {
-    listen   <span class="number">80</span> default<span class="comment">;</span>
-    server_name  _<span class="comment">;</span>
-    index index<span class="preprocessor">.php</span><span class="comment">;</span>
-
-     location / {
-             root   /data/www/wwwroot/domain<span class="comment">;</span>
-             proxy_redirect off <span class="comment">;</span>
-             proxy_set_header Host $host<span class="comment">;</span>
-             proxy_set_header <span class="built_in">X</span>-Real-IP $remote_addr<span class="comment">;</span>
-             proxy_set_header REMOTE-HOST $remote_addr<span class="comment">;</span>
-             proxy_set_header <span class="built_in">X</span>-Forwarded-For $proxy_add_x_forwarded_for<span class="comment">;</span>
-             client_max_body_size <span class="number">50</span>m<span class="comment">;</span>
-             client_body_buffer_size <span class="number">256</span>k<span class="comment">;</span>
-             proxy_connect_timeout <span class="number">30</span><span class="comment">;</span>
-             proxy_send_timeout <span class="number">30</span><span class="comment">;</span>
-             proxy_read_timeout <span class="number">60</span><span class="comment">;</span>
-             proxy_buffer_size <span class="number">256</span>k<span class="comment">;</span>
-             proxy_buffers <span class="number">4</span> <span class="number">256</span>k<span class="comment">;</span>
-             proxy_busy_buffers_size <span class="number">256</span>k<span class="comment">;</span>
-             proxy_temp_file_write_size <span class="number">256</span>k<span class="comment">;</span>
-             proxy_next_upstream error timeout invalid_header http_500 http_503 http_404<span class="comment">;</span>
-             proxy_max_temp_file_size <span class="number">128</span>m<span class="comment">;</span>
-             proxy_pass    http://domain<span class="preprocessor">.com</span><span class="comment">;</span>
-            }
-}`&lt;/pre&gt;
-
-配置源nginx的配置文件：
- &lt;pre&gt;`   location ~ .*\<span class="preprocessor">.php</span>?$
-    {
-        fastcgi_pass <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9000</span><span class="comment">;</span>
-        fastcgi_index index<span class="preprocessor">.php</span><span class="comment">;</span>
-        fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name<span class="comment">;</span>
-        include fastcgi_params<span class="comment">;</span>
-      <span class="preprocessor">#set_real_ip_from   192.168.1.0/24;   #允许被信任的段</span>
-        set_real_ip_from   <span class="number">192.168</span><span class="number">.1</span><span class="number">.10</span><span class="comment">;      #允许被信任的IP  加强安全性</span>
-        real_ip_header     <span class="built_in">X</span>-Real-IP<span class="comment">;</span>
-    } 
-</pre></figure></code></pre>
-<p>配置好后，日志里就可以看到用户的真实IP了。</p>
-<p>在centos 64位上配置生效。测试一切正常。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+  <div class="archive">
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2011-01-29T05:31:01.000Z"><a href="/2011/01/29/lvs-nginx-proxy-nginx-user-ip/">1月 29 2011</a></time>
+            
+              <h1 class="title"><a href="/2011/01/29/lvs-nginx-proxy-nginx-user-ip/">lvs  nginx-proxy nginx 取用户真实IP</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
+      <article class="post">
+        <div class="post-content">
+          <header>
+            <div class="icon"></div>
+            <time datetime="2010-12-19T08:04:01.000Z"><a href="/2010/12/19/linux-user-group-detailed/">12月 19 2010</a></time>
+            
+              <h1 class="title"><a href="/2010/12/19/linux-user-group-detailed/">linux 用户user及用户组group 详解</a></h1>
+            
+          </header>
+        </div>
+      </article>
+    
   </div>
-</article>
-
-
-  
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2010-12-19T08:04:01.000Z"><a href="/2010/12/19/linux-user-group-detailed/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/linux-user-group-detailed/">linux 用户user及用户组group 详解</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>一、user相关配置文件</p>
-<pre><code><figure class="highlight"><pre><span class="xml">/etc/passwd
-root:x:</span><span class="number">0</span><span class="xml">:</span><span class="number">0</span><span class="xml">:root:/root:/bin/bash`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-用户名：UID:GID:finger：家目录：shell
-注：UID： </span><span class="number">0</span><span class="xml">即管理员 </span><span class="number">1</span><span class="xml">-</span><span class="number">499</span><span class="xml">系统使用 </span><span class="number">500</span><span class="xml">-</span><span class="number">65535</span><span class="xml">+ 一般用户
-
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`/etc/shadow
-root:</span><span class="variable">$1</span><span class="xml"></span><span class="variable">$jHNFgOBV</span><span class="xml"></span><span class="variable">$br7SAZsvGRyFmySJ9UlUI.:14720:0:99999:7:::</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-用户：加密密码：更改密码日期：不可更改密码天数：需变更日期：过期天数：警告期限：宽限时间：失效日期
-注：日期按</span><span class="number">1970</span><span class="xml">年</span><span class="number">1</span><span class="xml">月</span><span class="number">1</span><span class="xml">日作为起初日期。
-
-二、用户组相关配置
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`/etc/group
-/etc/gshadow`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-三、管理用户（user）的工具或命令
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`useradd adduser 注：添加用户 
-passwd 注：为用户设置密码
-usermod 注：修改用户命令，可以通过usermod 来修改登录名、用户的家目录等等；
-pwconv 注：同步用户从/etc/passwd 到/etc/shadow
-pwck 注：pwck是校验用户配置文件/etc/passwd 和/etc/shadow 文件内容是否合法或完整；
-pwunconv 注：是pwcov 的立逆向操作，是从/etc/shadow和 /etc/passwd 创建/etc/passwd ，然后会删除 /etc/shadow 文件；
-finger 注：查看用户信息工具
-id 注：查看用户的UID、GID及所归属的用户组
-chfn 注：更改用户信息工具
-su 注：用户切换工具
-sudo 注：sudo 是通过另一个用户来执行命令（execute a command as another user），su 是用来切换用户，然后通过切换到的用户来完成相应的任务，但sudo 能后面直接执行命令，比如sudo 不需要root 密码就可以执行root 赋与的执行只有root才能执行相应的命令；但得通过visudo 来编辑/etc/sudoers来实现；
-visudo 注：visodo 是编辑 /etc/sudoers 的命令；也可以不用这个命令，直接用vi 来编辑 /etc/sudoers 的效果是一样的；
-sudoedit 注：和sudo 功能差不多；`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-四、管理用户组（group）的工具或命令
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`groupadd 注：添加用户组；
-groupdel 注：删除用户组；
-groupmod 注：修改用户组信息
-groups 注：显示用户所属的用户组
-grpck
-grpconv 注：通过/etc/group和/etc/gshadow 的文件内容来同步或创建/etc/gshadow ，如果/etc/gshadow 不存在则创建；
-grpunconv 注：通过/etc/group 和/etc/gshadow 文件内容来同步或创建/etc/group ，然后删除gshadow文件；`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="number">1</span><span class="xml">、useradd 命令详解
-功能说明：建立用户帐号。
-语　　法：useradd [-mMnr][-c <span class="tag">&lt;<span class="title">备注</span>&gt;</span>][-d <span class="tag">&lt;<span class="title">登入目录</span>&gt;</span>][-e <span class="tag">&lt;<span class="title">有效期限</span>&gt;</span>][-f <span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span>][-g <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-G <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-s ][-u ][用户帐号] 或 useradd -D [-b][-e <span class="tag">&lt;<span class="title">有效期限</span>&gt;</span>][-f <span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span>][-g <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-G <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-s ]
-
-补充说明：useradd可用来建立用户帐号。帐号建好之后，再用passwd设定帐号的密码．而可用userdel删除帐号。使用useradd指令所建立的帐号，实际上是保存在/etc/passwd文本文件中。
-参　　数：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-c<span class="tag">&lt;<span class="title">备注</span>&gt;</span> 加上备注文字。备注文字会保存在passwd的备注栏位中。
--d<span class="tag">&lt;<span class="title">登入目录</span>&gt;</span> 指定用户登入时的启始目录。
--D 　变更预设值．
--e<span class="tag">&lt;<span class="title">有效期限</span>&gt;</span> 指定帐号的有效期限。
--f<span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span> 指定在密码过期后多少天即关闭该帐号。
--g<span class="tag">&lt;<span class="title">群组</span>&gt;</span> 指定用户所属的群组。
--G<span class="tag">&lt;<span class="title">群组</span>&gt;</span> 指定用户所属的附加群组。
--m 　自动建立用户的登入目录。
--M 　不要自动建立用户的登入目录。
--n 　取消建立以用户名称为名的群组．
--r 　建立系统帐号。
--s　 　指定用户登入后所使用的shell。
--u 　指定用户ID。`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="number">2</span><span class="xml">、usermod
-功能说明：修改用户帐号。
-语　　法：usermod [-LU][-c <span class="tag">&lt;<span class="title">备注</span>&gt;</span>][-d <span class="tag">&lt;<span class="title">登入目录</span>&gt;</span>][-e <span class="tag">&lt;<span class="title">有效期限</span>&gt;</span>][-f <span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span>][-g <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-G <span class="tag">&lt;<span class="title">群组</span>&gt;</span>][-l <span class="tag">&lt;<span class="title">帐号名称</span>&gt;</span>][-s ][-u ][用户帐号]
-补充说明：usermod可用来修改用户帐号的各项设定。
-参　　数：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-c<span class="tag">&lt;<span class="title">备注</span>&gt;</span> 修改用户帐号的备注文字。
--d登入目录&gt; 修改用户登入时的目录。
--e<span class="tag">&lt;<span class="title">有效期限</span>&gt;</span> 修改帐号的有效期限。
--f<span class="tag">&lt;<span class="title">缓冲天数</span>&gt;</span> 修改在密码过期后多少天即关闭该帐号。
--g<span class="tag">&lt;<span class="title">群组</span>&gt;</span> 修改用户所属的群组。
--G<span class="tag">&lt;<span class="title">群组</span>&gt;</span> 修改用户所属的附加群组。
--l<span class="tag">&lt;<span class="title">帐号名称</span>&gt;</span> 修改用户帐号名称。
--L 　锁定用户密码，使密码无效。
--s 　修改用户登入后所使用的shell。
--u 　修改用户ID。
--U 　解除密码锁定。`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="number">3</span><span class="xml">、pwconv pwunconv
-功能说明：开启用户的投影密码。
-语　　法：pwconv
-补充说明：Linux系统里的用户和群组密码，分别存放在名称为passwd和group的文件中，　这两个文件位于/etc目录下。因系统运作所需，任 何人都得以读取它们，造成安全上的破绽。投影密码将文件内的密码改存在/etc目录下的shadow和gshadow文件内，只允许系统管理者读取，同时 把原密码置换为"x"字符，有效的强化了系统的安全性。
-功能说明：关闭用户的投影密码。
-语　　法：pwunconv
-补充说明：执行pwunconv指令可以关闭用户投影密码，它会把密码从shadow文件内，重回存到passwd文件里。
-
-</span><span class="number">4</span><span class="xml">、 pwck
-功能：检查用户密码文件的完整性（/etc/passwd以及/etc/shadow文件）。
-用法：pwck [-q] [-s] [passwd [ shadow ]]
-pwck [-q] [-r] [passwd shadow]
-参数：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-q：只显示错误信息，警告不显示
--s：按id排序
--r：只读方式检查`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="number">5</span><span class="xml">、grpck命令
-功能：检查用户组及密码文件的完整性（etc/group以及/etc/gshadow文件）
-用法： grpck [-r] [group [ shadow ]]
-grpck [-s] [group [ shadow ]]
-参数：与pwck一样
-
-</span><span class="number">6</span><span class="xml">、finger
-功能说明：查找并显示用户信息。
-语　　法：finger [-lmsp][帐号名称...]
-补充说明：finger指令会去查找，并显示指定帐号的用户相关信息，包括本地与远端主机的用户皆可，帐号名称没有大小写的差别。单独执行finger指 令，它会显示本地主机现在所有的用户的登陆信息，包括帐号名称，真实姓名，登入终端机，闲置时间，登入时间以及地址和电话。
-参　　数：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-l 　列出该用户的帐号名称，真实姓名，用户专属目录，登入所用的Shell，登入时间，转信地址，电子邮件状态，还有计划文件和方案文件内容。
--m 　排除查找用户的真实姓名。
--s 　列出该用户的帐号名称，真实姓名，登入终端机，闲置时间，登入时间以及地址和电话。
--p 　列出该用户的帐号名称，真实姓名，用户专属目录，登入所用的Shell，登入时间，转信地址，电子邮件状态，但不显示该用户的计划文件和方案文件内容。`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="number">7</span><span class="xml">、su
-</span><span class="number">1.</span><span class="xml">作用
-u的作用是变更为其它使用者的身份，超级用户除外，需要键入该使用者的密码。
-
-</span><span class="number">2.</span><span class="xml">格式
-u [选项]... [-] [USER [ARG]...]
-
-</span><span class="number">3.</span><span class="xml">主要参数
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-f ， --fast：不必读启动文件（如 csh.cshrc 等），仅用于csh或tcsh两种Shell。
--l ， --login：加了这个参数之后，就好像是重新登陆为该使用者一样，大部分环境变量（例如HOME、SHELL和USER等）都是以该使用者（USER）为主，并且工作目录也会改变。如果没有指定USER，缺省情况是root。
--m， -p ，--preserve-environment：执行su时不改变环境变数。
--c command：变更账号为USER的使用者，并执行指令（command）后再变回原来使用者。
-USER：欲变更的使用者账号，ARG传入新的Shell参数`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="number">8</span><span class="xml">、sudo
-功能说明：以其他身份来执行指令。
-语　　法：sudo [-bhHpV][-s ][-u <span class="tag">&lt;<span class="title">用户</span>&gt;</span>][指令] 或 sudo [-klv]
-补充说明：sudo 可让用户以其他的身份来执行指定的指令，预设的身份为root。在/etc/sudoers中设置了可执行sudo指令的用户。若其未经授权的用户企图使 用sudo，则会发出警告的邮件给管理员。用户使用sudo时，必须先输入密码，之后有</span><span class="number">5</span><span class="xml">分钟的有效期限，超过期限则必须重新输入密码。
-参　　数：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-b 　在后台执行指令。
--h 　显示帮助。
--H 　将HOME环境变量设为新身份的HOME环境变量。
--k 　结束密码的有效期限，也就是下次再执行sudo时便需要输入密码。
--l 　列出目前用户可执行与无法执行的指令。
--p 　改变询问密码的提示符号。
--s 　执行指定的shell。
--u<span class="tag">&lt;<span class="title">用户</span>&gt;</span> 以指定的用户作为新的身份。若不加上此参数，则预设以root作为新的身份。
--v 　延长密码有效期限</span><span class="number">5</span><span class="xml">分钟。
--V 　显示版本信息。`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="number">9</span><span class="xml">、groupadd
-名称 groupadd - 建 立 新 群 组
-语法
-groupadd [-g gid [-o]] [-r] [-f] group
-参数：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-g gid group's
-ID值。除非使用-o参数不然该值必须是唯一，不可相同。数值不可为负。预设为最小不得小于</span><span class="number">500</span><span class="xml">而逐次增加。</span><span class="number">0</span><span class="xml">~</span><span class="number">499</span><span class="xml">传统上是保留给系统帐号使用。
--r
-此参数是用来建立系统帐号。的UID会比定义在系统档上/etc/login.defs.的UID_MIN来的小。注意useradd此用法所建立的帐号 不会建立使用者目录，也不会在乎纪录在/etc/login.defs.的定义值。如果你想要有使用者目录须额外指定-m参数来建立系统帐号。这是 REDHAT额外增设的选项。它会自动帮你选定一个小于</span><span class="number">499</span><span class="xml">的gif不需要再加上-g参数。这是REDHAT额外增设的选项。
--f
-Thisisforceflag.新增一个已经存在的群组帐号，系统会出现错误讯息然后结束groupadd。如果是这样的情况，不会新增这个群组(如果 是这个情况下，系统不会再新增一次)也可同时加上-g选项当你加上一个gid，此时gid就不用是唯一值，可不加-o参数，建好群组后会显结果 (addingagroupasneither-gor-ooptionswerespecified).
-这是REDHAT额外增设的选项`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-</span><span class="number">10</span><span class="xml">、groupmod
-功能说明：更改群组识别码或名称。
-语　　法：groupmod [-g <span class="tag">&lt;<span class="title">群组识别码</span>&gt;</span> <span class="tag">&lt;<span class="title">-o</span>&gt;</span>][-n <span class="tag">&lt;<span class="title">新群组名称</span>&gt;</span>][群组名称]
-补充说明：需要更改群组的识别码或名称时，可用groupmod指令来完成这项工作。
-参　　数：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`-g <span class="tag">&lt;<span class="title">群组识别码</span>&gt;</span> 设置欲使用的群组识别码。
--o 　重复使用群组识别码。
--n <span class="tag">&lt;<span class="title">新群组名称</span>&gt;</span> 设置欲使用的群组名称。</span>
-</pre></figure></code></pre>
-<p>参考：
-鸟哥一书
-互联网
-<a href="http://www.linuxsir.org/main/?q=node/91">http://www.linuxsir.org/main/?q=node/91</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-  
-
-  <nav id="pagination">
-  
-  
-  <div class="clearfix"></div>
-</nav>
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
@@ -390,354 +136,15 @@ Thisisforceflag.新增一个已经存在的群组帐号，系统会出现错误�
 
 
   
-<div class="widget tag">
-  <h3 class="title">标签</h3>
-  <ul class="entry">
-  
-    <li><a href="/tags/1032/">1032</a><small>1</small></li>
-  
-    <li><a href="/tags/1236/">1236</a><small>1</small></li>
-  
-    <li><a href="/tags/403/">403</a><small>1</small></li>
-  
-    <li><a href="/tags/Cache-control/">Cache-control</a><small>2</small></li>
-  
-    <li><a href="/tags/Cluster-bacst/">Cluster-bacst</a><small>1</small></li>
-  
-    <li><a href="/tags/E752x/">E752x</a><small>1</small></li>
-  
-    <li><a href="/tags/Header-V3-DSA-signature/">Header V3 DSA signature</a><small>1</small></li>
-  
-    <li><a href="/tags/Python-Imaging-Library/">Python Imaging Library</a><small>1</small></li>
-  
-    <li><a href="/tags/object-Object/">[object Object]</a><small>1</small></li>
-  
-    <li><a href="/tags/acl/">acl</a><small>2</small></li>
-  
-    <li><a href="/tags/allcommands/">allcommands</a><small>1</small></li>
-  
-    <li><a href="/tags/apache/">apache</a><small>8</small></li>
-  
-    <li><a href="/tags/arp/">arp</a><small>1</small></li>
-  
-    <li><a href="/tags/awk/">awk</a><small>4</small></li>
-  
-    <li><a href="/tags/bash/">bash</a><small>2</small></li>
-  
-    <li><a href="/tags/best/">best</a><small>1</small></li>
-  
-    <li><a href="/tags/binding/">binding</a><small>1</small></li>
-  
-    <li><a href="/tags/binlog/">binlog</a><small>1</small></li>
-  
-    <li><a href="/tags/bnx2/">bnx2</a><small>1</small></li>
-  
-    <li><a href="/tags/browser/">browser</a><small>1</small></li>
-  
-    <li><a href="/tags/cache/">cache</a><small>1</small></li>
-  
-    <li><a href="/tags/cdn/">cdn</a><small>2</small></li>
-  
-    <li><a href="/tags/centos/">centos</a><small>8</small></li>
-  
-    <li><a href="/tags/chmod/">chmod</a><small>1</small></li>
-  
-    <li><a href="/tags/chown/">chown</a><small>1</small></li>
-  
-    <li><a href="/tags/commands/">commands</a><small>1</small></li>
-  
-    <li><a href="/tags/content/">content</a><small>1</small></li>
-  
-    <li><a href="/tags/cpan/">cpan</a><small>1</small></li>
-  
-    <li><a href="/tags/cpanm/">cpanm</a><small>1</small></li>
-  
-    <li><a href="/tags/creating/">creating</a><small>1</small></li>
-  
-    <li><a href="/tags/dashboard/">dashboard</a><small>1</small></li>
-  
-    <li><a href="/tags/dell/">dell</a><small>1</small></li>
-  
-    <li><a href="/tags/diff/">diff</a><small>1</small></li>
-  
-    <li><a href="/tags/dstat/">dstat</a><small>1</small></li>
-  
-    <li><a href="/tags/du/">du</a><small>1</small></li>
-  
-    <li><a href="/tags/eAccelerator/">eAccelerator</a><small>1</small></li>
-  
-    <li><a href="/tags/end/">end</a><small>1</small></li>
-  
-    <li><a href="/tags/epel/">epel</a><small>1</small></li>
-  
-    <li><a href="/tags/etag/">etag</a><small>1</small></li>
-  
-    <li><a href="/tags/expires/">expires</a><small>1</small></li>
-  
-    <li><a href="/tags/find/">find</a><small>1</small></li>
-  
-    <li><a href="/tags/for-1/">for</a><small>1</small></li>
-  
-    <li><a href="/tags/foreman/">foreman</a><small>1</small></li>
-  
-    <li><a href="/tags/ftp/">ftp</a><small>1</small></li>
-  
-    <li><a href="/tags/ganglia/">ganglia</a><small>2</small></li>
-  
-    <li><a href="/tags/gmond/">gmond</a><small>1</small></li>
-  
-    <li><a href="/tags/group/">group</a><small>1</small></li>
-  
-    <li><a href="/tags/groupadd/">groupadd</a><small>1</small></li>
-  
-    <li><a href="/tags/gzip/">gzip</a><small>1</small></li>
-  
-    <li><a href="/tags/howto/">howto</a><small>2</small></li>
-  
-    <li><a href="/tags/http_realip_module/">http_realip_module</a><small>1</small></li>
-  
-    <li><a href="/tags/ideauthority/">ideauthority</a><small>1</small></li>
-  
-    <li><a href="/tags/if/">if</a><small>2</small></li>
-  
-    <li><a href="/tags/ifconfig/">ifconfig</a><small>1</small></li>
-  
-    <li><a href="/tags/ignore/">ignore</a><small>1</small></li>
-  
-    <li><a href="/tags/init/">init</a><small>1</small></li>
-  
-    <li><a href="/tags/iostat/">iostat</a><small>2</small></li>
-  
-    <li><a href="/tags/ip-1/">ip</a><small>1</small></li>
-  
-    <li><a href="/tags/iptables/">iptables</a><small>1</small></li>
-  
-    <li><a href="/tags/jk/">jk</a><small>1</small></li>
-  
-    <li><a href="/tags/kcore/">kcore</a><small>1</small></li>
-  
-    <li><a href="/tags/kernel/">kernel</a><small>1</small></li>
-  
-    <li><a href="/tags/kick/">kick</a><small>1</small></li>
-  
-    <li><a href="/tags/libmemcached/">libmemcached</a><small>1</small></li>
-  
-    <li><a href="/tags/linux/">linux</a><small>18</small></li>
-  
-    <li><a href="/tags/lsof/">lsof</a><small>1</small></li>
-  
-    <li><a href="/tags/lvs/">lvs</a><small>1</small></li>
-  
-    <li><a href="/tags/master/">master</a><small>2</small></li>
-  
-    <li><a href="/tags/metric/">metric</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_cband/">mod_cband</a><small>1</small></li>
-  
-    <li><a href="/tags/mod_limitipconn/">mod_limitipconn</a><small>1</small></li>
-  
-    <li><a href="/tags/moinmoin/">moinmoin</a><small>1</small></li>
-  
-    <li><a href="/tags/monitoring/">monitoring</a><small>1</small></li>
-  
-    <li><a href="/tags/moudles/">moudles</a><small>1</small></li>
-  
-    <li><a href="/tags/mysql/">mysql</a><small>6</small></li>
-  
-    <li><a href="/tags/nagios/">nagios</a><small>1</small></li>
-  
-    <li><a href="/tags/netstat/">netstat</a><small>2</small></li>
-  
-    <li><a href="/tags/nginx/">nginx</a><small>4</small></li>
-  
-    <li><a href="/tags/optimization/">optimization</a><small>1</small></li>
-  
-    <li><a href="/tags/packet/">packet</a><small>1</small></li>
-  
-    <li><a href="/tags/pam/">pam</a><small>1</small></li>
-  
-    <li><a href="/tags/per-fcgi/">per-fcgi</a><small>1</small></li>
-  
-    <li><a href="/tags/perl/">perl</a><small>1</small></li>
-  
-    <li><a href="/tags/permission/">permission</a><small>1</small></li>
-  
-    <li><a href="/tags/php-1/">php</a><small>2</small></li>
-  
-    <li><a href="/tags/php-fpm/">php-fpm</a><small>2</small></li>
-  
-    <li><a href="/tags/pil/">pil</a><small>1</small></li>
-  
-    <li><a href="/tags/port/">port</a><small>1</small></li>
-  
-    <li><a href="/tags/practices/">practices</a><small>1</small></li>
-  
-    <li><a href="/tags/proftpd/">proftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/proxy/">proxy</a><small>2</small></li>
-  
-    <li><a href="/tags/ps/">ps</a><small>2</small></li>
-  
-    <li><a href="/tags/puppet/">puppet</a><small>6</small></li>
-  
-    <li><a href="/tags/puppetrun/">puppetrun</a><small>1</small></li>
-  
-    <li><a href="/tags/python-1/">python</a><small>3</small></li>
-  
-    <li><a href="/tags/python26/">python2.6</a><small>1</small></li>
-  
-    <li><a href="/tags/quick/">quick</a><small>1</small></li>
-  
-    <li><a href="/tags/r410/">r410</a><small>1</small></li>
-  
-    <li><a href="/tags/r710/">r710</a><small>1</small></li>
-  
-    <li><a href="/tags/raw/">raw</a><small>1</small></li>
-  
-    <li><a href="/tags/referer/">referer</a><small>1</small></li>
-  
-    <li><a href="/tags/replicate/">replicate</a><small>1</small></li>
-  
-    <li><a href="/tags/repo/">repo</a><small>1</small></li>
-  
-    <li><a href="/tags/resources/">resources</a><small>1</small></li>
-  
-    <li><a href="/tags/rhel/">rhel</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmbuild/">rpmbuild</a><small>1</small></li>
-  
-    <li><a href="/tags/rpmcreate/">rpmcreate</a><small>1</small></li>
-  
-    <li><a href="/tags/ruby/">ruby</a><small>1</small></li>
-  
-    <li><a href="/tags/sar/">sar</a><small>1</small></li>
-  
-    <li><a href="/tags/scribe/">scribe</a><small>2</small></li>
-  
-    <li><a href="/tags/sed/">sed</a><small>4</small></li>
-  
-    <li><a href="/tags/sedline/">sedline</a><small>1</small></li>
-  
-    <li><a href="/tags/sending/">sending</a><small>1</small></li>
-  
-    <li><a href="/tags/sendmail/">sendmail</a><small>1</small></li>
-  
-    <li><a href="/tags/shell/">shell</a><small>2</small></li>
-  
-    <li><a href="/tags/shtml/">shtml</a><small>1</small></li>
-  
-    <li><a href="/tags/slave/">slave</a><small>2</small></li>
-  
-    <li><a href="/tags/smartctl/">smartctl</a><small>1</small></li>
-  
-    <li><a href="/tags/smokeping/">smokeping</a><small>1</small></li>
-  
-    <li><a href="/tags/spec/">spec</a><small>2</small></li>
-  
-    <li><a href="/tags/squid/">squid</a><small>1</small></li>
-  
-    <li><a href="/tags/ssi/">ssi</a><small>1</small></li>
-  
-    <li><a href="/tags/system/">system</a><small>1</small></li>
-  
-    <li><a href="/tags/tar/">tar</a><small>1</small></li>
-  
-    <li><a href="/tags/tcpdump/">tcpdump</a><small>2</small></li>
-  
-    <li><a href="/tags/tomcat/">tomcat</a><small>4</small></li>
-  
-    <li><a href="/tags/tools/">tools</a><small>1</small></li>
-  
-    <li><a href="/tags/top/">top</a><small>1</small></li>
-  
-    <li><a href="/tags/tree/">tree</a><small>1</small></li>
-  
-    <li><a href="/tags/ubuntu/">ubuntu</a><small>4</small></li>
-  
-    <li><a href="/tags/upgrade/">upgrade</a><small>1</small></li>
-  
-    <li><a href="/tags/user/">user</a><small>2</small></li>
-  
-    <li><a href="/tags/useradd/">useradd</a><small>1</small></li>
-  
-    <li><a href="/tags/vim/">vim</a><small>2</small></li>
-  
-    <li><a href="/tags/vmstat/">vmstat</a><small>2</small></li>
-  
-    <li><a href="/tags/vsftpd/">vsftpd</a><small>1</small></li>
-  
-    <li><a href="/tags/while/">while</a><small>1</small></li>
-  
-    <li><a href="/tags/wiki/">wiki</a><small>1</small></li>
-  
-    <li><a href="/tags/windows7/">windows7</a><small>1</small></li>
-  
-    <li><a href="/tags/winsxs/">winsxs</a><small>1</small></li>
-  
-    <li><a href="/tags/wordpress/">wordpress</a><small>1</small></li>
-  
-    <li><a href="/tags/yum/">yum</a><small>10</small></li>
-  
-    <li><a href="/tags/zabbix/">zabbix</a><small>1</small></li>
-  
-    <li><a href="/tags/一句话命令/">一句话命令</a><small>1</small></li>
-  
-    <li><a href="/tags/主从配置/">主从配置</a><small>1</small></li>
-  
-    <li><a href="/tags/优化/">优化</a><small>1</small></li>
-  
-    <li><a href="/tags/内核/">内核</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式/">分布式</a><small>1</small></li>
-  
-    <li><a href="/tags/分布式监控/">分布式监控</a><small>1</small></li>
-  
-    <li><a href="/tags/单引号/">单引号</a><small>1</small></li>
-  
-    <li><a href="/tags/参考/">参考</a><small>1</small></li>
-  
-    <li><a href="/tags/双引号/">双引号</a><small>1</small></li>
-  
-    <li><a href="/tags/命令详解/">命令详解</a><small>7</small></li>
-  
-    <li><a href="/tags/对比/">对比</a><small>1</small></li>
-  
-    <li><a href="/tags/性能优化/">性能优化</a><small>1</small></li>
-  
-    <li><a href="/tags/日志/">日志</a><small>2</small></li>
-  
-    <li><a href="/tags/环境变量/">环境变量</a><small>1</small></li>
-  
-    <li><a href="/tags/硬件中断/">硬件中断</a><small>1</small></li>
-  
-    <li><a href="/tags/管理/">管理</a><small>1</small></li>
-  
-    <li><a href="/tags/系统命令/">系统命令</a><small>1</small></li>
-  
-    <li><a href="/tags/系统管理技巧/">系统管理技巧</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡丢包/">网卡丢包</a><small>1</small></li>
-  
-    <li><a href="/tags/网卡驱动/">网卡驱动</a><small>1</small></li>
-  
-    <li><a href="/tags/老板/">老板</a><small>1</small></li>
-  
-    <li><a href="/tags/认证/">认证</a><small>1</small></li>
-  
-    <li><a href="/tags/详解/">详解</a><small>3</small></li>
-  
-    <li><a href="/tags/过滤日志/">过滤日志</a><small>1</small></li>
-  
-    <li><a href="/tags/集中化管理/">集中化管理</a><small>1</small></li>
-  
-    <li><a href="/tags/面试题/">面试题</a><small>1</small></li>
-  
-  </ul>
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Cache-control/" style="font-size: 16.75px;">Cache-control</a><a href="/tags/Cluster-bacst/" style="font-size: 12.00px;">Cluster-bacst</a><a href="/tags/Header-V3-DSA-signature/" style="font-size: 15.75px;">Header V3 DSA signature</a><a href="/tags/object-Object/" style="font-size: 14.75px;">[object Object]</a><a href="/tags/apache/" style="font-size: 19.50px;">apache</a><a href="/tags/awk/" style="font-size: 18.25px;">awk</a><a href="/tags/bash/" style="font-size: 17.00px;">bash</a><a href="/tags/browser/" style="font-size: 13.75px;">browser</a><a href="/tags/cache/" style="font-size: 14.00px;">cache</a><a href="/tags/cdn/" style="font-size: 16.25px;">cdn</a><a href="/tags/centos/" style="font-size: 19.25px;">centos</a><a href="/tags/cpan/" style="font-size: 12.75px;">cpan</a><a href="/tags/cpanm/" style="font-size: 12.25px;">cpanm</a><a href="/tags/etag/" style="font-size: 14.25px;">etag</a><a href="/tags/expires/" style="font-size: 13.00px;">expires</a><a href="/tags/foreman/" style="font-size: 15.25px;">foreman</a><a href="/tags/gzip/" style="font-size: 10.50px;">gzip</a><a href="/tags/libmemcached/" style="font-size: 15.00px;">libmemcached</a><a href="/tags/mod_cband/" style="font-size: 11.00px;">mod_cband</a><a href="/tags/mod_limitipconn/" style="font-size: 12.50px;">mod_limitipconn</a><a href="/tags/moudles/" style="font-size: 10.25px;">moudles</a><a href="/tags/mysql/" style="font-size: 18.75px;">mysql</a><a href="/tags/nginx/" style="font-size: 18.00px;">nginx</a><a href="/tags/php-1/" style="font-size: 16.50px;">php</a><a href="/tags/php-fpm/" style="font-size: 17.50px;">php-fpm</a><a href="/tags/puppet/" style="font-size: 19.00px;">puppet</a><a href="/tags/python26/" style="font-size: 15.50px;">python2.6</a><a href="/tags/referer/" style="font-size: 11.25px;">referer</a><a href="/tags/repo/" style="font-size: 16.00px;">repo</a><a href="/tags/ruby/" style="font-size: 14.50px;">ruby</a><a href="/tags/shell/" style="font-size: 17.25px;">shell</a><a href="/tags/shtml/" style="font-size: 11.50px;">shtml</a><a href="/tags/ssi/" style="font-size: 11.75px;">ssi</a><a href="/tags/tomcat/" style="font-size: 18.50px;">tomcat</a><a href="/tags/yum/" style="font-size: 19.75px;">yum</a><a href="/tags/单引号/" style="font-size: 13.25px;">单引号</a><a href="/tags/双引号/" style="font-size: 13.50px;">双引号</a><a href="/tags/环境变量/" style="font-size: 10.00px;">环境变量</a><a href="/tags/详解/" style="font-size: 17.75px;">详解</a><a href="/tags/过滤日志/" style="font-size: 10.75px;">过滤日志</a>
+  </div>
 </div>
 
 
   
-
 </aside>
     <div class="clearfix"></div>
   </div>
