@@ -55,40 +55,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2011-03-01T07:38:43.000Z"><a href="/2011/03/01/rpmcreate/">3月 1 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/03/01/rpmcreate/">rpmcreate RPM打包利器</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>中文的。大家参考官网吧：</p>
-<p><a href="http://code.google.com/p/rpmcreate/"><a href="http://code.google.com/p/rpmcreate/">http://code.google.com/p/rpmcreate/</a></a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2011-03-01T07:37:27.000Z"><a href="/2011/03/01/python-creating-rpms/">3月 1 2011</a></time>
       
       
@@ -272,6 +238,62 @@
 
 
 
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-02-16T08:19:04.000Z"><a href="/2011/02/16/centos-yum-安装php5-2/">2月 16 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/02/16/centos-yum-安装php5-2/">centos yum 安装php5.2</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <div id="_mcePaste">
+
+wget <a href="http://rpms.famillecollet.com/enterprise/remi-release-5.rpm">http://rpms.famillecollet.com/enterprise/remi-release-5.rpm</a>
+
+rpm -ivh remi-release-5.rpm
+
+yum --enablerepo=remi update php
+
+测试了下，有点小问题
+
+换一个配置
+
+[c5-testing]
+
+name=CentOS-5 Testing
+
+baseurl=<a href="http://dev.centos.org/centos/$releasever/testing/$basearch/">http://dev.centos.org/centos/$releasever/testing/$basearch/</a>
+
+enabled=1
+
+gpgcheck=1
+
+gpgkey=<a href="http://dev.centos.org/centos/RPM-GPG-KEY-CentOS-testing">http://dev.centos.org/centos/RPM-GPG-KEY-CentOS-testing</a>
+
+</div>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
 
 <nav id="pagination">
   
@@ -301,7 +323,7 @@
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
-    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+    <li><a href="/categories/faq/">faq</a><small>26</small></li>
   
     <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
   

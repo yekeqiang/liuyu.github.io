@@ -55,77 +55,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2010-12-19T09:06:37.000Z"><a href="/2010/12/19/awk-use-bash-shell-export/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/awk-use-bash-shell-export/">awk中使用shell的环境变量</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>awk中使用shell的环境变量
-一:&quot;&#39;$var&#39;&quot;
-这种写法大家无需改变用&#39;括起awk程序的习惯,是老外常用的写法.如:</p>
-<pre><code><figure class="highlight"><pre><span class="xml">var="test"
-awk 'BEGIN{print "'</span><span class="variable">$var</span><span class="xml">'"}'
-`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-这种写法其实际是双括号变为单括号的常量,传递给了awk.
-如果var中含空格,为了shell不把空格作为分格符,便应该如下使用:
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`var="this is a test"
-awk 'BEGIN{print "'"</span><span class="variable">$var</span><span class="xml">"'"}'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-二:'"</span><span class="variable">$var</span><span class="xml">"'
-
-这种写法与上一种类似.如果变量含空格,则变为'""</span><span class="variable">$var</span><span class="xml">""'较为可靠.
-
-<span class="comment">&lt;!--more--&gt;</span>
-
-三.把括起awk程序的''变为"",使用"</span><span class="variable">$var</span><span class="xml">"
-
-如:
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`</span><span class="variable">$var</span><span class="xml">="this is a test"
-awk 'BEGIN{print "</span><span class="variable">$var</span><span class="xml">"}"`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-这是因为在""里$是特殊字符,而在''里$是普通字符.
-
-四:export 变量,使用ENVIRON["var"]形式,
-
-如:
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`</span><span class="variable">$var</span><span class="xml">="this is a test";export </span><span class="variable">$var</span><span class="xml">
-awk 'BEGIN{print ENVIRON["var"]}'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-五:当然也可以使用-v选项
-如:
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`</span><span class="variable">$var</span><span class="xml">="this is a test"
-awk -vnvar="</span><span class="variable">$var</span><span class="xml">" '{print nvar}'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-这样便把系统变量定义成了awk变量.
-
-二.在awk中给系统变量附值
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`eval $(awk 'BEGIN{print "a=ggg b=</span><span class="number">3</span><span class="xml">"}')
-eval $(grep -v '#' "</span><span class="variable">$CONFFILE</span><span class="xml">" | awk 'BEGIN{FS="|"} NR=="'</span><span class="variable">$var_list</span><span class="xml">'"{printf("HOST=\"%s\" MAX=\"%s\" EMAILLIST=\"%s\" PHONE=\"%s\"\n",</span><span class="variable">$1</span><span class="xml">,</span><span class="variable">$2</span><span class="xml">,</span><span class="variable">$3</span><span class="xml">,</span><span class="variable">$4</span><span class="xml">)}')</span>
-</pre></figure></code></pre>
-<p>转自：<a href="http://hi.baidu.com/%CA%AB%D5%B9/blog/item/ad30993d12c69700bba16776.html">http://hi.baidu.com/%CA%AB%D5%B9/blog/item/ad30993d12c69700bba16776.html</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2010-12-19T09:00:42.000Z"><a href="/2010/12/19/iostat-detailed/">12月 19 2010</a></time>
       
       
@@ -558,6 +487,106 @@ W 将当前设置写入~/.toprc文件中。这是写top配置文件的推荐方�
 
 
 
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:52:33.000Z"><a href="/2010/12/19/linux-ps-detailed/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/linux-ps-detailed/">linux ps 命令详解 </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>linux ps(process status) 命令详解
+功能说明：报告程序状况。</p>
+<p><strong>语　　法</strong>：ps [-aAcdefHjlmNVwy][acefghLnrsSTuvxX][-C &lt;指令名称&gt;][-g &lt;群组名称&gt;][-G &lt;群组识别码&gt;][-p &lt;程序识别码&gt;][p &lt;程序识别码&gt;][-s &lt;阶段作业&gt;][-t &lt;终端机编号&gt;][t &lt;终端机编号&gt;][-u &lt;用户识别码&gt;][-U &lt;用户识别码&gt;][U &lt;用户名称&gt;][-&lt;程序识别码&gt;][--cols &lt;每列字符数&gt;][--columns &lt;每列字符数&gt;][--cumulative][--deselect][--forest][--headers][--help] [--info][--lines &lt;显示列数&gt;][--no-headers][--group &lt;群组名称&gt;][-Group &lt;群组识别码&gt;][--pid &lt;程序识别码&gt;][--rows &lt;显示列数&gt;][--sid &lt;阶段作业&gt;][--tty &lt;终端机编号&gt;][--user &lt;用户名称&gt;][--User &lt;用户识别码&gt;][--version][--width &lt;每列字符数&gt;]
+补充说明：ps是用来报告程序执行状况的指令，您可以搭配kill指令随时中断，删除不必要的程序。
+<strong>
+参　　数：</strong>
+-a 　显示所有终端机下执行的程序，除了阶段作业领导者之外。
+a 　显示现行终端机下的所有程序，包括其他用户的程序。
+-A 　显示所有程序。
+-c 　显示CLS和PRI栏位。
+c 　列出程序时，显示每个程序真正的指令名称，而不包含路径，参数或常驻服务的标示。
+-C&lt;指令名称&gt; 指定执行指令的名称，并列出该指令的程序的状况。
+-d 　显示所有程序，但不包括阶段作业领导者的程序。
+-e 　此参数的效果和指定&quot;A&quot;参数相同。
+e 　列出程序时，显示每个程序所使用的环境变量。
+-f 　显示UID,PPIP,C与STIME栏位。
+f 　用ASCII字符显示树状结构，表达程序间的相互关系。
+-g&lt;群组名称&gt; 此参数的效果和指定&quot;-G&quot;参数相同，当亦能使用阶段作业领导者的名称来指定。
+g 　显示现行终端机下的所有程序，包括群组领导者的程序。
+-G&lt;群组识别码&gt; 列出属于该群组的程序的状况，也可使用群组名称来指定。
+h 　不显示标题列。
+-H 　显示树状结构，表示程序间的相互关系。
+-j或j 　采用工作控制的格式显示程序状况。
+-l或l 　采用详细的格式来显示程序状况。
+L 　列出栏位的相关信息。
+-m或m 　显示所有的执行绪。
+n 　以数字来表示USER和WCHAN栏位。
+-N 　显示所有的程序，除了执行ps指令终端机下的程序之外。
+-p&lt;程序识别码&gt; 指定程序识别码，并列出该程序的状况。
+p&lt;程序识别码&gt; 此参数的效果和指定&quot;-p&quot;参数相同，只在列表格式方面稍有差异。
+r 　只列出现行终端机正在执行中的程序。
+-s&lt;阶段作业&gt; 指定阶段作业的程序识别码，并列出隶属该阶段作业的程序的状况。
+s 　采用程序信号的格式显示程序状况。
+S 　列出程序时，包括已中断的子程序资料。
+-t&lt;终端机编号&gt; 指定终端机编号，并列出属于该终端机的程序的状况。
+t&lt;终端机编号&gt; 此参数的效果和指定&quot;-t&quot;参数相同，只在列表格式方面稍有差异。
+-T 　显示现行终端机下的所有程序。
+-u&lt;用户识别码&gt; 此参数的效果和指定&quot;-U&quot;参数相同。
+u 　以用户为主的格式来显示程序状况。
+-U&lt;用户识别码&gt; 列出属于该用户的程序的状况，也可使用用户名称来指定。
+U&lt;用户名称&gt; 列出属于该用户的程序的状况。
+v 　采用虚拟内存的格式显示程序状况。
+-V或V 　显示版本信息。
+-w或w 　采用宽阔的格式来显示程序状况。
+x 　显示所有程序，不以终端机来区分。
+X 　采用旧式的Linux i386登陆格式显示程序状况。
+-y 　配合参数&quot;-l&quot;使用时，不显示F(flag)栏位，并以RSS栏位取代ADDR栏位　。
+-&lt;程序识别码&gt; 此参数的效果和指定&quot;p&quot;参数相同。
+--cols&lt;每列字符数&gt; 设置每列的最大字符数。
+--columns&lt;每列字符数&gt; 此参数的效果和指定&quot;--cols&quot;参数相同。
+--cumulative 　此参数的效果和指定&quot;S&quot;参数相同。
+--deselect 　此参数的效果和指定&quot;-N&quot;参数相同。
+--forest 　此参数的效果和指定&quot;f&quot;参数相同。
+--headers 　重复显示标题列。
+--help 　在线帮助。
+--info 　显示排错信息。
+--lines&lt;显示列数&gt; 设置显示画面的列数。
+--no-headers 　此参数的效果和指定&quot;h&quot;参数相同，只在列表格式方面稍有差异。
+--group&lt;群组名称&gt; 此参数的效果和指定&quot;-G&quot;参数相同。
+--Group&lt;群组识别码&gt; 此参数的效果和指定&quot;-G&quot;参数相同。
+--pid&lt;程序识别码&gt; 此参数的效果和指定&quot;-p&quot;参数相同。
+--rows&lt;显示列数&gt; 此参数的效果和指定&quot;--lines&quot;参数相同。
+--sid&lt;阶段作业&gt; 此参数的效果和指定&quot;-s&quot;参数相同。
+--tty&lt;终端机编号&gt; 此参数的效果和指定&quot;-t&quot;参数相同。
+--user&lt;用户名称&gt; 此参数的效果和指定&quot;-U&quot;参数相同。
+--User&lt;用户识别码&gt; 此参数的效果和指定&quot;-U&quot;参数相同。
+--version 　此参数的效果和指定&quot;-V&quot;参数相同。
+--widty&lt;每列字符数&gt; 此参数的效果和指定&quot;-cols&quot;参数相同。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
 
 <nav id="pagination">
   
@@ -587,7 +616,7 @@ W 将当前设置写入~/.toprc文件中。这是写top配置文件的推荐方�
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
-    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+    <li><a href="/categories/faq/">faq</a><small>26</small></li>
   
     <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
   

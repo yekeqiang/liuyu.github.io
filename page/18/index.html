@@ -55,79 +55,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2010-12-17T10:59:04.000Z"><a href="/2010/12/17/apache-ssi-shtml-config/">12月 17 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/17/apache-ssi-shtml-config/">Apache ssi shtml配置</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>什么是shtml呢？
-使用SSI(Server Side Include)的html文件扩展名，SSI（Server Side Include)，通常称为&quot;服务器端嵌入&quot;或者叫&quot;服务器端包含&quot;，是一种类似于ASP的基于服务器的网页制作技术。默认扩展名是 .stm、.shtm 和 .shtml。
-什么是SSI？
-SSI是英文Server Side Includes的缩写，翻译成中文就是服务器端包含的意思。从技术角度上说，SSI就是在HTML文件中，可以通过注释行调用的命令或指针。SSI具有 强大的功能，只要使用一条简单的SSI命令就可以实现整个网站的内容更新，时间和日期的动态显示，以及执行shell和CGI脚本程序等复杂的功能。 网站维护常常碰到的一个问题是，网站的结构已经固定，却为了更新一点内容而不得不重做一大批网页。SSI提供了一种简单、有效的方法来解决这一问题，它将 一个网站的基本结构放在几个简单的HTML文件中（模板），以后我们要做的只是将文本传到服务器，让程序按照模板自动生成网页，从而使管理大型网站变得容 易。
-实现方法
-建立头文件
-head.html</p>
-<p>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;</p>
-<p>&quot;<a href="http://www.w3.org/TR/html4/loose.dtd"><a href="http://www.w3.org/TR/html4/loose.dtd">http://www.w3.org/TR/html4/loose.dtd</a></a>&quot;&gt;</p>
-<p>&lt;html&gt;</p>
-<p>&lt;head&gt;</p>
-<p>&lt;title&gt;Untitled Document&lt;/title&gt;</p>
-<p>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=gb2312&quot;&gt;</p>
-<p>&lt;/head&gt;&lt;body&gt;</p>
-<p>&lt;div style=&quot;background-color:#00CC66;boder:1px groove orange &quot;&gt;这是头&lt;/div&gt;</p>
-<p>建立尾文件：
-foot.html</p>
-<p>&lt;pre&gt;&lt;code&gt;</p>
-<p>这是尾</p>
-<p>&lt;/body&gt;&lt;/html&gt;</p>
-<p>连接头和尾</p>
-<p>&lt;!--#include file=&quot;head.html&quot;--&gt;</p>
-<p>&lt;hr&gt;</p>
-<p>&lt;b&gt;头尾文件内容都显示。表示SSI工作正常。shtml显示正常&lt;/b&gt;</p>
-<p>&lt;hr&gt;</p>
-<p>&lt;!--#include file=&quot;foot.html&quot;--&gt;</p>
-<p>linuxtone.shtml配置文件很简单。</p>
-<p>apache配置如下：
-修改如下几处</p>
-<pre><code><figure class="highlight"><pre><span class="comment">AddType</span> <span class="comment">text/html</span> <span class="string">.</span><span class="comment">shtml</span>
-<span class="comment">AddOutputFilter</span> <span class="comment">INCLUDES</span> <span class="string">.</span><span class="comment">shtml</span>
-<span class="comment">Options</span> <span class="comment">Indexes</span> <span class="comment">FollowSymLinks</span> <span class="comment">includes</span>
-<span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
-<span class="comment">includes</span> <span class="comment">#为追加</span> <span class="comment">你要是感觉麻烦可以用以下命令替换。</span>
-&lt;<span class="comment">pre</span>&gt;<span class="comment">`sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'s##AddType</span> <span class="comment">text/html</span> <span class="string">.</span><span class="comment">shtml#AddType</span> <span class="comment">text/html</span> <span class="string">.</span><span class="comment">shtml#'</span> <span class="comment">/usr/local/apachefile/httpd</span>.<span class="comment">conf</span>
-<span class="comment">sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'s##AddOutputFilter</span> <span class="comment">INCLUDES</span> <span class="string">.</span><span class="comment">shtml#AddOutputFilter</span> <span class="comment">INCLUDES</span> <span class="string">.</span><span class="comment">shtml#'</span>  <span class="comment">/usr/local/apachefile/httpd</span>.<span class="comment">conf</span>
-<span class="comment">sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'s#Options</span> <span class="comment">Indexes</span> <span class="comment">FollowSymLinks#Options</span> <span class="comment">Indexes</span> <span class="comment">FollowSymLinks</span> <span class="comment">includes</span> <span class="comment">#'</span>  <span class="comment">/usr/local/apachefile/httpd</span>.<span class="comment">conf
-</pre></figure></code></pre>
-<p>shtml 的压缩方法不同于js css php
-方法如下：
-AddOutputFilter INCLUDES;DEFLATE shtml</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2010-12-17T10:55:42.000Z"><a href="/2010/12/17/cache-control-translation/">12月 17 2010</a></time>
       
       
@@ -362,6 +289,109 @@ CustomLog logs/access_log combined env=!dontlog
 
 
 
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T10:48:24.000Z"><a href="/2010/12/17/apache-referer/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/apache-referer/">Apache referer AccessKey</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2><strong>防盗链原理：</strong></h2>
+<p>http标准协议中有专门的字段记录referer
+一来可以追溯上一个入站地址是什么
+二来对于资源文件，可以跟踪到包含显示他的网页地址是什么。
+因此所有防盗链方法都是基于这个Referer字段</p>
+<p>主要有两种方法实现</p>
+<h3>第一种：使用FilesMatch</h3>
+<pre><code><figure class="highlight"><pre>ServerAdmin laogui@gmail<span class="variable">.com</span>
+DocumentRoot D:/www/www<span class="variable">.chinahtml</span><span class="variable">.com</span>
+ServerName www<span class="variable">.aaa</span><span class="variable">.com</span>
+ServerName aaa<span class="variable">.com</span>
+</pre></figure></code></pre>
+<p>盗用连接指定显示的页面。也可以不用此项，这样盗用连接也可无法使用。</p>
+<pre><code><figure class="highlight"><pre>ErrorDocument <span class="number">404</span> http://www<span class="preprocessor">.chinahtml</span><span class="preprocessor">.com</span>/error<span class="preprocessor">.html</span>
+</pre></figure></code></pre>
+<p>允许www.aaa.com的网站使用</p>
+<pre><code><figure class="highlight"><pre><span class="title">SetEnvIfNoCase</span> Referer <span class="string">"^http://www.aaa.com"</span> local_ref=<span class="number">1</span>
+</pre></figure></code></pre>
+<p>允许 aaa.com  的网站使用</p>
+<pre><code><figure class="highlight"><pre><span class="title">SetEnvIfNoCase</span> Referer <span class="string">"^http://aaa.com"</span> local_ref=<span class="number">1</span>
+</pre></figure></code></pre>
+<p>定义防盗文件的扩展名</p>
+<pre><code><figure class="highlight"><pre><span class="keyword">Order</span> <span class="keyword">Allow</span>,<span class="keyword">Deny</span>
+<span class="keyword">Allow</span> from env=local_ref  允许上面指定域
+</pre></figure></code></pre>
+<p>防盗链设置样本：使用正则表达式</p>
+<pre><code><figure class="highlight"><pre><span class="keyword">SetEnvIf</span> Referer <span class="string">"^http://(.)+\.ilinux\.cn/"</span> local_ref=1
+<span class="keyword">SetEnvIf</span> Referer <span class="string">"^http://(.)+\.isql\.cn/"</span> local_ref=1
+<span class="comment">#SetEnvIf Referer "^http://(.)+\.other\.org\.cn/" local_ref=1</span>
+<span class="keyword">SetEnvIf</span> Request_URI <span class="string">"/logo(.)+"</span> local_ref=0
+
+<span class="keyword">Order</span> <span class="keyword">Allow</span>,<span class="keyword">Deny</span>
+<span class="keyword">Allow</span> from env=local_ref
+</pre></figure></code></pre>
+<p>解释：</p>
+<ol>
+<li>部分，表示设置允许访问的referer地址，第一行的意思为所有http协议访问，以.ilinux.cn结尾的域名地址，第二行类似，只是换成 了.isql.cn，表问我前面的鬼符是什么，不懂得可以去翻正则表达式的研究文献，不想深究的可以照猫画虎设置自己的网站。</li>
+<li>绿色部分，表示不在上述引用域名范围内，但可以被放行的特例，本例中表示网站/目录，所有以logo开头的文件(用作允许其它网站的友情连接引用本站logo)。</li>
+<li>橙色部分是设置反盗链的关键部分，上面每一个设置都联系到了local_ref这个环境变量，只有这个变量为1，则允许被引用，否则显示一个X。</li>
+<li>紫色部分设置了哪些扩展名的文件加入反盗链的规则。</li>
+</ol>
+<h3>第二种方法：</h3>
+<p>使用rewirte方式：</p>
+<pre><code><figure class="highlight"><pre><span class="keyword">RewriteEngine</span> <span class="literal">on</span>
+<span class="keyword">RewriteCond</span> <span class="cbracket">%{HTTP_REFERER}</span> !^$
+<span class="keyword">RewriteCond</span> <span class="cbracket">%{HTTP_REFERER}</span> !^http://bbs.ilinux.cn/.*$   <span class="sqbracket"> [NC]</span>
+<span class="keyword">RewriteCond</span> <span class="cbracket">%{HTTP_REFERER}</span> !^http://bbs.ilinux.cn$     <span class="sqbracket"> [NC]</span>
+<span class="keyword">RewriteCond</span> <span class="cbracket">%{HTTP_REFERER}</span> !^http://www.ilinux.cn/.*$     <span class="sqbracket"> [NC]</span>
+<span class="keyword">RewriteCond</span> <span class="cbracket">%{HTTP_REFERER}</span> !^http://www.ilinux.cn$     <span class="sqbracket"> [NC]</span>
+<span class="keyword">RewriteCond</span> <span class="cbracket">%{HTTP_REFERER}</span> !^http://ilinux.cn/.*$     <span class="sqbracket"> [NC]</span>
+<span class="keyword">RewriteCond</span> <span class="cbracket">%{HTTP_REFERER}</span> !^http://ilinux.cn$     <span class="sqbracket"> [NC]</span>
+<span class="keyword">RewriteRule</span> .*\.(gif|jpg|jpeg|avi|bmp|ram|rmvb|rm|rar|zip)$ http://www.ilinux.cn<span class="sqbracket"> [R,NC]</span>
+</pre></figure></code></pre>
+<p>上面的，需要Rewrite模板．所有指定的文件，如果Referer不是上面的值，将被重定向到首页.</p>
+<p>还有使用.htaccess 文件的方法，不过不推荐使用，影响apache性能。</p>
+<p>写一个.htaccess包括以下代码：</p>
+<pre><code><figure class="highlight"><pre><span class="keyword">SetEnvIfNoCase</span> Referer <span class="string">"^http://google\.com/"</span> local_ref=1
+<span class="keyword">Order</span> <span class="keyword">Allow</span>,<span class="keyword">Deny</span>
+<span class="keyword">Allow</span> from env=local_ref
+<span class="keyword">Allow</span> from 127.0.0.1
+<span class="keyword">Allow</span> from 123.123.123.12
+</pre></figure></code></pre>
+<p>如果你的网址是www.myst.cn就改为
+    SetEnvIfNoCase Referer &quot;^<a href="http://www\.myst\.com/">http://www\.myst\.com/</a>&quot; local_ref=1</p>
+<p>这意思是说防止人家连结你的jpg档案.可以增修为</p>
+<p>ps.最后一个不使用区各线</p>
+<pre><code><figure class="highlight"><pre><span class="title">Allow</span> from <span class="number">127.0.0.1</span>
+</pre></figure></code></pre>
+<p>这表示允许连结主机的IP。
+你要是默认其他网站可以连结的话，就填入该主机IP，把上述的code储存为.htaccess然后放入你安装的目录下即可。</p>
+<p>出自：<a href="http://blog.chinaunix.net/u/11765/showart_236561.html">http://blog.chinaunix.net/u/11765/showart_236561.html</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
 
 <nav id="pagination">
   
@@ -391,7 +421,7 @@ CustomLog logs/access_log combined env=!dontlog
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
-    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+    <li><a href="/categories/faq/">faq</a><small>26</small></li>
   
     <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
   

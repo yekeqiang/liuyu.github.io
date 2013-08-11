@@ -55,56 +55,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2010-12-17T23:53:12.000Z"><a href="/2010/12/18/tomcat-optimization-sending-end-packet/">12月 18 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/18/tomcat-optimization-sending-end-packet/">Tomcat 优化sending end packet</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>优化sending end packet</p>
-<p>性能调整：
-<a href="http://vod.sjtu.edu.cn/help/Article_Print.asp?ArticleID=1387">http://vod.sjtu.edu.cn/help/Article_Print.asp?ArticleID=1387</a></p>
-<p>症状:
-WARNING: Error sending end packet
-java.net.SocketException: Broken pipe
-资料:
-Broken pipe产生的原因通常是当管道读端没有在读，而管道的写端继续有线程在写，就会造成管道中断。（由于管道是单向通信的） SIGSEGV(Segment fault)意味着指针所对应的地址是无效地址，没有物理内存对应该地址。 以下是UNIX的信号解释： 11 / SIGSEGV: Unerlaubter Zugriff auf Hauptspeicher (Adressfehler). 12 / SIGUSER2: User-defined Signal 2 (POSIX). 把_JAVA_SR_SIGNUM改成12只是将信号至成user-defined，让它不报出来而已，不能解决问题。 </p>
-<p>建议采取的方式：
-1． 资源没有完全释放，用完后要至NULL 值（JAVA的GC没那么完善）
-2． 数据库连接顺序关闭！（RS，PS，CONN）
-3． 优化JAVA虚拟机 加入相应的内存参数！
-4． 不要在数据库中获取大段文本（即一个栏位的值不要太大）
-5． JAVA 不推荐 用String 获取大量信息。（容易造成内存泄露，建议用StringBuffer）
-6． 页面重复提交
-7． 尽量将METHOD移到JAVA中，在JSP中所有的方法都看做全局变量，编译执行本身就有很多问题。
-8． 尽量用较新较稳定版本的JDK，低版本的JVM本身也有很多BUG，比如1。5的垃圾回收比起1。2，1。3一定是非常明显的进步。
-9． LINUX系统本身没有这么稳定，有些问题无法避免的~~：）</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2010-12-17T23:51:58.000Z"><a href="/2010/12/18/tomcat-jk-no-connection/">12月 18 2010</a></time>
       
       
@@ -503,6 +453,79 @@ none 不缓存数据</p>
 
 
 
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T10:59:04.000Z"><a href="/2010/12/17/apache-ssi-shtml-config/">12月 17 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/17/apache-ssi-shtml-config/">Apache ssi shtml配置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>什么是shtml呢？
+使用SSI(Server Side Include)的html文件扩展名，SSI（Server Side Include)，通常称为&quot;服务器端嵌入&quot;或者叫&quot;服务器端包含&quot;，是一种类似于ASP的基于服务器的网页制作技术。默认扩展名是 .stm、.shtm 和 .shtml。
+什么是SSI？
+SSI是英文Server Side Includes的缩写，翻译成中文就是服务器端包含的意思。从技术角度上说，SSI就是在HTML文件中，可以通过注释行调用的命令或指针。SSI具有 强大的功能，只要使用一条简单的SSI命令就可以实现整个网站的内容更新，时间和日期的动态显示，以及执行shell和CGI脚本程序等复杂的功能。 网站维护常常碰到的一个问题是，网站的结构已经固定，却为了更新一点内容而不得不重做一大批网页。SSI提供了一种简单、有效的方法来解决这一问题，它将 一个网站的基本结构放在几个简单的HTML文件中（模板），以后我们要做的只是将文本传到服务器，让程序按照模板自动生成网页，从而使管理大型网站变得容 易。
+实现方法
+建立头文件
+head.html</p>
+<p>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;</p>
+<p>&quot;<a href="http://www.w3.org/TR/html4/loose.dtd"><a href="http://www.w3.org/TR/html4/loose.dtd">http://www.w3.org/TR/html4/loose.dtd</a></a>&quot;&gt;</p>
+<p>&lt;html&gt;</p>
+<p>&lt;head&gt;</p>
+<p>&lt;title&gt;Untitled Document&lt;/title&gt;</p>
+<p>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=gb2312&quot;&gt;</p>
+<p>&lt;/head&gt;&lt;body&gt;</p>
+<p>&lt;div style=&quot;background-color:#00CC66;boder:1px groove orange &quot;&gt;这是头&lt;/div&gt;</p>
+<p>建立尾文件：
+foot.html</p>
+<p>&lt;pre&gt;&lt;code&gt;</p>
+<p>这是尾</p>
+<p>&lt;/body&gt;&lt;/html&gt;</p>
+<p>连接头和尾</p>
+<p>&lt;!--#include file=&quot;head.html&quot;--&gt;</p>
+<p>&lt;hr&gt;</p>
+<p>&lt;b&gt;头尾文件内容都显示。表示SSI工作正常。shtml显示正常&lt;/b&gt;</p>
+<p>&lt;hr&gt;</p>
+<p>&lt;!--#include file=&quot;foot.html&quot;--&gt;</p>
+<p>linuxtone.shtml配置文件很简单。</p>
+<p>apache配置如下：
+修改如下几处</p>
+<pre><code><figure class="highlight"><pre><span class="comment">AddType</span> <span class="comment">text/html</span> <span class="string">.</span><span class="comment">shtml</span>
+<span class="comment">AddOutputFilter</span> <span class="comment">INCLUDES</span> <span class="string">.</span><span class="comment">shtml</span>
+<span class="comment">Options</span> <span class="comment">Indexes</span> <span class="comment">FollowSymLinks</span> <span class="comment">includes</span>
+<span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
+<span class="comment">includes</span> <span class="comment">#为追加</span> <span class="comment">你要是感觉麻烦可以用以下命令替换。</span>
+&lt;<span class="comment">pre</span>&gt;<span class="comment">`sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'s##AddType</span> <span class="comment">text/html</span> <span class="string">.</span><span class="comment">shtml#AddType</span> <span class="comment">text/html</span> <span class="string">.</span><span class="comment">shtml#'</span> <span class="comment">/usr/local/apachefile/httpd</span>.<span class="comment">conf</span>
+<span class="comment">sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'s##AddOutputFilter</span> <span class="comment">INCLUDES</span> <span class="string">.</span><span class="comment">shtml#AddOutputFilter</span> <span class="comment">INCLUDES</span> <span class="string">.</span><span class="comment">shtml#'</span>  <span class="comment">/usr/local/apachefile/httpd</span>.<span class="comment">conf</span>
+<span class="comment">sed</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">'s#Options</span> <span class="comment">Indexes</span> <span class="comment">FollowSymLinks#Options</span> <span class="comment">Indexes</span> <span class="comment">FollowSymLinks</span> <span class="comment">includes</span> <span class="comment">#'</span>  <span class="comment">/usr/local/apachefile/httpd</span>.<span class="comment">conf
+</pre></figure></code></pre>
+<p>shtml 的压缩方法不同于js css php
+方法如下：
+AddOutputFilter INCLUDES;DEFLATE shtml</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
 
 <nav id="pagination">
   
@@ -532,7 +555,7 @@ none 不缓存数据</p>
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
-    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+    <li><a href="/categories/faq/">faq</a><small>26</small></li>
   
     <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
   

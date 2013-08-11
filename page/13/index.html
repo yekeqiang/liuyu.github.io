@@ -55,39 +55,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2010-12-19T08:13:20.000Z"><a href="/2010/12/19/howto-only-use-epel-with-yum/">12月 19 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/19/howto-only-use-epel-with-yum/">Howto only use epel with yum?</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>yum --disablerepo=* --enablerepo=epel list available</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2010-12-19T08:11:47.000Z"><a href="/2010/12/19/howto-use-dstat-monitoring-linux-system-resources/">12月 19 2010</a></time>
       
       
@@ -596,6 +563,61 @@ mem=xxM</p>
 
 
 
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-18T23:32:25.000Z"><a href="/2010/12/19/rhel-use-centos-yum/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/19/rhel-use-centos-yum/">rhel howto use centos yum ?</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>rhel服务器可以使用yum更新，但需要先卸载原先的yum，并且安装新的yum，然后可以更新。</p>
+<p>1 卸载原先的yum
+rpm -aq|grep yum|xargs rpm -e --nodeps
+如果有卸载不了的，试试 --nodeps
+如果是定义的安装包，试试 --allmatches</p>
+<p>2 下载新的yum，并且安装</p>
+<pre><code><figure class="highlight"><pre>wget http://centos<span class="preprocessor">.ustc</span><span class="preprocessor">.edu</span><span class="preprocessor">.cn</span>/centos/<span class="number">5.3</span>/os/i386/CentOS/yum-<span class="number">3.2</span><span class="number">.19</span>-<span class="number">18.</span>el5<span class="preprocessor">.centos</span><span class="preprocessor">.noarch</span><span class="preprocessor">.rpm</span>
+wget http://centos<span class="preprocessor">.ustc</span><span class="preprocessor">.edu</span><span class="preprocessor">.cn</span>/centos/<span class="number">5.3</span>/os/i386/CentOS/yum-metadata-parser-<span class="number">1.1</span><span class="number">.2</span>-<span class="number">2.</span>el5<span class="preprocessor">.i</span>386<span class="preprocessor">.rpm</span>
+wget http://mirror<span class="preprocessor">.centos</span><span class="preprocessor">.org</span>/centos-<span class="number">5</span>/<span class="number">5.3</span>/os/i386/CentOS/yum-fastestmirror-<span class="number">1.1</span><span class="number">.16</span>-<span class="number">13.</span>el5<span class="preprocessor">.centos</span><span class="preprocessor">.noarch</span><span class="preprocessor">.rpm</span>
+rpm -ivh yum-*`&lt;/pre&gt;
+
+<span class="number">4</span> 更改yum源
+&lt;pre&gt;`cd /etc/yum<span class="preprocessor">.repos</span><span class="preprocessor">.d</span>/
+wget http://docs<span class="preprocessor">.linuxtone</span><span class="preprocessor">.org</span>/soft/lemp/CentOS-Base<span class="preprocessor">.repo</span>`&lt;/pre&gt;
+
+注：别的 centos源要把repo文件里的 $releasever 换成版本号，比如换成<span class="number">5</span>
+引用
+&lt;pre&gt;`baseurl=http://centos<span class="preprocessor">.ustc</span><span class="preprocessor">.edu</span><span class="preprocessor">.cn</span>/centos/$releasever/os/$basearch/
+变成：
+baseurl=http://centos<span class="preprocessor">.ustc</span><span class="preprocessor">.edu</span><span class="preprocessor">.cn</span>/centos/<span class="number">5</span>/os/$basearch/
+</pre></figure></code></pre>
+<p>5 全部更新
+yum -y update</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
 
 <nav id="pagination">
   
@@ -625,7 +647,7 @@ mem=xxM</p>
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
-    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+    <li><a href="/categories/faq/">faq</a><small>26</small></li>
   
     <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
   

@@ -55,82 +55,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2011-05-15T04:00:07.000Z"><a href="/2011/05/15/转服务器返回状态码图解/">5月 15 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/05/15/转服务器返回状态码图解/">[转]服务器返回状态码图解</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>以前只是看的枯燥的文字版的服务器返回状态码。现在，看一张比较形象的图解,希望能增强记忆。
-<a name="entrymore"></a>
-<a href="http://bubbyroom.com/wp-content/uploads/2011/05/服务器返回状态码图解.jpg"><img src="http://bubbyroom.com/wp-content/uploads/2011/05/服务器返回状态码图解-150x150.jpg" alt="" title="服务器返回状态码图解"></a></p>
-<p>HTTP 400 – 请求无效
-HTTP 401.1 – 未授权：登录失败
-HTTP 401.2 – 未授权：服务器配置问题导致登录失败
-HTTP 401.3 – ACL 禁止访问资源
-HTTP 401.4 – 未授权：授权被筛选器拒绝
-HTTP 401.5 – 未授权：ISAPI 或 CGI 授权失败
-HTTP 403 – 禁止访问
-HTTP 403 – 对 Internet 服务管理器 (HTML) 的访问仅限于 Localhost
-HTTP 403.1 禁止访问：禁止可执行访问
-HTTP 403.2 – 禁止访问：禁止读访问
-HTTP 403.3 – 禁止访问：禁止写访问
-HTTP 403.4 – 禁止访问：要求 SSL
-HTTP 403.5 – 禁止访问：要求 SSL 128
-HTTP 403.6 – 禁止访问：IP 地址被拒绝
-HTTP 403.7 – 禁止访问：要求客户证书
-HTTP 403.8 – 禁止访问：禁止站点访问
-HTTP 403.9 – 禁止访问：连接的用户过多
-HTTP 403.10 – 禁止访问：配置无效
-HTTP 403.11 – 禁止访问：密码更改
-HTTP 403.12 – 禁止访问：映射器拒绝访问
-HTTP 403.13 – 禁止访问：客户证书已被吊销
-HTTP 403.15 – 禁止访问：客户访问许可过多
-HTTP 403.16 – 禁止访问：客户证书不可信或者无效
-HTTP 403.17 – 禁止访问：客户证书已经到期或者尚未生效
-HTTP 404.1 – 无法找到 Web 站点
-HTTP 404 – 无法找到文件
-HTTP 405 – 资源被禁止
-HTTP 406 – 无法接受
-HTTP 407 – 要求代理身份验证
-HTTP 410 – 永远不可用
-HTTP 412 – 先决条件失败
-HTTP 414 – 请求 – URI 太长</p>
-<p>HTTP 500 – 内部服务器错误
-HTTP 500.100 – 内部服务器错误 – ASP 错误
-HTTP 500-11 服务器关闭
-HTTP 500-12 应用程序重新启动
-HTTP 500-13 – 服务器太忙
-HTTP 500-14 – 应用程序无效
-HTTP 500-15 – 不允许请求 global.asa
-Error 501 – 未实现
-HTTP 502 – 网关错误</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2011-04-01T08:55:40.000Z"><a href="/2011/04/01/iptables_raw_ip_conntrack-table-full-dropping-packet/">4月 1 2011</a></time>
       
       
@@ -639,6 +563,96 @@ Etc: git, vagrant, chef, capistrano, RabbitMQ, jQuery</p>
 
 
 
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-03-14T02:59:18.000Z"><a href="/2011/03/14/ganglia-gmond-acl/">3月 14 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/03/14/ganglia-gmond-acl/">ganglia gmond 安全：增加acl </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在配置好ganglia 后。可以通过</p>
+<p><code> </code></p>
+<pre><code><figure class="highlight"><pre><span class="title">telnet</span> ip <span class="number">8649</span> `&lt;/pre&gt;
+` `
+
+取到机器所监控的metric 信息。非常 的详细。为了安全起见。需要增加ACL访问控制。
+
+而gmond可以在**udp_recv_channel and tcp_accept_channel **增加ACL
+
+例如：
+
+` `
+&lt;pre&gt;`acl {
+<span class="title">default</span> = <span class="string">"deny"</span>
+access {
+<span class="title">ip</span> = <span class="number">192.168.0.4</span>
+mask = <span class="number">32</span>
+action = <span class="string">"allow"</span>
+}
+} `&lt;/pre&gt;
+` `
+
+或者：
+` `
+&lt;pre&gt;`acl {
+<span class="title">default</span> = <span class="string">"allow"</span>
+access {
+<span class="title">ip</span> = <span class="number">192.168.0.0</span>
+mask = <span class="number">24</span>
+action = <span class="string">"deny"</span>
+}
+access {
+<span class="title">ip</span> = ::ff:<span class="number">1.2.3.0</span>
+mask = <span class="number">120</span>
+action = <span class="string">"deny"</span>
+}
+} `&lt;/pre&gt;
+` `
+
+而取telnet 取得的信息是在tcp_accept_channel 字段。所以只需要在这个字段 增加acl即可 。
+
+例：
+
+` `
+&lt;pre&gt;`tcp_accept_channel {
+<span class="title">port</span> = <span class="number">8649</span>
+acl {
+<span class="title">default</span> = <span class="string">"deny"</span>
+access {
+<span class="title">ip</span> = <span class="number">192.168.1.5</span> <span class="comment">#中心机的IP</span>
+mask = <span class="number">32</span>
+action = <span class="string">"allow"</span>
+}
+}
+} 
+</pre></figure></code></pre>
+<p><code> </code></p>
+<p>参考文档：<a href="http://linux.die.net/man/5/gmond.conf"><a href="http://linux.die.net/man/5/gmond.conf">http://linux.die.net/man/5/gmond.conf</a></a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
 
 <nav id="pagination">
   
@@ -668,7 +682,7 @@ Etc: git, vagrant, chef, capistrano, RabbitMQ, jQuery</p>
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
-    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+    <li><a href="/categories/faq/">faq</a><small>26</small></li>
   
     <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
   

@@ -55,181 +55,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2010-12-18T06:05:34.000Z"><a href="/2010/12/18/vsftpd-virtual-user/">12月 18 2010</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2010/12/18/vsftpd-virtual-user/">vsftpd 安装与虚拟用户配置</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>vsftpd 安装与虚拟用户配置</p>
-<p>测试环境：
-centos 5.X 64bit
-vsftpd 2.0</p>
-<p>安装：yum -y install vsftpd</p>
-<p>需求：
-虚拟三个用户，使用同一个家目录。权限如下。
-ftpadmin 读写删除
-ftpuser 读写
-ftp 读(下载)
-目录为：/data
-密码统一为：123456</p>
-<p>一、创建虚拟用户数据库：
-1、创建文件文件loginuser.txt
-格式如下：</p>
-<pre><code><figure class="highlight"><pre><span class="title">user_id</span>
-<span class="title">password</span>
-/home/loginuser.txt
-<span class="title">ftpadmin</span>
-<span class="number">123456</span>
-<span class="title">ftpuser</span>
-<span class="number">123456</span>
-<span class="title">ftp</span>
-<span class="number">123456</span>
-`&lt;/pre&gt;
-<span class="number">2</span>、生成数据库文件：
-
-<span class="title">yum</span> -y install db4-utils
-&lt;pre&gt;`
-<span class="title">db_load</span> -<span class="type">T</span> -t hash -f /home/loginuser.txt /etc/vsftpd/vsftpd_login.db
-<span class="title">chmod</span> <span class="number">600</span> /etc/vsftpd/vsftpd_login.db
-`&lt;/pre&gt;
-<span class="number">3</span>、配置pam文件
-# vi /etc/pam.d/vsftpd.vu
-&lt;pre&gt;`auth required /lib64/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login
-<span class="title">account</span> required /lib64/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login
-`&lt;/pre&gt;
-#<span class="number">32</span>位操作系统
-&lt;pre&gt;`auth required /lib/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login
-<span class="title">account</span> required /lib/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login
-`&lt;/pre&gt;
-二、为虚拟用户创建本地系统用户
-&lt;pre&gt;`useradd opendoc -d /<span class="typedef"><span class="keyword">data</span> -s /bin/false</span>
-<span class="title">chown</span> opendoc.opendoc /<span class="typedef"><span class="keyword">data</span></span>
-`&lt;/pre&gt;
-三、vsftpd.conf配置
-&lt;pre&gt;`anonymous_enable=<span class="type">NO</span>
-<span class="title">local_enable</span>=<span class="type">YES</span>
-#write_enable=<span class="type">NO</span>
-<span class="title">dirmessage_enable</span>=<span class="type">YES</span>
-<span class="title">xferlog_enable</span>=<span class="type">YES</span>
-<span class="title">xferlog_file</span>=/var/log/vsftpd.log
-<span class="title">connect_from_port_20</span>=<span class="type">YES</span>
-<span class="title">xferlog_std_format</span>=<span class="type">YES</span>
-<span class="title">listen</span>=<span class="type">YES</span>
-<span class="title">listen_port</span>=<span class="number">21</span>
-<span class="title">userlist_enable</span>=<span class="type">YES</span>
-<span class="title">chroot_local_user</span>=<span class="type">YES</span>
-<span class="title">tcp_wrappers</span>=<span class="type">YES</span>
-<span class="title">guest_enable</span>=<span class="type">YES</span>
-<span class="title">guest_username</span>=opendoc
-<span class="title">pam_service_name</span>=vsftpd.vu
-<span class="title">user_config_dir</span>=/etc/vsftpd/vsftpd_user_conf
-<span class="title">virtual_use_local_privs</span>=<span class="type">YES</span>
-<span class="title">pasv_min_port</span>=<span class="number">50000</span>
-<span class="title">pasv_max_port</span>=<span class="number">60000</span>
-<span class="title">pasv_enable</span>=yes
-<span class="title">max_clients</span>=<span class="number">200</span>
-<span class="title">max_per_ip</span>=<span class="number">4</span>
-<span class="title">idle_session_timeout</span>=<span class="number">600</span>
-<span class="title">ftpd_banner</span>=<span class="type">Welcome</span> to opendoc <span class="type">FTP</span> service.
-<span class="title">mkdir</span> /etc/vsftpd/vsftpd_user_conf
-`&lt;/pre&gt;
-# vi /etc/vsftpd/vsftpd_user_conf/ftpadmin 所有权限
-&lt;pre&gt;`write_enable=<span class="type">YES</span>
-<span class="title">anonymous_enable</span>=<span class="type">NO</span>
-<span class="title">anon_world_readable_only</span>=<span class="type">NO</span>
-<span class="title">anon_upload_enable</span>=<span class="type">YES</span>
-<span class="title">anon_mkdir_write_enable</span>=<span class="type">YES</span>
-<span class="title">anon_other_write_enable</span>=<span class="type">YES</span>
-<span class="title">local_umask</span>=<span class="number">022</span>
-<span class="title">download_enable</span>=<span class="type">Yes</span>
-<span class="title">local_root</span>=/<span class="typedef"><span class="keyword">data</span></span>
-`&lt;/pre&gt;
-# vi /etc/vsftpd/vsftpd_user_conf/ftpuser 上传权限
-&lt;pre&gt;`write_enable=<span class="type">YES</span>
-<span class="title">anon_world_readable_only</span>=<span class="type">NO</span>
-<span class="title">anon_upload_enable</span>=<span class="type">YES</span>
-<span class="title">anon_mkdir_write_enable</span>=<span class="type">YES</span>
-<span class="title">anon_other_write_enable</span>=<span class="type">YES</span>
-<span class="title">local_umask</span>=<span class="number">022</span>
-<span class="title">download_enable</span>=<span class="type">NO</span>
-<span class="title">local_root</span>=/<span class="typedef"><span class="keyword">data</span></span>
-`&lt;/pre&gt;
-# vi /etc/vsftpd/vsftpd_user_conf/ftp 只能下载
-&lt;pre&gt;`write_enable=<span class="type">NO</span>
-<span class="title">anon_world_readable_only</span>=<span class="type">NO</span>
-<span class="title">anon_upload_enable</span>=<span class="type">NO</span>
-<span class="title">anon_mkdir_write_enable</span>=<span class="type">NO</span>
-<span class="title">anon_other_write_enable</span>=<span class="type">NO</span>
-<span class="title">local_umask</span>=<span class="number">022</span>
-<span class="title">download_enable</span>=yes
-<span class="title">local_root</span>=/<span class="typedef"><span class="keyword">data</span></span>
-</pre></figure></code></pre>
-<h1>/etc/init.d/vsftpd start</h1>
-<p>Starting vsftpd for vsftpd: [ OK ]</p>
-<p>测试：</p>
-<h1>ftp -n localhost</h1>
-<p>Connected to ifidc.
-530 Please login with USER and PASS.
-530 Please login with USER and PASS.
-KERBEROS_V4 rejected as an authentication type
-220 Welcome to tfhudong FTP service
-ftp&gt; use ftpadmin
-331 Please specify the password.
-Password:
-230 Login successful.
-ftp&gt; quit
-221 Goodbye.</p>
-<h1>ftp -n localhost</h1>
-<p>Connected to ifidc.
-220 Welcome to tfhudong FTP service
-530 Please login with USER and PASS.
-530 Please login with USER and PASS.
-KERBEROS_V4 rejected as an authentication type
-ftp&gt; use ftpuser
-331 Please specify the password.
-Password:
-230 Login successful.
-ftp&gt; quit
-221 Goodbye.</p>
-<h1>ftp -n localhost</h1>
-<p>Connected to ifidc.
-220 Welcome to tfhudong FTP service
-530 Please login with USER and PASS.
-530 Please login with USER and PASS.
-KERBEROS_V4 rejected as an authentication type
-ftp&gt; use ftp
-331 Please specify the password.
-Password:
-230 Login successful.
-ftp&gt; quit
-221 Goodbye.</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2010-12-18T05:59:13.000Z"><a href="/2010/12/18/ubuntu-install-smokeping/">12月 18 2010</a></time>
       
       
@@ -746,6 +571,56 @@ nginx.pid nginx.pid.oldbin</p>
 
 
 
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-17T23:53:12.000Z"><a href="/2010/12/18/tomcat-optimization-sending-end-packet/">12月 18 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/12/18/tomcat-optimization-sending-end-packet/">Tomcat 优化sending end packet</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>优化sending end packet</p>
+<p>性能调整：
+<a href="http://vod.sjtu.edu.cn/help/Article_Print.asp?ArticleID=1387">http://vod.sjtu.edu.cn/help/Article_Print.asp?ArticleID=1387</a></p>
+<p>症状:
+WARNING: Error sending end packet
+java.net.SocketException: Broken pipe
+资料:
+Broken pipe产生的原因通常是当管道读端没有在读，而管道的写端继续有线程在写，就会造成管道中断。（由于管道是单向通信的） SIGSEGV(Segment fault)意味着指针所对应的地址是无效地址，没有物理内存对应该地址。 以下是UNIX的信号解释： 11 / SIGSEGV: Unerlaubter Zugriff auf Hauptspeicher (Adressfehler). 12 / SIGUSER2: User-defined Signal 2 (POSIX). 把_JAVA_SR_SIGNUM改成12只是将信号至成user-defined，让它不报出来而已，不能解决问题。 </p>
+<p>建议采取的方式：
+1． 资源没有完全释放，用完后要至NULL 值（JAVA的GC没那么完善）
+2． 数据库连接顺序关闭！（RS，PS，CONN）
+3． 优化JAVA虚拟机 加入相应的内存参数！
+4． 不要在数据库中获取大段文本（即一个栏位的值不要太大）
+5． JAVA 不推荐 用String 获取大量信息。（容易造成内存泄露，建议用StringBuffer）
+6． 页面重复提交
+7． 尽量将METHOD移到JAVA中，在JSP中所有的方法都看做全局变量，编译执行本身就有很多问题。
+8． 尽量用较新较稳定版本的JDK，低版本的JVM本身也有很多BUG，比如1。5的垃圾回收比起1。2，1。3一定是非常明显的进步。
+9． LINUX系统本身没有这么稳定，有些问题无法避免的~~：）</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
 
 <nav id="pagination">
   
@@ -775,7 +650,7 @@ nginx.pid nginx.pid.oldbin</p>
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
-    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+    <li><a href="/categories/faq/">faq</a><small>26</small></li>
   
     <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
   

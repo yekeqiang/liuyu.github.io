@@ -55,62 +55,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2011-02-16T08:19:04.000Z"><a href="/2011/02/16/centos-yum-安装php5-2/">2月 16 2011</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2011/02/16/centos-yum-安装php5-2/">centos yum 安装php5.2</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <div id="_mcePaste">
-
-wget <a href="http://rpms.famillecollet.com/enterprise/remi-release-5.rpm">http://rpms.famillecollet.com/enterprise/remi-release-5.rpm</a>
-
-rpm -ivh remi-release-5.rpm
-
-yum --enablerepo=remi update php
-
-测试了下，有点小问题
-
-换一个配置
-
-[c5-testing]
-
-name=CentOS-5 Testing
-
-baseurl=<a href="http://dev.centos.org/centos/$releasever/testing/$basearch/">http://dev.centos.org/centos/$releasever/testing/$basearch/</a>
-
-enabled=1
-
-gpgcheck=1
-
-gpgkey=<a href="http://dev.centos.org/centos/RPM-GPG-KEY-CentOS-testing">http://dev.centos.org/centos/RPM-GPG-KEY-CentOS-testing</a>
-
-</div>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2011-02-12T06:58:36.000Z"><a href="/2011/02/12/一个小公司老板的日常管理/">2月 12 2011</a></time>
       
       
@@ -666,6 +610,51 @@ EOF</span>
 
 
 
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2011-01-27T09:19:14.000Z"><a href="/2011/01/27/centos-yum-update-ruby/">1月 27 2011</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2011/01/27/centos-yum-update-ruby/">centos yum 升级ruby 1.8.6 </a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>centos 64位：</p>
+<pre><code><figure class="highlight"><pre>$ sudo rpm -Uvh http://download<span class="preprocessor">.fedora</span><span class="preprocessor">.redhat</span><span class="preprocessor">.com</span>/pub/epel/<span class="number">5</span>/x86_64/epel-release-<span class="number">5</span>-<span class="number">4.</span>noarch<span class="preprocessor">.rpm</span>
+$ sudo rpm -Uvh http://download<span class="preprocessor">.elff</span><span class="preprocessor">.bravenet</span><span class="preprocessor">.com</span>/<span class="number">5</span>/x86_64/elff-release-<span class="number">5</span>-<span class="number">3.</span>noarch<span class="preprocessor">.rpm</span>
+$ sudo yum install ruby ruby-shadow ruby-ri ruby-rdoc gcc gcc-c++ ruby-devel -<span class="built_in">y</span>
+$ ruby -v
+ruby <span class="number">1.8</span><span class="number">.6</span> (<span class="number">2010</span>-<span class="number">02</span>-<span class="number">05</span> patchlevel <span class="number">399</span>) [x86_64-linux] `&lt;/pre&gt;
+
+centos <span class="number">32</span>位：
+&lt;pre&gt;`$ sudo rpm -Uvh http://download<span class="preprocessor">.fedora</span><span class="preprocessor">.redhat</span><span class="preprocessor">.com</span>/pub/epel/<span class="number">5</span>/i386/epel-release-<span class="number">5</span>-<span class="number">4.</span>noarch<span class="preprocessor">.rpm</span>
+$ sudo rpm -Uvh http://download<span class="preprocessor">.elff</span><span class="preprocessor">.bravenet</span><span class="preprocessor">.com</span>/<span class="number">5</span>/i386/elff-release-<span class="number">5</span>-<span class="number">3.</span>noarch<span class="preprocessor">.rpm</span>
+$ sudo yum install ruby ruby-shadow ruby-ri ruby-rdoc gcc gcc-c++ ruby-devel -<span class="built_in">y</span>
+$ ruby -v
+</pre></figure></code></pre>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
 
 <nav id="pagination">
   
@@ -695,7 +684,7 @@ EOF</span>
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
-    <li><a href="/categories/faq/">faq</a><small>27</small></li>
+    <li><a href="/categories/faq/">faq</a><small>26</small></li>
   
     <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
   
