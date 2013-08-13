@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://bubbyroom.com/2010/12/26/puppet-certificate-verify-failed/</loc>
+    <lastmod>2013-08-12T02:25:41.000Z</lastmod>
+  </url>
+  <url>
     <loc>http://bubbyroom.com/2011/05/15/http-code/</loc>
-    <lastmod>2013-08-11T11:23:09.000Z</lastmod>
+    <lastmod>2013-08-11T11:47:43.000Z</lastmod>
   </url>
   <url>
     <loc>http://bubbyroom.com/2011/08/11/zabbix_agent-spec/</loc>
@@ -37,19 +41,7 @@
     <lastmod>2013-08-11T07:09:17.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2011/03/10/bash-quotation-marks/</loc>
-    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
-  </url>
-  <url>
-    <loc>http://bubbyroom.com/2010/12/21/browser-cache/</loc>
-    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
-  </url>
-  <url>
     <loc>http://bubbyroom.com/2010/12/17/cache-control-translation/</loc>
-    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
-  </url>
-  <url>
-    <loc>http://bubbyroom.com/2011/02/23/centos-32bit-install-libmemcached-collect2-exit-status/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
@@ -74,10 +66,6 @@
   </url>
   <url>
     <loc>http://bubbyroom.com/2011/01/27/centos-yum-update-ruby/</loc>
-    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
-  </url>
-  <url>
-    <loc>http://bubbyroom.com/2011/02/16/centos-yum-安装php5-2/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
@@ -106,10 +94,6 @@
   </url>
   <url>
     <loc>http://bubbyroom.com/2011/03/14/ganglia-gmond-acl/</loc>
-    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
-  </url>
-  <url>
-    <loc>http://bubbyroom.com/2011/01/20/ganglia-metric-默认监控项翻译/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
@@ -149,10 +133,6 @@
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2010/12/19/linux-diff-命令详解/</loc>
-    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
-  </url>
-  <url>
     <loc>http://bubbyroom.com/2010/12/19/linux-find-commands/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
@@ -189,7 +169,7 @@
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2010/12/17/apache-ssi-shtml-config/</loc>
+    <loc>http://bubbyroom.com/2010/12/19/linux-user-group-detailed/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
@@ -209,11 +189,7 @@
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2011/01/21/mysql-master-slave-主从同步配置/</loc>
-    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
-  </url>
-  <url>
-    <loc>http://bubbyroom.com/2010/12/18/mysql-optimization/</loc>
+    <loc>http://bubbyroom.com/2010/12/17/apache-ssi-shtml-config/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
@@ -234,10 +210,6 @@
   </url>
   <url>
     <loc>http://bubbyroom.com/2011/01/22/proftpd-quick-install-config/</loc>
-    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
-  </url>
-  <url>
-    <loc>http://bubbyroom.com/2010/12/26/puppet-could-not-retrieve-catalog-from-remote-server-certificate-verify-failed/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
@@ -341,10 +313,6 @@
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2011/03/30/what-are-the-programming-languages-and-frameworks-the-top-nyc-startups-are-using/</loc>
-    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
-  </url>
-  <url>
     <loc>http://bubbyroom.com/2010/12/19/windows7-winsxs/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
@@ -361,15 +329,47 @@
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2010/12/17/apache-并发数限制mod_limitipconn/</loc>
-    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
-  </url>
-  <url>
     <loc>http://bubbyroom.com/2010/12/19/awk-use-bash-shell-export/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2010/12/19/linux-user-group-detailed/</loc>
+    <loc>http://bubbyroom.com/2011/03/10/bash-quotation-marks/</loc>
+    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://bubbyroom.com/2010/12/17/apache-limitipconn/</loc>
+    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://bubbyroom.com/2011/02/23/centos-32bit-install-libmemcached/</loc>
+    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://bubbyroom.com/2010/12/21/browser-cache/</loc>
+    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://bubbyroom.com/2011/03/30/what-are-the-programming-top-nyc-startups-are-using/</loc>
+    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://bubbyroom.com/2011/02/16/centos-yum-install-php5-2/</loc>
+    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://bubbyroom.com/2011/01/20/ganglia-metric-translate/</loc>
+    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://bubbyroom.com/2010/12/19/linux-diff/</loc>
+    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://bubbyroom.com/2011/01/21/mysql-master-slave-config/</loc>
+    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://bubbyroom.com/2010/12/18/mysql-optimization/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>

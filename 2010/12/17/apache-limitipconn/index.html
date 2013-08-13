@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>puppet Could not retrieve catalog from remote server: certificate verify failed | Liuyu's blog</title>
+  <title>Apache 并发数限制mod_limitipconn | Liuyu's blog</title>
   <meta name="author" content="Liu Yu">
   
   <meta name="description" content="Puppet cdn AutoMate">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="puppet Could not retrieve catalog from remote server: certificate verify failed"/>
+  <meta property="og:title" content="Apache 并发数限制mod_limitipconn"/>
   <meta property="og:site_name" content="Liuyu's blog"/>
 
   
@@ -54,23 +54,52 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2010-12-26T15:19:23.000Z"><a href="/2010/12/26/puppet-could-not-retrieve-catalog-from-remote-server-certificate-verify-failed/">12月 26 2010</a></time>
+        <time datetime="2010-12-17T10:54:26.000Z"><a href="/2010/12/17/apache-limitipconn/">12月 17 2010</a></time>
       
       
   
-    <h1 class="title">puppet Could not retrieve catalog from remote server: certificate verify failed</h1>
+    <h1 class="title">Apache 并发数限制mod_limitipconn</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>通过签名认证后：
-notice: Ignoring --listen on onetime run
-err: Could not retrieve catalog from remote server: certificate verify failed
-warning: Not using cache on failed catalog
-err: Could not retrieve catalog; skipping run
-err: Could not send report: certificate verify failed</p>
-<p>时间不同步导致</p>
+        <p>一、对于mod_limitipconn，其实该模块不仅提供客户端并发联接数的控制能力，从安全角度来说还可以起到对抗固定来源IP地址发起的 DOS攻击，包括来源固定的大量访问请求型攻击（大量GET或POST请求型的攻击），当同一来源IP地址的联接数超过限定的值后，会弹回对方的访问请 求，给对方一个“503服务临时无效”的响应。当Apache服务器受到大量的访问请求型攻击的时候，由于大量的Apache进程及PHP和MYSQL运 行消耗，会导致服务器资源迅速耗尽，网站打开缓慢或瘫痪。如果是此种类型的攻击，使用mod_limitipconn模块则可以有效地提升服务器的抗攻击 能力，因为大量的请求被弹回，节省了服务器运行PHP及MYSQL的性能消耗。当然只要请求进了80端口，不管是接受还是弹回请求，Aapche都有运行 成本，所以此方法只能是减轻而无法解决，毕竟应用层的处理效率是比较低的。</p>
+<p>二、对于网站访问量比较大、使用了mod_limitipconn模块且限制同一客户端并发联接数低于3的情况下，如果用Apache默认的配置参数，极 可能经常出现“服务临时无效”的提示。因为Apache默认是设置“KeepAlive on”，且“KeepAliveTimeout 180”，所以一旦建立联接，那么在3分钟内这个联接是不会被释放的。所以如果网站不同页面点击频率比较高或图片资源比较多的话，会经常出现服务临时无效 的提示。那么有两种方式去解决，一是加大并发联接数的量，比如设置为普通站点10个并发联接数，图片站点则20个。另一种方式就是如果你不想加大这个值的 话，可以设置KeepAlive为off，然后缩短Timeout时间，这样联接会很快被释放出来。具体情况根据需要去调整测试，以得到一个最适合自己站 点情况的值。</p>
+<p>三、如果要同时限制并发联接数与带宽的话，就用bw_mod+mod_limitipconn，因为虽然bw_mod也可以控制并发联接数，但他是针对某 个目录或整个网站的并发联接数，是用来控制服务器端的总联接数，比如设置MaxConnection all 1000，那么这个网站所能接受的最大并发联接数为1000，而并不是限制每一客户端的并发联接数，而mod_limitipconn则是针对同一来源 IP的客户端的并发联接数，所以这两者的联接数限制是有所区别的。
+四、个人感觉用了bw_mod及mod_limitipconn模块后，网站访问速度有所下降，能凭直观地感觉出来，并且CPU的负载有所上升。特别是在 网站访问量比较大的情况下，这两个模块会消耗一定的主机性能，所以轻重权衡这个得大家自己根据情况来采用了。另外bw_mod里有个参数是用来设置控制精 度与频率的，默认是1000毫秒，如果你想提高带宽控制精度就改小这个数值，但会消耗更多的CPU资源，反之亦然，降低精度可提升性能。</p>
+<p><a href="http://dominia.org/djao/limitipconn.html">http://dominia.org/djao/limitipconn.html</a></p>
+<p>tar xzvf mod_limitipconn-0.04.tar.gz
+cd mod_limitipconn-0.04
+make
+make install</p>
+<p>You can also copy the source file over to the Apache source tree and rebuild your httpd statically. The highlighted text below illustrates how to enable the proxy client detection feature; it can be omitted if you don&#39;t want this feature.</p>
+<p>tar xzvf apache_1.3.27.tar.gz
+tar xzvf mod_limitipconn-0.04.tar.gz
+cd apache_1.3.27
+patch -p1 &lt; ../mod_limitipconn-0.04/apachesrc.diff
+cp ../mod_limitipconn-0.04/mod_limitipconn.c src/modules/extra/
+./configure --activate-module=src/modules/extra/mod_limitipconn.c --with-forward
+make
+make install</p>
+<p>EXP：</p>
+<pre><code><figure class="highlight"><pre>ExtendedStatus <span class="keyword">On</span>
+
+# Only needed <span class="keyword">if</span> the module <span class="keyword">is</span> compiled as a DSO
+LoadModule limitipconn_module lib/apache/mod_limitipconn.so
+AddModule mod_limitipconn.c
+
+    MaxConnPerIP <span class="number">3</span>
+    # exempting images from the connection limit <span class="keyword">is</span> often a good
+    # idea <span class="keyword">if</span> your web page has lots <span class="keyword">of</span> inline images, since these
+    # pages often <span class="keyword">generate</span> a flurry <span class="keyword">of</span> concurrent image requests
+    NoIPLimit image<span class="comment">/*
+
+    MaxConnPerIP 1
+    # In this case, all MIME types other than audio/mpeg and video*
+    # are exempt from the limit check
+    OnlyIPLimit audio/mpeg video
+</pre></figure></code></pre>
 
       
     </div>
@@ -79,13 +108,13 @@ err: Could not send report: certificate verify failed</p>
         
   
   <div class="categories">
-    <a href="/categories/faq/">faq</a>
+    <a href="/categories/应用程序/">应用程序</a>
   </div>
 
         
   
   <div class="tags">
-    <a href="/tags/puppet/">puppet</a>, <a href="/tags/认证/">认证</a>
+    <a href="/tags/apache/">apache</a>, <a href="/tags/mod_limitipconn/">mod_limitipconn</a>
   </div>
 
 <!-- Baidu Button BEGIN -->
@@ -182,7 +211,7 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
 </div>
 
 
-  
+  <!--  -->
 
 </aside>
     <div class="clearfix"></div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>linux diff 命令详解  | Liuyu's blog</title>
+  <title>ganglia metric 默认监控项翻译 | Liuyu's blog</title>
   <meta name="author" content="Liu Yu">
   
   <meta name="description" content="Puppet cdn AutoMate">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="linux diff 命令详解 "/>
+  <meta property="og:title" content="ganglia metric 默认监控项翻译"/>
   <meta property="og:site_name" content="Liuyu's blog"/>
 
   
@@ -54,57 +54,249 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2010-12-19T08:49:04.000Z"><a href="/2010/12/19/linux-diff-命令详解/">12月 19 2010</a></time>
+        <time datetime="2011-01-20T15:37:12.000Z"><a href="/2011/01/20/ganglia-metric-translate/">1月 20 2011</a></time>
       
       
   
-    <h1 class="title">linux diff 命令详解 </h1>
+    <h1 class="title">ganglia metric 默认监控项翻译</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>linux diff(differential) 命令详解
-功能说明：比较文件的差异。</p>
-<p>语　　法：diff [-abBcdefHilnNpPqrstTuvwy][-&lt;行数&gt;][-C &lt;行数&gt;][-D &lt;巨集名称&gt;][-I &lt;字符或字符串&gt;][-S &lt;文件&gt;][-W &lt;宽度&gt;][-x &lt;文件或目录&gt;][-X &lt;文件&gt;][--help][--left-column][--suppress-common-line][文件或目录1][文件或目录 2]
-补充说明：diff以逐行的方式，比较文本文件的异同处。所是指定要比较目录，则diff会比较目录中相同文件名的文件，但不会比较其中子目录。</p>
-<p>参　　数：
--&lt;行数&gt; 指定要显示多少行的文本。此参数必须与-c或-u参数一并使用。
--a或--text 　diff预设只会逐行比较文本文件。
--b或--ignore-space-change 　不检查空格字符的不同。
--B或--ignore-blank-lines 　不检查空白行。
--c 　显示全部内文，并标出不同之处。
--C&lt;行数&gt;或--context&lt;行数&gt; 与执行&quot;-c-&lt;行数&gt;&quot;指令相同。
--d或--minimal 　使用不同的演算法，以较小的单位来做比较。
--D&lt;巨集名称&gt;或ifdef&lt;巨集名称&gt; 此参数的输出格式可用于前置处理器巨集。
--e或--ed 　此参数的输出格式可用于ed的script文件。
--f或-forward-ed 　输出的格式类似ed的script文件，但按照原来文件的顺序来显示不同处。
--H或--speed-large-files 　比较大文件时，可加快速度。
--l&lt;字符或字符串&gt;或--ignore-matching-lines&lt;字符或字符串&gt; 若两个文件在某几行有所不同，而这几行同时都包含了选项中指定的字符或字符串，则不显示这两个文件的差异。
--i或--ignore-case 　不检查大小写的不同。
--l或--paginate 　将结果交由pr程序来分页。
--n或--rcs 　将比较结果以RCS的格式来显示。
--N或--new-file 　在比较目录时，若文件A仅出现在某个目录中，预设会显示：
-Only in目录：文件A若使用-N参数，则diff会将文件A与一个空白的文件比较。
--p 　若比较的文件为C语言的程序码文件时，显示差异所在的函数名称。
--P或--unidirectional-new-file 　与-N类似，但只有当第二个目录包含了一个第一个目录所没有的文件时，才会将这个文件与空白的文件做比较。
--q或--brief 　仅显示有无差异，不显示详细的信息。
--r或--recursive 　比较子目录中的文件。
--s或--report-identical-files 　若没有发现任何差异，仍然显示信息。
--S&lt;文件&gt;或--starting-file&lt;文件&gt; 在比较目录时，从指定的文件开始比较。
--t或--expand-tabs 　在输出时，将tab字符展开。
--T或--initial-tab 　在每行前面加上tab字符以便对齐。
--u,-U&lt;列数&gt;或--unified=&lt;列数&gt; 以合并的方式来显示文件内容的不同。
--v或--version 　显示版本信息。
--w或--ignore-all-space 　忽略全部的空格字符。
--W&lt;宽度&gt;或--width&lt;宽度&gt; 在使用-y参数时，指定栏宽。
--x&lt;文件名或目录&gt;或--exclude&lt;文件名或目录&gt; 不比较选项中所指定的文件或目录。
--X&lt;文件&gt;或--exclude-from&lt;文件&gt; 您可以将文件或目录类型存成文本文件，然后在=&lt;文件&gt;中指定此文本文件。
--y或--side-by-side 　以并列的方式显示文件的异同之处。
---help 　显示帮助。
---left-column 　在使用-y参数时，若两个文件某一行内容相同，则仅在左侧的栏位显示该行内容。
---suppress-common-lines 　在使用-y参数时，仅显示不同之处</p>
+        <table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="111" valign="top">监控项</td>
+<td width="246" valign="top">说明</td>
+<td width="123" valign="top">监控值</td>
+</tr>
+<tr>
+<td width="111" valign="top">Load_one</td>
+<td width="246" valign="top">One minute load average
 
+每分钟的系统平均负载</td>
+<td width="123" valign="top">load_one=0.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">Load_five</td>
+<td width="246" valign="top">Five minute load average
+
+每5分钟的系统平均负载</td>
+<td width="123" valign="top">load_five=0.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">Load_fifteen</td>
+<td width="246" valign="top">Fifteen minute load average
+
+每15分钟的系统平均负载</td>
+<td width="123" valign="top">load_fifteen=0.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">mem_total</td>
+<td width="246" valign="top">Total amount of memory displayed in KBs
+
+物理内存总量（KBs显示）</td>
+<td width="123" valign="top">mem_total=2075288.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">mem_cached</td>
+<td width="246" valign="top">Amount of cached memory
+
+缓存内存大小</td>
+<td width="123" valign="top">mem_cached=470732.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">mem_free</td>
+<td width="246" valign="top">Amount of available memory
+
+空闲内存大小</td>
+<td width="123" valign="top">mem_free=1128860.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">mem_buffers</td>
+<td width="246" valign="top">Amount of buffered memory
+
+内核缓存的内存总量</td>
+<td width="123" valign="top">mem_buffers=353264.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">swap_total</td>
+<td width="246" valign="top">Total amount of swap space displayed in   KBs
+
+交换分区总量（KBs显示）</td>
+<td width="123" valign="top">swap_total=8289532.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">swap_free</td>
+<td width="246" valign="top">Amount of available swap memory
+
+空闲交换分区大小</td>
+<td width="123" valign="top">swap_free=8289532.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">mem_shared</td>
+<td width="246" valign="top">Amount of shared memory
+
+共享内存大小</td>
+<td width="123" valign="top">mem_shared=0.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">proc_run</td>
+<td width="246" valign="top">Total number of running processes
+
+运行的进程总数</td>
+<td width="123" valign="top">proc_run=0.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">proc_total</td>
+<td width="246" valign="top">Total number of processes
+
+进程总数</td>
+<td width="123" valign="top">proc_total=65.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">cpu_idle</td>
+<td width="246" valign="top">Percentage of time that the CPU or CPUs   were idle and the system did not
+have an outstanding disk I/O request
+
+空闲CPU百分比</td>
+<td width="123" valign="top">cpu_idle=99.6</td>
+</tr>
+<tr>
+<td width="111" valign="top">cpu_aidle</td>
+<td width="246" valign="top">Percent of time since boot idle CPU
+
+启动的空闲CPU百分比</td>
+<td width="123" valign="top">cpu_aidle=99.8</td>
+</tr>
+<tr>
+<td width="111" valign="top">cpu_user</td>
+<td width="246" valign="top">Percentage of CPU utilization that   occurred while executing at the user level
+
+用户空间占用CPU百分比</td>
+<td width="123" valign="top">cpu_user=0.2</td>
+</tr>
+<tr>
+<td width="111" valign="top">cpu_nice</td>
+<td width="246" valign="top">Percentage of CPU utilization that   occurred while executing at the user level with nice priority
+
+用户进程空间内改变过优先级的进程占用CPU百分比</td>
+<td width="123" valign="top">cpu_nice=0.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">cpu_system</td>
+<td width="246" valign="top">Percentage of CPU utilization that   occurred while executing at the
+system level
+
+内核空间占用CPU百分比</td>
+<td width="123" valign="top">cpu_system=0.1</td>
+</tr>
+<tr>
+<td width="111" valign="top">cpu_num</td>
+<td width="246" valign="top">Total number of CPUs
+
+CPU线程总数</td>
+<td width="123" valign="top">cpu_num=2.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">cpu_speed</td>
+<td width="246" valign="top">CPU Speed in terms of MHz
+
+CPU速度（MHz）</td>
+<td width="123" valign="top">cpu_speed=2993.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">cpu_wio</td>
+<td width="246" valign="top">Percentage of time that the CPU or CPUs   were idle during which the
+system had an outstanding disk I/O request
+
+Cpu空闲时的最大I/O请求</td>
+<td width="123" valign="top">cpu_wio=0.2</td>
+</tr>
+<tr>
+<td width="111" valign="top">part_max_used</td>
+<td width="246" valign="top">Maximum percent used for all partitions</td>
+<td width="123" valign="top">part_max_used=21.2</td>
+</tr>
+<tr>
+<td width="111" valign="top">disk_total</td>
+<td width="246" valign="top">Total available disk space
+
+磁盘总大小</td>
+<td width="123" valign="top">disk_total=133.991</td>
+</tr>
+<tr>
+<td width="111" valign="top">disk_free</td>
+<td width="246" valign="top">Total free disk space
+
+剩余磁盘空间</td>
+<td width="123" valign="top">disk_free=124.707</td>
+</tr>
+<tr>
+<td width="111" valign="top">boottime</td>
+<td width="246" valign="top">The last time that the system was started
+
+系统启动时间</td>
+<td width="123" valign="top">boottime=1285905983.0</td>
+</tr>
+<tr>
+<td width="111" valign="top">pkts_in</td>
+<td width="246" valign="top">Packets in per second
+
+每秒进来的包</td>
+<td width="123" valign="top">pkts_in=10.5</td>
+</tr>
+<tr>
+<td width="111" valign="top">pkts_out</td>
+<td width="246" valign="top">Packets out per second
+
+每秒出去的包</td>
+<td width="123" valign="top">pkts_out=2.85</td>
+</tr>
+<tr>
+<td width="111" valign="top">bytes_in</td>
+<td width="246" valign="top">Number of bytes in per second
+
+每秒进来字节数</td>
+<td width="123" valign="top">bytes_in=769.35</td>
+</tr>
+<tr>
+<td width="111" valign="top">bytes_out</td>
+<td width="246" valign="top">Number of bytes out per second
+
+每秒出去字节数</td>
+<td width="123" valign="top">bytes_out=3674.02</td>
+</tr>
+<tr>
+<td width="111" valign="top">machine_type</td>
+<td width="246" valign="top">System architecture
+
+系统版本（X86或64）</td>
+<td width="123" valign="top">machine_type=x86</td>
+</tr>
+<tr>
+<td width="111" valign="top">os_name</td>
+<td width="246" valign="top">系统名字</td>
+<td width="123" valign="top">os_name=Linux</td>
+</tr>
+<tr>
+<td width="111" valign="top">os_release</td>
+<td width="246" valign="top">系统版本</td>
+<td width="123" valign="top">os_release=2.6.18-164.el5PAE</td>
+</tr>
+<tr>
+<td width="111" valign="top">gexec</td>
+<td width="246" valign="top">gexec available</td>
+<td width="123" valign="top">gexec=OFF</td>
+</tr>
+<tr>
+<td width="111" valign="top">disk_free_rootfs</td>
+<td width="246" valign="top">Disk space available on</td>
+<td width="123" valign="top">WARN: &#39; disk_free_rootfs &#39;</td>
+</tr>
+</tbody>
+</table>
       
     </div>
     <footer>
@@ -112,13 +304,13 @@ Only in目录：文件A若使用-N参数，则diff会将文件A与一个空白�
         
   
   <div class="categories">
-    <a href="/categories/系统命令/">系统命令</a>
+    <a href="/categories/cdn/">cdn</a>, <a href="/categories/cdn/分布式监控/">分布式监控</a>
   </div>
 
         
   
   <div class="tags">
-    <a href="/tags/diff/">diff</a>, <a href="/tags/linux/">linux</a>, <a href="/tags/命令详解/">命令详解</a>
+    <a href="/tags/ganglia/">ganglia</a>, <a href="/tags/metric/">metric</a>, <a href="/tags/分布式监控/">分布式监控</a>
   </div>
 
 <!-- Baidu Button BEGIN -->
@@ -215,7 +407,7 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
 </div>
 
 
-  
+  <!--  -->
 
 </aside>
     <div class="clearfix"></div>
