@@ -65,13 +65,14 @@
     </header>
     <div class="entry">
       
-        <p>aptitude install rrdtool apache2 fping echoping libapache2-mod-speedycgi libwww-perl libsocket6-perl libnet-telnet-perl libnet-dns-perl libnet-ldap-perl libio-socket-ssl-perl libauthen-radius-perl libcgi-perl librrds-perl librrdp-perl
-apt-get install smokeping
-<a href="http://［IP］/cgi-bin/smokeping.cgi">http://［IP］/cgi-bin/smokeping.cgi</a></p>
+        <p><code>aptitude install rrdtool apache2 fping echoping libapache2-mod-speedycgi libwww-perl libsocket6-perl libnet-telnet-perl libnet-dns-perl libnet-ldap-perl libio-socket-ssl-perl libauthen-radius-perl libcgi-perl librrds-perl librrdp-perl
+apt-get install smokeping</code></p>
+<p><a href="http://［IP］/cgi-bin/smokeping.cgi">http://［IP］/cgi-bin/smokeping.cgi</a></p>
 <p>配置smokeping,添加监控主机。/etc/smokeping/config.d/ Targets
-ubuntu 的iptables 不同于linux
-iptables -F
-iptables -X</p>
+ubuntu 的iptables 不同于linux</p>
+<pre><code><figure class="highlight"><pre><span class="comment">iptables</span> <span class="literal">-</span><span class="comment">F</span>
+<span class="comment">iptables</span> <span class="literal">-</span><span class="comment">X
+</pre></figure></code></pre>
 <p>自动会生效，就关闭了iptables</p>
 
       
@@ -592,19 +593,19 @@ nginx.pid nginx.pid.oldbin</p>
 <a href="http://vod.sjtu.edu.cn/help/Article_Print.asp?ArticleID=1387">http://vod.sjtu.edu.cn/help/Article_Print.asp?ArticleID=1387</a></p>
 <p>症状:
 WARNING: Error sending end packet
-java.net.SocketException: Broken pipe
-资料:
+java.net.SocketException: Broken pipe</p>
+<p>资料:
 Broken pipe产生的原因通常是当管道读端没有在读，而管道的写端继续有线程在写，就会造成管道中断。（由于管道是单向通信的） SIGSEGV(Segment fault)意味着指针所对应的地址是无效地址，没有物理内存对应该地址。 以下是UNIX的信号解释： 11 / SIGSEGV: Unerlaubter Zugriff auf Hauptspeicher (Adressfehler). 12 / SIGUSER2: User-defined Signal 2 (POSIX). 把_JAVA_SR_SIGNUM改成12只是将信号至成user-defined，让它不报出来而已，不能解决问题。 </p>
 <p>建议采取的方式：
-1． 资源没有完全释放，用完后要至NULL 值（JAVA的GC没那么完善）
-2． 数据库连接顺序关闭！（RS，PS，CONN）
-3． 优化JAVA虚拟机 加入相应的内存参数！
-4． 不要在数据库中获取大段文本（即一个栏位的值不要太大）
-5． JAVA 不推荐 用String 获取大量信息。（容易造成内存泄露，建议用StringBuffer）
-6． 页面重复提交
-7． 尽量将METHOD移到JAVA中，在JSP中所有的方法都看做全局变量，编译执行本身就有很多问题。
-8． 尽量用较新较稳定版本的JDK，低版本的JVM本身也有很多BUG，比如1。5的垃圾回收比起1。2，1。3一定是非常明显的进步。
-9． LINUX系统本身没有这么稳定，有些问题无法避免的~~：）</p>
+1. 资源没有完全释放，用完后要至NULL 值（JAVA的GC没那么完善）
+2. 数据库连接顺序关闭！（RS，PS，CONN）
+3. 优化JAVA虚拟机 加入相应的内存参数！
+4. 不要在数据库中获取大段文本（即一个栏位的值不要太大）
+5. JAVA 不推荐 用String 获取大量信息。（容易造成内存泄露，建议用StringBuffer）
+6. 页面重复提交
+7. 尽量将METHOD移到JAVA中，在JSP中所有的方法都看做全局变量，编译执行本身就有很多问题。
+8. 尽量用较新较稳定版本的JDK，低版本的JVM本身也有很多BUG，比如1。5的垃圾回收比起1。2，1。3一定是非常明显的进步。
+9. LINUX系统本身没有这么稳定，有些问题无法避免的~~：）</p>
 
       
     </div>
@@ -644,9 +645,17 @@ Broken pipe产生的原因通常是当管道读端没有在读，而管道的写
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/Databases/">Databases</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/Monitoring/">Monitoring</a><small>1</small></li>
+  
     <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
   
-    <li><a href="/categories/Webserver/">Webserver</a><small>4</small></li>
+    <li><a href="/categories/faq/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>8</small></li>
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
@@ -662,15 +671,15 @@ Broken pipe产生的原因通常是当管道读端没有在读，而管道的写
   
     <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
   
-    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
-  
     <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
   
     <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
   
-    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
   
     <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
   
     <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   

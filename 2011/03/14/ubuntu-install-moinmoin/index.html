@@ -68,38 +68,33 @@
 <p>下载1.9的包后，在docs里有INSTALL.html文档，可以看下依赖包。</p>
 <p>本文是最新ubuntu python2.6+ nginx fcgi</p>
 <p>安装：</p>
-<pre><code><figure class="highlight"><pre> python2<span class="number">.6</span> setup.py install <span class="comment">--force --record=install.log --prefix='/usr/local' --install-data=/data/moin  `&lt;/pre&gt;</span>
-
-<span class="type">COPY</span> <span class="type">WIKI</span>相关的目录
-
-&lt;pre&gt;`
-<span class="title">cp</span> -<span class="type">R</span> /usr/local/share/moin/<span class="typedef"><span class="keyword">data</span> /<span class="keyword">data</span>/moin</span>
+<pre><code><figure class="highlight"><pre><span class="comment">python2</span>.<span class="comment">6</span> <span class="comment">setup</span>.<span class="comment">py</span> <span class="comment">install</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">force</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">record=install</span>.<span class="comment">log</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">prefix='/usr/local'</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">install</span>-<span class="comment">data=/data/moin
+</pre></figure></code></pre>
+<p>COPY WIKI相关的目录</p>
+<pre><code><figure class="highlight"><pre><span class="title">cp</span> -<span class="type">R</span> /usr/local/share/moin/<span class="typedef"><span class="keyword">data</span> /<span class="keyword">data</span>/moin</span>
 <span class="title">cp</span> -<span class="type">R</span> /usr/local/share/moin/underlay /<span class="typedef"><span class="keyword">data</span>/moin</span>
 <span class="title">cp</span> /usr/local/share/moin/config/wikiconfig.py /<span class="typedef"><span class="keyword">data</span>/moin</span>
 <span class="title">cp</span> /usr/local/share/moin/server/moin.fcgi  /<span class="typedef"><span class="keyword">data</span>/moin </span>
-`&lt;/pre&gt;
-
-启动moin
-
-&lt;pre&gt;` spawn-fcgi -a <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> -p <span class="number">9001</span> -u daemon -g daemon -<span class="type">F</span> <span class="number">1</span> -f /<span class="typedef"><span class="keyword">data</span>/moin/moin.fcgi `&lt;/pre&gt;</span>
-
-新建<span class="type">WIKI</span>的虚拟主机
-<span class="title">wiki</span>.bubbyroom.com.conf
-&lt;pre&gt;` 
-<span class="title">server</span>
+</pre></figure></code></pre>
+<p>启动moin</p>
+<pre><code><figure class="highlight"><pre><span class="comment">spawn</span>-<span class="comment">fcgi</span> <span class="literal">-</span><span class="comment">a</span> <span class="comment">127</span>.<span class="comment">0</span>.<span class="comment">0</span>.<span class="comment">1</span> <span class="literal">-</span><span class="comment">p</span> <span class="comment">9001</span> <span class="literal">-</span><span class="comment">u</span> <span class="comment">daemon</span> <span class="literal">-</span><span class="comment">g</span> <span class="comment">daemon</span> <span class="literal">-</span><span class="comment">F</span> <span class="comment">1</span> <span class="literal">-</span><span class="comment">f</span> <span class="comment">/data/moin/moin</span>.<span class="comment">fcgi
+</pre></figure></code></pre>
+<p>新建WIKI的虚拟主机</p>
+<pre><code><figure class="highlight"><pre>wiki<span class="preprocessor">.bubbyroom</span><span class="preprocessor">.com</span><span class="preprocessor">.conf</span>
+server
 {
-<span class="title">listen</span>    <span class="number">80</span>;
-<span class="title">server_name</span> wiki.bubbyroom.com;
-<span class="title">index</span> index.php index.html index.htm;
-<span class="title">root</span>   /<span class="typedef"><span class="keyword">data</span>/wwwroot/moin;</span>
-#access_log /<span class="typedef"><span class="keyword">data</span>/logs/access_test.com.log  combined;</span>
-#error_log  /<span class="typedef"><span class="keyword">data</span>/logs/error_test.com.log;</span>
-<span class="title">location</span> / {
-<span class="title">include</span>        fastcgi_params;
-<span class="title">fastcgi_pass</span>   <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9001</span>;
-<span class="title">fastcgi_param</span>  <span class="type">SCRIPT_FILENAME</span>  $fastcgi_script_name;
-<span class="title">fastcgi_param</span>   <span class="type">SCRIPT_NAME</span> /;
-<span class="title">fastcgi_param</span> <span class="type">PATH_INFO</span> $fastcgi_script_name;
+listen    <span class="number">80</span><span class="comment">;</span>
+server_name wiki<span class="preprocessor">.bubbyroom</span><span class="preprocessor">.com</span><span class="comment">;</span>
+index index<span class="preprocessor">.php</span> index<span class="preprocessor">.html</span> index<span class="preprocessor">.htm</span><span class="comment">;</span>
+root   /data/wwwroot/moin<span class="comment">;</span>
+<span class="preprocessor">#access_log /data/logs/access_test.com.log  combined;</span>
+<span class="preprocessor">#error_log  /data/logs/error_test.com.log;</span>
+location / {
+include        fastcgi_params<span class="comment">;</span>
+fastcgi_pass   <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9001</span><span class="comment">;</span>
+fastcgi_param  SCRIPT_FILENAME  $fastcgi_script_name<span class="comment">;</span>
+fastcgi_param   SCRIPT_NAME /<span class="comment">;</span>
+fastcgi_param PATH_INFO $fastcgi_script_name<span class="comment">;</span>
 }
 } 
 </pre></figure></code></pre>
@@ -112,13 +107,13 @@
         
   
   <div class="categories">
-    <a href="/categories/应用程序/">应用程序</a>
+    <a href="/categories/Webserver/">Webserver</a>
   </div>
 
         
   
   <div class="tags">
-    <a href="/tags/moinmoin/">moinmoin</a>, <a href="/tags/ubuntu/">ubuntu</a>, <a href="/tags/wiki/">wiki</a>
+    <a href="/tags/moinmoin/">moinmoin</a>
   </div>
 
 <!-- Baidu Button BEGIN -->
@@ -158,9 +153,17 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/Databases/">Databases</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/Monitoring/">Monitoring</a><small>1</small></li>
+  
     <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
   
-    <li><a href="/categories/Webserver/">Webserver</a><small>4</small></li>
+    <li><a href="/categories/faq/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>8</small></li>
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
@@ -176,15 +179,15 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
   
     <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
   
-    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
-  
     <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
   
     <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
   
-    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
   
     <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
   
     <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   

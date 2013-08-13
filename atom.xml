@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Puppet in action]]></subtitle>
   <link href="http://bubbyroom.com/atom.xml" rel="self"/>
   <link href="http://bubbyroom.com"/>
-  <updated>2013-08-13T07:07:55.264Z</updated>
+  <updated>2013-08-13T10:20:04.861Z</updated>
   <id>http://bubbyroom.com/</id>
   <author>
     <name><![CDATA[Liu Yu]]></name>
@@ -235,7 +235,7 @@ rm -rf <span class="variable">%{buildroot}</span>
     <link href="http://bubbyroom.com/2011/05/15/http-code/"/>
     <id>http://bubbyroom.com/2011/05/15/http-code/</id>
     <published>2011-05-15T04:00:07.000Z</published>
-    <updated>2013-08-11T11:47:43.000Z</updated>
+    <updated>2013-08-13T09:36:55.000Z</updated>
     <content type="html"><![CDATA[<p>以前只是看的枯燥的文字版的服务器返回状态码。现在，看一张比较形象的图解,希望能增强记忆。
 <a name="more"></a></p>
 <pre><code><figure class="highlight"><pre><span class="title">HTTP</span> <span class="number">400</span> – 请求无效
@@ -282,6 +282,7 @@ Error <span class="number">501</span> – 未实现
 HTTP <span class="number">502</span> – 网关错误
 </pre></figure></code></pre>
 ]]></content>
+    <category scheme="http://bubbyroom.com/tags/http-1/" term="http"/>
     <category scheme="http://bubbyroom.com/categories/faq/" term="faq"/>
   </entry>
   <entry>
@@ -449,7 +450,7 @@ HTTP <span class="number">502</span> – 网关错误
     <link href="http://bubbyroom.com/2011/03/30/what-are-the-programming-top-nyc-startups-are-using/"/>
     <id>http://bubbyroom.com/2011/03/30/what-are-the-programming-top-nyc-startups-are-using/</id>
     <published>2011-03-30T08:48:45.000Z</published>
-    <updated>2013-08-11T03:52:35.000Z</updated>
+    <updated>2013-08-13T09:40:08.000Z</updated>
     <content type="html"><![CDATA[<p>In a conversation with the NYCEDC and ITAC, I learned that no one has a sense of what are the predominant languages and frameworks that people are using.</p>
 <p>If you are with a startup or company that has more than 1M pageviews a month and is based in NYC (or the boroughs), can you give a sense of the skills/experience you are looking for? This will help people understand what skills we need to grow...</p>
 <p>Companies like:</p>
@@ -531,8 +532,8 @@ Databases: MySQL, Tokyo Cabinet, and MongoDB
 Volatile Data Stores: Memcache, MemoryFly (internal)
 Hosting: NTT and EC2
 Queueing - simplequeue (<a href="https://github.com/bitly/simplehttp/tree/master/simplequeue"><a href="https://github.com/bitly/simpleh">https://github.com/bitly/simpleh</a>...</a>)
-JS Library: jQuery
-五、Gilt Groupe/City:</p>
+JS Library: jQuery</p>
+<p>五、Gilt Groupe/City:</p>
 <p>Frontend: Java/JSP
 Middle Tier: Java/Jetty
 Internal app: lots of Rails
@@ -669,52 +670,45 @@ Etc: git, vagrant, chef, capistrano, RabbitMQ, jQuery</p>
     <link href="http://bubbyroom.com/2011/03/14/ubuntu-install-moinmoin/"/>
     <id>http://bubbyroom.com/2011/03/14/ubuntu-install-moinmoin/</id>
     <published>2011-03-14T06:29:43.000Z</published>
-    <updated>2013-08-11T03:52:35.000Z</updated>
+    <updated>2013-08-13T10:05:28.000Z</updated>
     <content type="html"><![CDATA[<p>官方网站：<a href="http://moinmo.in/"><a href="http://moinmo.in">http://moinmo.in</a></a></p>
 <p>下载1.9的包后，在docs里有INSTALL.html文档，可以看下依赖包。</p>
 <p>本文是最新ubuntu python2.6+ nginx fcgi</p>
 <p>安装：</p>
-<pre><code><figure class="highlight"><pre> python2<span class="number">.6</span> setup.py install <span class="comment">--force --record=install.log --prefix='/usr/local' --install-data=/data/moin  `&lt;/pre&gt;</span>
-
-<span class="type">COPY</span> <span class="type">WIKI</span>相关的目录
-
-&lt;pre&gt;`
-<span class="title">cp</span> -<span class="type">R</span> /usr/local/share/moin/<span class="typedef"><span class="keyword">data</span> /<span class="keyword">data</span>/moin</span>
+<pre><code><figure class="highlight"><pre><span class="comment">python2</span>.<span class="comment">6</span> <span class="comment">setup</span>.<span class="comment">py</span> <span class="comment">install</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">force</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">record=install</span>.<span class="comment">log</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">prefix='/usr/local'</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">install</span>-<span class="comment">data=/data/moin
+</pre></figure></code></pre>
+<p>COPY WIKI相关的目录</p>
+<pre><code><figure class="highlight"><pre><span class="title">cp</span> -<span class="type">R</span> /usr/local/share/moin/<span class="typedef"><span class="keyword">data</span> /<span class="keyword">data</span>/moin</span>
 <span class="title">cp</span> -<span class="type">R</span> /usr/local/share/moin/underlay /<span class="typedef"><span class="keyword">data</span>/moin</span>
 <span class="title">cp</span> /usr/local/share/moin/config/wikiconfig.py /<span class="typedef"><span class="keyword">data</span>/moin</span>
 <span class="title">cp</span> /usr/local/share/moin/server/moin.fcgi  /<span class="typedef"><span class="keyword">data</span>/moin </span>
-`&lt;/pre&gt;
-
-启动moin
-
-&lt;pre&gt;` spawn-fcgi -a <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> -p <span class="number">9001</span> -u daemon -g daemon -<span class="type">F</span> <span class="number">1</span> -f /<span class="typedef"><span class="keyword">data</span>/moin/moin.fcgi `&lt;/pre&gt;</span>
-
-新建<span class="type">WIKI</span>的虚拟主机
-<span class="title">wiki</span>.bubbyroom.com.conf
-&lt;pre&gt;` 
-<span class="title">server</span>
+</pre></figure></code></pre>
+<p>启动moin</p>
+<pre><code><figure class="highlight"><pre><span class="comment">spawn</span>-<span class="comment">fcgi</span> <span class="literal">-</span><span class="comment">a</span> <span class="comment">127</span>.<span class="comment">0</span>.<span class="comment">0</span>.<span class="comment">1</span> <span class="literal">-</span><span class="comment">p</span> <span class="comment">9001</span> <span class="literal">-</span><span class="comment">u</span> <span class="comment">daemon</span> <span class="literal">-</span><span class="comment">g</span> <span class="comment">daemon</span> <span class="literal">-</span><span class="comment">F</span> <span class="comment">1</span> <span class="literal">-</span><span class="comment">f</span> <span class="comment">/data/moin/moin</span>.<span class="comment">fcgi
+</pre></figure></code></pre>
+<p>新建WIKI的虚拟主机</p>
+<pre><code><figure class="highlight"><pre>wiki<span class="preprocessor">.bubbyroom</span><span class="preprocessor">.com</span><span class="preprocessor">.conf</span>
+server
 {
-<span class="title">listen</span>    <span class="number">80</span>;
-<span class="title">server_name</span> wiki.bubbyroom.com;
-<span class="title">index</span> index.php index.html index.htm;
-<span class="title">root</span>   /<span class="typedef"><span class="keyword">data</span>/wwwroot/moin;</span>
-#access_log /<span class="typedef"><span class="keyword">data</span>/logs/access_test.com.log  combined;</span>
-#error_log  /<span class="typedef"><span class="keyword">data</span>/logs/error_test.com.log;</span>
-<span class="title">location</span> / {
-<span class="title">include</span>        fastcgi_params;
-<span class="title">fastcgi_pass</span>   <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9001</span>;
-<span class="title">fastcgi_param</span>  <span class="type">SCRIPT_FILENAME</span>  $fastcgi_script_name;
-<span class="title">fastcgi_param</span>   <span class="type">SCRIPT_NAME</span> /;
-<span class="title">fastcgi_param</span> <span class="type">PATH_INFO</span> $fastcgi_script_name;
+listen    <span class="number">80</span><span class="comment">;</span>
+server_name wiki<span class="preprocessor">.bubbyroom</span><span class="preprocessor">.com</span><span class="comment">;</span>
+index index<span class="preprocessor">.php</span> index<span class="preprocessor">.html</span> index<span class="preprocessor">.htm</span><span class="comment">;</span>
+root   /data/wwwroot/moin<span class="comment">;</span>
+<span class="preprocessor">#access_log /data/logs/access_test.com.log  combined;</span>
+<span class="preprocessor">#error_log  /data/logs/error_test.com.log;</span>
+location / {
+include        fastcgi_params<span class="comment">;</span>
+fastcgi_pass   <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9001</span><span class="comment">;</span>
+fastcgi_param  SCRIPT_FILENAME  $fastcgi_script_name<span class="comment">;</span>
+fastcgi_param   SCRIPT_NAME /<span class="comment">;</span>
+fastcgi_param PATH_INFO $fastcgi_script_name<span class="comment">;</span>
 }
 } 
 </pre></figure></code></pre>
 <p>访问wiki.bubbyroom.com 就好了</p>
 ]]></content>
     <category scheme="http://bubbyroom.com/tags/moinmoin/" term="moinmoin"/>
-    <category scheme="http://bubbyroom.com/tags/ubuntu/" term="ubuntu"/>
-    <category scheme="http://bubbyroom.com/tags/wiki/" term="wiki"/>
-    <category scheme="http://bubbyroom.com/categories/应用程序/" term="应用程序"/>
+    <category scheme="http://bubbyroom.com/categories/Webserver/" term="Webserver"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[ganglia gmond 安全：增加acl ]]></title>

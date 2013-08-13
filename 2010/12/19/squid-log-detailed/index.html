@@ -65,20 +65,21 @@
     <div class="entry">
       
         <p>安装配置完squid，通过日志来看看squid的一些基本的运行状态</p>
-<p>1.access.log</p>
+<ol>
+<li>access.log</li>
+</ol>
 <p>访问日志，位于squid/var/logs/access.log，常用的记录格式如下</p>
-<pre><code><figure class="highlight"><pre>remotehost rfc931 authuser [date] “method URL” status bytes [Result Codes]:[Hierarchy Codes] `&lt;/pre&gt;
+<pre><code><figure class="highlight"><pre>remotehost rfc931 authuser [date] “method URL” status bytes [Result Codes]:[Hierarchy Codes] `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</pre></figure></code></pre>
+<p>看一些具体的</p>
+<pre><code><figure class="highlight"><pre>cd /opt/squid/var/logs
+head access<span class="preprocessor">.log</span>
 
-看一些具体的
-&lt;pre&gt;`cd /opt/squid/<span class="keyword">var</span>/logs
-head access.log
-
-<span class="number">221.222</span><span class="number">.213</span><span class="number">.64</span> - - [<span class="number">15</span>/Nov/<span class="number">2006</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">03</span> +<span class="number">0800</span>] “GET http:<span class="comment">//bbs.ci123.com/sample.jpg HTTP/1.1″ 200 240673 TCP_MEM_HIT:NONE</span>
-`&lt;/pre&gt;
-可以通过脚本查看一些统计信息，如各种反应状态所占的比例，通常较好的情况下HIT所占的比例（应该就是所谓的命中率）可以在<span class="number">70</span>%~<span class="number">80</span>%
-&lt;pre&gt;`
-cat access.log|gawk ‘{print $<span class="number">11</span>}’|sort|uniq -c|sort -nr
-cat access.log|grep “http:<span class="comment">//blog”|gawk ‘{print $11}’|sort|uniq -c|sort -nr</span>
+<span class="number">221.222</span><span class="number">.213</span><span class="number">.64</span> - - [<span class="number">15</span>/Nov/<span class="number">2006</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">03</span> +<span class="number">0800</span>] “GET http://bbs<span class="preprocessor">.ci</span>123<span class="preprocessor">.com</span>/sample<span class="preprocessor">.jpg</span> HTTP/<span class="number">1.1</span>″ <span class="number">200</span> <span class="number">240673</span> TCP_MEM_HIT:NONE
+</pre></figure></code></pre>
+<p>可以通过脚本查看一些统计信息，如各种反应状态所占的比例，通常较好的情况下HIT所占的比例（应该就是所谓的命中率）可以在70%~80%</p>
+<pre><code><figure class="highlight"><pre>cat access.<span class="keyword">log</span>|gawk ‘{<span class="keyword">print</span> <span class="variable">$1</span>1}’|<span class="keyword">sort</span>|uniq -c|<span class="keyword">sort</span> -nr
+cat access.<span class="keyword">log</span>|<span class="keyword">grep</span> “http:<span class="regexp">//blog</span>”|gawk ‘{<span class="keyword">print</span> <span class="variable">$1</span>1}’|<span class="keyword">sort</span>|uniq -c|<span class="keyword">sort</span> -nr
 
 <span class="number">154389</span> TCP_MEM_HIT:NONE
 <span class="number">81330</span> TCP_IMS_HIT:NONE
@@ -94,12 +95,10 @@ cat access.log|grep “http:<span class="comment">//blog”|gawk ‘{print $11}�
 <span class="number">7</span> TCP_REFRESH_HIT:ANY_PARENT
 <span class="number">7</span> TCP_CLIENT_REFRESH_MISS:ANY_PARENT
 <span class="number">6</span> TCP_MISS:NONE
-<span class="number">2</span> TCP_SWAPFAIL_MISS:ANY_PARENT`&lt;/pre&gt;
-
-PS:官方文档中关于Result Codes的说明
-============================================================
-
-TCP_HIT
+<span class="number">2</span> TCP_SWAPFAIL_MISS:ANY_PARENT
+</pre></figure></code></pre>
+<h1>PS:官方文档中关于Result Codes的说明</h1>
+<pre><code><figure class="highlight"><pre>TCP_HIT
 
 A valid copy of the requested <span class="class"><span class="keyword">object</span> <span class="title">was</span> <span class="title">in</span> <span class="title">the</span> <span class="title">cache</span>.</span>
 TCP_MISS
@@ -182,11 +181,11 @@ Hit objects are no longer available.
 UDP_RELOADING
 
 See: UDP_MISS_NOFETCH.
+</pre></figure></code></pre>
+<p> 后面找到了中文版，补充全一些：</p>
+<pre><code><figure class="highlight"><pre><span class="transposed_variable">access.</span><span class="built_in">log</span>结果编码
 
-后面找到了中文版，补充全一些：
-access.log结果编码
-
-相应于HTTP请求，下列标签可能出现在access.log文件的第四个域。
+相应于HTTP请求，下列标签可能出现在<span class="transposed_variable">access.</span><span class="built_in">log</span>文件的第四个域。
 
 TCP_HIT
 Squid发现请求资源的貌似新鲜的拷贝，并将其立即发送到客户端。
@@ -230,7 +229,7 @@ TCP_REDIRECT
 NONE
 无分类的结果用于特定错误，例如无效主机名。
 
-相应于ICP查询，下列标签可能出现在access.log文件的第四域。
+相应于ICP查询，下列标签可能出现在<span class="transposed_variable">access.</span><span class="built_in">log</span>文件的第四域。
 
 UDP_HIT
 Squid在cache里发现请求资源的貌似新鲜的拷贝。
@@ -242,18 +241,17 @@ UDP_MISS_NOFETCH
 跟UDP_MISS类似，不同的是这里也指示了Squid不愿去处理相应的HTTP请求。假如使用了-Y命令行选项，Squid在启动并编译其内存索引时，会返回这个标签而不是UDP_MISS。
 
 UDP_DENIED
-因为icp_access规则，ICP查询被拒绝。假如超过<span class="number">95</span>%的到某客户端的ICP响应是UDP_DENIED，并且客户端数据库激活了（见附录A），Squid在<span class="number">1</span>小时内，停止发送任何ICP响应到该客户端。若这点发生，你也可在cache.log里见到一个警告。
+因为icp_access规则，ICP查询被拒绝。假如超过<span class="number">95</span><span class="comment">%的到某客户端的ICP响应是UDP_DENIED，并且客户端数据库激活了（见附录A），Squid在1小时内，停止发送任何ICP响应到该客户端。若这点发生，你也可在cache.log里见到一个警告。</span>
 
 UDP_INVALID
 Squid接受到无效查询（例如截断的消息、无效协议版本、URI里的空格等）。Squid发送UDP_INVALID响应到客户端。
 
 <span class="number">13.2</span><span class="number">.2</span> HTTP响应状态码
-
-Table <span class="number">13</span>-<span class="number">1</span>列出了数字HTTP响应CODE和理由短句。注意Squid和其他HTTP客户端仅仅关注这些数字值。理由短句是纯解释性的，不会影响响应的意义。对每个状态码，也提供了一个到RFC <span class="number">2616</span>的具体节的索引。注意状态码<span class="number">0</span>和<span class="number">600</span>是squid使用的非标准的值，不会在RFC里提到。
-Table <span class="number">13</span>-<span class="number">1</span>\. HTTP response status codes
-
-Code    Reason phrase    RFC <span class="number">2616</span> section
-<span class="number">0</span>    No Response Received (Squid-specific)    N/A
+</pre></figure></code></pre>
+<p>Table 13-1列出了数字HTTP响应CODE和理由短句。注意Squid和其他HTTP客户端仅仅关注这些数字值。理由短句是纯解释性的，不会影响响应的意义。对每个状态码，也提供了一个到RFC 2616的具体节的索引。注意状态码0和600是squid使用的非标准的值，不会在RFC里提到。
+    Table 13-1. HTTP response status codes</p>
+<pre><code><figure class="highlight"><pre>Code    Reason phrase    RFC <span class="number">2616</span> section
+<span class="number">0</span>    No <span class="built_in">Response</span> Received (Squid-specific)    N/A
 <span class="number">1</span>xx    Informational    <span class="number">10.1</span>
 <span class="number">100</span>    Continue    <span class="number">10.1</span><span class="number">.1</span>
 <span class="number">101</span>    Switching Protocols    <span class="number">10.1</span><span class="number">.2</span>
@@ -270,43 +268,42 @@ Code    Reason phrase    RFC <span class="number">2616</span> section
 <span class="number">301</span>    Moved Permanently    <span class="number">10.3</span><span class="number">.2</span>
 <span class="number">302</span>    Found    <span class="number">10.3</span><span class="number">.3</span>
 <span class="number">303</span>    See Other    <span class="number">10.3</span><span class="number">.4</span>
-<span class="number">304</span>    Not Modified    <span class="number">10.3</span><span class="number">.5</span>
+<span class="number">304</span>    <span class="keyword">Not</span> Modified    <span class="number">10.3</span><span class="number">.5</span>
 <span class="number">305</span>    Use Proxy    <span class="number">10.3</span><span class="number">.6</span>
 <span class="number">306</span>    (Unused)    <span class="number">10.3</span><span class="number">.7</span>
 <span class="number">307</span>    Temporary Redirect    <span class="number">10.3</span><span class="number">.8</span>
-<span class="number">4</span>xx    Client Error    <span class="number">10.4</span>
-<span class="number">400</span>    Bad Request    <span class="number">10.4</span><span class="number">.1</span>
+<span class="number">4</span>xx    Client <span class="keyword">Error</span>    <span class="number">10.4</span>
+<span class="number">400</span>    Bad <span class="built_in">Request</span>    <span class="number">10.4</span><span class="number">.1</span>
 <span class="number">401</span>    Unauthorized    <span class="number">10.4</span><span class="number">.2</span>
 <span class="number">402</span>    Payment Required    <span class="number">10.4</span><span class="number">.3</span>
 <span class="number">403</span>    Forbidden    <span class="number">10.4</span><span class="number">.4</span>
-<span class="number">404</span>    Not Found    <span class="number">10.4</span><span class="number">.5</span>
-<span class="number">405</span>    Method Not Allowed    <span class="number">10.4</span><span class="number">.6</span>
-<span class="number">406</span>    Not Acceptable    <span class="number">10.4</span><span class="number">.7</span>
+<span class="number">404</span>    <span class="keyword">Not</span> Found    <span class="number">10.4</span><span class="number">.5</span>
+<span class="number">405</span>    Method <span class="keyword">Not</span> Allowed    <span class="number">10.4</span><span class="number">.6</span>
+<span class="number">406</span>    <span class="keyword">Not</span> Acceptable    <span class="number">10.4</span><span class="number">.7</span>
 <span class="number">407</span>    Proxy Authentication Required    <span class="number">10.4</span><span class="number">.8</span>
-<span class="number">408</span>    Request Timeout    <span class="number">10.4</span><span class="number">.9</span>
+<span class="number">408</span>    <span class="built_in">Request</span> Timeout    <span class="number">10.4</span><span class="number">.9</span>
 <span class="number">409</span>    Conflict    <span class="number">10.4</span><span class="number">.10</span>
 <span class="number">410</span>    Gone    <span class="number">10.4</span><span class="number">.11</span>
 <span class="number">411</span>    Length Required    <span class="number">10.4</span><span class="number">.12</span>
 <span class="number">412</span>    Precondition Failed    <span class="number">10.4</span><span class="number">.13</span>
-<span class="number">413</span>    Request Entity Too Large    <span class="number">10.4</span><span class="number">.14</span>
-<span class="number">414</span>    Request-URI Too Long    <span class="number">10.4</span><span class="number">.15</span>
+<span class="number">413</span>    <span class="built_in">Request</span> Entity Too Large    <span class="number">10.4</span><span class="number">.14</span>
+<span class="number">414</span>    <span class="built_in">Request</span>-URI Too Long    <span class="number">10.4</span><span class="number">.15</span>
 <span class="number">415</span>    Unsupported Media Type    <span class="number">10.4</span><span class="number">.16</span>
-<span class="number">416</span>    Requested Range Not Satisfiable    <span class="number">10.4</span><span class="number">.17</span>
+<span class="number">416</span>    Requested Range <span class="keyword">Not</span> Satisfiable    <span class="number">10.4</span><span class="number">.17</span>
 <span class="number">417</span>    Expectation Failed    <span class="number">10.4</span><span class="number">.18</span>
-<span class="number">5</span>xx    Server Error    <span class="number">10.5</span>
-<span class="number">500</span>    Internal Server Error    <span class="number">10.5</span><span class="number">.1</span>
-<span class="number">501</span>    Not Implemented    <span class="number">10.5</span><span class="number">.2</span>
+<span class="number">5</span>xx    <span class="built_in">Server</span> <span class="keyword">Error</span>    <span class="number">10.5</span>
+<span class="number">500</span>    Internal <span class="built_in">Server</span> <span class="keyword">Error</span>    <span class="number">10.5</span><span class="number">.1</span>
+<span class="number">501</span>    <span class="keyword">Not</span> Implemented    <span class="number">10.5</span><span class="number">.2</span>
 <span class="number">502</span>    Bad Gateway    <span class="number">10.5</span><span class="number">.3</span>
 <span class="number">503</span>    Service Unavailable    <span class="number">10.5</span><span class="number">.4</span>
 <span class="number">504</span>    Gateway Timeout    <span class="number">10.5</span><span class="number">.5</span>
-<span class="number">505</span>    HTTP Version Not Supported    <span class="number">10.5</span><span class="number">.6</span>
-<span class="number">6</span>xx    Proxy Error    N/A
-<span class="number">600</span>    Unparseable Response Headers (Squid-specific)    N/A
-假如Squid从原始服务器没有接受到任何响应，你可在access.log里看到状态码<span class="number">0</span>。假如Squid接受到的响应没有包含HTTP头部，就会出现状态码<span class="number">600</span>。在少数情况下，某些原始服务器仅发送响应body，而忽略了任何头部。
-
-<span class="number">13.2</span><span class="number">.3</span> access.log对端编码
-
-下列编码可能出现在access.log的第<span class="number">9</span>域。请参考<span class="number">10.10</span>节关于Squid如何对cache丢失情况，选择有效的下一跳。
+<span class="number">505</span>    HTTP Version <span class="keyword">Not</span> Supported    <span class="number">10.5</span><span class="number">.6</span>
+<span class="number">6</span>xx    Proxy <span class="keyword">Error</span>    N/A
+<span class="number">600</span>    Unparseable <span class="built_in">Response</span> Headers (Squid-specific)    N/A
+</pre></figure></code></pre>
+<p>假如Squid从原始服务器没有接受到任何响应，你可在access.log里看到状态码0。假如Squid接受到的响应没有包含HTTP头部，就会出现状态码600。在少数情况下，某些原始服务器仅发送响应body，而忽略了任何头部。</p>
+<p>13.2.3 access.log对端编码</p>
+<pre><code><figure class="highlight"><pre>下列编码可能出现在access<span class="preprocessor">.log</span>的第<span class="number">9</span>域。请参考<span class="number">10.10</span>节关于Squid如何对cache丢失情况，选择有效的下一跳。
 
 NONE
 这指明Squid对本次请求，不会与任何其他服务器（邻居或原始服务器）通信。它通常与cache命中、拒绝请求、cache管理请求、错误、和所有的ICP查询这些类型联合出现。
@@ -321,7 +318,7 @@ PARENT_HIT
 在父cache返回ICP或HTCP命中后，Squid发送请求到父cache。
 
 DEFAULT_PARENT
-Squid选择该父cache，因为其在squid.conf的cache_peer行里被标志为<span class="keyword">default</span>。
+Squid选择该父cache，因为其在squid<span class="preprocessor">.conf</span>的cache_peer行里被标志为default。
 
 FIRST_UP_PARENT
 Squid转发请求到该父cache，因为它是位于已知活跃列表里的第一个父cache。
@@ -330,7 +327,7 @@ FIRST_PARENT_MISS
 Squid转发请求到该父cache，它第一个响应ICP/HTCP丢失消息。换句话说，对这个特殊的ICP/HTCP查询，在这个特殊时刻，被选中的父cache有最佳的往返时间（RTT）。注意标准RTT可能被人工矫正过，取决于cache_peer指令的weight选项。
 
 CLOSEST_PARENT_MISS
-Squid选择该父cache，因为它报告到原始服务器的RTT最低。这点仅在<span class="number">2</span>个cache都激活了netdb，并且原始服务器（或在同一子网内的其他server）返回ICMP ping消息。
+Squid选择该父cache，因为它报告到原始服务器的RTT最低。这点仅在<span class="number">2</span>个cache都激活了netdb，并且原始服务器（或在同一子网内的其他server）返回ICMP <span class="built_in">ping</span>消息。
 
 CLOSEST_PARENT
 这点类似CLOSEST_PARENT_MISS，除了RTT计算不是来自ICP/HTCP响应消息外。代替的，它们来自Squid保留的更老的计算方式，例如netdb交换功能。
@@ -358,20 +355,20 @@ ANY_PARENT
 
 注意大部分上述编码可能以TIMEOUT_开头，这表明在等待ICP/HTCP响应时发生超时。例如：
 
-<span class="number">1066038165.382</span>    <span class="number">345</span> <span class="number">193.233</span><span class="number">.46</span><span class="number">.21</span> TCP_MISS/<span class="number">200</span> <span class="number">2836</span>          GET http:<span class="comment">//www.caida.org/home/../images/home.jpg          TIMEOUT_CLOSEST_DIRECT/213.219.122.19 image/jpeg</span>
+<span class="number">1066038165.382</span>    <span class="number">345</span> <span class="number">193.233</span><span class="number">.46</span><span class="number">.21</span> TCP_MISS/<span class="number">200</span> <span class="number">2836</span>          GET http://www<span class="preprocessor">.caida</span><span class="preprocessor">.org</span>/home/../images/home<span class="preprocessor">.jpg</span>          TIMEOUT_CLOSEST_DIRECT/<span class="number">213.219</span><span class="number">.122</span><span class="number">.19</span> image/jpeg
 可使用icp_query_timeout指令来调整超时。
-
-事例：
-&lt;pre&gt;` cat access.log|gawk ‘{print $<span class="number">11</span>}’|sort|uniq -c|sort -nr
-  <span class="number">15508</span> TCP_NEGATIVE_HIT:NONE 在对原始服务器的请求导致HTTP错误时，Squid也会cache这个响应。在短时间内对这些资源的重复请求，导致了否命中。
-   <span class="number">8212</span> TCP_IMS_HIT:NONE  客户端发送确认请求，Squid发现更近来的、貌似新鲜的请求资源的拷贝。Squid发送更新的内容到客户端，而不联系原始服务器。（这指明Squid对本次请求，不会与任何其他服务器（邻居或原始服务器）通信。）
-   <span class="number">3771</span> TCP_HIT:NONE Squid发现请求资源的貌似新鲜的拷贝，并将其立即发送到客户端。
-   <span class="number">3468</span> TCP_MISS:DIRECT Squid没有请求资源的cache拷贝。（Squid直接转发请求到原始服务器）
-   <span class="number">2379</span> TCP_MEM_HIT:NONE  从内存的响应
-   <span class="number">1876</span> TCP_DENIED:NONE 因为http_access或http_reply_access规则，客户端的请求被拒绝了   全是错误地址链接
-   <span class="number">1732</span> TCP_REFRESH_HIT:DIRECT Squid发现请求资源的貌似陈旧的拷贝，并发送确认请求到原始服务器。原始服务器返回<span class="number">304</span>（未修改）响应，指示squid的拷贝仍旧是新鲜的。（Squid直接转发请求到原始服务器）
-    <span class="number">708</span> TCP_CLIENT_REFRESH_MISS:DIRECT Squid发现了请求资源的拷贝，但客户端的请求包含了Cache-Control: no-cache指令。Squid转发客户端的请求到原始服务器，强迫cache确认。 （Squid直接转发请求到原始服务器）
-      <span class="number">7</span> TCP_MISS:NONE Squid没有请求资源的cache拷贝。（这指明Squid对本次请求，不会与任何其他服务器（邻居或原始服务器）通信）
+</pre></figure></code></pre>
+<p>事例：</p>
+<pre><code><figure class="highlight"><pre>cat access.log|gawk ‘{print <span class="variable">$11</span>}’|sort|uniq -c|sort -nr
+  <span class="number">15508</span> <span class="constant">TCP_NEGATIVE_HIT</span><span class="symbol">:NONE</span> 在对原始服务器的请求导致<span class="constant">HTTP</span>错误时，<span class="constant">Squid</span>也会cache这个响应。在短时间内对这些资源的重复请求，导致了否命中。
+   <span class="number">8212</span> <span class="constant">TCP_IMS_HIT</span><span class="symbol">:NONE</span>  客户端发送确认请求，<span class="constant">Squid</span>发现更近来的、貌似新鲜的请求资源的拷贝。<span class="constant">Squid</span>发送更新的内容到客户端，而不联系原始服务器。（这指明<span class="constant">Squid</span>对本次请求，不会与任何其他服务器（邻居或原始服务器）通信。）
+   <span class="number">3771</span> <span class="constant">TCP_HIT</span><span class="symbol">:NONE</span> <span class="constant">Squid</span>发现请求资源的貌似新鲜的拷贝，并将其立即发送到客户端。
+   <span class="number">3468</span> <span class="constant">TCP_MISS</span><span class="symbol">:DIRECT</span> <span class="constant">Squid</span>没有请求资源的cache拷贝。（<span class="constant">Squid</span>直接转发请求到原始服务器）
+   <span class="number">2379</span> <span class="constant">TCP_MEM_HIT</span><span class="symbol">:NONE</span>  从内存的响应
+   <span class="number">1876</span> <span class="constant">TCP_DENIED</span><span class="symbol">:NONE</span> 因为http_access或http_reply_access规则，客户端的请求被拒绝了   全是错误地址链接
+   <span class="number">1732</span> <span class="constant">TCP_REFRESH_HIT</span><span class="symbol">:DIRECT</span> <span class="constant">Squid</span>发现请求资源的貌似陈旧的拷贝，并发送确认请求到原始服务器。原始服务器返回<span class="number">304</span>（未修改）响应，指示squid的拷贝仍旧是新鲜的。（<span class="constant">Squid</span>直接转发请求到原始服务器）
+    <span class="number">708</span> <span class="constant">TCP_CLIENT_REFRESH_MISS</span><span class="symbol">:DIRECT</span> <span class="constant">Squid</span>发现了请求资源的拷贝，但客户端的请求包含了<span class="constant">Cache</span>-<span class="constant">Control</span><span class="symbol">:</span> no-cache指令。<span class="constant">Squid</span>转发客户端的请求到原始服务器，强迫cache确认。 （<span class="constant">Squid</span>直接转发请求到原始服务器）
+      <span class="number">7</span> <span class="constant">TCP_MISS</span><span class="symbol">:NONE</span> <span class="constant">Squid</span>没有请求资源的cache拷贝。（这指明<span class="constant">Squid</span>对本次请求，不会与任何其他服务器（邻居或原始服务器）通信）
 </pre></figure></code></pre>
 <p> 原文地址 h<a href="http://callaly.net/blog/archives/category/%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF/ttp://">http://callaly.net/blog/archives/category/%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF/ttp://</a></p>
 
@@ -382,13 +379,13 @@ ANY_PARENT
         
   
   <div class="categories">
-    <a href="/categories/应用程序/">应用程序</a>
+    <a href="/categories/Webserver/">Webserver</a>
   </div>
 
         
   
   <div class="tags">
-    <a href="/tags/squid/">squid</a>, <a href="/tags/日志/">日志</a>, <a href="/tags/详解/">详解</a>
+    <a href="/tags/squid/">squid</a>
   </div>
 
 <!-- Baidu Button BEGIN -->
@@ -428,9 +425,17 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/Databases/">Databases</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/Monitoring/">Monitoring</a><small>1</small></li>
+  
     <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
   
-    <li><a href="/categories/Webserver/">Webserver</a><small>4</small></li>
+    <li><a href="/categories/faq/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>8</small></li>
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
@@ -446,15 +451,15 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
   
     <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
   
-    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
-  
     <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
   
     <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
   
-    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
   
     <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
   
     <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   

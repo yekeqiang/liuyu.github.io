@@ -64,157 +64,161 @@
     </header>
     <div class="entry">
       
-        <p>利用top取某个进程的CPU的脚本:</p>
-<pre><code><figure class="highlight"><pre><span class="xml"></span><span class="comment">#/bin/sh</span><span class="xml">
-Max_CPU=</span><span class="number">0</span><span class="xml">
-Avg_CPU=</span><span class="number">0</span><span class="xml">
-Total_Time=</span><span class="number">1</span><span class="xml">
- Process=</span><span class="variable">$1</span><span class="xml">
- Interval=</span><span class="variable">$2</span><span class="xml">
- # check the parameters
- if [ $# -ne </span><span class="number">2</span><span class="xml"> ]; then
-    echo "Usage: </span><span class="variable">$0</span><span class="xml"> ProcessName Interval"
-    exit
- fi
- LogFile="Per.txt"
- echo "`date`" &gt; </span><span class="variable">$LogFile</span><span class="xml">
- while sleep </span><span class="variable">$Interval</span><span class="xml">
- do
-    top -d </span><span class="number">1</span><span class="xml"> -n </span><span class="number">1</span><span class="xml">|grep </span><span class="variable">$Process</span><span class="xml">|grep -v grep|awk '{print </span><span class="variable">$9</span><span class="xml">"\t"</span><span class="variable">$10}</span><span class="xml">' &gt;&gt; </span><span class="variable">$LogFile</span><span class="xml">
- done`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-判断是否是设备文件
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`#/bin/bash
- echo -e "The program will Judge a file is or not a device file.\n\n"
- read -p "Input a filename:" filename
- if [ -b </span><span class="variable">$filename</span><span class="xml"> -o -c </span><span class="variable">$filename</span><span class="xml"> ]; then
-         echo "</span><span class="variable">$filename</span><span class="xml"> is a device file"
-         exit </span><span class="number">0</span><span class="xml">
- else
-         echo "</span><span class="variable">$filename</span><span class="xml"> is not a device file"
-         exit </span><span class="number">1</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
- firead –p：用于在读数据时输出提示信息
-
-注意！ [ 之间是有空格的：if ! [ -f </span><span class="variable">$filename</span><span class="xml"> ] ; then。一般用if [ ! * ]
-
-添加用户：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` #/bin/bash
- groupadd -f class1
- for i in {</span><span class="number">9909.</span><span class="xml"></span><span class="number">.9911</span><span class="xml">}
- do
-         xx=`echo </span><span class="variable">$i</span><span class="xml"> | sed 's/</span><span class="number">99</span><span class="xml">//g'`
-         useradd -g class1 std</span><span class="variable">${xx}</span><span class="xml">
-         echo std</span><span class="variable">${xx}</span><span class="xml"> | passwd std</span><span class="variable">${xx}</span><span class="xml"> --stdin
-         echo -e "user std</span><span class="variable">${xx}</span><span class="xml"> passwd is std</span><span class="variable">${xx}</span><span class="xml">"&gt;&gt;/root/newuser.txt
- done
- exit </span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-        注意等号的前后不要有空格：xx=`echo </span><span class="variable">$i</span><span class="xml"> | sed 's/</span><span class="number">99</span><span class="xml">//g'`
-        变量如果前后有字符，要是大括号
-
-统计IP访问：
-要求分析apache访问日志，找出访问页面数量在前</span><span class="number">100</span><span class="xml">位的IP数。日志大小在</span><span class="number">78</span><span class="xml">M左右。以下是apache的访问日志节选
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` </span><span class="number">202.101</span><span class="xml"></span><span class="number">.129</span><span class="xml"></span><span class="number">.218</span><span class="xml"> - - [</span><span class="number">26</span><span class="xml">/Mar/</span><span class="number">2006</span><span class="xml">:</span><span class="number">23</span><span class="xml">:</span><span class="number">59</span><span class="xml">:</span><span class="number">55</span><span class="xml"> +</span><span class="number">0800</span><span class="xml">] "GET /online/stat_inst.php?pid=d065 HTTP/</span><span class="number">1.1</span><span class="xml">" </span><span class="number">302</span><span class="xml"> </span><span class="number">20</span><span class="xml">-"-" "-" "Mozilla/</span><span class="number">4.0</span><span class="xml"> (compatible; MSIE </span><span class="number">6.0</span><span class="xml">; Windows NT </span><span class="number">5.1</span><span class="xml">)"`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`# awk '{print </span><span class="variable">$1}</span><span class="xml">' log      |sort |uniq -c|sort -r |head -n10
-      </span><span class="number">5</span><span class="xml"> </span><span class="number">221.224</span><span class="xml"></span><span class="number">.78</span><span class="xml"></span><span class="number">.15</span><span class="xml">
-      </span><span class="number">3</span><span class="xml"> </span><span class="number">221.233</span><span class="xml"></span><span class="number">.19</span><span class="xml"></span><span class="number">.137</span><span class="xml">
-       </span><span class="number">1</span><span class="xml"> </span><span class="number">58.63</span><span class="xml"></span><span class="number">.148</span><span class="xml"></span><span class="number">.135</span><span class="xml">
-       </span><span class="number">1</span><span class="xml"> </span><span class="number">222.90</span><span class="xml"></span><span class="number">.66</span><span class="xml"></span><span class="number">.142</span><span class="xml">
-       </span><span class="number">1</span><span class="xml"> </span><span class="number">222.218</span><span class="xml"></span><span class="number">.90</span><span class="xml"></span><span class="number">.239</span><span class="xml">
-       </span><span class="number">1</span><span class="xml"> </span><span class="number">222.182</span><span class="xml"></span><span class="number">.95</span><span class="xml"></span><span class="number">.155</span><span class="xml">
-       </span><span class="number">1</span><span class="xml"> </span><span class="number">221.7</span><span class="xml"></span><span class="number">.249</span><span class="xml"></span><span class="number">.206</span><span class="xml">
-       </span><span class="number">1</span><span class="xml"> </span><span class="number">221.237</span><span class="xml"></span><span class="number">.232</span><span class="xml"></span><span class="number">.191</span><span class="xml">
-       </span><span class="number">1</span><span class="xml"> </span><span class="number">221.235</span><span class="xml"></span><span class="number">.61</span><span class="xml"></span><span class="number">.109</span><span class="xml">
-       </span><span class="number">1</span><span class="xml"> </span><span class="number">219.129</span><span class="xml"></span><span class="number">.183</span><span class="xml"></span><span class="number">.122</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-这个地方有个疑问，为什么在使用uniq之前要sort。
-
-求</span><span class="number">2</span><span class="xml">个数之和
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` #/bin/bash
- typeset first second
- read -p "Input the first number:" first
- read -p "Input the second number:" second
- result=$[</span><span class="variable">$first</span><span class="xml">+</span><span class="variable">$second</span><span class="xml">]
- echo "result is : </span><span class="variable">$result</span><span class="xml">"
- exit </span><span class="number">0</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
- 文本分析
-取出password中shell出现的次数
-第一种方法结果:
-    <span class="tag">&lt;<span class="title">pre</span>&gt;</span>`   </span><span class="number">4</span><span class="xml"> /bin/bash
-       </span><span class="number">1</span><span class="xml"> /bin/sync
-       </span><span class="number">1</span><span class="xml"> /sbin/halt
-      </span><span class="number">31</span><span class="xml"> /sbin/nologin
-       </span><span class="number">1</span><span class="xml"> /sbin/shutdown`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-第二种方法结果:
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` /bin/sync       </span><span class="number">1</span><span class="xml">
- /bin/bash       </span><span class="number">1</span><span class="xml">
- /sbin/nologin   </span><span class="number">30</span><span class="xml">
- /sbin/halt      </span><span class="number">1</span><span class="xml">
- /sbin/shutdown  </span><span class="number">1</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-答案：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`cat /etc/passwd|awk -F: '{if (</span><span class="variable">$7</span><span class="xml">!="") print </span><span class="variable">$7}</span><span class="xml">'|sort|uniq –c
- cat /etc/passwd|awk -F: '{if (</span><span class="variable">$7</span><span class="xml">!="") print </span><span class="variable">$7}</span><span class="xml">'|sort|uniq -c | awk '{print </span><span class="variable">$2</span><span class="xml">,</span><span class="variable">$1}</span><span class="xml">'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-文件整理
-employee文件中记录了工号和姓名
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` employee.txt:
- </span><span class="number">100</span><span class="xml"> Jason Smith 
- </span><span class="number">200</span><span class="xml"> John Doe 
- </span><span class="number">300</span><span class="xml"> Sanjay Gupta 
- </span><span class="number">400</span><span class="xml"> Ashok Sharma 
- bonus文件中记录工号和工资
- bonus.txt:
- </span><span class="number">100</span><span class="xml"> </span><span class="variable">$5</span><span class="xml">,</span><span class="number">000</span><span class="xml"> 
- </span><span class="number">200</span><span class="xml"> </span><span class="variable">$500</span><span class="xml"> 
- </span><span class="number">300</span><span class="xml"> </span><span class="variable">$3</span><span class="xml">,</span><span class="number">000</span><span class="xml"> 
- </span><span class="number">400</span><span class="xml"> </span><span class="variable">$1</span><span class="xml">,</span><span class="number">250</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-要求把两个文件合并并输出如下
- 处理结果
- <span class="tag">&lt;<span class="title">pre</span>&gt;</span>`</span><span class="number">400</span><span class="xml"> ashok sharma </span><span class="variable">$1</span><span class="xml">,</span><span class="number">250</span><span class="xml">
- </span><span class="number">100</span><span class="xml"> jason smith  </span><span class="variable">$5</span><span class="xml">,</span><span class="number">000</span><span class="xml">
- </span><span class="number">200</span><span class="xml"> john doe  </span><span class="variable">$500</span><span class="xml">
- </span><span class="number">300</span><span class="xml"> sanjay gupta  </span><span class="variable">$3</span><span class="xml">,</span><span class="number">000</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-答案：join employee bonus | sort -k </span><span class="number">2</span><span class="xml">
- 打印本机的交换分区大小
-处理结果:
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` Swap:</span><span class="number">1024</span><span class="xml">M
-free -m | sed -n '/Swap/p' | awk '{ print </span><span class="variable">$2}</span><span class="xml">'
- free -m | sed -n 's/Swap:\ *\([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]*\).*/\</span><span class="number">1</span><span class="xml">/p'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-输出本机创建</span><span class="number">20000</span><span class="xml">个目录所用的时间
-处理结果:
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` real    </span><span class="number">0</span><span class="xml">m3</span><span class="number">.367</span><span class="xml">s
- user    </span><span class="number">0</span><span class="xml">m0</span><span class="number">.066</span><span class="xml">s
- sys     </span><span class="number">0</span><span class="xml">m1</span><span class="number">.925</span><span class="xml">s`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-答案：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` # time for i in {</span><span class="number">1.</span><span class="xml"></span><span class="number">.2000</span><span class="xml">} ; do mkdir /root/neil</span><span class="variable">$i</span><span class="xml">; done
-  real    </span><span class="number">0</span><span class="xml">m6</span><span class="number">.200</span><span class="xml">s
- user    </span><span class="number">0</span><span class="xml">m1</span><span class="number">.128</span><span class="xml">s
- sys     </span><span class="number">0</span><span class="xml">m4</span><span class="number">.710</span><span class="xml">s`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-打印当前sshd的端口和进程id
- 处理结果:
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` sshd Port&amp;&amp;pid: </span><span class="number">22</span><span class="xml"> </span><span class="number">5412</span><span class="xml">
- 答案：netstat -anp | grep sshd | sed -n 's/.*:::\([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]*\)\ .* \ \([</span><span class="number">0</span><span class="xml">-</span><span class="number">9</span><span class="xml">]*\)\/sshd/\</span><span class="number">1</span><span class="xml"> \</span><span class="number">2</span><span class="xml">/p'`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-打印root可以使用可执行文件数
- 处理结果:
- <span class="tag">&lt;<span class="title">pre</span>&gt;</span>`root's bins: </span><span class="number">2306</span><span class="xml">
- echo "root's bins: $(find ./ -type f | xargs ls -l | sed '/-..x/p' | wc -l)"
- root's bins: </span><span class="number">3664</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-编译当前目录下的所有.c文件：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` for file in *.c; do echo </span><span class="variable">$file</span><span class="xml"> ; gcc -o $(basename </span><span class="variable">$file</span><span class="xml"> .c) </span><span class="variable">$file</span><span class="xml">  ; sleep </span><span class="number">2</span><span class="xml">;  done &gt; compile </span><span class="number">2</span><span class="xml">&gt;&amp;</span><span class="number">1</span><span class="xml">`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-将一目录下所有的文件的扩展名改为bak
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>` for i in *.*;do mv </span><span class="variable">$i</span><span class="xml"> </span><span class="variable">${i</span><span class="xml">%%.*}.bak;done </span>
+        <ol>
+<li><p>利用top取某个进程的CPU的脚本:</p>
+<h1>/bin/sh</h1>
+<p> Max_CPU=0
+ Avg_CPU=0
+ Total_Time=1
+  Process=$1
+  Interval=$2</p>
+<h1>check the parameters</h1>
+<p>  if [ $# -ne 2 ]; then</p>
+<pre><code><figure class="highlight"><pre> <span class="keyword">echo</span> <span class="string">"Usage: <span class="variable">$0</span> ProcessName Interval"</span>
+ <span class="keyword">exit</span>
 </pre></figure></code></pre>
+<p>  fi
+  LogFile=&quot;Per.txt&quot;
+  echo &quot;date&quot; &gt; $LogFile
+  while sleep $Interval
+  do</p>
+<pre><code><figure class="highlight"><pre> <span class="title">top</span> -d <span class="number">1</span> -n <span class="number">1</span>|grep <span class="variable">$Process</span>|grep -v grep|awk <span class="string">'{print <span class="variable">$9</span>"\t"<span class="variable">$10</span>}'</span> &gt;&gt; <span class="variable">$LogFile</span>
+</pre></figure></code></pre>
+<p>  done</p>
+</li>
+<li><p>判断是否是设备文件</p>
+<h1>/bin/bash</h1>
+<p>  echo -e &quot;The program will Judge a file is or not a device file.\n\n&quot;
+  read -p &quot;Input a filename:&quot; filename
+  if [ -b $filename -o -c $filename ]; then</p>
+<pre><code><figure class="highlight"><pre>      <span class="keyword">echo</span> <span class="string">"<span class="variable">$filename</span> is a device file"</span>
+      <span class="keyword">exit</span> 0
+</pre></figure></code></pre>
+<p>  else</p>
+<pre><code><figure class="highlight"><pre>      <span class="keyword">echo</span> <span class="string">"<span class="variable">$filename</span> is not a device file"</span>
+      <span class="keyword">exit</span> 1
+</pre></figure></code></pre>
+<p>  firead –p：用于在读数据时输出提示信息</p>
+<p> 注意！ [ 之间是有空格的：if ! [ -f $filename ] ; then。一般用if [ ! * ]</p>
+</li>
+<li><p>添加用户：</p>
+<h1>/bin/bash</h1>
+<p> groupadd -f class1
+ for i in {9909..9911}
+ do</p>
+<pre><code><figure class="highlight"><pre>     xx=echo <span class="variable">$i</span> | sed <span class="string">'s/99//g'</span>
+     useradd -g class1 std<span class="variable">${xx}</span>
+     echo std<span class="variable">${xx}</span> | passwd std<span class="variable">${xx}</span> --stdin
+     echo -e <span class="string">"user std<span class="subst">${xx}</span> passwd is std<span class="subst">${xx}</span>"</span>&gt;&gt;<span class="regexp">/root/newuser</span>.txt
+</pre></figure></code></pre>
+<p> done
+ exit 0</p>
+<pre><code><figure class="highlight"><pre>    注意等号的前后不要有空格：xx=<span class="keyword">echo</span> <span class="variable">$i</span> | sed <span class="string">'s/99//g'</span>
+    变量如果前后有字符，要是大括号
+</pre></figure></code></pre>
+</li>
+<li><p>统计IP访问：
+ 要求分析apache访问日志，找出访问页面数量在前100位的IP数。日志大小在78M左右。以下是apache的访问日志节选</p>
+<p> 202.101.129.218 - - [26/Mar/2006:23:59:55 +0800] &quot;GET /online/stat_inst.php?pid=d065 HTTP/1.1&quot; 302 20-&quot;-&quot; &quot;-&quot; &quot;Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)&quot;</p>
+<h1>awk &#39;{print $1}&#39; log      |sort |uniq -c|sort -r |head -n10</h1>
+<pre><code><figure class="highlight"><pre>   5 221.224.78.15
+   3 221.233.19.137
+    1 58.63.148.135
+    1 222.90.66.142
+    1 222.218.90.239
+    1 222.182.95.155
+    1 221.7.249.206
+    1 221.237.232.191
+    1 221.235.61.109
+    1 219.129.183.122
+</pre></figure></code></pre>
+<p> 这个地方有个疑问，为什么在使用uniq之前要sort。</p>
+</li>
+<li><p>求2个数之和</p>
+<h1>/bin/bash</h1>
+<p>  typeset first second
+  read -p &quot;Input the first number:&quot; first
+  read -p &quot;Input the second number:&quot; second
+  result=$[$first+$second]
+  echo &quot;result is : $result&quot;
+  exit 0</p>
+</li>
+<li><p>文本分析
+ 取出password中shell出现的次数</p>
+<p> 第一种方法结果:</p>
+<pre><code><figure class="highlight"><pre>    <span class="number">4</span> <span class="regexp">/bin/</span>bash
+    <span class="number">1</span> <span class="regexp">/bin/</span>sync
+    <span class="number">1</span> <span class="regexp">/sbin/</span>halt
+   <span class="number">31</span> <span class="regexp">/sbin/</span>nologin
+    <span class="number">1</span> <span class="regexp">/sbin/</span>shutdown
+</pre></figure></code></pre>
+<p> 第二种方法结果:
+  /bin/sync       1
+  /bin/bash       1
+  /sbin/nologin   30
+  /sbin/halt      1
+  /sbin/shutdown  1</p>
+<p> 答案：
+ cat /etc/passwd|awk -F: &#39;{if ($7!=&quot;&quot;) print $7}&#39;|sort|uniq –c
+  cat /etc/passwd|awk -F: &#39;{if ($7!=&quot;&quot;) print $7}&#39;|sort|uniq -c | awk &#39;{print $2,$1}&#39;</p>
+</li>
+<li><p>文件整理
+ employee文件中记录了工号和姓名
+  employee.txt:
+  100 Jason Smith 
+  200 John Doe 
+  300 Sanjay Gupta 
+  400 Ashok Sharma 
+  bonus文件中记录工号和工资
+  bonus.txt:
+  100 $5,000 
+  200 $500 
+  300 $3,000 
+  400 $1,250 </p>
+</li>
+<li><p>要求把两个文件合并并输出如下
+  处理结果
+  400 ashok sharma $1,250
+  100 jason smith  $5,000
+  200 john doe  $500
+  300 sanjay gupta  $3,000</p>
+<p> 答案：join employee bonus | sort -k 2</p>
+</li>
+<li><p>打印本机的交换分区大小</p>
+<p> 处理结果:
+  Swap:1024M
+ free -m | sed -n &#39;/Swap/p&#39; | awk &#39;{ print $2}&#39;
+  free -m | sed -n &#39;s/Swap:\ <em>([0-9]</em>).*/\1/p&#39;</p>
+</li>
+<li><p>输出本机创建20000个目录所用的时间</p>
+<p>处理结果:
+ real    0m3.367s
+ user    0m0.066s
+ sys     0m1.925s</p>
+<p>答案：</p>
+<h1>time for i in {1..2000} ; do mkdir /root/neil$i; done</h1>
+<p>  real    0m6.200s
+ user    0m1.128s
+ sys     0m4.710s</p>
+</li>
+<li><p>打印当前sshd的端口和进程id</p>
+<p> 处理结果:
+ sshd Port&amp;&amp;pid: 22 5412
+ 答案：netstat -anp | grep sshd | sed -n &#39;s/.<em>:::([0-9]</em>)\ .<em> \ ([0-9]</em>)\/sshd/\1 \2/p&#39;</p>
+</li>
+<li><p>打印root可以使用可执行文件数</p>
+<p> 处理结果:
+ root&#39;s bins: 2306
+ echo &quot;root&#39;s bins: $(find ./ -type f | xargs ls -l | sed &#39;/-..x/p&#39; | wc -l)&quot;
+ root&#39;s bins: 3664</p>
+</li>
+<li><p>编译当前目录下的所有.c文件：</p>
+<p> for file in *.c; do echo $file ; gcc -o $(basename $file .c) $file  ; sleep 2;  done &gt; compile 2&gt;&amp;1</p>
+</li>
+<li><p>将一目录下所有的文件的扩展名改为bak</p>
+<p> for i in <em>.</em>;do mv $i ${i%%.*}.bak;done </p>
+</li>
+</ol>
 <p>转自：oychw.cublog.cn</p>
 
       
@@ -224,13 +228,13 @@ free -m | sed -n '/Swap/p' | awk '{ print </span><span class="variable">$2}</spa
         
   
   <div class="categories">
-    <a href="/categories/faq/">faq</a>, <a href="/categories/faq/系统命令/">系统命令</a>
+    <a href="/categories/faq/">faq</a>, <a href="/categories/faq/Programming/">Programming</a>
   </div>
 
         
   
   <div class="tags">
-    <a href="/tags/shell/">shell</a>, <a href="/tags/面试题/">面试题</a>
+    <a href="/tags/shell/">shell</a>
   </div>
 
 <!-- Baidu Button BEGIN -->
@@ -270,9 +274,17 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/Databases/">Databases</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/Monitoring/">Monitoring</a><small>1</small></li>
+  
     <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
   
-    <li><a href="/categories/Webserver/">Webserver</a><small>4</small></li>
+    <li><a href="/categories/faq/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>8</small></li>
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
@@ -288,15 +300,15 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
   
     <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
   
-    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
-  
     <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
   
     <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
   
-    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
   
     <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
   
     <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   

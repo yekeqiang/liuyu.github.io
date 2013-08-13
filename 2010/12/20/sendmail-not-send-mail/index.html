@@ -66,29 +66,28 @@
       
         <p>php无法发mail
 用命令行测试下：</p>
-<pre><code><figure class="highlight"><pre><span class="xml"></span><span class="comment">#!/bin/bash</span><span class="xml">
-/usr/sbin/sendmail -t <span class="tag">&lt;<span class="title">&lt;EOF
-From:</span> <span class="attribute">Mail</span> <span class="attribute">testing</span> &lt;<span class="attribute">mail.goapk.gmail.com</span>&gt;</span>
-To: liuyu105@gmail.com
-Subject: mail testing
------------
-This is the mail content 
-----------
-EOF`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-发现速度特别慢。查看日志：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tail /var/log/maillog
-Dec </span><span class="number">15</span><span class="xml"> </span><span class="number">23</span><span class="xml">:</span><span class="number">22</span><span class="xml">:</span><span class="number">03</span><span class="xml"> litian sendmail[</span><span class="number">10845</span><span class="xml">]: My unqualified host name (LVSMaster) unknown; sleeping for retry
-Dec </span><span class="number">15</span><span class="xml"> </span><span class="number">23</span><span class="xml">:</span><span class="number">23</span><span class="xml">:</span><span class="number">21</span><span class="xml"> litian sendmail[</span><span class="number">12068</span><span class="xml">]: My unqualified host name (LVSMaster) unknown; sleeping for retry`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-原因是DNS导致，修改hosts
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`</span><span class="number">192.168</span><span class="xml"></span><span class="number">.1</span><span class="xml"></span><span class="number">.6</span><span class="xml"> LVSMaster. LVSMaster`<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-本机IP  主机名.  主机名
-
-重启sendmail 
-
-写个PHP测试：
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`<span class="tag">&lt;<span class="title">html</span>&gt;</span>
+<pre><code><figure class="highlight"><pre><span class="comment">#!/bin/bash</span>
+<span class="comment">/usr/sbin/sendmail</span> <span class="literal">-</span><span class="comment">t</span> &lt;&lt;<span class="comment">EOF</span>
+<span class="comment">From:</span> <span class="comment">Mail</span> <span class="comment">testing</span> &lt;<span class="comment">mail</span>.<span class="comment">goapk</span>.<span class="comment">gmail</span>.<span class="comment">com</span>&gt;
+<span class="comment">To:</span> <span class="comment">liuyu105@gmail</span>.<span class="comment">com</span>
+<span class="comment">Subject:</span> <span class="comment">mail</span> <span class="comment">testing</span>
+<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span>
+<span class="comment">This</span> <span class="comment">is</span> <span class="comment">the</span> <span class="comment">mail</span> <span class="comment">content</span> 
+<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span>
+<span class="comment">EOF
+</pre></figure></code></pre>
+<p>发现速度特别慢。查看日志：</p>
+<pre><code><figure class="highlight"><pre><span class="title">tail</span> /var/log/maillog
+Dec <span class="number">15</span> <span class="number">23</span>:<span class="number">22</span>:<span class="number">03</span> litian sendmail[<span class="number">10845</span>]: My unqualified host name (LVSMaster) unknown; <span class="title">sleeping</span> for retry
+Dec <span class="number">15</span> <span class="number">23</span>:<span class="number">23</span>:<span class="number">21</span> litian sendmail[<span class="number">12068</span>]: My unqualified host name (LVSMaster) unknown; <span class="title">sleeping</span> for retry
+</pre></figure></code></pre>
+<p>原因是DNS导致，修改hosts</p>
+<pre><code><figure class="highlight"><pre><span class="number">192.168</span><span class="number">.1</span><span class="number">.6</span> <span class="transposed_variable">LVSMaster.</span> LVSMaster
+</pre></figure></code></pre>
+<p>本机IP  主机名.  主机名</p>
+<p>重启sendmail </p>
+<p>写个PHP测试：</p>
+<pre><code><figure class="highlight"><pre><span class="xml"><span class="tag">&lt;<span class="title">html</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
 <span class="pi">&lt;?php
@@ -182,9 +181,17 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/Databases/">Databases</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/Monitoring/">Monitoring</a><small>1</small></li>
+  
     <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
   
-    <li><a href="/categories/Webserver/">Webserver</a><small>4</small></li>
+    <li><a href="/categories/faq/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>8</small></li>
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
@@ -200,15 +207,15 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
   
     <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
   
-    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
-  
     <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
   
     <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
   
-    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
   
     <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
   
     <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   

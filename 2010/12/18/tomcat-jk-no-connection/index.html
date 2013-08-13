@@ -67,16 +67,19 @@
         <p>解决tomcat死掉JK无法连接故障</p>
 <p>近日，发现网站jsp部分无法访问，或者访问速度极其缓慢。经过近二天的时间，问题得到了解决，现在把这解决步骤及思考方法详细的记录下来。其中也走了不少弯路。其结果也是让人无法琢磨！
 发现问题时处理思路：</p>
-<p>1、检查服务器是否正常连接。掉网、死机啥的。－－－&gt;SSH登录正常
-2、检查负载情况，load是否超高,vmstat 检查资源占用率 --－&gt;只有mysql占少量资源，起初以为是mysql导致（检查mysql 状态后发现并没有锁表及DDL语句堆积，执行sql语句速度也很快。因此判断出不是mysql导致）
-3、查看tcp连接状态。是不是并发太大被拖死了－－－&gt;其中ESTABLISHED大约有1000左右。TIME_WAIT CLOSE_WAIT 在40左右。看样子tomcat是被拖死了。并发这么大？
-4、重启了tomcat 访问正常了。先观察一段时间。
-5、查看分析日志，希望能从这里面找出一点蛛丝马迹来。</p>
+<ol>
+<li>检查服务器是否正常连接。掉网、死机啥的。－－－SSH登录正常</li>
+<li>检查负载情况，load是否超高,vmstat 检查资源占用率 --－只有mysql占少量资源，起初以为是mysql导致（检查mysql 状态后发现并没有锁表及DDL语句堆积，执行sql语句速度也很快。因此判断出不是mysql导致）</li>
+<li>查看tcp连接状态。是不是并发太大被拖死了－－－其中ESTABLISHED大约有1000左右。TIME_WAIT CLOSE_WAIT 在40左右。看样子tomcat是被拖死了。并发这么大？</li>
+<li>重启了tomcat 访问正常了。先观察一段时间。</li>
+<li>查看分析日志，希望能从这里面找出一点蛛丝马迹来。</li>
+</ol>
 <a name="more"></a>
 
-<p>tomcat日志如下：
-error:All threads (150) are currently busy, waiting. Increase maxThreads (150) or check the servlet status
-提示我最大的线程数设置小了。那就按日志提示先加大点吧。</p>
+<p>tomcat日志如下：</p>
+<pre><code><figure class="highlight"><pre><span class="keyword">error</span>:All threads (<span class="number">150</span>) are currently busy, waiting. Increase maxThreads (<span class="number">150</span>) <span class="keyword">or</span> check <span class="keyword">the</span> servlet status
+</pre></figure></code></pre>
+<p>提示我最大的线程数设置小了。那就按日志提示先加大点吧。</p>
 <p>从网上找到如下一段：<a href="http://tech.163.com/05/0711/10/1OCH7J2000091589_3.html">http://tech.163.com/05/0711/10/1OCH7J2000091589_3.html</a>
 web server允许的最大连接数还受制于操作系统的内核参数设置，通常Windows是2000个左右，Linux是1000个左右。
 那我先加到999再说。</p>
@@ -89,23 +92,23 @@ web server允许的最大连接数还受制于操作系统的内核参数设置�
 <pre><code><figure class="highlight"><pre>[<span class="keyword">error</span>] ajp_connection_tcp_get_message::jk_ajp_common.c (<span class="number">951</span>): (ajp13) can't receive <span class="keyword">the</span> response message <span class="keyword">from</span> tomcat, network problems <span class="keyword">or</span> tomcat (<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8009</span>) <span class="keyword">is</span> down (errno=<span class="number">104</span>)
 [<span class="keyword">error</span>] ajp_get_reply::jk_ajp_common.c (<span class="number">1592</span>): (ajp13) Tomcat <span class="keyword">is</span> down <span class="keyword">or</span> refused connection. No response has been sent <span class="keyword">to</span> <span class="keyword">the</span> client (yet)
 Connecting <span class="keyword">to</span> tomcat failed. Tomcat <span class="keyword">is</span> probably <span class="keyword">not</span> started <span class="keyword">or</span> <span class="keyword">is</span> listening <span class="function_start"><span class="keyword">on</span> <span class="title">the</span></span> wrong port
-`&lt;/pre&gt;
-带着问题G了一下，有一些优化配置方案：
-官网的如下：
-&lt;pre&gt;`worker.worker2.lbfactor=<span class="number">50</span>
-worker.worker2.cachesize=<span class="number">10</span>
-worker.worker2.cache_timeout=<span class="number">600</span>
-worker.worker2.socket_keepalive=<span class="number">1</span>
-worker.worker2.socket_timeout=<span class="number">300</span>
-`&lt;/pre&gt;
-别的文章可以不信，官网总得信呀。因此马上修改了
-worker.properties 配置文件。
-再一次重启tomcat
-
-结果过了一段时间，问题又来了。tomcat还是down。如此再次修改worker.properties 配置文件，还是没有任何效果。
+</pre></figure></code></pre>
+<p> 带着问题G了一下，有一些优化配置方案：</p>
+<p> 官网的如下：</p>
+<pre><code><figure class="highlight"><pre>worker<span class="variable">.worker2</span><span class="variable">.lbfactor</span>=<span class="number">50</span>
+worker<span class="variable">.worker2</span><span class="variable">.cachesize</span>=<span class="number">10</span>
+worker<span class="variable">.worker2</span><span class="variable">.cache_timeout</span>=<span class="number">600</span>
+worker<span class="variable">.worker2</span><span class="variable">.socket_keepalive</span>=<span class="number">1</span>
+worker<span class="variable">.worker2</span><span class="variable">.socket_timeout</span>=<span class="number">300</span>
+</pre></figure></code></pre>
+<p>别的文章可以不信，官网总得信呀。因此马上修改了</p>
+<pre><code><figure class="highlight"><pre><span class="transposed_variable">worker.</span><span class="keyword">properties</span> 配置文件。
+</pre></figure></code></pre>
+<p>再一次重启tomcat</p>
+<p>结果过了一段时间，问题又来了。tomcat还是down。如此再次修改worker.properties 配置文件，还是没有任何效果。
 难道问题不是出在JK2？
-此后就一直被此问题困扰。后来经理给了些信息。
-&lt;pre&gt;`<span class="comment">#worker.ajp13.lbfactor=1</span>
+此后就一直被此问题困扰。后来经理给了些信息。</p>
+<pre><code><figure class="highlight"><pre><span class="comment">#worker.ajp13.lbfactor=1</span>
 lbfactor  <span class="keyword">property</span> <span class="keyword">is</span> used when working <span class="keyword">with</span> a load balancer worker, this <span class="keyword">is</span> <span class="keyword">the</span> load-balancing factor <span class="keyword">for</span> <span class="keyword">the</span> worker. We'll see more <span class="function_start"><span class="keyword">on</span> <span class="title">this</span></span> <span class="keyword">in</span> <span class="keyword">the</span> lb worker section.
 <span class="comment">#worker.loadbalancer.type=lb</span>
 <span class="comment">#worker.loadbalancer.balance_workers=ajp13</span>
@@ -118,7 +121,7 @@ lbfactor  <span class="keyword">property</span> <span class="keyword">is</span> 
 </pre></figure></code></pre>
 <p>也就是说先去掉tomcat集群配置选项，多余的选项一个都不要。免得造成轮循。
 此后问题没有像之前那样频繁发生。相对稳定了许多。
-目前tomcat已经稳定下来了。可量还是没有下来。因此还是需要做tomcat集群，以解决高端并发的问题。<!--more--></p>
+目前tomcat已经稳定下来了。可量还是没有下来。因此还是需要做tomcat集群，以解决高端并发的问题。</p>
 
       
     </div>
@@ -127,13 +130,13 @@ lbfactor  <span class="keyword">property</span> <span class="keyword">is</span> 
         
   
   <div class="categories">
-    <a href="/categories/应用程序/">应用程序</a>
+    <a href="/categories/Webserver/">Webserver</a>
   </div>
 
         
   
   <div class="tags">
-    <a href="/tags/jk/">jk</a>, <a href="/tags/tomcat/">tomcat</a>
+    <a href="/tags/tomcat/">tomcat</a>
   </div>
 
 <!-- Baidu Button BEGIN -->
@@ -173,9 +176,17 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/Databases/">Databases</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/Monitoring/">Monitoring</a><small>1</small></li>
+  
     <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
   
-    <li><a href="/categories/Webserver/">Webserver</a><small>4</small></li>
+    <li><a href="/categories/faq/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>8</small></li>
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
@@ -191,15 +202,15 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
   
     <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
   
-    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
-  
     <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
   
     <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
   
-    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
   
     <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
   
     <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   

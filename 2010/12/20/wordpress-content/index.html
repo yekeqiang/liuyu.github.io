@@ -66,24 +66,22 @@
       
         <p>方案： 打开htdocs目录下的wp-config.php文件，将下面的代码放在wp-config.php最后一行的&quot;?&gt;&quot;前面即可。注意，不要忘记上传到服务器上啊。</p>
 <p>Php代码</p>
-<pre><code><figure class="highlight"><pre><span class="comment">if(is_admin())</span> <span class="comment">{add_filter('filesystem_method'</span>, <span class="comment">create_function('$a'</span>, <span class="comment">'return</span> <span class="comment">"direct";'</span> <span class="comment">));define(</span> <span class="comment">'FS_CHMOD_DIR'</span>, <span class="comment">0751</span> <span class="comment">);}</span>  <span class="comment">`</span>&lt;<span class="comment">/pre</span>&gt;
-<span class="comment">修改完毕后的wp</span>-<span class="comment">config</span>.<span class="comment">php文件是这样的:</span>
-
-<span class="comment">Php代码</span>
-&lt;<span class="comment">pre</span>&gt;<span class="comment">`/*</span> <span class="comment">设定完毕，请保存该文件。</span> <span class="comment">*/</span>
-<span class="comment">//</span>.<span class="string">.</span><span class="string">.</span><span class="string">.</span><span class="string">.</span><span class="string">.</span><span class="string">.</span><span class="comment">上面的都省略了</span>
-<span class="comment">/**</span> <span class="comment">WordPress目录的绝对路径。</span> <span class="comment">*/</span>
-<span class="comment">if</span> <span class="comment">(</span> <span class="comment">!defined('ABSPATH')</span> <span class="comment">)</span>
-    <span class="comment">define('ABSPATH'</span>, <span class="comment">dirname(__FILE__)</span> <span class="string">.</span> <span class="comment">'/');</span>  
-
-<span class="comment">/**</span> <span class="comment">设置WordPress变量和包含文件。</span> <span class="comment">*/</span>
-<span class="comment">require_once(ABSPATH</span> <span class="string">.</span> <span class="comment">'wp</span>-<span class="comment">settings</span>.<span class="comment">php');</span>  
-
-<span class="comment">//</span>-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">无法定位WordPress</span> <span class="comment">Content目录(wp</span>-<span class="comment">content)</span>  <span class="comment">解决方案</span>-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">begin</span>
-<span class="comment">if(is_admin())</span> <span class="comment">{add_filter('filesystem_method'</span>, <span class="comment">create_function('$a'</span>, <span class="comment">'return</span> <span class="comment">"direct";'</span> <span class="comment">));define(</span> <span class="comment">'FS_CHMOD_DIR'</span>, <span class="comment">0751</span> <span class="comment">);}</span>
-<span class="comment">//</span>-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">无法定位WordPress</span> <span class="comment">Content目录(wp</span>-<span class="comment">content)</span>  <span class="comment">解决方案</span>-<span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">end</span>
-<span class="comment">?&amp;gt;
+<pre><code><figure class="highlight"><pre><span class="function"><span class="title">if</span><span class="params">(<span class="function_name">is_admin</span>())</span> {<span class="title">add_filter</span><span class="params">('filesystem_method', <span class="function_name">create_function</span>('$a', 'return <span class="string">"direct"</span>;' ))</span>;<span class="title">define</span><span class="params">( '<span class="variable">FS_CHMOD_DIR</span>', <span class="number">0751</span> )</span>;}
 </pre></figure></code></pre>
+<p>修改完毕后的wp-config.php文件是这样的:</p>
+<p>Php代码
+    /<em> 设定完毕，请保存该文件。 </em>/
+    //.......上面的都省略了
+    /<em>* WordPress目录的绝对路径。 </em>/
+    if ( !defined(&#39;ABSPATH&#39;) )
+        define(&#39;ABSPATH&#39;, dirname(<strong>FILE</strong>) . &#39;/&#39;);</p>
+<pre><code><figure class="highlight"><pre><span class="javadoc">/** 设置WordPress变量和包含文件。 */</span>
+require_once(ABSPATH . <span class="string">'wp-settings.php'</span>);  
+
+<span class="comment">//-----无法定位WordPress Content目录(wp-content) </span>
+</pre></figure></code></pre>
+<p>解决方案---------begin
+    if(is_admin()) {add_filter(&#39;filesystem_method&#39;, create_function(&#39;$a&#39;, &#39;return &quot;direct&quot;;&#39; ));define( &#39;FS_CHMOD_DIR&#39;, 0751 );}</p>
 
       
     </div>
@@ -138,9 +136,17 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/Databases/">Databases</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/Monitoring/">Monitoring</a><small>1</small></li>
+  
     <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
   
-    <li><a href="/categories/Webserver/">Webserver</a><small>4</small></li>
+    <li><a href="/categories/faq/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>8</small></li>
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
@@ -156,15 +162,15 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
   
     <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
   
-    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
-  
     <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
   
     <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
   
-    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
   
     <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
   
     <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   

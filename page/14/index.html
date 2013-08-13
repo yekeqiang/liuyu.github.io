@@ -70,7 +70,7 @@
 <p>保存的时候会提示：没有Root Permission
 可以用如下方法解决：
 保存时加上：
-:w !sudo tee %</p>
+<code>:w !sudo tee %</code></p>
 <p><a href="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-2.jpg"><img src="http://bubbyroom.com/wp-content/uploads/2010/12/vim-not-root-2.jpg" alt="" title="vim-not-root-2"></a></p>
 <p>我这里有一个问题。没有配置sudo权限。
 用sudo时提示&quot;xxx is not in the sudoers file. This incident will be reported.其中XXX是你的用户名，也就是你的用户名没有权限使用sudo,我们只要修改一下/etc/sudoers文件就行了。下面是修改方 法：
@@ -181,21 +181,21 @@ Crash 工具分析 Linux dump 文件 <a href="http://www.ibm.com/developerworks/
       
         <p>TcpDump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供 and、or、not等逻辑语句来帮助你去掉无用的信息。tcpdump就是一种免费的网络分析工具</p>
 <p>一般我们使用Tcpdump时都是使用：</p>
-<pre><code><figure class="highlight"><pre><span class="xml">tcpdump -i ethx `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-这样可以查看网卡ethx上的所有数据包传送过程，但你会发现相当的多。你都看不过来。因此我们需要过滤。
-
-下面这条命令就是查看</span><span class="number">80</span><span class="xml">端口的访问量，进行排序，取前</span><span class="number">20</span><span class="xml">位
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tcpdump -i eth0 -tnn dst port </span><span class="number">80</span><span class="xml"> -c </span><span class="number">1000</span><span class="xml"> | awk -F"." '{print </span><span class="variable">$1</span><span class="xml">"."</span><span class="variable">$2</span><span class="xml">"."</span><span class="variable">$3</span><span class="xml">"."</span><span class="variable">$4}</span><span class="xml">' | sort | uniq -c | sort -nr |head -</span><span class="number">20</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-但也可以使用过滤某个端口的方法进行查看
-如：过滤掉</span><span class="number">22</span><span class="xml">端口
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tcpdump -i eth1  -s </span><span class="number">1500</span><span class="xml"> port not </span><span class="number">22</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-过滤</span><span class="number">22</span><span class="xml">和</span><span class="number">53</span><span class="xml">
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tcpdump -i eth1  -s </span><span class="number">1500</span><span class="xml"> port not </span><span class="number">22</span><span class="xml"> and port not </span><span class="number">53</span><span class="xml"> `<span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
-
-过滤</span><span class="number">22</span><span class="xml">并指定来源ip
-<span class="tag">&lt;<span class="title">pre</span>&gt;</span>`tcpdump -i eth1 port not </span><span class="number">22</span><span class="xml"> and host </span><span class="number">1.2</span><span class="xml"></span><span class="number">.3</span><span class="xml"></span><span class="number">.4</span><span class="xml"> </span>
+<pre><code><figure class="highlight"><pre><span class="title">tcpdump</span> -i ethx
+</pre></figure></code></pre>
+<p>这样可以查看网卡ethx上的所有数据包传送过程，但你会发现相当的多。你都看不过来。因此我们需要过滤。</p>
+<p>下面这条命令就是查看80端口的访问量，进行排序，取前20位</p>
+<pre><code><figure class="highlight"><pre><span class="comment">tcpdump</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">eth0</span> <span class="literal">-</span><span class="comment">tnn</span> <span class="comment">dst</span> <span class="comment">port</span> <span class="comment">80</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">1000</span> <span class="comment">|</span> <span class="comment">awk</span> <span class="literal">-</span><span class="comment">F"</span>.<span class="comment">"</span> <span class="comment">'{print</span> <span class="comment">$1"</span>.<span class="comment">"$2"</span>.<span class="comment">"$3"</span>.<span class="comment">"$4}'</span> <span class="comment">|</span> <span class="comment">sort</span> <span class="comment">|</span> <span class="comment">uniq</span> <span class="literal">-</span><span class="comment">c</span> <span class="comment">|</span> <span class="comment">sort</span> <span class="literal">-</span><span class="comment">nr</span> <span class="comment">|head</span> <span class="literal">-</span><span class="comment">20
+</pre></figure></code></pre>
+<p>但也可以使用过滤某个端口的方法进行查看
+如：过滤掉22端口</p>
+<pre><code><figure class="highlight"><pre><span class="comment">tcpdump</span> <span class="literal">-</span><span class="comment">i</span> <span class="comment">eth1</span>  <span class="literal">-</span><span class="comment">s</span> <span class="comment">1500</span> <span class="comment">port</span> <span class="comment">not</span> <span class="comment">22
+</pre></figure></code></pre>
+<p>过滤22和53</p>
+<pre><code><figure class="highlight"><pre>tcpdump -i eth1  -s <span class="number">1500</span> <span class="keyword">port</span> <span class="keyword">not</span> <span class="number">22</span> <span class="keyword">and</span> <span class="keyword">port</span> <span class="keyword">not</span> <span class="number">53</span>
+</pre></figure></code></pre>
+<p>过滤22并指定来源ip</p>
+<pre><code><figure class="highlight"><pre>tcpdump -i eth1 <span class="keyword">port</span> <span class="keyword">not</span> <span class="number">22</span> <span class="keyword">and</span> host <span class="number">1.2</span><span class="number">.3</span><span class="number">.4</span> 
 </pre></figure></code></pre>
 <p>参考：
 <a href="http://www.cyberciti.biz/faq/linux-monitor-all-network-traffic-except-ssh-port-22/">http://www.cyberciti.biz/faq/linux-monitor-all-network-traffic-except-ssh-port-22/</a>
@@ -559,9 +559,17 @@ $ locate -i ~/m
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/Databases/">Databases</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/Monitoring/">Monitoring</a><small>1</small></li>
+  
     <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
   
-    <li><a href="/categories/Webserver/">Webserver</a><small>4</small></li>
+    <li><a href="/categories/faq/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>8</small></li>
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
@@ -577,15 +585,15 @@ $ locate -i ~/m
   
     <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
   
-    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
-  
     <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
   
     <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
   
-    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
   
     <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
   
     <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   

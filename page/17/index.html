@@ -68,11 +68,13 @@
         <p>解决tomcat死掉JK无法连接故障</p>
 <p>近日，发现网站jsp部分无法访问，或者访问速度极其缓慢。经过近二天的时间，问题得到了解决，现在把这解决步骤及思考方法详细的记录下来。其中也走了不少弯路。其结果也是让人无法琢磨！
 发现问题时处理思路：</p>
-<p>1、检查服务器是否正常连接。掉网、死机啥的。－－－&gt;SSH登录正常
-2、检查负载情况，load是否超高,vmstat 检查资源占用率 --－&gt;只有mysql占少量资源，起初以为是mysql导致（检查mysql 状态后发现并没有锁表及DDL语句堆积，执行sql语句速度也很快。因此判断出不是mysql导致）
-3、查看tcp连接状态。是不是并发太大被拖死了－－－&gt;其中ESTABLISHED大约有1000左右。TIME_WAIT CLOSE_WAIT 在40左右。看样子tomcat是被拖死了。并发这么大？
-4、重启了tomcat 访问正常了。先观察一段时间。
-5、查看分析日志，希望能从这里面找出一点蛛丝马迹来。</p>
+<ol>
+<li>检查服务器是否正常连接。掉网、死机啥的。－－－SSH登录正常</li>
+<li>检查负载情况，load是否超高,vmstat 检查资源占用率 --－只有mysql占少量资源，起初以为是mysql导致（检查mysql 状态后发现并没有锁表及DDL语句堆积，执行sql语句速度也很快。因此判断出不是mysql导致）</li>
+<li>查看tcp连接状态。是不是并发太大被拖死了－－－其中ESTABLISHED大约有1000左右。TIME_WAIT CLOSE_WAIT 在40左右。看样子tomcat是被拖死了。并发这么大？</li>
+<li>重启了tomcat 访问正常了。先观察一段时间。</li>
+<li>查看分析日志，希望能从这里面找出一点蛛丝马迹来。</li>
+</ol>
 
       
     </div>
@@ -549,9 +551,17 @@ AddOutputFilter INCLUDES;DEFLATE shtml</p>
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/Databases/">Databases</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/Monitoring/">Monitoring</a><small>1</small></li>
+  
     <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
   
-    <li><a href="/categories/Webserver/">Webserver</a><small>4</small></li>
+    <li><a href="/categories/faq/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>8</small></li>
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
@@ -567,15 +577,15 @@ AddOutputFilter INCLUDES;DEFLATE shtml</p>
   
     <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
   
-    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
-  
     <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
   
     <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
   
-    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
   
     <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
   
     <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   

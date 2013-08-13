@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>vmstat man | Liuyu's blog</title>
+  <meta name="author" content="Liu Yu">
+  
+  <meta name="description" content="Puppet cdn AutoMate">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="vmstat man"/>
+  <meta property="og:site_name" content="Liuyu's blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Liuyu's blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Liuyu's blog</a></h1>
+  <h2><a href="/">Puppet in action</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+    <li> <a href="/atom.xml">RSS</a> </li>
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-12-19T08:58:42.000Z"><a href="/2010/12/19/vmstat-man/">12月 19 2010</a></time>
+      
+      
+  
+    <h1 class="title">vmstat man</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>vmstat介绍</p>
+<p><strong>.Procs</strong>
+-r: 运行的和等待（CPU时间片）运行的进程数，这个值也可以判断是否需要增加CPU（长期大于1）
+-b: 处于不可中断状态的进程数，常见的情况是由I/O引起的。</p>
+<p><strong>MEMORY</strong>
+-swap:切换到交换内存上的内存（默认以KB为单位）
+如果SWAP的值不为0，或者还比较大，比如超过100M了，但是SI，SO的值长期为0，这种情况我们可以不用担心，不会影响系统性能。
+-free:p空闲的物理内存
+- buff:作为buffer cache的内存，对块设备的读写进行缓冲
+-cache：作为page cache的内存，文件系统的cache
+如果cache的值大的时候，说明cache处的文件数多，如果频繁访问到的文件都能被cache处，那么磁盘的读IO bi会非常小。</p>
+<p>**
+<a name="more"></a> </p>
+<p>SWAP**
+-si:交换内存使用，由磁盘调入内存
+-so:交换内存使用，由内存调入磁盘
+内存够用的时候，这2个值都是0，如果这2个值长期大于0时，系统性能会受到影响，磁盘IO和CPU资源都会被消耗。
+我发现有些朋友看到空闲内存（FREE）很少的或接近于0时，就认为内存不够用了，实际上不能光看这一点，还要结合si,so，如果free很少，但是si,so也很少（大多时候是0），那么不用担心，系统性能这时不会受到影响的。</p>
+<p><strong>IO</strong>
+-bi:从块设备读入的数据总量（读磁盘）（KB/S）
+-bo:写入到块设备的数据总量（写磁盘）（KB/S）
+随机磁盘读写的时候，这2个值越大（如超出1M),能看到CPU在IO等待的值也会越大</p>
+<p>SYSTEM
+--in:每秒产生的中断次数
+--cs:每秒产生的上下文切换次数
+上面2个值越大，会看到由内核消耗的CPU时间会越大</p>
+<p><strong>CPU</strong>
+-us:用户进程消耗的CPU时间百分
+us的值比较高时，说明用户进程消耗的CPU时间多，但是如果长期超50%的使用，那么我们就该考虑优化程序算法或者进行加速（比如PHP/PERL）
+-sy:内核进程消耗的CPU时间百分比（sy的值高时，说明系统内核消耗的CPU资源多，这并不是良性表现，我们应该检查原因）
+-wa:IO等待消耗的CPU时间百分比
+wa的值高时，说明IO等待比较严重，这可能由于磁盘大量作随机访问造成，也有可能磁盘出现瓶颈（块操作）。
+-id:CPU处于空闲状态时间百分比</p>
+<p><strong>情景分析：</strong>
+vmstat的输出哪些信息值得关注？
+--proc r:运行的进程比较多，系统很繁忙
+--IO bo:磁盘写的数据量稍大，如果大文件的写，10以内基本不用担心，如果是小文件2M以前基本正常，
+--CPU us:持续大于50，服务高峰期可以接受
+--CPU wa:稍微有些同
+--CPU id:持续小于50，服务高峰期可以接受</p>
+<p><strong>TOP命令：</strong>
+这个命令可以查看系统中运行的进程的状况，CPU使用状况，系统负载，内存使用等。它是检查系统进程运行状况最方便的工具了。它默认显示部分活动的进程，并按照进程使用CPU的多少排序，</p>
+<p><strong>top参数：</strong>
+-D 不可中断休眠，通常是IO操作处的状态
+-R 正在执行的或者处在等街待的进程队列中
+-S 休眠中
+-T 暂停刮起的
+-Z 僵尸进程，进程执行完成，但由于其父进程没有销毁该进程，而被INIT进程接管进行销毁。
+-W 没有使用物理内存，所占用的物理内存被切换到交换内存
+-N 低优先级</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/系统命令/">系统命令</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/vmstat/">vmstat</a>, <a href="/tags/man/">man</a>
+  </div>
+
+<!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=2018311" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:bubbyroom.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Databases/">Databases</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/Monitoring/">Monitoring</a><small>1</small></li>
+  
+    <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>8</small></li>
+  
+    <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
+  
+    <li><a href="/categories/faq/">faq</a><small>26</small></li>
+  
+    <li><a href="/categories/cdn/faq/">faq</a><small>1</small></li>
+  
+    <li><a href="/categories/faq/howtoforge/">howtoforge</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/">howtoforge</a><small>6</small></li>
+  
+    <li><a href="/categories/puppet/">puppet</a><small>2</small></li>
+  
+    <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
+  
+    <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
+  
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
+  
+    <li><a href="/categories/faq/数据库/">数据库</a><small>1</small></li>
+  
+    <li><a href="/categories/生活乐事/">生活乐事</a><small>3</small></li>
+  
+    <li><a href="/categories/程序开发/">程序开发</a><small>4</small></li>
+  
+    <li><a href="/categories/系统命令/">系统命令</a><small>14</small></li>
+  
+    <li><a href="/categories/faq/系统命令/">系统命令</a><small>2</small></li>
+  
+    <li><a href="/categories/美图鉴赏/">美图鉴赏</a><small>0</small></li>
+  
+    <li><a href="/categories/应用程序/负载均衡/">负载均衡</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Cache-control/" style="font-size: 16.75px;">Cache-control</a><a href="/tags/Cluster-bacst/" style="font-size: 12.00px;">Cluster-bacst</a><a href="/tags/Header-V3-DSA-signature/" style="font-size: 15.75px;">Header V3 DSA signature</a><a href="/tags/object-Object/" style="font-size: 14.75px;">[object Object]</a><a href="/tags/apache/" style="font-size: 19.50px;">apache</a><a href="/tags/awk/" style="font-size: 18.25px;">awk</a><a href="/tags/bash/" style="font-size: 17.00px;">bash</a><a href="/tags/browser/" style="font-size: 13.75px;">browser</a><a href="/tags/cache/" style="font-size: 14.00px;">cache</a><a href="/tags/cdn/" style="font-size: 16.25px;">cdn</a><a href="/tags/centos/" style="font-size: 19.25px;">centos</a><a href="/tags/cpan/" style="font-size: 12.75px;">cpan</a><a href="/tags/cpanm/" style="font-size: 12.25px;">cpanm</a><a href="/tags/etag/" style="font-size: 14.25px;">etag</a><a href="/tags/expires/" style="font-size: 13.00px;">expires</a><a href="/tags/foreman/" style="font-size: 15.25px;">foreman</a><a href="/tags/gzip/" style="font-size: 10.50px;">gzip</a><a href="/tags/libmemcached/" style="font-size: 15.00px;">libmemcached</a><a href="/tags/mod_cband/" style="font-size: 11.00px;">mod_cband</a><a href="/tags/mod_limitipconn/" style="font-size: 12.50px;">mod_limitipconn</a><a href="/tags/moudles/" style="font-size: 10.25px;">moudles</a><a href="/tags/mysql/" style="font-size: 18.75px;">mysql</a><a href="/tags/nginx/" style="font-size: 18.00px;">nginx</a><a href="/tags/php-1/" style="font-size: 16.50px;">php</a><a href="/tags/php-fpm/" style="font-size: 17.50px;">php-fpm</a><a href="/tags/puppet/" style="font-size: 19.00px;">puppet</a><a href="/tags/python26/" style="font-size: 15.50px;">python2.6</a><a href="/tags/referer/" style="font-size: 11.25px;">referer</a><a href="/tags/repo/" style="font-size: 16.00px;">repo</a><a href="/tags/ruby/" style="font-size: 14.50px;">ruby</a><a href="/tags/shell/" style="font-size: 17.25px;">shell</a><a href="/tags/shtml/" style="font-size: 11.50px;">shtml</a><a href="/tags/ssi/" style="font-size: 11.75px;">ssi</a><a href="/tags/tomcat/" style="font-size: 18.50px;">tomcat</a><a href="/tags/yum/" style="font-size: 19.75px;">yum</a><a href="/tags/单引号/" style="font-size: 13.25px;">单引号</a><a href="/tags/双引号/" style="font-size: 13.50px;">双引号</a><a href="/tags/环境变量/" style="font-size: 10.00px;">环境变量</a><a href="/tags/详解/" style="font-size: 17.75px;">详解</a><a href="/tags/过滤日志/" style="font-size: 10.75px;">过滤日志</a>
+  </div>
+</div>
+
+
+  <!--  -->
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Liu Yu
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

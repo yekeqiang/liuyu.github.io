@@ -88,31 +88,27 @@ ftp 读(下载)
 <span class="number">123456</span>
 <span class="title">ftp</span>
 <span class="number">123456</span>
-`&lt;/pre&gt;
-<span class="number">2</span>、生成数据库文件：
-
-<span class="title">yum</span> -y install db4-utils
-&lt;pre&gt;`
-<span class="title">db_load</span> -<span class="type">T</span> -t hash -f /home/loginuser.txt /etc/vsftpd/vsftpd_login.db
-<span class="title">chmod</span> <span class="number">600</span> /etc/vsftpd/vsftpd_login.db
-`&lt;/pre&gt;
-<span class="number">3</span>、配置pam文件
-# vi /etc/pam.d/vsftpd.vu
-&lt;pre&gt;`auth required /lib64/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login
-<span class="title">account</span> required /lib64/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login
-`&lt;/pre&gt;
-#<span class="number">32</span>位操作系统
-&lt;pre&gt;`auth required /lib/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login
-<span class="title">account</span> required /lib/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login
-`&lt;/pre&gt;
-二、为虚拟用户创建本地系统用户
-&lt;pre&gt;`useradd opendoc -d /<span class="typedef"><span class="keyword">data</span> -s /bin/false</span>
-<span class="title">chown</span> opendoc.opendoc /<span class="typedef"><span class="keyword">data</span></span>
-`&lt;/pre&gt;
+</pre></figure></code></pre>
+<p>2、生成数据库文件：</p>
+<pre><code><figure class="highlight"><pre><span class="comment">yum</span> <span class="literal">-</span><span class="comment">y</span> <span class="comment">install</span> <span class="comment">db4</span>-<span class="comment">utils</span>
+<span class="comment">db_load</span> <span class="literal">-</span><span class="comment">T</span> <span class="literal">-</span><span class="comment">t</span> <span class="comment">hash</span> <span class="literal">-</span><span class="comment">f</span> <span class="comment">/home/loginuser</span>.<span class="comment">txt</span> <span class="comment">/etc/vsftpd/vsftpd_login</span>.<span class="comment">db</span>
+<span class="comment">chmod</span> <span class="comment">600</span> <span class="comment">/etc/vsftpd/vsftpd_login</span>.<span class="comment">db
+</pre></figure></code></pre>
+<p>3、配置pam文件</p>
+<pre><code><figure class="highlight"><pre><span class="preprocessor"># vi /etc/pam.d/vsftpd.vu</span>
+auth <span class="keyword">required</span> /lib64/security/pam_userdb<span class="variable">.so</span> db=/etc/vsftpd/vsftpd_login
+account <span class="keyword">required</span> /lib64/security/pam_userdb<span class="variable">.so</span> db=/etc/vsftpd/vsftpd_login
+<span class="preprocessor">#32位操作系统</span>
+auth <span class="keyword">required</span> /lib/security/pam_userdb<span class="variable">.so</span> db=/etc/vsftpd/vsftpd_login
+account <span class="keyword">required</span> /lib/security/pam_userdb<span class="variable">.so</span> db=/etc/vsftpd/vsftpd_login
+</pre></figure></code></pre>
+<p>二、为虚拟用户创建本地系统用户
+    useradd opendoc -d /data -s /bin/false
+    chown opendoc.opendoc /data
 三、vsftpd.conf配置
-&lt;pre&gt;`anonymous_enable=<span class="type">NO</span>
-<span class="title">local_enable</span>=<span class="type">YES</span>
-#write_enable=<span class="type">NO</span>
+    anonymous_enable=NO
+    local_enable=YES</p>
+<pre><code><figure class="highlight"><pre>#write_enable=<span class="type">NO</span>
 <span class="title">dirmessage_enable</span>=<span class="type">YES</span>
 <span class="title">xferlog_enable</span>=<span class="type">YES</span>
 <span class="title">xferlog_file</span>=/var/log/vsftpd.log
@@ -136,43 +132,42 @@ ftp 读(下载)
 <span class="title">idle_session_timeout</span>=<span class="number">600</span>
 <span class="title">ftpd_banner</span>=<span class="type">Welcome</span> to opendoc <span class="type">FTP</span> service.
 <span class="title">mkdir</span> /etc/vsftpd/vsftpd_user_conf
-`&lt;/pre&gt;
-# vi /etc/vsftpd/vsftpd_user_conf/ftpadmin 所有权限
-&lt;pre&gt;`write_enable=<span class="type">YES</span>
-<span class="title">anonymous_enable</span>=<span class="type">NO</span>
-<span class="title">anon_world_readable_only</span>=<span class="type">NO</span>
-<span class="title">anon_upload_enable</span>=<span class="type">YES</span>
-<span class="title">anon_mkdir_write_enable</span>=<span class="type">YES</span>
-<span class="title">anon_other_write_enable</span>=<span class="type">YES</span>
-<span class="title">local_umask</span>=<span class="number">022</span>
-<span class="title">download_enable</span>=<span class="type">Yes</span>
-<span class="title">local_root</span>=/<span class="typedef"><span class="keyword">data</span></span>
-`&lt;/pre&gt;
-# vi /etc/vsftpd/vsftpd_user_conf/ftpuser 上传权限
-&lt;pre&gt;`write_enable=<span class="type">YES</span>
-<span class="title">anon_world_readable_only</span>=<span class="type">NO</span>
-<span class="title">anon_upload_enable</span>=<span class="type">YES</span>
-<span class="title">anon_mkdir_write_enable</span>=<span class="type">YES</span>
-<span class="title">anon_other_write_enable</span>=<span class="type">YES</span>
-<span class="title">local_umask</span>=<span class="number">022</span>
-<span class="title">download_enable</span>=<span class="type">NO</span>
-<span class="title">local_root</span>=/<span class="typedef"><span class="keyword">data</span></span>
-`&lt;/pre&gt;
-# vi /etc/vsftpd/vsftpd_user_conf/ftp 只能下载
-&lt;pre&gt;`write_enable=<span class="type">NO</span>
-<span class="title">anon_world_readable_only</span>=<span class="type">NO</span>
-<span class="title">anon_upload_enable</span>=<span class="type">NO</span>
-<span class="title">anon_mkdir_write_enable</span>=<span class="type">NO</span>
-<span class="title">anon_other_write_enable</span>=<span class="type">NO</span>
-<span class="title">local_umask</span>=<span class="number">022</span>
-<span class="title">download_enable</span>=yes
-<span class="title">local_root</span>=/<span class="typedef"><span class="keyword">data</span></span>
 </pre></figure></code></pre>
+<ul>
+<li>vi /etc/vsftpd/vsftpd_user_conf/ftpadmin 所有权限
+  write_enable=YES
+  anonymous_enable=NO
+  anon_world_readable_only=NO
+  anon_upload_enable=YES
+  anon_mkdir_write_enable=YES
+  anon_other_write_enable=YES
+  local_umask=022
+  download_enable=Yes
+  local_root=/data</li>
+<li>vi /etc/vsftpd/vsftpd_user_conf/ftpuser 上传权限
+  write_enable=YES
+  anon_world_readable_only=NO
+  anon_upload_enable=YES
+  anon_mkdir_write_enable=YES
+  anon_other_write_enable=YES
+  local_umask=022
+  download_enable=NO
+  local_root=/data</li>
+<li>vi /etc/vsftpd/vsftpd_user_conf/ftp 只能下载
+  write_enable=NO
+  anon_world_readable_only=NO
+  anon_upload_enable=NO
+  anon_mkdir_write_enable=NO
+  anon_other_write_enable=NO
+  local_umask=022
+  download_enable=yes
+  local_root=/data</li>
+</ul>
 <h1>/etc/init.d/vsftpd start</h1>
 <p>Starting vsftpd for vsftpd: [ OK ]</p>
-<p>测试：</p>
-<h1>ftp -n localhost</h1>
-<p>Connected to ifidc.
+<p>测试：
+$ ftp -n localhost
+Connected to ifidc.
 530 Please login with USER and PASS.
 530 Please login with USER and PASS.
 KERBEROS_V4 rejected as an authentication type
@@ -182,9 +177,9 @@ ftp&gt; use ftpadmin
 Password:
 230 Login successful.
 ftp&gt; quit
-221 Goodbye.</p>
-<h1>ftp -n localhost</h1>
-<p>Connected to ifidc.
+221 Goodbye.
+$ ftp -n localhost
+Connected to ifidc.
 220 Welcome to tfhudong FTP service
 530 Please login with USER and PASS.
 530 Please login with USER and PASS.
@@ -194,9 +189,9 @@ ftp&gt; use ftpuser
 Password:
 230 Login successful.
 ftp&gt; quit
-221 Goodbye.</p>
-<h1>ftp -n localhost</h1>
-<p>Connected to ifidc.
+221 Goodbye.
+$ ftp -n localhost
+Connected to ifidc.
 220 Welcome to tfhudong FTP service
 530 Please login with USER and PASS.
 530 Please login with USER and PASS.
@@ -261,9 +256,17 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/Databases/">Databases</a><small>1</small></li>
+  
+    <li><a href="/categories/howtoforge/Monitoring/">Monitoring</a><small>1</small></li>
+  
     <li><a href="/categories/Monitoring/">Monitoring</a><small>1</small></li>
   
-    <li><a href="/categories/Webserver/">Webserver</a><small>4</small></li>
+    <li><a href="/categories/faq/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Programming/">Programming</a><small>1</small></li>
+  
+    <li><a href="/categories/Webserver/">Webserver</a><small>8</small></li>
   
     <li><a href="/categories/cdn/">cdn</a><small>12</small></li>
   
@@ -279,15 +282,15 @@ document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static
   
     <li><a href="/categories/cdn/puppet/">puppet</a><small>4</small></li>
   
-    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
-  
     <li><a href="/categories/cdn/分布式监控/">分布式监控</a><small>2</small></li>
   
     <li><a href="/categories/howtoforge/分布式监控/">分布式监控</a><small>2</small></li>
   
-    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
+    <li><a href="/categories/分布式监控/">分布式监控</a><small>1</small></li>
   
     <li><a href="/categories/howtoforge/应用程序/">应用程序</a><small>2</small></li>
+  
+    <li><a href="/categories/应用程序/">应用程序</a><small>19</small></li>
   
     <li><a href="/categories/数据库/">数据库</a><small>4</small></li>
   
