@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://bubbyroom.com/2011/01/27/centos-yum-update-ruby/</loc>
+    <lastmod>2013-08-13T10:22:31.000Z</lastmod>
+  </url>
+  <url>
     <loc>http://bubbyroom.com/2010/12/19/sedline/</loc>
     <lastmod>2013-08-13T10:19:41.000Z</lastmod>
   </url>
@@ -109,10 +113,6 @@
     <lastmod>2013-08-11T07:09:17.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2010/12/19/iostat-detailed/</loc>
-    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
-  </url>
-  <url>
     <loc>http://bubbyroom.com/2011/04/01/iptables_raw_ip_conntrack-table-full-dropping-packet/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
@@ -189,7 +189,7 @@
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2010/12/17/apache-ssi-shtml-config/</loc>
+    <loc>http://bubbyroom.com/2010/12/18/apache-tomcat-cluster-bacst/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
@@ -249,10 +249,6 @@
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2010/12/18/apache-tomcat-cluster-bacst/</loc>
-    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
-  </url>
-  <url>
     <loc>http://bubbyroom.com/2010/12/19/awk-use-bash-shell-export/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
@@ -289,11 +285,11 @@
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2010/12/20/ubuntu-could-not-update-ideauthority-file-homeuser-iceauthority/</loc>
+    <loc>http://bubbyroom.com/2010/12/17/apache-ssi-shtml-config/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2011/01/27/centos-yum-update-ruby/</loc>
+    <loc>http://bubbyroom.com/2010/12/20/ubuntu-could-not-update-ideauthority-file-homeuser-iceauthority/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
@@ -309,11 +305,11 @@
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2010/12/19/windows7-winsxs/</loc>
+    <loc>http://bubbyroom.com/2011/01/27/create-yum-repo/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2011/01/27/create-yum-repo/</loc>
+    <loc>http://bubbyroom.com/2010/12/19/windows7-winsxs/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
@@ -321,15 +317,19 @@
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2011/02/12/一个小公司老板的日常管理/</loc>
-    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
-  </url>
-  <url>
     <loc>http://bubbyroom.com/2010/12/18/eaccelerator-config-explanation/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
+    <loc>http://bubbyroom.com/2011/02/12/一个小公司老板的日常管理/</loc>
+    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
+  </url>
+  <url>
     <loc>http://bubbyroom.com/2011/03/14/ganglia-gmond-acl/</loc>
+    <lastmod>2013-08-11T03:52:35.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://bubbyroom.com/2010/12/20/howto-install-puppet-on-centos5/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
@@ -341,11 +341,11 @@
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2010/12/20/howto-install-puppet-on-centos5/</loc>
+    <loc>http://bubbyroom.com/2010/12/19/howto-only-use-epel-with-yum/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2010/12/19/howto-only-use-epel-with-yum/</loc>
+    <loc>http://bubbyroom.com/2010/12/19/howto-use-dstat-monitoring-linux-system-resources/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
@@ -365,7 +365,7 @@
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
-    <loc>http://bubbyroom.com/2010/12/19/howto-use-dstat-monitoring-linux-system-resources/</loc>
+    <loc>http://bubbyroom.com/2010/12/19/iostat-detailed/</loc>
     <lastmod>2013-08-11T03:52:35.000Z</lastmod>
   </url>
   <url>
